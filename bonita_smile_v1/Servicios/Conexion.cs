@@ -9,11 +9,11 @@ namespace bonita_smile_v1.Servicios
 {
     class Conexion
     {
-        string servidor = "162.241.60.126";
-        string puerto = "3306";
-        string usuario = "jjdevelo_dentist";
-        string password = "jjpd1996";
-        string database = "jjdevelo_dentist";
+        string servidor = "";
+        string puerto = "";
+        string usuario = "";
+        string password = "";
+        string database = "";
 
         public MySqlConnection conexion()
         {
