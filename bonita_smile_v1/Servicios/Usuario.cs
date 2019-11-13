@@ -16,7 +16,8 @@ namespace bonita_smile_v1.Servicios
         private string query;
         private MySqlConnection conexionBD;
         private UsuarioModel usuarioModel;
-        Conexion obj = new Conexion();
+        private Conexion obj = new Conexion();
+        
 
         public Usuario()
         {
@@ -120,80 +121,44 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        
-        //verifica el tipo de rol. Devuelve el rol del alias
-        public string verificarRol(string alias)
-        {
-            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
-            string rol = "";
-            int id = 0;
-            //int rol = 0;
-            query = "SELECT * FROM usuario where alias='" + alias + "'";
 
+        //verifica el tipo de rol. Devuelve el rol del alias
+
+        public string verificarRol(int id_rol)
+        {
+            string rol = "";
+            MySqlCommand cmd;
+            string query = "SELECT *FROM  rol where id_rol=" + id_rol;
             try
             {
                 conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                cmd = new MySqlCommand(query, conexionBD);
+                int existe = Convert.ToInt32(cmd.ExecuteScalar());
+                if (existe == 0)
                 {
-                    UsuarioModel usuarioModel = new UsuarioModel();
-
-                    usuarioModel.id_usuario = int.Parse(reader[0].ToString());
-                    usuarioModel.alias = reader[1].ToString();
-                    usuarioModel.nombre = reader[2].ToString();
-                    usuarioModel.apellidos = reader[3].ToString();
-                    usuarioModel.password = reader[4].ToString();
-                    usuarioModel.id_rol = int.Parse(reader[5].ToString());
-
-                    listaUsuario.Add(usuarioModel);
-                }
-              
-                    foreach (UsuarioModel um in listaUsuario)
-                    {
-                        id = um.id_rol;
-
-                    }
-
-                if (id == 1)
-                {
-                    MessageBox.Show("Administrador");
-                     rol = "Administrador";
-
-
+                    conexionBD.Close();
+                    return "";
                 }
                 else
-                if (id == 2)
                 {
-                    MessageBox.Show("Clinica");
-                    rol = "Clinica";
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    rol = reader[1].ToString();
+                    conexionBD.Close();
+                    return rol;
+
+
 
                 }
-                else
-                    if (id == 3)
-                {
-                    MessageBox.Show("Marketing");
-                     rol = "Marketing";
-
-                }
-
-
-               
-
-
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.ToString());
+                conexionBD.Close();
                 return "";
             }
-            conexionBD.Close();
-            return rol;
-
-
         }
+
 
 
         //Comprobara si existe el usuario en la base de datos y despues cimprobara si esta en la base de datos. Devuelve true si es correcto, de lo contario false
@@ -203,22 +168,26 @@ namespace bonita_smile_v1.Servicios
             bool valido = Validar_login(alias, password);
             if(valido)
             {
-                rol = verificarRol(alias);
+                rol = verificarRol(usuarioModel.id_rol);
                 if(rol.Equals("Administrador"))
                 {
                     //Admin admin = new Admin();
                     //admin.ShowDialog();
-                }else
+                    MessageBox.Show("Administrador");
+                }
+                else
                     if(rol.Equals("Clinica"))
                 {
                     //Clin clinica = new Clin();
                     //clinica.ShowDialog();
+                    MessageBox.Show("Clinica");
                 }
                 else
                     if(rol.Equals("Marketing"))
                 {
                     //Mark marketing = new Mark();
                     //marketing.ShowDialog();
+                    MessageBox.Show("Marketing");
                 }
             }
         }
@@ -241,7 +210,7 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                    UsuarioModel usuarioModel = new UsuarioModel();
+                    usuarioModel = new UsuarioModel();
 
                     usuarioModel.id_usuario = int.Parse(reader[0].ToString());
                     usuarioModel.alias = reader[1].ToString();
@@ -273,7 +242,8 @@ namespace bonita_smile_v1.Servicios
 
                     if (result)
                     {
-                        conexionBD.Close();
+                        
+                       conexionBD.Close();
                         verdad= true;
                     }
                     else
@@ -297,5 +267,53 @@ namespace bonita_smile_v1.Servicios
 
         }
 
+        //public bool Validar_usu(string alias,string password)
+        //{
+            
+        //    MySqlCommand cmd;
+        //    string query = "SELECT * FROM usuario where alias='" + alias+"'";
+        //    try
+        //    {
+        //        conexionBD.Open();
+        //        cmd = new MySqlCommand(query, conexionBD);
+        //        int existe = Convert.ToInt32(cmd.ExecuteScalar());
+        //        if (existe == 0)
+        //        {
+        //            conexionBD.Close();
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            reader = cmd.ExecuteReader();
+        //            reader.Read();
+        //            usuarioModel = new UsuarioModel();
+        //            usuarioModel.id_usuario = int.Parse(reader[0].ToString());
+        //            usuarioModel.alias = reader[1].ToString();
+        //            usuarioModel.nombre = reader[2].ToString();
+        //            usuarioModel.apellidos = reader[3].ToString();
+        //            usuarioModel.password = reader[4].ToString();
+        //            usuarioModel.id_rol = int.Parse(reader[5].ToString());
+        //            Seguridad secure = new Seguridad();
+        //            if(password.Equals(secure.Desencriptar(usuarioModel.password)))
+        //            {
+        //                MessageBox.Show("Bienvenido usuario");
+        //                return true;
+        //            }
+        //            else
+        //            {
+        //                return false;
+        //            }
+                    
+        //        }
+        //    }
+        //    catch (MySqlException ex)
+        //    {
+        //        MessageBox.Show(ex.ToString());
+        //        conexionBD.Close();
+        //        return false;
+        //    }
+        //}
     }
+
 }
+
