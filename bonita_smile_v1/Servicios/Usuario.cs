@@ -14,6 +14,7 @@ namespace bonita_smile_v1.Servicios
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
+        private UsuarioModel usuarioModel;
         Conexion obj = new Conexion();
 
         public Usuario()
@@ -117,20 +118,33 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        private bool ValidarExistencia(int id_usuario)
+
+        //Comprobara si existe el usuario en la base de datos y despues cimprobara si esta en la base de datos. Devuelve true si es correcto, de lo contario false
+        private bool validarUsuario(string alias, string password)
         {
             MySqlCommand cmd;
-            string query = "SELECT * FROM usuario where id_usuario=" + id_usuario;
+            string query = "SELECT * FROM usuario where alias=" + alias;
             try
             {
                 cmd = new MySqlCommand(query, conexionBD);
-                int existe = Convert.ToInt32(cmd.ExecuteScalar());
-                if (existe == 0)
+                if (Convert.ToInt32(cmd.ExecuteScalar()) == 0)
                 {
+                    conexionBD.Close();
                     return false;
                 }
                 else
                 {
+                    usuarioModel = new UsuarioModel();
+
+                    usuarioModel.id_usuario = int.Parse(reader[0].ToString());
+                    usuarioModel.alias = reader[1].ToString();
+                    usuarioModel.nombre = reader[2].ToString();
+                    usuarioModel.apellidos = reader[3].ToString();
+                    usuarioModel.password = reader[4].ToString();
+                    usuarioModel.id_rol = int.Parse(reader[5].ToString());
+
+                    conexionBD.Close();
+
                     return true;
                 }
             }
@@ -142,10 +156,23 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
+        //verifica el tipo de rol. Devuelve el rol del alias
+        private string verificarRol()
+        {
+            string rol = "";
+
+            return rol;
+        }
+
+        //Hace uso de los dos metodos anteriores, asi como redireccionar a la interfaz cerrespondiente
+        public void redireccionarLogin(string alias, string password)
+        {
+
+        }
+
+        //mismo metodo que validarUsuario, solo que sin validar pass, usa el que quieras
         public bool Validar_login(string alias, string password)
         {
-            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
-            string pass = "";
             query = "SELECT * FROM usuario where alias='" + alias + "'";
 
             try
@@ -155,9 +182,15 @@ namespace bonita_smile_v1.Servicios
 
                 reader = cmd.ExecuteReader();
 
-                while (reader.Read())
+                if (Convert.ToInt32(cmd.ExecuteScalar())==0)
                 {
-                    UsuarioModel usuarioModel = new UsuarioModel();
+                    //MessageBox.Show("Usuario incorrecto");
+                    conexionBD.Close();
+                    return false;
+                }
+                else
+                {
+                    usuarioModel = new UsuarioModel();
 
                     usuarioModel.id_usuario = int.Parse(reader[0].ToString());
                     usuarioModel.alias = reader[1].ToString();
@@ -166,25 +199,9 @@ namespace bonita_smile_v1.Servicios
                     usuarioModel.password = reader[4].ToString();
                     usuarioModel.id_rol = int.Parse(reader[5].ToString());
 
-                    listaUsuario.Add(usuarioModel);
-                }
-                if (!listaUsuario.Any())
-                {
-                    //MessageBox.Show("Usuario incorrecto");
-                    conexionBD.Close();
-                    return false;
-                }
-                else
-                {
-                    foreach (UsuarioModel um in listaUsuario)
-                    {
-                        pass = um.password.ToString();
-                    }
-
                     Seguridad secure = new Seguridad();
-                    string contraseña_desenc = secure.Desencriptar(pass);
 
-                    if (password.Equals(contraseña_desenc))
+                    if (password.Equals(secure.Desencriptar(usuarioModel.password)))
                     {
                         conexionBD.Close();
                         return true;
@@ -197,7 +214,6 @@ namespace bonita_smile_v1.Servicios
                         //MessageBox.Show("contraseña esta incorrecta");
                     }
                 }
-
             }
             catch (MySqlException ex)
             {
