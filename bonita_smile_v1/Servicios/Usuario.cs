@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+
 namespace bonita_smile_v1.Servicios
 {
     class Usuario
@@ -119,60 +120,14 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        //Comprobara si existe el usuario en la base de datos y despues cimprobara si esta en la base de datos. Devuelve true si es correcto, de lo contario false
-        private bool validarUsuario(string alias, string password)
-        {
-            MySqlCommand cmd;
-            string query = "SELECT * FROM usuario where alias=" + alias;
-            try
-            {
-                cmd = new MySqlCommand(query, conexionBD);
-                if (Convert.ToInt32(cmd.ExecuteScalar()) == 0)
-                {
-                    conexionBD.Close();
-                    return false;
-                }
-                else
-                {
-                    usuarioModel = new UsuarioModel();
-
-                    usuarioModel.id_usuario = int.Parse(reader[0].ToString());
-                    usuarioModel.alias = reader[1].ToString();
-                    usuarioModel.nombre = reader[2].ToString();
-                    usuarioModel.apellidos = reader[3].ToString();
-                    usuarioModel.password = reader[4].ToString();
-                    usuarioModel.id_rol = int.Parse(reader[5].ToString());
-
-                    conexionBD.Close();
-
-                    return true;
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return false;
-            }
-        }
-
+        
         //verifica el tipo de rol. Devuelve el rol del alias
-        private string verificarRol()
+        public string verificarRol(string alias)
         {
+            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
             string rol = "";
-
-            return rol;
-        }
-
-        //Hace uso de los dos metodos anteriores, asi como redireccionar a la interfaz cerrespondiente
-        public void redireccionarLogin(string alias, string password)
-        {
-
-        }
-
-        //mismo metodo que validarUsuario, solo que sin validar pass, usa el que quieras
-        public bool Validar_login(string alias, string password)
-        {
+            int id = 0;
+            //int rol = 0;
             query = "SELECT * FROM usuario where alias='" + alias + "'";
 
             try
@@ -182,15 +137,9 @@ namespace bonita_smile_v1.Servicios
 
                 reader = cmd.ExecuteReader();
 
-                if (Convert.ToInt32(cmd.ExecuteScalar())==0)
+                while (reader.Read())
                 {
-                    //MessageBox.Show("Usuario incorrecto");
-                    conexionBD.Close();
-                    return false;
-                }
-                else
-                {
-                    usuarioModel = new UsuarioModel();
+                    UsuarioModel usuarioModel = new UsuarioModel();
 
                     usuarioModel.id_usuario = int.Parse(reader[0].ToString());
                     usuarioModel.alias = reader[1].ToString();
@@ -199,28 +148,158 @@ namespace bonita_smile_v1.Servicios
                     usuarioModel.password = reader[4].ToString();
                     usuarioModel.id_rol = int.Parse(reader[5].ToString());
 
-                    Seguridad secure = new Seguridad();
-
-                    if (password.Equals(secure.Desencriptar(usuarioModel.password)))
-                    {
-                        conexionBD.Close();
-                        return true;
-                        //MessageBox.Show("Bienvenido usuario");
-                    }
-                    else
-                    {
-                        conexionBD.Close();
-                        return false;
-                        //MessageBox.Show("contraseña esta incorrecta");
-                    }
+                    listaUsuario.Add(usuarioModel);
                 }
+              
+                    foreach (UsuarioModel um in listaUsuario)
+                    {
+                        id = um.id_rol;
+
+                    }
+
+                if (id == 1)
+                {
+                    MessageBox.Show("Administrador");
+                     rol = "Administrador";
+
+
+                }
+                else
+                if (id == 2)
+                {
+                    MessageBox.Show("Clinica");
+                    rol = "Clinica";
+
+                }
+                else
+                    if (id == 3)
+                {
+                    MessageBox.Show("Marketing");
+                     rol = "Marketing";
+
+                }
+
+
+               
+
+
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return false;
+                return "";
+            }
+            conexionBD.Close();
+            return rol;
+
+
+        }
+
+
+        //Comprobara si existe el usuario en la base de datos y despues cimprobara si esta en la base de datos. Devuelve true si es correcto, de lo contario false
+        public void redireccionarLogin(string alias, string password)
+        {
+            string rol = "";
+            bool valido = Validar_login(alias, password);
+            if(valido)
+            {
+                rol = verificarRol(alias);
+                if(rol.Equals("Administrador"))
+                {
+                    //Admin admin = new Admin();
+                    //admin.ShowDialog();
+                }else
+                    if(rol.Equals("Clinica"))
+                {
+                    //Clin clinica = new Clin();
+                    //clinica.ShowDialog();
+                }
+                else
+                    if(rol.Equals("Marketing"))
+                {
+                    //Mark marketing = new Mark();
+                    //marketing.ShowDialog();
+                }
             }
         }
+
+       
+        public bool Validar_login(string alias, string password)
+        {
+            bool verdad;
+            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
+            string pass = "";
+            //int rol = 0;
+            query = "SELECT * FROM usuario where alias='" + alias + "'";
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    UsuarioModel usuarioModel = new UsuarioModel();
+
+                    usuarioModel.id_usuario = int.Parse(reader[0].ToString());
+                    usuarioModel.alias = reader[1].ToString();
+                    usuarioModel.nombre = reader[2].ToString();
+                    usuarioModel.apellidos = reader[3].ToString();
+                    usuarioModel.password = reader[4].ToString();
+                    usuarioModel.id_rol = int.Parse(reader[5].ToString());
+
+                    listaUsuario.Add(usuarioModel);
+                }
+                bool isEmpty = !listaUsuario.Any();
+                if (isEmpty)
+                {
+                    MessageBox.Show("Usuario incorrecto");
+                    verdad = false; ;
+                }
+                else
+                {
+                    foreach (UsuarioModel um in listaUsuario)
+                    {
+                        pass = um.password.ToString();
+                       
+                    }
+                    Seguridad secure = new Seguridad();
+                    string contraseña_desenc = secure.Desencriptar(pass);
+
+                    //MessageBox.Show(password + "         pass_desnc=" + contraseña_desenc);
+                    bool result = password.Equals(contraseña_desenc);
+
+                    if (result)
+                    {
+                        conexionBD.Close();
+                        verdad= true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("contraseña esta incorrecta");
+                        conexionBD.Close();
+                       verdad= false;
+                    }
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                verdad = false;
+                conexionBD.Close();
+
+            }
+            return verdad;
+            
+
+        }
+
+
+
+
+
     }
 }

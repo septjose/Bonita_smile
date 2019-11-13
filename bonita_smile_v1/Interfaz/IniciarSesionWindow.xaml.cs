@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using bonita_smile_v1.Modelos;
+using bonita_smile_v1.Servicios;
 namespace bonita_smile_v1
 {
     /// <summary>
@@ -23,6 +25,13 @@ namespace bonita_smile_v1
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           // MessageBox.Show("txtx  :" +txtUsuario.Text+"    "+ "pass :"+pbPassword.Password);
+            Usuario user = new Usuario();
+            user.redireccionarLogin(txtUsuario.Text,pbPassword.Password);
         }
     }
 }
