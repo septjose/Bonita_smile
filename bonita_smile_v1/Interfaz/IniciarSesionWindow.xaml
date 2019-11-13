@@ -15,26 +15,15 @@
         <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 140" Source="/Resources/login_icon3.png" Width="110" Height="110"></Image>
 
         <Label HorizontalAlignment ="Center" VerticalAlignment="Center" Margin="0 0 200 0">Usuario:</Label>
-
-        <TextBox Name="txtUsuario" HorizontalAlignment="Center" Height="25" Margin="0 50 0 0" TextWrapping="Wrap" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa un usuario">
-            <!--<TextBox.Template>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
-                        <TextBox Text="{TemplateBinding Text}" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa un usuario"/>
-                        <Image Margin="0,0,25,0" 
-                           Source="/Resources/user_login2.png" 
-                           Width="12" 
-                           Height="12"
-                           HorizontalAlignment="Right"/>
-                    </Grid>
-                </ControlTemplate>
-            </TextBox.Template>-->
-        </TextBox>
+        <TextBox Name="txtUsuario" HorizontalAlignment="Center" Height="25" Margin="0 50 0 0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa un usuario"/>
+        <Image Source="/Resources/user_login2.png" HorizontalAlignment="Right" Height="12" Margin="0 50 65 0" VerticalAlignment="Center" Width="12"/>
 
         <Label HorizontalAlignment ="Center" VerticalAlignment="Center" Margin="0 120 180 0">Contraseña:</Label>
+        <PasswordBox Name="pbPassword" HorizontalAlignment="Center" Height="25" Margin="0 170 0 0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa una contraseña"/>
+        <Image Source="/Resources/candado_icon.png" HorizontalAlignment="Right" Height="12" Margin="0 170 65 0" VerticalAlignment="Center" Width="12"/>
 
-        <PasswordBox Name="pbPassword" HorizontalAlignment="Center" Height="25" Margin="0,170,0,0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa un usuario" Background="White">
-            <!--<PasswordBox.Template>
+        <!--<PasswordBox Name="pbPassword" HorizontalAlignment="Center" Height="25" Margin="0,170,0,0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa un usuario" Background="White">
+            <PasswordBox.Template>
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
                     <Grid>
                         <PasswordBox  Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresar contraseña"/>
@@ -45,8 +34,8 @@
                            HorizontalAlignment="Right"/>
                     </Grid>
                 </ControlTemplate>
-            </PasswordBox.Template>-->
-        </PasswordBox>
+            </PasswordBox.Template>
+        </PasswordBox>-->
         <Button Content="Iniciar" Height="28" Width="140" HorizontalAlignment="Center" BorderThickness="1"  VerticalAlignment="Bottom" Margin="0 0 0 46" FontSize="12" OpacityMask="#FF915D5D" Background="#FFC8C8C8" Click="Button_Click"/>
 
     </Grid>
