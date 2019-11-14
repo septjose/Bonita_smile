@@ -25,6 +25,7 @@ namespace bonita_smile_v1
         public MainWindow()
         {
             InitializeComponent();
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -35,6 +36,7 @@ namespace bonita_smile_v1
             //Rol r = new Rol();
             //r.eliminarRol(5);
             user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+           
         }
     }
 }

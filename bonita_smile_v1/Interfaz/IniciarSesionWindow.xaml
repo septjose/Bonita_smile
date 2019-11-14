@@ -11,15 +11,15 @@
                       WindowStartupLocation="CenterScreen">
 
     <Grid OpacityMask="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
-        <Label FontSize="30" HorizontalAlignment="Center" Margin="0 20 0 0">Iniciar Sesión</Label>
+        <Label  FontSize="30" HorizontalAlignment="Center" Margin="0 20 0 0"  Style="{StaticResource MetroLabel}">Iniciar Sesión</Label>
         <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 140" Source="/Resources/login_icon3.png" Width="110" Height="110"></Image>
 
         <Label HorizontalAlignment ="Center" VerticalAlignment="Center" Margin="0 0 200 0">Usuario:</Label>
-        <TextBox Name="txtUsuario" HorizontalAlignment="Center" Height="25" Margin="0 50 0 0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa un usuario"/>
+        <TextBox Name="txtUsuario" HorizontalAlignment="Center" Height="25" Margin="0 50 0 0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa un usuario"  Style="{StaticResource MetroTextBox}" />
         <Image Source="/Resources/user_login2.png" HorizontalAlignment="Right" Height="12" Margin="0 50 65 0" VerticalAlignment="Center" Width="12"/>
 
         <Label HorizontalAlignment ="Center" VerticalAlignment="Center" Margin="0 120 180 0">Contraseña:</Label>
-        <PasswordBox Name="pbPassword" HorizontalAlignment="Center" Height="25" Margin="0 170 0 0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa una contraseña"/>
+        <PasswordBox Name="pbPassword" HorizontalAlignment="Center" Height="25" Margin="0 170 0 0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa una contraseña" Style="{StaticResource MetroPasswordBox}"/>
         <Image Source="/Resources/candado_icon.png" HorizontalAlignment="Right" Height="12" Margin="0 170 65 0" VerticalAlignment="Center" Width="12"/>
 
         <!--<PasswordBox Name="pbPassword" HorizontalAlignment="Center" Height="25" Margin="0,170,0,0" VerticalAlignment="Center" Width="250" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Ingresa un usuario" Background="White">
@@ -36,7 +36,7 @@
                 </ControlTemplate>
             </PasswordBox.Template>
         </PasswordBox>-->
-        <Button Content="Iniciar" Height="28" Width="140" HorizontalAlignment="Center" BorderThickness="1"  VerticalAlignment="Bottom" Margin="0 0 0 46" FontSize="12" OpacityMask="#FF915D5D" Background="#FFC8C8C8" Click="Button_Click"/>
+        <Button Content="Iniciar" Height="28" Width="140" HorizontalAlignment="Center" BorderThickness="1"  VerticalAlignment="Bottom" Margin="0 0 0 46" FontSize="12"  Background="#FFC8C8C8"  Style="{StaticResource MetroFlatButton}" Click="Button_Click"/>
 
     </Grid>
 </Controls:MetroWindow>

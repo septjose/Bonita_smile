@@ -70,3 +70,5 @@ D:\wpf_project\bs1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj
 D:\wpf_project\bs1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj.CopyComplete
 D:\wpf_project\bs1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.exe
 D:\wpf_project\bs1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.pdb
+D:\wpf_project\bs1\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Admin.g.cs
+D:\wpf_project\bs1\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Admin.baml

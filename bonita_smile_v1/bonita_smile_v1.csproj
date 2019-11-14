@@ -77,6 +77,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaz\Administrador\Admin.xaml.cs">
+      <DependentUpon>Admin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Servicios\Abonos.cs" />
     <Compile Include="Servicios\Antecedentes_clinicos.cs" />
     <Compile Include="Servicios\Carpeta_archivos.cs" />
@@ -92,6 +95,11 @@
     <Compile Include="Servicios\Rol.cs" />
     <Compile Include="Servicios\Seguridad.cs" />
     <Compile Include="Servicios\Usuario.cs" />
+    <Compile Include="ViewModel.cs" />
+    <Page Include="Interfaz\Administrador\Admin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaz\IniciarSesionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -167,11 +175,17 @@
   <ItemGroup>
     <Resource Include="Resources\candado_icon.png" />
     <Resource Include="Resources\candado_azul.png" />
+    <Resource Include="Assets\back.jpg" />
+    <Resource Include="Assets\pexels-photo-247885.jpeg" />
+    <Resource Include="Assets\pexels-photo-374592.jpeg" />
+    <Resource Include="Assets\pexels-photo-701026.jpeg" />
+    <Resource Include="Assets\pexels-photo-701337.jpeg" />
+    <Resource Include="Assets\pexels-photo-701449.jpeg" />
+    <Resource Include="Assets\pexels-photo-701762.jpeg" />
     <Content Include="Resources\login_icon4.svg" />
     <Resource Include="Resources\usuario_azul.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaz\Administrador\" />
     <Folder Include="Interfaz\Clinica\" />
     <Folder Include="Interfaz\Marketing\" />
   </ItemGroup>
