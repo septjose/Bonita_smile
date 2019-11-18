@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Interfaz.Administrador.Paciente;
 using bonita_smile_v1.Interfaz;
 
 namespace bonita_smile_v1.Servicios
@@ -172,11 +173,12 @@ namespace bonita_smile_v1.Servicios
                 rol = verificarRol(usuarioModel.id_rol);
                 if(rol.Equals("Administrador"))
                 {
-                    Admin admin = new Admin();
+                    //Admin admin = new Admin();
+                    Insertar_Paciente ip = new Insertar_Paciente();
                     
                     MessageBox.Show("Administrador");
                     Application.Current.Windows[0].Close();
-                    admin.ShowDialog();
+                    ip.ShowDialog();
                    
                     
                 }

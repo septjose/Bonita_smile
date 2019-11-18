@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\wpf_project\bs1\Bonita_smile\bonita_smile_v1\obj\Debug\
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\
 bonita_smile_v1
 none
 false
 DEBUG;TRACE
-D:\wpf_project\bs1\Bonita_smile\bonita_smile_v1\App.xaml
-21203508735
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\App.xaml
+3-1696428200
 1-1665918769
-35-1634720452
-2039933188
-Interfaz\Administrador\Admin.xaml;Interfaz\IniciarSesionWindow.xaml;
+361589226154
+24-1684394129
+Interfaz\Administrador\Admin.xaml;Interfaz\Administrador\Paciente\Insertar_Paciente.xaml;Interfaz\IniciarSesionWindow.xaml;
 
 False
 
