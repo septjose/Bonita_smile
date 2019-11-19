@@ -54,7 +54,7 @@ namespace bonita_smile_v1.Servicios
         public bool eliminarRol(int id_rol)
         {
             MySqlCommand cmd;
-            query = "DELETE FROM rol where id_rol=" + id_rol;
+            query = "DELETE FROM rol where id_rol="+ id_rol;
             try
             {
                 conexionBD.Open();
@@ -81,7 +81,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarRol(string descripcion)
         {
-            query = "INSERT INTO rol (descripcion) VALUES('" + descripcion + "')";
+            query = "INSERT INTO rol (descripcion) VALUES('"+ descripcion +"')";
             try
             {
                 conexionBD.Open();
@@ -100,7 +100,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarRol(int id_rol, string descripcion)
         {
-            query = "UPDATE rol set descripcion = '" + descripcion + "' where id_rol = " + id_rol;
+            query = "UPDATE rol set descripcion = '"+ descripcion +"' where id_rol = "+ id_rol;
             try
             {
                 conexionBD.Open();
@@ -121,7 +121,7 @@ namespace bonita_smile_v1.Servicios
         private bool ValidarExistencia(int id_rol)
         {
             MySqlCommand cmd;
-            string query = "SELECT * FROM rol where id_rol=" + id_rol;
+            string query = "SELECT * FROM rol where id_rol="+ id_rol;
             try
             {
                 cmd = new MySqlCommand(query, conexionBD);

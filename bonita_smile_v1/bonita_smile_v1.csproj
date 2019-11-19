@@ -90,13 +90,22 @@
     <Compile Include="Interfaz\Administrador\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\Administrador\Clinica\Ingresar Clinica.xaml.cs">
+      <DependentUpon>Ingresar Clinica.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Administrador\Paciente\ActualizarPaciente.xaml.cs">
+      <DependentUpon>ActualizarPaciente.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\Administrador\Paciente\Insertar_Paciente.xaml.cs">
       <DependentUpon>Insertar_Paciente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Administrador\Paciente\MostrarPacientes.xaml.cs">
+      <DependentUpon>MostrarPacientes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Servicios\Abonos.cs" />
     <Compile Include="Servicios\Antecedentes_clinicos.cs" />
     <Compile Include="Servicios\Carpeta_archivos.cs" />
-    <Compile Include="Servicios\Clinica.cs" />
+    <Compile Include="Servicios\Clinicas.cs" />
     <Compile Include="Servicios\Clinica_paciente.cs" />
     <Compile Include="Servicios\Colores.cs" />
     <Compile Include="Servicios\Conexion.cs" />
@@ -113,7 +122,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interfaz\Administrador\Clinica\Ingresar Clinica.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Administrador\Paciente\ActualizarPaciente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaz\Administrador\Paciente\Insertar_Paciente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Administrador\Paciente\MostrarPacientes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -203,6 +224,7 @@
     <Resource Include="Resources\usuario_azul.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Interfaz\Administrador\Usuario\" />
     <Folder Include="Interfaz\Clinica\" />
     <Folder Include="Interfaz\Marketing\" />
   </ItemGroup>

@@ -56,7 +56,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarMotivo_cita(int id_nota)
         {
-            query = "DELETE FROM nota_de_digi_evolucion where id_nota=" + id_nota;
+            query = "DELETE FROM nota_de_digi_evolucion where id_nota="+ id_nota;
             try
             {
                 conexionBD.Open();
@@ -76,7 +76,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarNota_de_digi_evolucion(int id_paciente, int id_motivo, string descripcion, string fecha)
         {
-            query = "INSERT INTO nota_de_digi_evolucion (id_paciente,id_motivo,descripcion,fecha) VALUES(" + id_paciente + "," + id_motivo + ",'" + descripcion + "','" + fecha + "')";
+            query = "INSERT INTO nota_de_digi_evolucion (id_paciente,id_motivo,descripcion,fecha) VALUES("+ id_paciente +","+ id_motivo +",'"+ descripcion +"','"+ fecha +"')";
             try
             {
                 conexionBD.Open();
@@ -96,7 +96,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarNota_de_digi_evolucion(int id_nota, int id_paciente, int id_motivo, string descripcion, string fecha)
         {
-            query = "UPDATE nota_de_digi_evolucion set id_paciente = " + id_paciente + ",id_motivo = " + id_motivo + "',descripcion = '" + descripcion + "',fecha = " + fecha + " where id_nota = " + id_nota;
+            query = "UPDATE nota_de_digi_evolucion set id_paciente = "+ id_paciente +",id_motivo = "+ id_motivo +"',descripcion = '"+ descripcion +"',fecha = "+ fecha +" where id_nota = "+ id_nota;
             try
             {
                 conexionBD.Open();

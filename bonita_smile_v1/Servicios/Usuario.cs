@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Administrador.Paciente;
+using bonita_smile_v1.Interfaz.Administrador.Clinica;
 using bonita_smile_v1.Interfaz;
 
 namespace bonita_smile_v1.Servicios
@@ -62,7 +63,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarUsuario(int id_usuario)
         {
-            query = "DELETE FROM usuario where id_usuario=" + id_usuario;
+            query = "DELETE FROM usuario where id_usuario="+ id_usuario;
             try
             {
                 conexionBD.Open();
@@ -83,7 +84,7 @@ namespace bonita_smile_v1.Servicios
         public bool insertarUsuario(string alias, string nombre, string apellidos, string password, int id_rol)
         {
             password = new Seguridad().Encriptar(password);
-            query = "INSERT INTO usuario (alias,nombre,apellidos,password,id_rol) VALUES('" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
+            query = "INSERT INTO usuario (alias,nombre,apellidos,password,id_rol) VALUES('"+ alias +"','" + nombre +"','" + apellidos +"','"+ password +"',"+ id_rol +")";
             try
             {
                 conexionBD.Open();
@@ -104,7 +105,7 @@ namespace bonita_smile_v1.Servicios
         public bool actualizarUsuario(int id_usuario, string alias, string nombre, string apellidos, string password, int id_rol)
         {
             password = new Seguridad().Encriptar(password);
-            query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = '" + id_rol + "' where id_usuario = " + id_usuario;
+            query = "UPDATE usuario set alias = '"+ alias +"',nombre = '"+ nombre +"',apellidos = '"+ apellidos +"',password = '"+ password +"',id_rol = '"+ id_rol +"' where id_usuario = "+ id_usuario;
             try
             {
                 conexionBD.Open();
@@ -130,7 +131,7 @@ namespace bonita_smile_v1.Servicios
         {
             string rol = "";
             MySqlCommand cmd;
-            string query = "SELECT *FROM  rol where id_rol=" + id_rol;
+            string query = "SELECT *FROM  rol where id_rol="+ id_rol;
             try
             {
                 conexionBD.Open();
@@ -174,11 +175,11 @@ namespace bonita_smile_v1.Servicios
                 if(rol.Equals("Administrador"))
                 {
                     //Admin admin = new Admin();
-                    Insertar_Paciente ip = new Insertar_Paciente();
-                    
+                    //Insertar_Paciente ip = new Insertar_Paciente();
+                    Ingresar_Clinica ic = new Ingresar_Clinica();
                     MessageBox.Show("Administrador");
                     Application.Current.Windows[0].Close();
-                    ip.ShowDialog();
+                    ic.ShowDialog();
                    
                     
                 }

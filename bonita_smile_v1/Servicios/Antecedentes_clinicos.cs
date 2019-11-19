@@ -54,8 +54,8 @@ namespace bonita_smile_v1.Servicios
         public bool eliminarAntecedentes_clinicos(string id_antecedentes)
         {
             MySqlCommand cmd;
-            query = "DELETE FROM antecedentes_clinicos where id_antecedentes=" + id_antecedentes;
-            string query_compropar = "SELECT * FROM antecedentes_clinicos where id_antecedentes=" + id_antecedentes;
+            query = "DELETE FROM antecedentes_clinicos where id_antecedentes="+ id_antecedentes;
+            string query_compropar = "SELECT * FROM antecedentes_clinicos where id_antecedentes="+ id_antecedentes;
             try
             {
                 conexionBD.Open();
@@ -84,24 +84,27 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarAntecedentes_clinicos(string descripcion)
         {
-            query = "INSERT INTO antecedentes_clinicos (descripcion) VALUES('" + descripcion + "')";
+            query = "INSERT INTO antecedentes_clinicos (descripcion) VALUES('"+ descripcion +"')";
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                cmd.ExecuteReader();
+                conexionBD.Close();
                 return true;
 
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.ToString());
+                conexionBD.Close();
                 return false;
             }
         }
 
         public bool actualizarAbono(int id_antecedentes, string descripcion)
         {
-            query = "UPDATE antecedentes_clinicos set descripcion = '" + descripcion + "' where id_antecedentes = " + id_antecedentes;
+            query = "UPDATE antecedentes_clinicos set descripcion = '"+ descripcion +"' where id_antecedentes = "+ id_antecedentes;
             try
             {
                 conexionBD.Open();

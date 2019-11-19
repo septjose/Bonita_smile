@@ -55,7 +55,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarMotivo_cita(int id_motivo)
         {
-            query = "DELETE FROM motivo_cita where id_motivo=" + id_motivo;
+            query = "DELETE FROM motivo_cita where id_motivo="+ id_motivo;
             try
             {
                 conexionBD.Open();
@@ -75,7 +75,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarMotivo_cita(string descripcion, double costo, int id_paciente)
         {
-            query = "INSERT INTO motivo_cita (descripcion,costo,id_paciente) VALUES('" + descripcion + "'," + costo + "," + id_paciente + ")";
+            query = "INSERT INTO motivo_cita (descripcion,costo,id_paciente) VALUES('"+ descripcion +"',"+ costo +","+ id_paciente +")";
             try
             {
                 conexionBD.Open();
@@ -95,7 +95,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarMotivo_cita(int id_motivo, string descripcion, double costo, int id_paciente)
         {
-            query = "UPDATE motivo_cita set descripcion = '" + descripcion + "',costo = " + costo + ",id_paciente = " + id_paciente + " where id_motivo = " + id_motivo;
+            query = "UPDATE motivo_cita set descripcion = '"+ descripcion +"',costo = "+ costo +",id_paciente = "+ id_paciente +" where id_motivo = "+ id_motivo;
             try
             {
                 conexionBD.Open();

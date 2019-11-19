@@ -53,7 +53,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarColor(int id_color)
         {
-            query = "DELETE FROM colores where id_color=" + id_color;
+            query = "DELETE FROM colores where id_color="+ id_color;
             try
             {
                 conexionBD.Open();
@@ -72,7 +72,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarColor(string descripcion)
         {
-            query = "INSERT INTO colores (descripcion) VALUES('" + descripcion + "')";
+            query = "INSERT INTO colores (descripcion) VALUES('"+ descripcion +"')";
             try
             {
                 conexionBD.Open();
@@ -91,7 +91,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarColor(int id_color, string descripcion)
         {
-            query = "UPDATE colores set descripcion = '" + descripcion + "' where id_color = " + id_color;
+            query = "UPDATE colores set descripcion = '"+ descripcion +"' where id_color = "+ id_color;
             try
             {
                 conexionBD.Open();

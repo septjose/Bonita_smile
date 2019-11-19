@@ -56,7 +56,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarFoto_estudio_carpeta(int id_foto)
         {
-            query = "DELETE FROM fotos_estudio_carpeta where id_foto=" + id_foto;
+            query = "DELETE FROM fotos_estudio_carpeta where id_foto="+ id_foto;
             try
             {
                 conexionBD.Open();
@@ -75,7 +75,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarFoto_estudio_carpeta(int id_carpeta, int id_paciente, string foto)
         {
-            query = "INSERT INTO fotos_Estudio_carpeta (id_carpeta,id_paciente) VALUES(" + id_carpeta + "," + id_paciente + ",'" + foto + "')";
+            query = "INSERT INTO fotos_Estudio_carpeta (id_carpeta,id_paciente) VALUES("+ id_carpeta +","+ id_paciente +",'"+ foto +"')";
             try
             {
                 conexionBD.Open();
@@ -95,7 +95,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarFoto_estudio_carpeta(int id_foto, int id_carpeta, int id_paciente, string foto)
         {
-            query = "UPDATE fotos_estudio_carpeta set id_paciente = " + id_paciente + ",id_carpeta = " + id_carpeta + ",foto = '" + foto + "' where id_foto = " + id_foto;
+            query = "UPDATE fotos_estudio_carpeta set id_paciente = "+ id_paciente +",id_carpeta = "+ id_carpeta +",foto = '"+ foto +"' where id_foto = "+ id_foto;
             try
             {
                 conexionBD.Open();

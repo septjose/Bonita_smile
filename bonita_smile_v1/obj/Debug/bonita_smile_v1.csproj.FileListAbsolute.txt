@@ -118,3 +118,9 @@ E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\bin\Debug\AForge
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\bin\Debug\AForge.xml
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\bin\Debug\AForge.Video.xml
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\bin\Debug\AForge.Video.DirectShow.xml
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Clinica\Ingresar Clinica.g.cs
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Paciente\ActualizarPaciente.g.cs
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Paciente\MostrarPacientes.g.cs
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Clinica\Ingresar Clinica.baml
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Paciente\ActualizarPaciente.baml
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Paciente\MostrarPacientes.baml

@@ -68,6 +68,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
+                    conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
                     conexionBD.Close();
@@ -77,13 +78,14 @@ namespace bonita_smile_v1.Servicios
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.ToString());
+                conexionBD.Close();
                 return false;
             }
         }
 
         public bool insertarAbono(int id_paciente, int id_motivo, string fecha, double monto)
         {
-            query = "INSERT INTO abonos (id_paciente,id_motivo,fecha,monto) VALUES(" + id_paciente + "," + id_motivo + ",'" + fecha + "'," + monto + ")";
+            query = "INSERT INTO abonos (id_paciente,id_motivo,fecha,monto) VALUES("+ id_paciente +","+ id_motivo +",'"+ fecha +"',"+ monto +")";
             try
             {
                 conexionBD.Open();
@@ -103,7 +105,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarAbono(int id_abono, int id_paciente, int id_motivo, string fecha, double monto)
         {
-            query = "UPDATE abonos set id_paciente = " + id_paciente + ",id_motivo = " + id_motivo + ",fecha = '" + fecha + "',monto = " + monto + "where id_abono = " + id_abono;
+            query = "UPDATE abonos set id_paciente = "+ id_paciente +",id_motivo = "+ id_motivo +",fecha = '"+ fecha +"',monto = "+ monto +"where id_abono = "+ id_abono;
             try
             {
                 conexionBD.Open();
@@ -124,7 +126,7 @@ namespace bonita_smile_v1.Servicios
         private bool ValidarExistencia(int id_abono)
         {
             MySqlCommand cmd;
-            string query = "SELECT * FROM rol where id_abono=" + id_abono;
+            string query = "SELECT * FROM rol where id_abono="+ id_abono;
             try
             {
                 cmd = new MySqlCommand(query, conexionBD);

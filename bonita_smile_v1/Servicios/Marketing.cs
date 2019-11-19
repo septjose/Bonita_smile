@@ -55,7 +55,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarMarketing(int id_marketing)
         {
-            query = "DELETE FROM clinica where id_marketing=" + id_marketing;
+            query = "DELETE FROM clinica where id_marketing="+ id_marketing;
             try
             {
                 conexionBD.Open();
@@ -75,7 +75,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarMarketing(string descripcion, string fecha_de_envio, int id_paciente)
         {
-            query = "INSERT INTO marketing (descripcion,fecha_de_envio,id_paciente) VALUES('" + descripcion + "','" + fecha_de_envio + "'," + id_paciente + ")";
+            query = "INSERT INTO marketing (descripcion,fecha_de_envio,id_paciente) VALUES('"+ descripcion +"','"+ fecha_de_envio +"',"+ id_paciente +")";
             try
             {
                 conexionBD.Open();
@@ -95,7 +95,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarMarketing(int id_marketing, string descripcion, string fecha_de_envio, int id_paciente)
         {
-            query = "UPDATE marketing set descripcion = '" + descripcion + "',fecha_de_envio = '" + fecha_de_envio + "',id_paciente = " + id_paciente + " where id_marketing = " + id_marketing;
+            query = "UPDATE marketing set descripcion = '"+ descripcion +"',fecha_de_envio = '" + fecha_de_envio +"',id_paciente = "+ id_paciente +" where id_marketing = "+ id_marketing;
             try
             {
                 conexionBD.Open();

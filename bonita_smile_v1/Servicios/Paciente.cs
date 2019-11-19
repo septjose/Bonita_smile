@@ -60,7 +60,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarPaciente(int id_paciente)
         {
-            query = "DELETE FROM paciente where id_paciente=" + id_paciente;
+            query = "DELETE FROM paciente where id_paciente="+ id_paciente;
             try
             {
                 conexionBD.Open();
@@ -79,7 +79,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarPaciente(string nombre, string apellidos, string direccion, string telefono, string foto, int id_antecedentes, string email, int marketing)
         {
-            query = "INSERT INTO paciente (nombre,apellidos,direccion,telefono,foto,id_antecedentes,email,marketing) VALUES('" + nombre + "','" + apellidos + "','" + direccion + "','" + direccion + "','" + direccion + "','" + telefono + "','" + foto + "'," + id_antecedentes + ",'" + email + "','" + marketing + "')";
+            query = "INSERT INTO paciente (nombre,apellidos,direccion,telefono,foto,id_antecedentes,email,marketing) VALUES('"+ nombre +"','"+ apellidos +"','"+ direccion +"','"+ direccion +"','"+ direccion +"','"+ telefono +"','"+ foto +"',"+ id_antecedentes +",'"+ email +"','"+ marketing +"')";
             try
             {
                 conexionBD.Open();
@@ -98,7 +98,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarPaciente(int id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, int id_antecedentes, string email, int marketing)
         {
-            query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto + "',id_antecedentes = " + id_antecedentes + ",email = '" + email + "',marketing = '" + marketing + "' where paciente = " + id_paciente;
+            query = "UPDATE paciente set nombre = '"+ nombre +"',apellidos = '"+ apellidos +"',direccion = '"+ direccion +"',telefono = '"+ telefono +"',foto = '"+ foto +"',id_antecedentes = "+ id_antecedentes +",email = '"+ email +"',marketing = '"+ marketing +"' where paciente = "+ id_paciente;
             try
             {
                 conexionBD.Open();

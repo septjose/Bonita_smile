@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\App.xaml
-3-1696428200
+61948361990
 1-1665918769
-371772425976
+40257783764
 24-1684394129
-Interfaz\Administrador\Admin.xaml;Interfaz\Administrador\Paciente\Insertar_Paciente.xaml;Interfaz\IniciarSesionWindow.xaml;
+Interfaz\Administrador\Admin.xaml;Interfaz\Administrador\Clinica\Ingresar Clinica.xaml;Interfaz\Administrador\Paciente\ActualizarPaciente.xaml;Interfaz\Administrador\Paciente\Insertar_Paciente.xaml;Interfaz\Administrador\Paciente\MostrarPacientes.xaml;Interfaz\IniciarSesionWindow.xaml;
 
 True
 
