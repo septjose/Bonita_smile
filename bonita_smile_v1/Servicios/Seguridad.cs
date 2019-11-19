@@ -10,15 +10,17 @@ namespace bonita_smile_v1.Servicios
     {
         public string Encriptar(string cadena)
         {
+            string encriptada = string.Empty;
             byte[] encryted = System.Text.Encoding.Unicode.GetBytes(cadena);
-            string encriptada = Convert.ToBase64String(encryted);
+            encriptada = Convert.ToBase64String(encryted);
             return encriptada;
         }
 
         public string Desencriptar(string cadena)
         {
+            string desencriptada = string.Empty;
             byte[] decryted = Convert.FromBase64String(cadena);
-            string desencriptada = Encoding.Unicode.GetString(decryted);
+            desencriptada = System.Text.Encoding.Unicode.GetString(decryted);
             return desencriptada;
         }
     }

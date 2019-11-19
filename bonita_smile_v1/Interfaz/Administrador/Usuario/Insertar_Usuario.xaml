@@ -1,0 +1,26 @@
+﻿<Controls:MetroWindow x:Class="bonita_smile_v1.Interfaz.Administrador.Usuario.Insertar_Usuario"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bonita_smile_v1.Interfaz.Administrador.Usuario"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Title="Insertar_Usuario" Height="500" Width="800">
+    <Grid>
+        <Label Content="Nombre Completo" HorizontalAlignment="Left" Margin="36,64,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+        <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Height="42" Margin="230,64,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
+        <Label Content="Apellidos" HorizontalAlignment="Left" Margin="36,126,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+        <TextBox x:Name="txtApellido" HorizontalAlignment="Left" Height="42" Margin="230,126,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
+        <Label Content="Nombre de usuario" HorizontalAlignment="Left" Margin="36,188,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+        <TextBox x:Name="txtAlias" HorizontalAlignment="Left" Height="42" Margin="230,188,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
+        <Label Content="Contraseña" HorizontalAlignment="Left" Margin="36,249,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+        <PasswordBox x:Name="pwbPassword" HorizontalAlignment="Left" Height="42" Margin="230,249,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroButtonRevealedPasswordBox}"/>
+        <Label Content="Ingresar Usuario" HorizontalAlignment="Left" Height="33" Margin="311,10,0,0" VerticalAlignment="Top" Width="126" Style="{StaticResource MetroLabel}"/>
+        <Label Content="Seleccionar Rol" HorizontalAlignment="Left" Margin="36,319,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+        <ComboBox x:Name="cmbRol" HorizontalAlignment="Left" Height="42" Margin="230,319,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroComboBox}"/>
+        <Button x:Name="btnFinalizar" Content="Finalizar" HorizontalAlignment="Left" Height="47" Margin="610,396,0,0" VerticalAlignment="Top" Width="160" Click="btnFinalizar_Click"/>
+
+
+    </Grid>
+</Controls:MetroWindow>

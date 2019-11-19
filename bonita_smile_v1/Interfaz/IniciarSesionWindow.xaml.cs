@@ -32,12 +32,13 @@ namespace bonita_smile_v1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // MessageBox.Show("txtx  :" +txtUsuario.Text+"    "+ "pass :"+pbPassword.Password);
-            Usuario user = new Usuario();
+            Usuarios user = new Usuarios();
+            Seguridad secure = new Seguridad();
             //user.redireccionarLogin();
             //Rol r = new Rol();
             //r.eliminarRol(5);
             user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
-           
+            
         }
     }
 }

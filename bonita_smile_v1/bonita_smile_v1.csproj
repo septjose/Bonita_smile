@@ -93,6 +93,9 @@
     <Compile Include="Interfaz\Administrador\Clinica\Ingresar Clinica.xaml.cs">
       <DependentUpon>Ingresar Clinica.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\Administrador\Color\Insertar_Color.xaml.cs">
+      <DependentUpon>Insertar_Color.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\Administrador\Paciente\ActualizarPaciente.xaml.cs">
       <DependentUpon>ActualizarPaciente.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,9 @@
     </Compile>
     <Compile Include="Interfaz\Administrador\Paciente\MostrarPacientes.xaml.cs">
       <DependentUpon>MostrarPacientes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Administrador\Usuario\Insertar_Usuario.xaml.cs">
+      <DependentUpon>Insertar_Usuario.xaml</DependentUpon>
     </Compile>
     <Compile Include="Servicios\Abonos.cs" />
     <Compile Include="Servicios\Antecedentes_clinicos.cs" />
@@ -116,13 +122,17 @@
     <Compile Include="Servicios\Paciente.cs" />
     <Compile Include="Servicios\Rol.cs" />
     <Compile Include="Servicios\Seguridad.cs" />
-    <Compile Include="Servicios\Usuario.cs" />
+    <Compile Include="Servicios\Usuarios.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="Interfaz\Administrador\Admin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaz\Administrador\Clinica\Ingresar Clinica.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Administrador\Color\Insertar_Color.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaz\Administrador\Paciente\MostrarPacientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Administrador\Usuario\Insertar_Usuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,7 +238,6 @@
     <Resource Include="Resources\usuario_azul.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaz\Administrador\Usuario\" />
     <Folder Include="Interfaz\Clinica\" />
     <Folder Include="Interfaz\Marketing\" />
   </ItemGroup>
