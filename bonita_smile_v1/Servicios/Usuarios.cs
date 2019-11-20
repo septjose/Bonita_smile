@@ -12,6 +12,7 @@ using bonita_smile_v1.Interfaz.Administrador.Clinica;
 using bonita_smile_v1.Interfaz;
 using bonita_smile_v1.Interfaz.Administrador.Color;
 using bonita_smile_v1.Interfaz.Administrador.Usuario;
+using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
 namespace bonita_smile_v1.Servicios
 {
     class Usuarios
@@ -179,10 +180,12 @@ namespace bonita_smile_v1.Servicios
                     //Insertar_Paciente ip = new Insertar_Paciente();
                     //Ingresar_Clinica ic = new Ingresar_Clinica();
                     //Insertar_Color ic = new Insertar_Color();
-                    Insertar_Usuario iu = new Insertar_Usuario();
+                    //Insertar_Usuario iu = new Insertar_Usuario();
+                    //Ingresar_Antecedentes_Clinicos iac = new Ingresar_Antecedentes_Clinicos();
+                    Ventana_Usuario vu = new Ventana_Usuario();
                     MessageBox.Show("Administrador");
                     Application.Current.Windows[0].Close();
-                    iu.ShowDialog();
+                    vu.ShowDialog();
                    
                     
                 }
