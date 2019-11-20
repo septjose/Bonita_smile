@@ -16,6 +16,7 @@ using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Modelos;
 using MySql.Data.MySqlClient;
 
+
 namespace bonita_smile_v1.Interfaz.Administrador.Usuario
 {
     /// <summary>
@@ -23,31 +24,20 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
     /// </summary>
     public partial class Actualizar_Usuario : MetroWindow
     {
-        string alias = "";
-        string nombre = "";
-        string apellidos = "";
-        public Actualizar_Usuario(int id_usuario)
+       
+        public Actualizar_Usuario(string alias)
         {
-            llenar_campos(id_usuario);
+
+
+            txtAlias = new TextBox();
+            txtAlias.Text = alias;
 
             InitializeComponent();
+          
 
         }
 
-        void llenar_campos(int id_usuario)
-        {
-            
-            Usuarios user = new Usuarios();
-            List<UsuarioModel> usu = new List<UsuarioModel>();
-            usu=user.Mostrar_unico_usuario(id_usuario);
-            foreach(UsuarioModel usuario in usu)
-            {
-                alias = usuario.alias;
-
-            }
-            txtAlias.Text = "jajaja";
-           
-        }
+        
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {

@@ -118,6 +118,9 @@
     <Compile Include="Interfaz\Administrador\Usuario\Ventana_Usuario.xaml.cs">
       <DependentUpon>Ventana_Usuario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\Administrador\Ventana_Administrador.xaml.cs">
+      <DependentUpon>Ventana_Administrador.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Servicios\Abonos.cs" />
     <Compile Include="Servicios\Antecedentes_clinicos.cs" />
     <Compile Include="Servicios\Carpeta_archivos.cs" />
@@ -171,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaz\Administrador\Usuario\Ventana_Usuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Administrador\Ventana_Administrador.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

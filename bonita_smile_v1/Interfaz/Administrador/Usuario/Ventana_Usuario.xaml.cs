@@ -81,11 +81,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            Insertar_Usuario iu = new Insertar_Usuario();
-            iu.ShowDialog();
-        }
+       
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
@@ -95,7 +91,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
             {
                 int id_usuario = usuario.id_usuario;
                 string alias = usuario.alias;
-                Actualizar_Usuario au = new Actualizar_Usuario(id_usuario);
+                Actualizar_Usuario au = new Actualizar_Usuario(alias);
                 au.ShowDialog();
             }
             else

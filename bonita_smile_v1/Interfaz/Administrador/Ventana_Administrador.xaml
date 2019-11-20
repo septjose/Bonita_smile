@@ -1,0 +1,29 @@
+﻿<Window x:Class="bonita_smile_v1.Interfaz.Administrador.Ventana_Administrador"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bonita_smile_v1.Interfaz.Administrador"
+        mc:Ignorable="d"
+        Title="Ventana_Administrador" Height="450" Width="800">
+    <Grid>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Usuario">
+                <MenuItem Header="_Usuario Nuevo" Click="usu_nuevo_Click" />
+                <MenuItem Header="_Mostrar Usuarios" Click="usu_ver_Click" />
+                <MenuItem Header="_Borrar Usuario" Click="usu_borrar_Click" />
+                <Separator />
+                <MenuItem Header="_Actualizar Usuario" Click="usu_actualizar_Click" />
+            </MenuItem>
+            <MenuItem Header="Clinica">
+                <MenuItem Header="_Nueva Clinica" />
+                <MenuItem Header="_Mostrar Clinicas" />
+                <MenuItem Header="_Borrar Clinica" />
+                <Separator />
+                <MenuItem Header="_Ver Clinica" />
+            </MenuItem>
+        </Menu>
+        
+
+    </Grid>
+</Window>
