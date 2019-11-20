@@ -6,16 +6,16 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:bonita_smile_v1.Interfaz.Administrador.Usuario"
         mc:Ignorable="d"
-        Title="Ventana_Usuario" Height="450" Width="800">
+        Title="Ventana_Usuario" Height="450" Width="900">
     <Grid>
 
         <Button Content="Borrar" HorizontalAlignment="Left" Margin="100,340,0,0" VerticalAlignment="Top" Width="129" Height="43" Click="Button_Click"/>
-        <Button Content="Actualizar" HorizontalAlignment="Left" Margin="296,340,0,0" VerticalAlignment="Top" Width="129" Height="43" Click="Button_Click"/>
         <Button Content="Insertar" HorizontalAlignment="Left" Margin="498,340,0,0" VerticalAlignment="Top" Width="129" Height="43" Click="Button_Click_1"/>
-        <ListView x:Name="lv_Users" HorizontalAlignment="Left" Height="250" Margin="36,61,0,0" VerticalAlignment="Top" Width="720" Style="{StaticResource MetroListView}" >
+        <ListView x:Name="lv_Users" HorizontalAlignment="Left" Height="250" Margin="28,57,0,0" VerticalAlignment="Top" Width="829" Style="{StaticResource MetroListView}" >
             <ListView.View >
                 <GridView >
-                    <GridViewColumn Header="Nombre Completo" Width="150" DisplayMemberBinding="{Binding nombre}" />
+                    <GridViewColumn Header="ID" Width="150" DisplayMemberBinding="{Binding id_usuario}" />
+                    <GridViewColumn Header="Nombre Completo" Width="120" DisplayMemberBinding="{Binding nombre}" />
                     <GridViewColumn Header="Apellidos" Width="150" DisplayMemberBinding="{Binding apellidos}" />
                     <GridViewColumn Header="Alias" Width="120" DisplayMemberBinding="{Binding alias}" />
                     <GridViewColumn Header="Contraseña" Width="200" DisplayMemberBinding="{Binding password}" />
@@ -24,6 +24,7 @@
             </ListView.View>
         </ListView>
         <Label Content="Informacion de Usuarios" HorizontalAlignment="Left" Margin="296,10,0,0" VerticalAlignment="Top" Width="191" Height="42"/>
+        <Button Content="Actualizar" HorizontalAlignment="Left" Height="43" Margin="296,340,0,0" VerticalAlignment="Top" Width="132" Click="Button_Click_2"/>
 
     </Grid>
 </Controls:MetroWindow>

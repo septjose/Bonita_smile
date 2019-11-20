@@ -132,3 +132,5 @@ E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interf
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Antecedentes\Ingresar_Antecedentes_Clinicos.baml
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Usuario\Ventana_Usuario.g.cs
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Usuario\Ventana_Usuario.baml
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Usuario\Actualizar_Usuario.g.cs
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Usuario\Actualizar_Usuario.baml

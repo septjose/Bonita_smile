@@ -63,6 +63,39 @@ namespace bonita_smile_v1.Servicios
             return listaUsuario;
         }
 
+        public List<UsuarioModel> Mostrar_unico_usuario(int id_usuario)
+        {
+            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
+            query = "SELECT * FROM usuario where id_usuario="+id_usuario+"";
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    UsuarioModel usuarioModel = new UsuarioModel();
+
+                    usuarioModel.id_usuario = int.Parse(reader[0].ToString());
+                    usuarioModel.alias = reader[1].ToString();
+                    usuarioModel.nombre = reader[2].ToString();
+                    usuarioModel.apellidos = reader[3].ToString();
+                    usuarioModel.password = reader[4].ToString();
+                    usuarioModel.id_rol = int.Parse(reader[5].ToString());
+
+                    listaUsuario.Add(usuarioModel);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return listaUsuario;
+        }
         public bool eliminarUsuario(int id_usuario)
         {
             query = "DELETE FROM usuario where id_usuario="+ id_usuario;
