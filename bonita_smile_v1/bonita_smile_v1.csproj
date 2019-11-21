@@ -94,8 +94,14 @@
     <Compile Include="Interfaz\Administrador\Antecedentes\Ingresar_Antecedentes_Clinicos.xaml.cs">
       <DependentUpon>Ingresar_Antecedentes_Clinicos.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\Administrador\Clinica\Actualizar_Clinica.xaml.cs">
+      <DependentUpon>Actualizar_Clinica.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\Administrador\Clinica\Ingresar Clinica.xaml.cs">
       <DependentUpon>Ingresar Clinica.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Administrador\Clinica\ventana_Clinica.xaml.cs">
+      <DependentUpon>ventana_Clinica.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\Administrador\Color\Insertar_Color.xaml.cs">
       <DependentUpon>Insertar_Color.xaml</DependentUpon>
@@ -145,7 +151,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interfaz\Administrador\Clinica\Actualizar_Clinica.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaz\Administrador\Clinica\Ingresar Clinica.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Administrador\Clinica\ventana_Clinica.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

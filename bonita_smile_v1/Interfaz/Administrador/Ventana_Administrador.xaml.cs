@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using bonita_smile_v1.Interfaz.Administrador.Usuario;
+using bonita_smile_v1.Interfaz.Administrador.Clinica;
 
 namespace bonita_smile_v1.Interfaz.Administrador
 {
@@ -53,6 +54,34 @@ namespace bonita_smile_v1.Interfaz.Administrador
             vu.ShowDialog();
         }
 
+        //Clinica
 
+        private void cli_nuevo_Click(object sender, RoutedEventArgs e)
+        {
+
+            Ingresar_Clinica ic= new Ingresar_Clinica();
+            ic.ShowDialog();
+        }
+
+        private void cli_borrar_Click(object sender, RoutedEventArgs e)
+        {
+
+            ventana_Clinica vc = new ventana_Clinica();
+            vc.ShowDialog();
+        }
+
+        private void cli_ver_Click(object sender, RoutedEventArgs e)
+        {
+
+            ventana_Clinica vc = new ventana_Clinica();
+            vc.ShowDialog();
+        }
+
+        private void cli_actualizar_Click(object sender, RoutedEventArgs e)
+        {
+
+            Actualizar_Clinica ac = new Actualizar_Clinica();
+            ac.ShowDialog();
+        }
     }
 }

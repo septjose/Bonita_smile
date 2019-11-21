@@ -16,6 +16,7 @@ using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Modelos;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
+using bonita_smile_v1.Interfaz.Administrador.Usuario;
 
 namespace bonita_smile_v1.Interfaz.Administrador.Usuario
 {
@@ -31,11 +32,16 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
         Conexion obj = new Conexion();
         string valor = "";
         public int id_usu=0;
-        public Actualizar_Usuario(UsuarioModel usu)
+        UsuarioModel usu;
+        System.Windows.Controls.ListView lv_aux;
+
+        public Actualizar_Usuario(UsuarioModel usu, System.Windows.Controls.ListView lv_aux)
         {
             
             this.conexionBD = obj.conexion();
             InitializeComponent();
+            this.usu = usu;
+            this.lv_aux = lv_aux;
             txtAlias.Text = usu.alias;
             txtApellido.Text = usu.apellidos;
             txtNombre.Text = usu.nombre;
@@ -80,6 +86,9 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
+            Ventana_Usuario vu = new Ventana_Usuario();
+            UsuarioModel usu = new UsuarioModel();
+            RolModel rolModel = new RolModel();
             valor = cmbRol.SelectedItem.ToString();
             int id_rol = obtener_id_rol(valor);
             string nombre = txtNombre.Text;
@@ -96,6 +105,19 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
                 if(inserto)
                 {
                     System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    
+                    usu.alias = alias;
+                    usu.apellidos = apellidos;
+                    usu.id_usuario = id_usu;
+                    usu.nombre = nombre;
+                    usu.password = password;
+                    rolModel.id_rol = id_rol;
+                    rolModel.descripcion = valor;
+
+                    usu.rol = rolModel;
+
+                    vu.refrescar_listview(this.usu,usu,lv_aux);
                 }
                 else
                 {
@@ -110,6 +132,18 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
                 inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                 if (inserto)
                 {
+                    usu.alias = alias;
+                    usu.apellidos = apellidos;
+                    usu.id_usuario = id_usu;
+                    usu.nombre = nombre;
+                    usu.password = password;
+                    rolModel.id_rol = id_rol;
+                    rolModel.descripcion = valor;
+
+                    usu.rol = rolModel;
+
+                    
+                    vu.refrescar_listview(this.usu,usu,lv_aux);
                     System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else

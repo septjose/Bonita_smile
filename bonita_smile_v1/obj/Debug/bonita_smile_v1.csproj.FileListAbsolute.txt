@@ -136,3 +136,7 @@ E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interf
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Usuario\Actualizar_Usuario.baml
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Ventana_Administrador.g.cs
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Ventana_Administrador.baml
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Clinica\Actualizar_Clinica.g.cs
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Clinica\ventana_Clinica.g.cs
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Clinica\Actualizar_Clinica.baml
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Clinica\ventana_Clinica.baml

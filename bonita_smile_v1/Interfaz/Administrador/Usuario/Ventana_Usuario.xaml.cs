@@ -26,6 +26,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
     public partial class Ventana_Usuario : MetroWindow
     {
         ObservableCollection<UsuarioModel> Gusuario;
+        System.Windows.Controls.ListView lv_aux;
         public Ventana_Usuario()
         {
             InitializeComponent();
@@ -47,7 +48,23 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
             var usuarios = new ObservableCollection<UsuarioModel>((new Usuarios().MostrarUsuario()));
 
             lv_Users.ItemsSource = usuarios;
+            lv_aux = lv_Users;
             Gusuario = usuarios;
+        }
+        public void refrescar_listview(UsuarioModel usuarioViejo, UsuarioModel usuarioNuevo, System.Windows.Controls.ListView lv_aux)
+        {
+            
+             Gusuario.RemoveAt(1);
+            llenar_list_view();
+           /* Gusuario.Add(usuarioNuevo);
+            this.lv_Users.ItemsSource = Gusuario;
+           // view.Refresh();
+            //lv_Users.Items.Clear();
+
+            foreach (var cad in Gusuario)
+            {
+                System.Windows.MessageBox.Show(cad.alias);
+            }*/
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -91,7 +108,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
             {
                 int id_usuario = usuario.id_usuario;
                 string alias = usuario.alias;
-                Actualizar_Usuario au = new Actualizar_Usuario(usuario);
+                Actualizar_Usuario au = new Actualizar_Usuario(usuario,lv_aux);
                 au.ShowDialog();
             }
             else

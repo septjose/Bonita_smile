@@ -16,11 +16,11 @@
                 <MenuItem Header="_Actualizar Usuario" Click="usu_actualizar_Click" />
             </MenuItem>
             <MenuItem Header="Clinica">
-                <MenuItem Header="_Nueva Clinica" />
-                <MenuItem Header="_Mostrar Clinicas" />
-                <MenuItem Header="_Borrar Clinica" />
+                <MenuItem Header="_Nueva Clinica" Click="cli_nuevo_Click" />
+                <MenuItem Header="_Mostrar Clinicas" Click="cli_ver_Click" />
+                <MenuItem Header="_Borrar Clinica" Click="cli_borrar_Click"/>
                 <Separator />
-                <MenuItem Header="_Ver Clinica" />
+                <MenuItem Header="_Actualizar Clinica" Click="cli_actualizar_Click" />
             </MenuItem>
         </Menu>
         
