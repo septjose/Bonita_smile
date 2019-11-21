@@ -91,7 +91,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
             {
                 int id_usuario = usuario.id_usuario;
                 string alias = usuario.alias;
-                Actualizar_Usuario au = new Actualizar_Usuario(alias);
+                Actualizar_Usuario au = new Actualizar_Usuario(usuario);
                 au.ShowDialog();
             }
             else

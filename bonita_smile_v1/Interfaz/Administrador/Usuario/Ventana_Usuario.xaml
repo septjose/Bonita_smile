@@ -10,15 +10,15 @@
     <Grid>
 
         <Button Content="Borrar" HorizontalAlignment="Left" Margin="267,340,0,0" VerticalAlignment="Top" Width="129" Height="43" Click="Button_Click"/>
-        <ListView x:Name="lv_Users" HorizontalAlignment="Left" Height="250" Margin="28,57,0,0" VerticalAlignment="Top" Width="829" Style="{StaticResource MetroListView}" >
+        <ListView x:Name="lv_Users" HorizontalAlignment="Left" Height="250" Margin="28,57,0,0" VerticalAlignment="Top" Width="790" Style="{StaticResource MetroListView}" >
             <ListView.View >
                 <GridView >
-                    <GridViewColumn Header="ID" Width="110" DisplayMemberBinding="{Binding id_usuario}" />
-                    <GridViewColumn Header="Nombre Completo" Width="120" DisplayMemberBinding="{Binding nombre}" />
+                    <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding id_usuario}" />
+                    <GridViewColumn Header="Nombre Completo" Width="150" DisplayMemberBinding="{Binding nombre}" />
                     <GridViewColumn Header="Apellidos" Width="150" DisplayMemberBinding="{Binding apellidos}" />
                     <GridViewColumn Header="Alias" Width="120" DisplayMemberBinding="{Binding alias}" />
                     <GridViewColumn Header="Contraseña" Width="200" DisplayMemberBinding="{Binding password}" />
-                    <GridViewColumn Header="Rol" Width="120" DisplayMemberBinding="{Binding id_rol}" />
+                    <GridViewColumn Header="Rol" Width="120" DisplayMemberBinding="{Binding rol.descripcion}" />
                 </GridView>
             </ListView.View>
         </ListView>

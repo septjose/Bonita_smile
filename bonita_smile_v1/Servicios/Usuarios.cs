@@ -18,6 +18,7 @@ namespace bonita_smile_v1.Servicios
     class Usuarios
     {
         private MySqlDataReader reader = null;
+        private MySqlDataReader reader2 = null;
         private string query;
         private MySqlConnection conexionBD;
         private UsuarioModel usuarioModel;
@@ -32,7 +33,7 @@ namespace bonita_smile_v1.Servicios
         public List<UsuarioModel> MostrarUsuario()
         {
             List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
-            query = "SELECT * FROM usuario";
+            query = "SELECT * FROM usuario inner join rol on usuario.id_rol=rol.id_rol";
 
             try
             {
@@ -43,14 +44,17 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                    UsuarioModel usuarioModel = new UsuarioModel();
+                    usuarioModel = new UsuarioModel();
+                    RolModel rolModel = new RolModel();
 
                     usuarioModel.id_usuario = int.Parse(reader[0].ToString());
                     usuarioModel.alias = reader[1].ToString();
                     usuarioModel.nombre = reader[2].ToString();
                     usuarioModel.apellidos = reader[3].ToString();
                     usuarioModel.password = reader[4].ToString();
-                    usuarioModel.id_rol = int.Parse(reader[5].ToString());
+                    rolModel.id_rol = int.Parse(reader[5].ToString());
+                    rolModel.descripcion = reader[7].ToString();
+                    usuarioModel.rol = rolModel;
 
                     listaUsuario.Add(usuarioModel);
                 }
@@ -63,39 +67,7 @@ namespace bonita_smile_v1.Servicios
             return listaUsuario;
         }
 
-        public List<UsuarioModel> Mostrar_unico_usuario(int id_usuario)
-        {
-            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
-            query = "SELECT * FROM usuario where id_usuario="+id_usuario+"";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    UsuarioModel usuarioModel = new UsuarioModel();
-
-                    usuarioModel.id_usuario = int.Parse(reader[0].ToString());
-                    usuarioModel.alias = reader[1].ToString();
-                    usuarioModel.nombre = reader[2].ToString();
-                    usuarioModel.apellidos = reader[3].ToString();
-                    usuarioModel.password = reader[4].ToString();
-                    usuarioModel.id_rol = int.Parse(reader[5].ToString());
-
-                    listaUsuario.Add(usuarioModel);
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            conexionBD.Close();
-            return listaUsuario;
-        }
+        
         public bool eliminarUsuario(int id_usuario)
         {
             query = "DELETE FROM usuario where id_usuario="+ id_usuario;
@@ -139,7 +111,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarUsuario(int id_usuario, string alias, string nombre, string apellidos, string password, int id_rol)
         {
-            password = new Seguridad().Encriptar(password);
+            //password = new Seguridad().Encriptar(password);
             query = "UPDATE usuario set alias = '"+ alias +"',nombre = '"+ nombre +"',apellidos = '"+ apellidos +"',password = '"+ password +"',id_rol = '"+ id_rol +"' where id_usuario = "+ id_usuario;
             try
             {
@@ -206,7 +178,7 @@ namespace bonita_smile_v1.Servicios
             bool valido = Validar_login(alias, password);
             if(valido)
             {
-                rol = verificarRol(usuarioModel.id_rol);
+                rol = verificarRol(usuarioModel.rol.id_rol);
                 if(rol.Equals("Administrador"))
                 {
                     //Admin admin = new Admin();
@@ -247,7 +219,7 @@ namespace bonita_smile_v1.Servicios
             List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
             string pass = "";
             //int rol = 0;
-            query = "SELECT * FROM usuario where alias='" + alias + "'";
+            query = "SELECT * FROM usuario inner join rol on usuario.id_rol=rol.id_rol where usuario.alias='" + alias + "'";
 
             try
             {
@@ -255,17 +227,20 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
 
                 reader = cmd.ExecuteReader();
-
+                
                 while (reader.Read())
                 {
                     usuarioModel = new UsuarioModel();
+                    RolModel rolModel = new RolModel();
 
                     usuarioModel.id_usuario = int.Parse(reader[0].ToString());
                     usuarioModel.alias = reader[1].ToString();
                     usuarioModel.nombre = reader[2].ToString();
                     usuarioModel.apellidos = reader[3].ToString();
                     usuarioModel.password = reader[4].ToString();
-                    usuarioModel.id_rol = int.Parse(reader[5].ToString());
+                    rolModel.id_rol = int.Parse(reader[5].ToString());
+                    rolModel.descripcion= reader[7].ToString();
+                    usuarioModel.rol = rolModel;
 
                     listaUsuario.Add(usuarioModel);
                 }

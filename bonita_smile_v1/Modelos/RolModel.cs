@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bonita_smile_v1.Modelos
 {
-    class RolModel
+    public class RolModel
     {
         public int id_rol { get; set; }
         public String descripcion { get; set; }
