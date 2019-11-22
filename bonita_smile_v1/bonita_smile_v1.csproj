@@ -103,9 +103,6 @@
     <Compile Include="Interfaz\Administrador\Clinica\ventana_Clinica.xaml.cs">
       <DependentUpon>ventana_Clinica.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaz\Administrador\Color\Insertar_Color.xaml.cs">
-      <DependentUpon>Insertar_Color.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interfaz\Administrador\Paciente\ActualizarPaciente.xaml.cs">
       <DependentUpon>ActualizarPaciente.xaml</DependentUpon>
     </Compile>
@@ -132,7 +129,6 @@
     <Compile Include="Servicios\Carpeta_archivos.cs" />
     <Compile Include="Servicios\Clinicas.cs" />
     <Compile Include="Servicios\Clinica_paciente.cs" />
-    <Compile Include="Servicios\Colores.cs" />
     <Compile Include="Servicios\Conexion.cs" />
     <Compile Include="Servicios\Foto_estudio_carpeta.cs" />
     <Compile Include="Servicios\Marketing.cs" />
@@ -160,10 +156,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaz\Administrador\Clinica\ventana_Clinica.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Interfaz\Administrador\Color\Insertar_Color.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,7 +206,6 @@
     <Compile Include="Modelos\Carpeta_archivosModel.cs" />
     <Compile Include="Modelos\ClinicaModel.cs" />
     <Compile Include="Modelos\Clinica_pacienteModel.cs" />
-    <Compile Include="Modelos\ColoresModel.cs" />
     <Compile Include="Modelos\Fotos_estudio_carpetaModel.cs" />
     <Compile Include="Modelos\MarketingModel.cs" />
     <Compile Include="Modelos\Motivo_citaModel.cs" />

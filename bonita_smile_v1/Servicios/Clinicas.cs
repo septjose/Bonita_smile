@@ -24,7 +24,7 @@ namespace bonita_smile_v1.Servicios
         public List<ClinicaModel> MostrarClinica()
         {
             List<ClinicaModel> listaClinica = new List<ClinicaModel>();
-            query = "SELECT * FROM clinica";
+            query = "SELECT * FROM clinica ";
 
             try
             {
@@ -36,10 +36,11 @@ namespace bonita_smile_v1.Servicios
                 while (reader.Read())
                 {
                     ClinicaModel clinicaModel = new ClinicaModel();
+                   
 
                     clinicaModel.id_clinica = int.Parse(reader[0].ToString());
-                    clinicaModel.id_color = int.Parse(reader[1].ToString());
-
+                    clinicaModel.nombre_sucursal = reader[1].ToString();
+                    clinicaModel.color = reader[2].ToString();
                     listaClinica.Add(clinicaModel);
                 }
             }
@@ -72,10 +73,10 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarClinica(string nombre_sucursal, int id_color)
+        public bool insertarClinica(string nombre_sucursal, string color)
         {
             
-            query = "INSERT INTO clinica (nombre_sucursal,id_color) VALUES('"+nombre_sucursal+"',"+id_color+")";
+            query = "INSERT INTO clinica (nombre_sucursal,color) VALUES('"+nombre_sucursal+"','"+color+"')";
             //query = "INSERT INTO clinica (nombre_sucursal,id_color) VALUES('Clinica Salamanca',1)";
             Console.WriteLine(query);
             try
@@ -96,9 +97,9 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarClinica(int id_clinica, string nombre_sucursal, int id_color)
+        public bool actualizarClinica(int id_clinica, string nombre_sucursal, string color)
         {
-            query = "UPDATE clinica set nombre_sucursal = '"+nombre_sucursal+"',id_color = "+id_color+" where id_clinica = "+ id_clinica;
+            query = "UPDATE clinica set nombre_sucursal = '"+nombre_sucursal+"',color = '"+color+"' where id_clinica = "+ id_clinica;
             try
             {
                 conexionBD.Open();

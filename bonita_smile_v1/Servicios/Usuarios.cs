@@ -10,7 +10,6 @@ using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Administrador.Paciente;
 using bonita_smile_v1.Interfaz.Administrador.Clinica;
 using bonita_smile_v1.Interfaz;
-using bonita_smile_v1.Interfaz.Administrador.Color;
 using bonita_smile_v1.Interfaz.Administrador.Usuario;
 using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
 namespace bonita_smile_v1.Servicios
@@ -182,7 +181,7 @@ namespace bonita_smile_v1.Servicios
                 if(rol.Equals("Administrador"))
                 {
                     //Admin admin = new Admin();
-                    //Insertar_Paciente ip = new Insertar_Paciente();
+                    Insertar_Paciente ip = new Insertar_Paciente();
                     //Ingresar_Clinica ic = new Ingresar_Clinica();
                     //Insertar_Color ic = new Insertar_Color();
                     //Insertar_Usuario iu = new Insertar_Usuario();

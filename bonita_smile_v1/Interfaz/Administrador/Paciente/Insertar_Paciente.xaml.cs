@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ using System.Drawing.Imaging;
 using System.Windows.Interop;
 using System.Threading;
 using Size = System.Windows.Size;
+using bonita_smile_v1.Modelos;
+using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
 //using System.Windows.Forms;
 
 namespace bonita_smile_v1.Interfaz.Administrador.Paciente
@@ -82,7 +85,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Paciente
             MiWebCam = new VideoCaptureDevice(NombreVideo);
             MiWebCam.NewFrame += new NewFrameEventHandler(Capturando);
             MiWebCam.Start();
-           
+
 
         }
         private void Capturando(object sender, NewFrameEventArgs eventArgs)
@@ -111,7 +114,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Paciente
         }
 
 
-        public  void SaveToJpeg(FrameworkElement visual, string fileName)
+        public void SaveToJpeg(FrameworkElement visual, string fileName)
         {
             var encoder = new JpegBitmapEncoder();
             SaveUsingEncoder(visual, fileName, encoder);
@@ -136,27 +139,35 @@ namespace bonita_smile_v1.Interfaz.Administrador.Paciente
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            string apellidos = txtApellidos.Text;
-            string nombre = txtNombre.Text;
-            string direccion = txtDireccion.Text;
-            string telefono = txtTelefono.Text;
-            string foto = "";
-            string email = txtEmail.Text;
+            PacienteModel pacienteModel = new PacienteModel();
 
-            MessageBox.Show(nombre + " " + apellidos + " " + direccion + " " + telefono + " " + email);
-            SaveToJpeg(img1, ruta + "prueba1.jpg");
+            pacienteModel.apellidos = txtApellidos.Text;
+            pacienteModel.nombre = txtNombre.Text;
+            pacienteModel.direccion = txtDireccion.Text;
+            pacienteModel.telefono = txtTelefono.Text;
+            pacienteModel.foto = txtNombre + "" + txtApellidos.Text;
+            pacienteModel.email = txtEmail.Text;
+            pacienteModel.marketing = 0;
+            pacienteModel.id_clinica = int.Parse(txtclinica.Text.ToString());
+
+            new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
+
+
+            //MessageBox.Show(nombre + " " + apellidos + " " + direccion + " " + telefono + " " + email);
+
         }
 
-        
+
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             if (MiWebCam != null && MiWebCam.IsRunning)
             {
                 CerrarWebCam();
-                
-                
-
-                //img2.Image.Save(ruta + "yugi.jpg", ImageFormat.Jpeg);
+                string filePath = ruta+"img.jpg";
+                var encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    encoder.Save(stream);
             }
         }
     }

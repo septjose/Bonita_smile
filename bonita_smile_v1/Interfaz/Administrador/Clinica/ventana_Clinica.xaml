@@ -1,12 +1,27 @@
-﻿<Window x:Class="bonita_smile_v1.Interfaz.Administrador.Clinica.ventana_Clinica"
+﻿<Controls:MetroWindow x:Class="bonita_smile_v1.Interfaz.Administrador.Clinica.ventana_Clinica"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:bonita_smile_v1.Interfaz.Administrador.Clinica"
         mc:Ignorable="d"
-        Title="ventana_Clinica" Height="450" Width="800">
+        Title="Ventana de Clinica" Height="450" Width="450">
     <Grid>
-        
+
+        <Button Content="Borrar" HorizontalAlignment="Left" Margin="267,340,0,0" VerticalAlignment="Top" Width="129" Height="43" Click="Button_Click"/>
+        <ListView x:Name="lv_Clinica" HorizontalAlignment="Left" Height="207" Margin="28,71,0,0" VerticalAlignment="Top" Width="405" Style="{StaticResource MetroListView}" SelectionChanged="lv_Clinica_SelectionChanged" >
+            <ListView.View >
+                <GridView >
+                    <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding id_clinica}" />
+                    <GridViewColumn Header="Nombre de la sucursal" Width="250" DisplayMemberBinding="{Binding nombre_sucursal}" />
+                    <GridViewColumn Header="Color" Width="150" DisplayMemberBinding="{Binding color}" />
+                    
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Información de las clínicas" HorizontalAlignment="Left" Margin="131,10,0,0" VerticalAlignment="Top" Width="191" Height="42"/>
+        <Button Content="Actualizar" HorizontalAlignment="Left" Height="43" Margin="71,340,0,0" VerticalAlignment="Top" Width="132" Click="Button_Click_2"/>
+
     </Grid>
-</Window>
+</Controls:MetroWindow>

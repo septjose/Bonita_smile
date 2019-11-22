@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace bonita_smile_v1.Modelos
 {
-    class ClinicaModel
+    public class ClinicaModel
     {
         public int id_clinica { get; set; }
         public string nombre_sucursal { get; set; }
-        public int id_color { get; set; }
+        public string color { get; set; }
     }
 }

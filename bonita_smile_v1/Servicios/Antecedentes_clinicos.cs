@@ -54,8 +54,8 @@ namespace bonita_smile_v1.Servicios
         public bool eliminarAntecedentes_clinicos(string id_antecedentes)
         {
             MySqlCommand cmd;
-            query = "DELETE FROM antecedentes_clinicos where id_antecedentes="+ id_antecedentes;
-            string query_compropar = "SELECT * FROM antecedentes_clinicos where id_antecedentes="+ id_antecedentes;
+            query = "DELETE FROM antecedentes_clinicos where id_antecedentes=" + id_antecedentes;
+            string query_compropar = "SELECT * FROM antecedentes_clinicos where id_antecedentes=" + id_antecedentes;
             try
             {
                 conexionBD.Open();
@@ -82,29 +82,41 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarAntecedentes_clinicos(string descripcion)
+        public int insertarAntecedentes_clinicos(string descripcion)
         {
-            query = "INSERT INTO antecedentes_clinicos (descripcion) VALUES('"+ descripcion +"')";
+            int id = 0;
+            query = "INSERT INTO antecedentes_clinicos (descripcion) VALUES('" + descripcion + "')";
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                return true;
+                query = "select id_antecedentes from antecedentes_clinicos order by id_antecedentes desc limit 1";
+
+                conexionBD.Open();
+                var reader2 = new MySqlCommand(query, conexionBD).ExecuteReader();
+
+                while (reader2.Read())
+                {
+                    id = int.Parse(reader2[0].ToString());
+                }
+
+                conexionBD.Close();
+                return id;
 
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.ToString());
                 conexionBD.Close();
-                return false;
+                return 0;
             }
         }
 
         public bool actualizarAbono(int id_antecedentes, string descripcion)
         {
-            query = "UPDATE antecedentes_clinicos set descripcion = '"+ descripcion +"' where id_antecedentes = "+ id_antecedentes;
+            query = "UPDATE antecedentes_clinicos set descripcion = '" + descripcion + "' where id_antecedentes = " + id_antecedentes;
             try
             {
                 conexionBD.Open();

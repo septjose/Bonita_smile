@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bonita_smile_v1.Modelos
 {
-    class Antecedentes_clinicosModel
+    public class Antecedentes_clinicosModel
     {
         public int id_antecedentes { get; set; }
         public string descripcion { get; set; }

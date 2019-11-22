@@ -22,6 +22,14 @@
                 <Separator />
                 <MenuItem Header="_Actualizar Clinica" Click="cli_actualizar_Click" />
             </MenuItem>
+            <MenuItem Header="_Paciente">
+            <MenuItem Header="_Paciente Nuevo" Click="pac_nuevo_Click" />
+            <MenuItem Header="_Mostrar Pacientes" Click="pac_ver_Click" />
+            <MenuItem Header="_Borrar Paciente" Click="pac_borrar_Click" />
+            <Separator />
+            <MenuItem Header="_Actualizar Paciente" Click="pac_actualizar_Click" />
+            </MenuItem>
+
         </Menu>
         
 

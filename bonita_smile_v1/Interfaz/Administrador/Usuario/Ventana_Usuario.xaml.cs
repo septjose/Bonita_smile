@@ -106,7 +106,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
             UsuarioModel usuario = (UsuarioModel)lv_Users.SelectedItem;
             if (lv_Users.SelectedItems.Count > 0)
             {
-                int id_usuario = usuario.id_usuario;
+                //int id_usuario = usuario.id_usuario;
                 string alias = usuario.alias;
                 Actualizar_Usuario au = new Actualizar_Usuario(usuario,lv_aux);
                 au.ShowDialog();
