@@ -193,6 +193,12 @@
     <Compile Include="Page7_Ingresar.xaml.cs">
       <DependentUpon>Page7_Ingresar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Page8_ActualizarFoto.xaml.cs">
+      <DependentUpon>Page8_ActualizarFoto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page8_IngresarFoto.xaml.cs">
+      <DependentUpon>Page8_IngresarFoto.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Servicios\Abonos.cs" />
     <Compile Include="Servicios\Antecedentes_clinicos.cs" />
     <Compile Include="Servicios\Carpeta_archivos.cs" />
@@ -340,6 +346,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Page7_Ingresar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page8_ActualizarFoto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page8_IngresarFoto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -3,6 +3,7 @@ using bonita_smile_v1.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,15 +58,32 @@ namespace bonita_smile_v1
 
         public void Imagen(string ruta)
         {
-            Image image = new Image();
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new System.Uri(ruta);
-            bi.EndInit();
-            image.Source = bi;
-            ImageBrush ib = new ImageBrush();
-            ib.ImageSource = bi;
-            rt_imagen.Fill = ib;
+            string ruta2 = @"C:\bs\img1.jpg";
+            if (File.Exists(ruta))
+            {
+                Image image = new Image();
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+                bi.UriSource = new System.Uri(ruta);
+                bi.EndInit();
+                image.Source = bi;
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = bi;
+                rt_imagen.Fill = ib;
+            }
+            else
+            {
+                Image image = new Image();
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+                bi.UriSource = new System.Uri(ruta2);
+                bi.EndInit();
+                image.Source = bi;
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = bi;
+                rt_imagen.Fill = ib;
+            }
+           
             
         }
         private void Button_Click(object sender, RoutedEventArgs e)
