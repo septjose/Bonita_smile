@@ -21,9 +21,9 @@
         <Label x:Name="lblAbonado" HorizontalAlignment="Left" Height="26" Margin="690,67,0,0" VerticalAlignment="Top" Width="186"/>
         <Label x:Name="lblRestante" HorizontalAlignment="Left" Height="26" Margin="690,107,0,0" VerticalAlignment="Top" Width="186"/>
         <Button Content="Boton Abonar" HorizontalAlignment="Left" Margin="690,183,0,0" VerticalAlignment="Top" Width="155" Height="42" Click="Button_Click_1"/>
-        <Button Content="Historial Abonos" HorizontalAlignment="Left" Margin="690,299,0,0" VerticalAlignment="Top" Width="155" Height="42"/>
+        <Button Content="Historial Abonos" HorizontalAlignment="Left" Margin="690,299,0,0" VerticalAlignment="Top" Width="155" Height="42" Click="Button_Click_2"/>
         <Button Content="Agregar Nota" HorizontalAlignment="Left" Margin="36,183,0,0" VerticalAlignment="Top" Width="155" Height="42" Click="Button_Click"/>
-        <ListView x:Name="lvNotas" HorizontalAlignment="Left" Height="208" Margin="36,232,0,0" VerticalAlignment="Top" Width="599">
+        <ListView x:Name="lvNotas" HorizontalAlignment="Left" Height="208" Margin="36,232,0,0" VerticalAlignment="Top" Width="599" Style="{StaticResource MetroListView}">
             <ListView.View >
                 <GridView >
 

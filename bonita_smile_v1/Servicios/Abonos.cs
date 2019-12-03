@@ -21,10 +21,10 @@ namespace bonita_smile_v1.Servicios
             this.conexionBD = obj.conexion();
         }
 
-        public List<AbonosModel> MostrarAbonos()
+        public List<AbonosModel> MostrarAbonos(int id_motivo,int id_paciente)
         {
             List<AbonosModel> listaAbonos = new List<AbonosModel>();
-            query = "SELECT * FROM ABONOS";
+            query = "SELECT id_abono,id_paciente,id_motivo,date_format(fecha, '%d/%m/%Y') as fecha,monto,comentario FROM abonos where id_paciente=" + id_paciente + " and id_motivo=" + id_motivo;
 
             try
             {
@@ -40,8 +40,9 @@ namespace bonita_smile_v1.Servicios
                     abonosModel.id_abono = int.Parse(reader[0].ToString());
                     abonosModel.id_paciente = int.Parse(reader[1].ToString());
                     abonosModel.id_motivo = int.Parse(reader[2].ToString());
-                    abonosModel.fecha = reader[3].ToString();
+                    abonosModel.fecha =reader[3].ToString();                 
                     abonosModel.monto = double.Parse(reader[4].ToString());
+                    abonosModel.comentario = reader[5].ToString();
 
                     listaAbonos.Add(abonosModel);
                 }

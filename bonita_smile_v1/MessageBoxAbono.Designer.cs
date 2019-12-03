@@ -1,5 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows;
+using SystemColors = System.Drawing.SystemColors;
 namespace bonita_smile_v1
 {
     partial class MessageBoxAbono
@@ -121,11 +130,11 @@ namespace bonita_smile_v1
             bool insertarAbono = new Servicios.Abonos().insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono,comentario);
             if (insertarAbono)
             {
-                MessageBox.Show("Exito");
+                System.Windows.MessageBox.Show("Exito");
             }
             else
             {
-                MessageBox.Show("No se inserto");
+                System.Windows.MessageBox.Show("No se inserto");
             }
 
             this.DialogResult = DialogResult.OK;

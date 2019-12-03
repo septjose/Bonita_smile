@@ -1,5 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows;
+using SystemColors = System.Drawing.SystemColors;
 namespace bonita_smile_v1
 {
     partial class Agregar_Nota_Evolucion
@@ -113,11 +122,11 @@ namespace bonita_smile_v1
             bool insertarAbono = new Servicios.Nota_de_digi_evolucion().insertarNota_de_digi_evolucion(id_paciente, id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
             if (insertarAbono)
             {
-                MessageBox.Show("Exito");
+                System.Windows.MessageBox.Show("Exito");
             }
             else
             {
-                MessageBox.Show("No se inserto");
+                System.Windows.MessageBox.Show("No se inserto");
             }
 
             this.DialogResult = DialogResult.OK;

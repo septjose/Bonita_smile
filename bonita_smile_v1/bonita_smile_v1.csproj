@@ -151,6 +151,9 @@
     <Compile Include="Page2.xaml.cs">
       <DependentUpon>Page2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Page2_Abonos.xaml.cs">
+      <DependentUpon>Page2_Abonos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Page2_notas.xaml.cs">
       <DependentUpon>Page2_notas.xaml</DependentUpon>
     </Compile>
@@ -281,6 +284,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Page2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page2_Abonos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -174,3 +174,5 @@ E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Page7_
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Page7_Ingresar.baml
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Page2_notas.g.cs
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Page2_notas.baml
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Page2_Abonos.g.cs
+E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\obj\Debug\Page2_Abonos.baml

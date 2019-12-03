@@ -17,10 +17,10 @@
         <Label x:Name="lblApellido" Content="" HorizontalAlignment="Left" Margin="573,86,0,0" VerticalAlignment="Top" Width="273"/>
         <Label x:Name="lblDireccion" Content="" HorizontalAlignment="Left" Margin="573,144,0,0" VerticalAlignment="Top" Width="273"/>
         <Label Content="DATOS PERSONALES" HorizontalAlignment="Left" Height="39" Margin="342,10,0,0" VerticalAlignment="Top" Width="132"/>
-        <Image HorizontalAlignment="Left" Height="195" Margin="14,30,0,0" VerticalAlignment="Top" Width="205" OpacityMask="#FF825252"/>
+        <Image x:Name="img" HorizontalAlignment="Left" Height="195" Margin="14,30,0,0" VerticalAlignment="Top" Width="205" OpacityMask="#FF825252"/>
         <Label Content="ANTECEDENTES CLINICOS" HorizontalAlignment="Left" Margin="14,230,0,0" VerticalAlignment="Top" Height="34" Width="185"/>
         <TextBlock x:Name="tbAntecedentes" HorizontalAlignment="Left" Height="107" Margin="30,269,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="284"/>
-        <ListView x:Name="lvMotivo" HorizontalAlignment="Left" Height="260" Margin="314,316,0,0" VerticalAlignment="Top" Width="608">
+        <ListView x:Name="lvMotivo" HorizontalAlignment="Left" Height="260" Margin="314,316,0,0" VerticalAlignment="Top" Width="608" Style="{StaticResource MetroListView}">
             <ListView.View >
                 <GridView >
 

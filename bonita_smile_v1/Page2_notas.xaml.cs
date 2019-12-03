@@ -1,4 +1,5 @@
-﻿using bonita_smile_v1.Modelos;
+﻿using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,13 @@ namespace bonita_smile_v1
             DialogResult resultado = new DialogResult();
             Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente);
             resultado = mensaje.ShowDialog();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+            if (admin != null)
+                admin.Main.Content = new Page2_Abonos(paciente, motivo);
         }
     }
 }
