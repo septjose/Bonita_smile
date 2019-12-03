@@ -32,8 +32,9 @@ namespace bonita_smile_v1
         {
             
             InitializeComponent();
+            Imagen(@"C:\bs\"+paciente.foto);
 
-            InitializeComponent();
+
             lblNombre.Content = paciente.nombre;
             lblApellido.Content = paciente.apellidos;
             lblClinica.Content = paciente.clinica.nombre_sucursal;
@@ -54,6 +55,19 @@ namespace bonita_smile_v1
             GMotivo = motivos;
         }
 
+        public void Imagen(string ruta)
+        {
+            Image image = new Image();
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.UriSource = new System.Uri(ruta);
+            bi.EndInit();
+            image.Source = bi;
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = bi;
+            rt_imagen.Fill = ib;
+            
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Motivo_citaModel motivo = (Motivo_citaModel)lvMotivo.SelectedItem;

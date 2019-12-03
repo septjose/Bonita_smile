@@ -9,7 +9,7 @@
       Title="Page2_Abonos">
 
     <Grid>
-        <Image HorizontalAlignment="Left" Height="122" Margin="36,29,0,0" VerticalAlignment="Top" Width="121"/>
+        <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="168" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="186"/>
         <Label Content="Nombre" HorizontalAlignment="Left" Margin="196,67,0,0" VerticalAlignment="Top" Width="59"/>
         <Label x:Name="lblNombre" HorizontalAlignment="Left" Height="26" Margin="260,67,0,0" VerticalAlignment="Top" Width="287"/>
         <Label Content="Motivo de cita" HorizontalAlignment="Left" Margin="196,125,0,0" VerticalAlignment="Top" Width="88"/>
@@ -20,7 +20,7 @@
         <Label x:Name="lblTotal" HorizontalAlignment="Left" Height="26" Margin="690,27,0,0" VerticalAlignment="Top" Width="186"/>
         <Label x:Name="lblAbonado" HorizontalAlignment="Left" Height="26" Margin="690,67,0,0" VerticalAlignment="Top" Width="186"/>
         <Label x:Name="lblRestante" HorizontalAlignment="Left" Height="26" Margin="690,107,0,0" VerticalAlignment="Top" Width="186"/>
-        <Button Content="Realizar Abono" HorizontalAlignment="Left" Margin="36,183,0,0" VerticalAlignment="Top" Width="155" Height="42" Click="Button_Click"/>
+        <Button Content="Realizar Abono" HorizontalAlignment="Left" Margin="36,204,0,0" VerticalAlignment="Top" Width="155" Height="42" Click="Button_Click"/>
         <ListView x:Name="lvNotas" HorizontalAlignment="Left" Height="208" Margin="221,183,0,0" VerticalAlignment="Top" Width="655" Style="{StaticResource MetroListView}">
             <ListView.View >
                 <GridView >
@@ -28,7 +28,7 @@
                     <GridViewColumn Header="Fecha" Width="250" DisplayMemberBinding="{Binding fecha}" />
                     <GridViewColumn Header="Abono" Width="250" DisplayMemberBinding="{Binding monto}" />
                     <GridViewColumn Header="Observacion" Width="250" DisplayMemberBinding="{Binding comentario}" />
-                    
+
 
                 </GridView>
             </ListView.View>
