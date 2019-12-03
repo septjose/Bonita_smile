@@ -18,7 +18,7 @@
         <PasswordBox x:Name="pwbPassword" HorizontalAlignment="Left" Height="42" Margin="230,249,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroButtonRevealedPasswordBox}"/>
         <Label Content="Ingresar Usuario" HorizontalAlignment="Left" Height="33" Margin="311,10,0,0" VerticalAlignment="Top" Width="126" Style="{StaticResource MetroLabel}"/>
         <Label Content="Seleccionar Rol" HorizontalAlignment="Left" Margin="36,319,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
-        <ComboBox x:Name="cmbRol" HorizontalAlignment="Left" Height="42" Margin="230,319,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroComboBox}"/>
+        <ComboBox x:Name="cmbRol" HorizontalAlignment="Left" Height="42" Margin="230,319,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroComboBox}" SelectionChanged="cmbRol_SelectionChanged"/>
         <Button x:Name="btnFinalizar" Content="Finalizar" HorizontalAlignment="Left" Height="47" Margin="610,396,0,0" VerticalAlignment="Top" Width="160" Click="btnFinalizar_Click"/>
 
 

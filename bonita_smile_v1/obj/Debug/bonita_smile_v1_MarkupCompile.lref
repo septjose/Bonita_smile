@@ -1,10 +1,13 @@
 ﻿
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\App.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Admin.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Antecedentes\Actualizar_Antecedentes.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Antecedentes\Ingresar_Antecedentes_Clinicos.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Clinica\Actualizar_Clinica.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Clinica\Ingresar Clinica.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Clinica\ventana_Clinica.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Historial_clinico.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Ingresar_Motivo.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Paciente\ActualizarPaciente.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Paciente\Insertar_Paciente.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Paciente\MostrarPacientes.xaml;;
@@ -12,4 +15,19 @@ FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Admini
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Usuario\Insertar_Usuario.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Usuario\Ventana_Usuario.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Ventana_Administrador.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page1.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page2.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page3.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page4.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page4_Actualizar.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page4_Ingresar.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page5.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page5_Actualizar.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page5_Ingresar.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page6.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page6_Actualizar.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page6_Ingresar.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page7_Actualizar.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page7_Ingresar.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page2_notas.xaml;;
 

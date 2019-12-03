@@ -34,23 +34,14 @@ namespace bonita_smile_v1.Interfaz.Administrador.Antecedentes
             string descripcion = txtAntecedentes.Text;
             Antecedentes_clinicos ac = new Antecedentes_clinicos();
             Servicios.Paciente paciente = new Servicios.Paciente();
-            int insertarAntecedente = ac.insertarAntecedentes_clinicos(descripcion);
-            MessageBox.Show("ultimo id = " + insertarAntecedente);
-            if (insertarAntecedente != 0)
+            bool insertarPaciente = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, descripcion, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+            if (insertarPaciente)
             {
-                bool insertarPaciente = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, insertarAntecedente, this.paciente.email, this.paciente.marketing, this.paciente.id_clinica);
-                if (insertarPaciente)
-                {
-                    MessageBox.Show("Exito");
-                }
-                else
-                {
-                    MessageBox.Show("No se inserto");
-                }
+                MessageBox.Show("Exito");
             }
             else
             {
-                MessageBox.Show("no");
+                MessageBox.Show("No se inserto");
             }
         }
 

@@ -21,10 +21,10 @@ namespace bonita_smile_v1.Servicios
             this.conexionBD = obj.conexion();
         }
 
-        public List<Nota_de_digi_evolucionModel> MostrarNota_de_digi_evolucion()
+        public List<Nota_de_digi_evolucionModel> MostrarNota_de_digi_evolucion(int id_motivo,int id_paciente)
         {
             List<Nota_de_digi_evolucionModel> listaNota_de_digi_evolucion = new List<Nota_de_digi_evolucionModel>();
-            query = "SELECT * FROM nota_de_digi_evolucion";
+            query = "SELECT * FROM nota_de_digi_evolucion where id_paciente=" + id_paciente+" and id_motivo="+id_motivo;
 
             try
             {
@@ -41,7 +41,9 @@ namespace bonita_smile_v1.Servicios
                     nota_De_Digi_EvolucionModel.id_paciente = int.Parse(reader[1].ToString());
                     nota_De_Digi_EvolucionModel.id_motivo = int.Parse(reader[2].ToString());
                     nota_De_Digi_EvolucionModel.descripcion = reader[3].ToString();
-                    nota_De_Digi_EvolucionModel.fecha = reader[4].ToString();
+                    //nota_De_Digi_EvolucionModel.fecha =reader[4].ToString();
+                    DateTime dt = DateTime.Parse("2019/05/02");
+                    nota_De_Digi_EvolucionModel.fecha = dt.ToString("yyyy/MM/dd");
 
                     listaNota_de_digi_evolucion.Add(nota_De_Digi_EvolucionModel);
                 }

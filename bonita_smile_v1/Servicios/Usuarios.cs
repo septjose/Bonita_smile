@@ -186,13 +186,14 @@ namespace bonita_smile_v1.Servicios
                     //Insertar_Color ic = new Insertar_Color();
                     //Insertar_Usuario iu = new Insertar_Usuario();
                     //Ingresar_Antecedentes_Clinicos iac = new Ingresar_Antecedentes_Clinicos();
-                    Ventana_Administrador va = new Ventana_Administrador();
+                    //Ventana_Administrador va = new Ventana_Administrador();
                     //Ventana_Usuario vu = new Ventana_Usuario();
+                    
                     MessageBox.Show("Administrador");
                     Application.Current.Windows[0].Close();
-                    va.ShowDialog();
-                   
-                    
+                    new Admin().ShowDialog();
+
+
                 }
                 else
                     if(rol.Equals("Clinica"))

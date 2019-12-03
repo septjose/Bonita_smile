@@ -116,5 +116,10 @@ namespace bonita_smile_v1.Interfaz.Administrador.Usuario
 
             return id;
         }
+
+        private void cmbRol_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

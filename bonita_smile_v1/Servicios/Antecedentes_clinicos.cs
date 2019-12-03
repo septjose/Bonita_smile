@@ -21,7 +21,7 @@ namespace bonita_smile_v1.Servicios
             this.conexionBD = obj.conexion();
         }
 
-        public List<Antecedentes_clinicosModel> MostrarAntecedentes_clinicos()
+        /*public List<Antecedentes_clinicosModel> MostrarAntecedentes_clinicos()
         {
             List<Antecedentes_clinicosModel> listaAntecedentes_clinicos = new List<Antecedentes_clinicosModel>();
             query = "SELECT * FROM antecedentes_clinicos";
@@ -49,7 +49,7 @@ namespace bonita_smile_v1.Servicios
             }
             conexionBD.Close();
             return listaAntecedentes_clinicos;
-        }
+        }*/
 
         public bool eliminarAntecedentes_clinicos(string id_antecedentes)
         {

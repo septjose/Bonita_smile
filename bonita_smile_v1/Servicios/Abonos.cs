@@ -54,6 +54,67 @@ namespace bonita_smile_v1.Servicios
             return listaAbonos;
         }
 
+        public double Abonados(int id_motivo)
+        {
+            double abonado = 0.0;
+           
+            query = "select sum(monto) from abonos where id_motivo = "+id_motivo;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    
+
+                    abonado = double.Parse(reader[0].ToString());
+                  
+
+                    
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return abonado;
+        }
+
+        public double Restante(int id_motivo)
+        {
+            double restante = 0.0;
+
+            query = "select ((select costo from motivo_cita where id_motivo="+id_motivo+")-(select sum(monto) from abonos where id_motivo ="+ id_motivo+")) as restante";
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+
+                    restante = double.Parse(reader[0].ToString());
+
+
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return restante;
+        }
         public bool eliminarAbono(int id_abono)
         {
             MySqlCommand cmd;
@@ -83,9 +144,9 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarAbono(int id_paciente, int id_motivo, string fecha, double monto)
+        public bool insertarAbono(int id_paciente, int id_motivo, string fecha, double monto,string comentario)
         {
-            query = "INSERT INTO abonos (id_paciente,id_motivo,fecha,monto) VALUES("+ id_paciente +","+ id_motivo +",'"+ fecha +"',"+ monto +")";
+            query = "INSERT INTO abonos (id_paciente,id_motivo,fecha,monto,comentario) VALUES("+ id_paciente +","+ id_motivo +",'"+ fecha +"',"+ monto +",'"+comentario+"')";
             try
             {
                 conexionBD.Open();

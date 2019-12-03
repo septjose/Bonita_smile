@@ -21,7 +21,6 @@
             <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="26" Margin="153,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Style="{StaticResource MetroTextBox}"/>
             <Label Content="Nombre Completo" HorizontalAlignment="Left" Height="26" Margin="10,46,0,0" VerticalAlignment="Top" Width="111" Style="{StaticResource MetroLabel}"/>
             <Label Content="Apellidos " HorizontalAlignment="Left" Height="26" Margin="398,46,0,0" VerticalAlignment="Top" Width="111" Style="{StaticResource MetroLabel}"/>
-            <Label Content="Direccion" HorizontalAlignment="Left" Height="26" Margin="10,102,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.538,2.286" Style="{StaticResource MetroLabel}"/>
             <Label Content="Direccion" HorizontalAlignment="Left" Height="26" Margin="10,84,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.538,2.286" Style="{StaticResource MetroLabel}"/>
             <Label Content="Telefono" HorizontalAlignment="Left" Height="26" Margin="395,84,0,0" VerticalAlignment="Top" Width="111" Style="{StaticResource MetroLabel}"/>
             <Label Content="Email" HorizontalAlignment="Left" Height="26" Margin="10,132,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.538,2.286" Style="{StaticResource MetroLabel}"/>
@@ -32,7 +31,7 @@
             <Button x:Name="btnSiguiente" Content="Siguiente" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="121.667,367,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
             <Image x:Name="img1" HorizontalAlignment="Left" Height="216" Margin="115,210,0,0" VerticalAlignment="Top" Width="286"/>
             <Label Content="Clínica" HorizontalAlignment="Left" Height="26" Margin="398,132,0,0" VerticalAlignment="Top" Width="132" Style="{StaticResource MetroLabel}" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="txtclinica" HorizontalAlignment="Left" Height="26" Margin="506,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Style="{StaticResource MetroTextBox}" Grid.ColumnSpan="2"/>
+            <ComboBox x:Name="cmbClinica" HorizontalAlignment="Left" Margin="506,132,0,0" VerticalAlignment="Top" Width="188" Grid.ColumnSpan="2" SelectionChanged="cmbClinica_SelectionChanged"/>
         </Grid>
     </Grid>
 </Controls:MetroWindow>

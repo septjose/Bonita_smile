@@ -14,6 +14,9 @@ using System.Windows.Shapes;
 using bonita_smile_v1.Interfaz.Administrador.Usuario;
 using bonita_smile_v1.Interfaz.Administrador.Clinica;
 using bonita_smile_v1.Interfaz.Administrador.Paciente;
+using bonita_smile_v1.Modelos;
+using System.Collections.ObjectModel;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1.Interfaz.Administrador
 {
@@ -22,9 +25,19 @@ namespace bonita_smile_v1.Interfaz.Administrador
     /// </summary>
     public partial class Ventana_Administrador : Window
     {
+        ObservableCollection<PacienteModel> GPaciente;
         public Ventana_Administrador()
         {
             InitializeComponent();
+            llenar_list_view();
+        }
+
+        void llenar_list_view()
+        {
+            var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente());
+
+            lv_Paciente.ItemsSource = pacientes;
+            GPaciente = pacientes;
         }
 
         private void usu_nuevo_Click(object sender, RoutedEventArgs e)
@@ -112,6 +125,56 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
             MostrarPacientes mp = new MostrarPacientes();
             mp.ShowDialog();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string nombre = txtnombre.Text;
+
+          
+
+                var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente_unico(nombre));
+
+                lv_Paciente.ItemsSource = pacientes;
+                GPaciente = pacientes;
+            
+
+        }
+
+        private void lv_Paciente_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            llenar_list_view();
+            txtnombre.Text = "";
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
+            if (lv_Paciente.SelectedItems.Count > 0)
+            {
+                //System.Windows.MessageBox.Show("hi");
+                Historial_clinico hc = new Historial_clinico(paciente);
+                hc.ShowDialog();
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

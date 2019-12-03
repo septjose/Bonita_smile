@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +25,8 @@ using System.Threading;
 using Size = System.Windows.Size;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
+using MySql.Data.MySqlClient;
+using bonita_smile_v1.Servicios;
 //using System.Windows.Forms;
 
 namespace bonita_smile_v1.Interfaz.Administrador.Paciente
@@ -39,16 +40,54 @@ namespace bonita_smile_v1.Interfaz.Administrador.Paciente
         private VideoCaptureDevice MiWebCam;
         private bool HayDispositivos;
         private string ruta = @"E:\PortableGit\programs_c#\ftp_v1.0\ftp_camara\";
+        private MySqlDataReader reader = null;
+        private string query;
+        private MySqlConnection conexionBD;
+        Conexion obj = new Conexion();
+        string valor = "";
         public Insertar_Paciente()
         {
+            this.conexionBD = obj.conexion();
             InitializeComponent();
             CargaDispositivos();
+            llenar_Combo();
         }
 
         private void Capturar_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        public void llenar_Combo()
+        {
+            query = "SELECT * FROM clinica";
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    // ColoresModel coloresModel = new ColoresModel();
+
+                    //coloresModel.id_color = int.Parse(reader[0].ToString());
+                    //coloresModel.descripcion = reader[1].ToString();
+
+                    string clinica = reader[1].ToString();
+                    cmbClinica.Items.Add(clinica);
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+        }
+
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -139,7 +178,10 @@ namespace bonita_smile_v1.Interfaz.Administrador.Paciente
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            valor = cmbClinica.SelectedItem.ToString();
+            int id_clinica = obtener_id_clinica(valor);
             PacienteModel pacienteModel = new PacienteModel();
+            ClinicaModel clinicaModel = new ClinicaModel();
 
             pacienteModel.apellidos = txtApellidos.Text;
             pacienteModel.nombre = txtNombre.Text;
@@ -148,8 +190,9 @@ namespace bonita_smile_v1.Interfaz.Administrador.Paciente
             pacienteModel.foto = txtNombre + "" + txtApellidos.Text;
             pacienteModel.email = txtEmail.Text;
             pacienteModel.marketing = 0;
-            pacienteModel.id_clinica = int.Parse(txtclinica.Text.ToString());
-
+            clinicaModel.id_clinica = id_clinica;
+            //pacienteModel.id_clinica = int.Parse(txtclinica.Text.ToString());
+            pacienteModel.clinica = clinicaModel;
             new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
 
 
@@ -157,6 +200,37 @@ namespace bonita_smile_v1.Interfaz.Administrador.Paciente
 
         }
 
+        public int obtener_id_clinica(string nombre_sucursal)
+        {
+            int id = 0;
+            query = "SELECT id_clinica FROM clinica where nombre_sucursal='" + nombre_sucursal + "'";
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    // ColoresModel coloresModel = new ColoresModel();
+
+                    //coloresModel.id_color = int.Parse(reader[0].ToString());
+                    //coloresModel.descripcion = reader[1].ToString();
+
+                    id = int.Parse(reader[0].ToString());
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return 0;
+            }
+            conexionBD.Close();
+
+            return id;
+        }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
@@ -169,6 +243,11 @@ namespace bonita_smile_v1.Interfaz.Administrador.Paciente
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     encoder.Save(stream);
             }
+        }
+
+        private void cmbClinica_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

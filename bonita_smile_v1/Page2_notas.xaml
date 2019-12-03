@@ -1,0 +1,38 @@
+﻿<Page x:Class="bonita_smile_v1.Page2_notas"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:bonita_smile_v1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="900"
+      Title="Page2_notas">
+
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="122" Margin="36,29,0,0" VerticalAlignment="Top" Width="121"/>
+        <Label Content="Nombre" HorizontalAlignment="Left" Margin="196,67,0,0" VerticalAlignment="Top" Width="59"/>
+        <Label x:Name="lblNombre" HorizontalAlignment="Left" Height="26" Margin="260,67,0,0" VerticalAlignment="Top" Width="287"/>
+        <Label Content="Motivo de cita" HorizontalAlignment="Left" Margin="196,125,0,0" VerticalAlignment="Top" Width="88"/>
+        <Label x:Name="lblmotivo"  HorizontalAlignment="Left" Height="26" Margin="289,125,0,0" VerticalAlignment="Top" Width="287"/>
+        <Label Content="Total" HorizontalAlignment="Left" Margin="626,27,0,0" VerticalAlignment="Top"/>
+        <Label Content="Abonado" HorizontalAlignment="Left" Margin="626,67,0,0" VerticalAlignment="Top"/>
+        <Label Content="Restante" HorizontalAlignment="Left" Margin="626,107,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblTotal" HorizontalAlignment="Left" Height="26" Margin="690,27,0,0" VerticalAlignment="Top" Width="186"/>
+        <Label x:Name="lblAbonado" HorizontalAlignment="Left" Height="26" Margin="690,67,0,0" VerticalAlignment="Top" Width="186"/>
+        <Label x:Name="lblRestante" HorizontalAlignment="Left" Height="26" Margin="690,107,0,0" VerticalAlignment="Top" Width="186"/>
+        <Button Content="Boton Abonar" HorizontalAlignment="Left" Margin="690,183,0,0" VerticalAlignment="Top" Width="155" Height="42" Click="Button_Click_1"/>
+        <Button Content="Historial Abonos" HorizontalAlignment="Left" Margin="690,299,0,0" VerticalAlignment="Top" Width="155" Height="42"/>
+        <Button Content="Agregar Nota" HorizontalAlignment="Left" Margin="36,183,0,0" VerticalAlignment="Top" Width="155" Height="42" Click="Button_Click"/>
+        <ListView x:Name="lvNotas" HorizontalAlignment="Left" Height="208" Margin="36,232,0,0" VerticalAlignment="Top" Width="599">
+            <ListView.View >
+                <GridView >
+
+                    <GridViewColumn Header="Fecha" Width="250" DisplayMemberBinding="{Binding fecha}" />
+                    <GridViewColumn Header="Descripcion" Width="250" DisplayMemberBinding="{Binding descripcion}" />
+                    
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Page>

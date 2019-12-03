@@ -15,15 +15,37 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
                 
-                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <!--<Style TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}">
+            <Style TargetType="GridViewColumnHeader" BasedOn="{StaticResource MetroGridViewColumnHeader}">
                 <Setter Property="Margin" Value="50" />
                 <Setter Property="BorderBrush" Value="#FF1449DC" />
-            </Style>-->
+            </Style>
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource MetroListViewItem}">
+                <Setter Property="Margin" Value="50" />
+               
+
+             <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+               <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Background" Value="White"/> 
+            </Trigger>
+        </Style.Triggers>
+                <Style.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Red"/>
+                </Style.Resources>
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}">
+                <Setter Property="Margin" Value="50" />
+                <Setter Property="BorderBrush" Value="#FF1449DC" />
+            </Style>
+            <Style TargetType="Label" BasedOn="{StaticResource MetroLabel}">
+                <Setter Property="Margin" Value="50" />
+                <Setter Property="BorderBrush" Value="#FF1449DC" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
     

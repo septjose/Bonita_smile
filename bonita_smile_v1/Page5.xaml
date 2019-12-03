@@ -1,0 +1,28 @@
+﻿<Page x:Class="bonita_smile_v1.Page5"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:bonita_smile_v1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="600"
+      Title="Page5">
+    <Grid>
+
+        <Button Content="Borrar" HorizontalAlignment="Left" Margin="242,340,0,0" VerticalAlignment="Top" Width="129" Height="43" Click="Button_Click"/>
+        <ListView x:Name="lv_Clinica" HorizontalAlignment="Left" Height="207" Margin="28,71,0,0" VerticalAlignment="Top" Width="405" Style="{StaticResource MetroListView}" SelectionChanged="lv_Clinica_SelectionChanged" >
+            <ListView.View >
+                <GridView >
+
+                    <GridViewColumn Header="Nombre de la sucursal" Width="250" DisplayMemberBinding="{Binding nombre_sucursal}" />
+                    <GridViewColumn Header="Color" Width="250" DisplayMemberBinding="{Binding color}" />
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Información de las clínicas" HorizontalAlignment="Left" Margin="131,10,0,0" VerticalAlignment="Top" Width="191" Height="42"/>
+        <Button Content="Actualizar" HorizontalAlignment="Left" Height="43" Margin="46,340,0,0" VerticalAlignment="Top" Width="132" Click="Button_Click_2"/>
+        <Button Content="Ingresar" HorizontalAlignment="Left" Margin="411,340,0,0" VerticalAlignment="Top" Width="112" Height="43" Click="Button_Click_1"/>
+
+    </Grid>
+</Page>

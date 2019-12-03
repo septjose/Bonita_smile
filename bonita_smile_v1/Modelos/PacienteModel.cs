@@ -14,9 +14,9 @@ namespace bonita_smile_v1.Modelos
         public string direccion { get; set; }
         public string telefono { get; set; }
         public string foto { get; set; }
-        public Antecedentes_clinicosModel antecedente { get; set; }
+        public string antecedente { get; set; }
         public string email { get; set; }
         public int marketing { get; set; }
-        public int id_clinica { get; set; }
+        public ClinicaModel clinica { get; set; }
     }
 }

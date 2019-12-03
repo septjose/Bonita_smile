@@ -87,7 +87,7 @@ namespace bonita_smile_v1.Interfaz.Administrador.Clinica
                 }
                 else
                 {
-
+                    System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bonita_smile_v1.Modelos
 {
-    class Nota_de_digi_evolucionModel
+    public class Nota_de_digi_evolucionModel
     {
         public int id_nota { get; set; }
         public int id_paciente { get; set; }
