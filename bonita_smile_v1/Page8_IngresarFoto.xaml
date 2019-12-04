@@ -9,6 +9,18 @@
       Title="Page8_IngresarFoto">
 
     <Grid>
-        
+        <Grid x:Name="btnEncender" Margin="0,0,0,-5" Height="426" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="521*"/>
+                <ColumnDefinition Width="272*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Añadir Paciente" HorizontalAlignment="Left" Height="41" Margin="360,0,0,0" VerticalAlignment="Top" Width="161" FontSize="20" Style="{StaticResource MetroLabel}"/>
+            <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="26" Margin="189,57,0,0" VerticalAlignment="Top" Width="180"  Style="{StaticResource MetroComboBox}"/>
+            <Label Content="Seleccionar Dispositivo" HorizontalAlignment="Left" Height="26" Margin="10,52,0,0" VerticalAlignment="Top" Width="148" Style="{StaticResource MetroLabel}"/>
+            <Button Content="Encender Camara" Height="26" Margin="79,112,282.333,0" VerticalAlignment="Top" Click="Button_Click" RenderTransformOrigin="0.501,0.5"/>
+            <Button Content="Capturar" HorizontalAlignment="Left" Height="26" Margin="9.667,112,0,0" VerticalAlignment="Top" Width="93" Grid.Column="1" Click="Button_Click_2"/>
+            <Button x:Name="btnSiguiente" Content="Finalizar" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="121.667,367,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
+            <Image x:Name="img1" HorizontalAlignment="Left" Height="247" Margin="79,169,0,0" VerticalAlignment="Top" Width="418"/>
+        </Grid>
     </Grid>
 </Page>

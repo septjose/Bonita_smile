@@ -33,7 +33,7 @@ namespace bonita_smile_v1
         {
             
             InitializeComponent();
-            Imagen(@"C:\bs\"+paciente.foto);
+            rt_imagen.Fill= Imagen(@"C:\bs\" + paciente.foto);
 
 
             lblNombre.Content = paciente.nombre;
@@ -48,6 +48,10 @@ namespace bonita_smile_v1
             this.paciente = paciente;
         }
 
+        public Page2()
+        {
+        }
+
         void llenar_list_view(int id_paciente)
         {
             var motivos = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita().Mostrar_MotivoCita(id_paciente));
@@ -56,7 +60,7 @@ namespace bonita_smile_v1
             GMotivo = motivos;
         }
 
-        public void Imagen(string ruta)
+        public ImageBrush Imagen(string ruta)
         {
             string ruta2 = @"C:\bs\img1.jpg";
             if (File.Exists(ruta))
@@ -69,7 +73,8 @@ namespace bonita_smile_v1
                 image.Source = bi;
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = bi;
-                rt_imagen.Fill = ib;
+                return ib;
+                //rt_imagen.Fill = ib;
             }
             else
             {
@@ -81,10 +86,9 @@ namespace bonita_smile_v1
                 image.Source = bi;
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = bi;
-                rt_imagen.Fill = ib;
+                return ib;
+                //rt_imagen.Fill = ib;
             }
-           
-            
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

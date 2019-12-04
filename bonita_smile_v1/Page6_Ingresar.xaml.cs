@@ -49,7 +49,7 @@ namespace bonita_smile_v1
         {
             this.conexionBD = obj.conexion();
             InitializeComponent();
-            CargaDispositivos();
+           
             llenar_Combo();
         }
 
@@ -93,20 +93,7 @@ namespace bonita_smile_v1
         {
 
         }
-        public void CargaDispositivos()
-        {
-            MisDispositivios = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            if (MisDispositivios.Count > 0)
-            {
-                HayDispositivos = true;
-                for (int i = 0; i < MisDispositivios.Count; i++)
-                    comboBox1.Items.Add(MisDispositivios[i].Name.ToString());
-                comboBox1.Text = MisDispositivios[0].Name.ToString();
-            }
-            else
-                HayDispositivos = false;
-
-        }
+     
         private void CerrarWebCam()
         {
             if (MiWebCam != null && MiWebCam.IsRunning)
@@ -116,41 +103,8 @@ namespace bonita_smile_v1
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            CerrarWebCam();
-            int i = comboBox1.SelectedIndex;
-            string NombreVideo = MisDispositivios[i].MonikerString;
-            MiWebCam = new VideoCaptureDevice(NombreVideo);
-            MiWebCam.NewFrame += new NewFrameEventHandler(Capturando);
-            MiWebCam.Start();
-
-
-        }
-        private void Capturando(object sender, NewFrameEventArgs eventArgs)
-        {
-            try
-            {
-                System.Drawing.Image img = (Bitmap)eventArgs.Frame.Clone();
-
-                MemoryStream ms = new MemoryStream();
-                img.Save(ms, ImageFormat.Bmp);
-                ms.Seek(0, SeekOrigin.Begin);
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.StreamSource = ms;
-                bi.EndInit();
-
-                bi.Freeze();
-                Dispatcher.BeginInvoke(new ThreadStart(delegate
-                {
-                    img1.Source = bi;
-                }));
-            }
-            catch (Exception ex)
-            {
-            }
-        }
+        
+   
 
 
         public void SaveToJpeg(FrameworkElement visual, string fileName)
@@ -234,18 +188,7 @@ namespace bonita_smile_v1
             return id;
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            if (MiWebCam != null && MiWebCam.IsRunning)
-            {
-                CerrarWebCam();
-                string filePath = ruta + "img.jpg";
-                var encoder = new JpegBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
-                using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                    encoder.Save(stream);
-            }
-        }
+       
 
         private void cmbClinica_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

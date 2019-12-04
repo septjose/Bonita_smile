@@ -25,12 +25,7 @@
             <Label Content="Direccion" HorizontalAlignment="Left" Height="26" Margin="10,84,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.538,2.286" Style="{StaticResource MetroLabel}"/>
             <Label Content="Telefono" HorizontalAlignment="Left" Height="26" Margin="395,84,0,0" VerticalAlignment="Top" Width="111" Style="{StaticResource MetroLabel}"/>
             <Label Content="Email" HorizontalAlignment="Left" Height="26" Margin="10,132,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.538,2.286" Style="{StaticResource MetroLabel}"/>
-            <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="26" Margin="161,179,0,0" VerticalAlignment="Top" Width="180" SelectionChanged="ComboBox_SelectionChanged" Style="{StaticResource MetroComboBox}"/>
-            <Label Content="Seleccionar Dispositivo" HorizontalAlignment="Left" Height="26" Margin="10,176,0,0" VerticalAlignment="Top" Width="132" Style="{StaticResource MetroLabel}"/>
-            <Button Content="Encender Camara" Height="26" Margin="358,176,3.333,0" VerticalAlignment="Top" Click="Button_Click" RenderTransformOrigin="0.501,0.5"/>
-            <Button Content="Capturar" HorizontalAlignment="Left" Height="26" Margin="77.667,181,0,0" VerticalAlignment="Top" Width="93" Grid.Column="1" Click="Button_Click_2"/>
-            <Button x:Name="btnSiguiente" Content="Siguiente" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="121.667,367,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
-            <Image x:Name="img1" HorizontalAlignment="Left" Height="216" Margin="115,210,0,0" VerticalAlignment="Top" Width="286"/>
+            <Button x:Name="btnSiguiente" Content="Siguiente" HorizontalAlignment="Left" Height="30" Margin="311,281,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
             <Label Content="Clínica" HorizontalAlignment="Left" Height="26" Margin="398,132,0,0" VerticalAlignment="Top" Width="132" Style="{StaticResource MetroLabel}" Grid.ColumnSpan="2"/>
             <ComboBox x:Name="cmbClinica" HorizontalAlignment="Left" Margin="506,132,0,0" VerticalAlignment="Top" Width="188" Grid.ColumnSpan="2" SelectionChanged="cmbClinica_SelectionChanged"/>
         </Grid>

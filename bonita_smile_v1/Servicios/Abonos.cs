@@ -59,7 +59,7 @@ namespace bonita_smile_v1.Servicios
         {
             double abonado = 0.0;
            
-            query = "select sum(monto) from abonos where id_motivo = "+id_motivo;
+            query = "select  IFNULL(sum(monto),0)as abonado from abonos where id_motivo = "+id_motivo;
 
             try
             {
@@ -90,7 +90,7 @@ namespace bonita_smile_v1.Servicios
         {
             double restante = 0.0;
 
-            query = "select ((select costo from motivo_cita where id_motivo="+id_motivo+")-(select sum(monto) from abonos where id_motivo ="+ id_motivo+")) as restante";
+            query = "select IFNULL(((select costo from motivo_cita where id_motivo="+id_motivo+")-(select sum(monto) from abonos where id_motivo ="+ id_motivo+")),0) as restante";
 
             try
             {

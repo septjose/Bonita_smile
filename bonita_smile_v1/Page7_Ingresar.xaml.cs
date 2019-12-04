@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Modelos;
-
+using bonita_smile_v1.Interfaz.Administrador;
 
 namespace bonita_smile_v1
 {
@@ -32,18 +32,11 @@ namespace bonita_smile_v1
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
-            string descripcion = txtAntecedentes.Text;
-            Antecedentes_clinicos ac = new Antecedentes_clinicos();
-            Servicios.Paciente paciente = new Servicios.Paciente();
-            bool insertarPaciente = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, descripcion, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
-            if (insertarPaciente)
-            {
-                MessageBox.Show("Exito");
-            }
-            else
-            {
-                MessageBox.Show("No se inserto");
-            }
+            string descripcion = txtAntecedentes.Text;           
+            paciente.antecedente = descripcion;
+            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+            if (admin != null)
+                admin.Main.Content = new Page8_IngresarFoto(paciente); 
         }
 
     }

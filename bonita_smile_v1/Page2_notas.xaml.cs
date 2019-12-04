@@ -33,9 +33,9 @@ namespace bonita_smile_v1
 
             
             InitializeComponent();
-            
+           rt_imagen.Fill =new Page2().Imagen(@"C:\bs\" + paciente.foto);
 
-            
+
             this.paciente = paciente;
             this.motivo = motivo;
             lblNombre.Content = paciente.nombre + " " + paciente.apellidos;
