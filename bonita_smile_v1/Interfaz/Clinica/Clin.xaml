@@ -139,10 +139,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="AccountSearch" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text="Usuarios" Margin="10" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10 0"/>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem2" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="listViewItem2_PreviewMouseLeftButtonDown">
                     <ListViewItem.RenderTransform>
@@ -153,10 +150,6 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Facebook" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text="Clinicas" Margin="10" VerticalAlignment="Center"/>
-                    </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem3" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="listViewItem3_PreviewMouseLeftButtonDown">
                     <ListViewItem.RenderTransform>
@@ -167,10 +160,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Twitter" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text="Pacientes" Margin="10" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10 0"/>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem4" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
@@ -181,10 +171,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Skype" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text="Skype" Margin="10" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10 0"/>
                 </ListViewItem>
             </ListView>
         </StackPanel>

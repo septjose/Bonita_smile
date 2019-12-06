@@ -101,7 +101,7 @@ namespace bonita_smile_v1
             Motivo_citaModel motivo = (Motivo_citaModel)lvMotivo.SelectedItem;
             if (lvMotivo.SelectedItems.Count > 0)
             {
-                System.Windows.MessageBox.Show("id_paciente :" + motivo.paciente.id_paciente.ToString() + "   " + "id_motivo   " + motivo.id_motivo.ToString());
+                //System.Windows.MessageBox.Show("id_paciente :" + motivo.paciente.id_paciente.ToString() + "   " + "id_motivo   " + motivo.id_motivo.ToString());
                
 
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();

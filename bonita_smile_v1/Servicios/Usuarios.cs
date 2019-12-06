@@ -13,6 +13,8 @@ using bonita_smile_v1.Interfaz.Administrador.Clinica;
 using bonita_smile_v1.Interfaz;
 using bonita_smile_v1.Interfaz.Administrador.Usuario;
 using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
+using System.Windows.Forms;
+
 namespace bonita_smile_v1.Servicios
 {
     class Usuarios
@@ -61,7 +63,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
             return listaUsuario;
@@ -82,7 +84,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
@@ -103,7 +105,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
@@ -124,7 +126,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
@@ -163,7 +165,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return "";
             }
@@ -189,9 +191,9 @@ namespace bonita_smile_v1.Servicios
                     //Ingresar_Antecedentes_Clinicos iac = new Ingresar_Antecedentes_Clinicos();
                     //Ventana_Administrador va = new Ventana_Administrador();
                     //Ventana_Usuario vu = new Ventana_Usuario();
-                    
-                    MessageBox.Show("Administrador");
-                    Application.Current.Windows[0].Close();
+
+                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: "+alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Windows.Application.Current.Windows[0].Close();
                     new Admin().ShowDialog();
 
 
@@ -199,9 +201,9 @@ namespace bonita_smile_v1.Servicios
                 else
                     if(rol.Equals("Clinica"))
                 {
-                    
-                    MessageBox.Show("Clinica");
-                   // Application.Current.Windows[0].Close();
+                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //System.Windows.Application.Current.Windows[0].Close();
+                    // Application.Current.Windows[0].Close();
                     new Clin().ShowDialog();
                 }
                 else
@@ -209,7 +211,7 @@ namespace bonita_smile_v1.Servicios
                 {
                     //Mark marketing = new Mark();
                     //marketing.ShowDialog();
-                    MessageBox.Show("Marketing");
+                    System.Windows.MessageBox.Show("Marketing");
                 }
             }
         }
@@ -249,7 +251,7 @@ namespace bonita_smile_v1.Servicios
                 bool isEmpty = !listaUsuario.Any();
                 if (isEmpty)
                 {
-                    MessageBox.Show("Usuario incorrecto");
+                    System.Windows.MessageBox.Show("Usuario incorrecto");
                     verdad = false; ;
                 }
                 else
@@ -273,7 +275,7 @@ namespace bonita_smile_v1.Servicios
                     }
                     else
                     {
-                        MessageBox.Show("contraseña esta incorrecta");
+                        System.Windows.MessageBox.Show("contraseña esta incorrecta");
                         conexionBD.Close();
                        verdad= false;
                     }
@@ -282,7 +284,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 verdad = false;
                 conexionBD.Close();
 

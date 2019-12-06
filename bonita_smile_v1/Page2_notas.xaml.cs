@@ -34,17 +34,26 @@ namespace bonita_smile_v1
 
             
             InitializeComponent();
-           //rt_imagen.Fill =new Page2().Imagen(@"C:\bs\" + paciente.foto);
+           rt_imagen.Fill =new Page2().Imagen(@"C:\bs\" + paciente.foto);
 
 
             this.paciente = paciente;
             this.motivo = motivo;
-            //lblNombre.Content = paciente.nombre + " " + paciente.apellidos;
+            txtNombre.Text = paciente.nombre + " " + paciente.apellidos;
+            txtNombre.IsEnabled = false;
+            txtMotivo.Text= motivo.descripcion;
+            txtMotivo.IsEnabled = false;
+            txtTotal.IsEnabled = false;
+            txtAbonado.IsEnabled = false;
+            txtRestante.IsEnabled = false;
             //lblmotivo.Content = motivo.descripcion;
             //lblTotal.Content = motivo.costo.ToString();
             Abonos abono = new Abonos();
+            txtTotal.Text= "$"+motivo.costo.ToString();
+            txtAbonado.Text= "$" + abono.Abonados(motivo.id_motivo).ToString();
+            txtRestante.Text="$" + abono.Restante(motivo.id_motivo).ToString();
             //lblAbonado.Content = abono.Abonados(motivo.id_motivo).ToString();
-            //lblRestante.Content = abono.Restante(motivo.id_motivo).ToString();
+            //lblRestante.Content = 
             //System.Windows.MessageBox.Show(motivo.id_motivo.ToString() + "  " + paciente.id_paciente.ToString());
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
                 
@@ -54,7 +63,7 @@ namespace bonita_smile_v1
         {
             var notas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion().MostrarNota_de_digi_evolucion(id_motivo,id_paciente));
 
-            //lvNotas.ItemsSource = notas;
+            lvNotas.ItemsSource = notas;
             GNotas = notas;
         }
 

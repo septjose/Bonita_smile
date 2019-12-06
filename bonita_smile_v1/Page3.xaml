@@ -9,11 +9,12 @@
       Title="Page3">
 
     <Grid>
-        <Label Content="Nombre del Tratamiento" HorizontalAlignment="Left" Margin="23,79,0,0" VerticalAlignment="Top" Height="47" Width="173"/>
-        <TextBox x:Name="txt_nombre" HorizontalAlignment="Left" Height="47" Margin="172,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="267"/>
-        <Label Content="Costo del tratamiento" HorizontalAlignment="Left" Margin="23,171,0,0" VerticalAlignment="Top" Height="47" Width="173"/>
-        <TextBox x:Name="txt_costo" HorizontalAlignment="Left" Height="47" Margin="172,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="267"/>
-        <Button Content="Nuevo tratamiento" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155" Margin="172,262,0,0" Height="47" Click="Button_Click"/>
+        <TextBlock  Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Ingresar Motivo" Margin="50 20 0 0"/>
+        <Label Content="Nombre del Tratamiento" HorizontalAlignment="Left" Margin="23,95,0,0" VerticalAlignment="Top" Height="47" Width="173"/>
+        <TextBox x:Name="txt_nombre" HorizontalAlignment="Left" Height="47" Margin="172,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="267"/>
+        <Label Content="Costo del tratamiento" HorizontalAlignment="Left" Margin="23,187,0,0" VerticalAlignment="Top" Height="47" Width="173"/>
+        <TextBox x:Name="txt_costo" HorizontalAlignment="Left" Height="47" Margin="172,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="267"/>
+        <Button Content="Nuevo tratamiento" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155" Margin="172,278,0,0" Height="47" Click="Button_Click"/>
 
     </Grid>
 </Page>

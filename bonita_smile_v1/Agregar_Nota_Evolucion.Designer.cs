@@ -122,11 +122,11 @@ namespace bonita_smile_v1
             bool insertarAbono = new Servicios.Nota_de_digi_evolucion().insertarNota_de_digi_evolucion(id_paciente, id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
             if (insertarAbono)
             {
-                System.Windows.MessageBox.Show("Exito");
+                System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                System.Windows.MessageBox.Show("No se inserto");
+                System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             this.DialogResult = DialogResult.OK;

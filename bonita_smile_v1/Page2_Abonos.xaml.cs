@@ -36,13 +36,23 @@ namespace bonita_smile_v1
             rt_imagen.Fill = new Page2().Imagen(@"C:\bs\" + paciente.foto);
             this.paciente = paciente;
             this.motivo = motivo;
-            lblNombre.Content = paciente.nombre + " " + paciente.apellidos;
-            lblmotivo.Content = motivo.descripcion;
-            lblTotal.Content = motivo.costo.ToString();
+            //lblNombre.Content = paciente.nombre + " " + paciente.apellidos;
+            //lblmotivo.Content = motivo.descripcion;
+            //lblTotal.Content = motivo.costo.ToString();
             Abonos abono = new Abonos();
-            lblAbonado.Content = abono.Abonados(motivo.id_motivo).ToString();
-            lblRestante.Content = abono.Restante(motivo.id_motivo).ToString();
-            System.Windows.MessageBox.Show(motivo.id_motivo.ToString() + "  " + paciente.id_paciente.ToString());
+            //lblAbonado.Content = abono.Abonados(motivo.id_motivo).ToString();
+            //lblRestante.Content = abono.Restante(motivo.id_motivo).ToString();
+            //System.Windows.MessageBox.Show(motivo.id_motivo.ToString() + "  " + paciente.id_paciente.ToString());
+            txtNombre.Text = paciente.nombre + " " + paciente.apellidos;
+            txtNombre.IsEnabled = false;
+            txtMotivo.Text = motivo.descripcion;
+            txtMotivo.IsEnabled = false;
+            txtTotal.IsEnabled = false;
+            txtAbonado.IsEnabled = false;
+            txtRestante.IsEnabled = false;
+            txtTotal.Text = "$" + motivo.costo.ToString();
+            txtAbonado.Text = "$" + abono.Abonados(motivo.id_motivo).ToString();
+            txtRestante.Text = "$" + abono.Restante(motivo.id_motivo).ToString();
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
 
         }

@@ -120,7 +120,7 @@
                 <Button.Template>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                            <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\\bs\img1.jpg">
+                            <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\\bs\agregar.png">
                             </Image>
                             <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                 <TextBlock Width="Auto" Height="Auto" Text="mi boton 1" TextWrapping="Wrap" x:Name="btn1" TextAlignment="Center" Background="{x:Null}" FontSize="14" Margin="5,5,5,5" Foreground="#FFFFFFFF" FontWeight="Normal" VerticalAlignment="Center" FontFamily="Segoe" IsEnabled="False" Cursor="None"/>

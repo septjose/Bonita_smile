@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -42,11 +43,12 @@ namespace bonita_smile_v1
             bool inserto = mc.insertarMotivo_cita(nombre, costo, id);
             if (inserto)
             {
-                MessageBox.Show("se ingreso");
+                System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             else
             {
-                MessageBox.Show("no se ingreso");
+                System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

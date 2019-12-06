@@ -130,11 +130,11 @@ namespace bonita_smile_v1
             bool insertarAbono = new Servicios.Abonos().insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono,comentario);
             if (insertarAbono)
             {
-                System.Windows.MessageBox.Show("Exito");
+                System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                System.Windows.MessageBox.Show("No se inserto");
+                System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             this.DialogResult = DialogResult.OK;
