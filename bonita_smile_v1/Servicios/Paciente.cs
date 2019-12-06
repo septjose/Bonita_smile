@@ -2,10 +2,12 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -44,10 +46,11 @@ namespace bonita_smile_v1.Servicios
                     pacienteModel.direccion = reader[3].ToString();
                     pacienteModel.telefono = reader[4].ToString();
                     pacienteModel.foto = reader[5].ToString();
+                    pacienteModel.imagen = LoadImage(@"C:\bs\" + reader[5].ToString());
                     pacienteModel.email = reader[6].ToString();
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                     //pacienteModel.marketing = reader[6].ToString();
-                    
+
                     pacienteModel.antecedente = reader[9].ToString();
                     clinicaModel.id_clinica = int.Parse(reader[10].ToString());
                     clinicaModel.nombre_sucursal = reader[11].ToString();
@@ -88,7 +91,10 @@ namespace bonita_smile_v1.Servicios
                     pacienteModel.apellidos = reader[2].ToString();
                     pacienteModel.direccion = reader[3].ToString();
                     pacienteModel.telefono = reader[4].ToString();
-                    pacienteModel.foto = reader[5].ToString();
+
+                    string ruta = reader[5].ToString();
+                    
+                    pacienteModel.imagen = LoadImage(@"C:\bs\" + ruta);
                     pacienteModel.email = reader[6].ToString();
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                     //pacienteModel.marketing = reader[6].ToString();
@@ -168,6 +174,20 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 return false;
             }
+        }
+        private BitmapImage LoadImage(string filename)
+        {
+            BitmapImage bi;
+          
+            if(File.Exists(filename))
+            {
+               bi =new BitmapImage(new Uri(filename));
+            }
+            else
+            {
+                bi= new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
+            }
+            return bi;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Interfaz.Clinica;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using System;
@@ -33,18 +34,18 @@ namespace bonita_smile_v1
 
             
             InitializeComponent();
-           rt_imagen.Fill =new Page2().Imagen(@"C:\bs\" + paciente.foto);
+           //rt_imagen.Fill =new Page2().Imagen(@"C:\bs\" + paciente.foto);
 
 
             this.paciente = paciente;
             this.motivo = motivo;
-            lblNombre.Content = paciente.nombre + " " + paciente.apellidos;
-            lblmotivo.Content = motivo.descripcion;
-            lblTotal.Content = motivo.costo.ToString();
+            //lblNombre.Content = paciente.nombre + " " + paciente.apellidos;
+            //lblmotivo.Content = motivo.descripcion;
+            //lblTotal.Content = motivo.costo.ToString();
             Abonos abono = new Abonos();
-            lblAbonado.Content = abono.Abonados(motivo.id_motivo).ToString();
-            lblRestante.Content = abono.Restante(motivo.id_motivo).ToString();
-            System.Windows.MessageBox.Show(motivo.id_motivo.ToString() + "  " + paciente.id_paciente.ToString());
+            //lblAbonado.Content = abono.Abonados(motivo.id_motivo).ToString();
+            //lblRestante.Content = abono.Restante(motivo.id_motivo).ToString();
+            //System.Windows.MessageBox.Show(motivo.id_motivo.ToString() + "  " + paciente.id_paciente.ToString());
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
                 
         }
@@ -53,7 +54,7 @@ namespace bonita_smile_v1
         {
             var notas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion().MostrarNota_de_digi_evolucion(id_motivo,id_paciente));
 
-            lvNotas.ItemsSource = notas;
+            //lvNotas.ItemsSource = notas;
             GNotas = notas;
         }
 
@@ -73,9 +74,18 @@ namespace bonita_smile_v1
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            
+
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+            Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+
             if (admin != null)
                 admin.Main.Content = new Page2_Abonos(paciente, motivo);
+            else
+            {
+                clin.Main2.Content = new Page2_Abonos(paciente, motivo);
+            }
         }
+
     }
 }

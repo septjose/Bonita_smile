@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Interfaz.Clinica;
 using bonita_smile_v1.Interfaz.Administrador.Paciente;
 using bonita_smile_v1.Interfaz.Administrador.Clinica;
 using bonita_smile_v1.Interfaz;
@@ -198,9 +199,10 @@ namespace bonita_smile_v1.Servicios
                 else
                     if(rol.Equals("Clinica"))
                 {
-                    //Clin clinica = new Clin();
-                    //clinica.ShowDialog();
+                    
                     MessageBox.Show("Clinica");
+                   // Application.Current.Windows[0].Close();
+                    new Clin().ShowDialog();
                 }
                 else
                     if(rol.Equals("Marketing"))

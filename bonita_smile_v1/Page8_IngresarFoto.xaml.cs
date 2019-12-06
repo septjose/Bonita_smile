@@ -81,6 +81,7 @@ namespace bonita_smile_v1
         {
            
             string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.clinica.nombre_sucursal+".jpg";
+            foto = foto.Replace(" ", "_");
 
             if (MiWebCam != null && MiWebCam.IsRunning)
             {

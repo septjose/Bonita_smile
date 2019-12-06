@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace bonita_smile_v1.Modelos
 {
@@ -14,6 +15,7 @@ namespace bonita_smile_v1.Modelos
         public string direccion { get; set; }
         public string telefono { get; set; }
         public string foto { get; set; }
+        public BitmapImage imagen { get; set; }
         public string antecedente { get; set; }
         public string email { get; set; }
         public int marketing { get; set; }

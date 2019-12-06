@@ -142,6 +142,9 @@
     <Compile Include=".xaml.cs">
       <DependentUpon>Page1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\Clinica\Clin.xaml.cs">
+      <DependentUpon>Clin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageBoxAbono.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,6 +273,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaz\Administrador\Ventana_Administrador.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Clinica\Clin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -429,7 +436,6 @@
     <Resource Include="Resources\usuario_azul.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaz\Clinica\" />
     <Folder Include="Interfaz\Marketing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
