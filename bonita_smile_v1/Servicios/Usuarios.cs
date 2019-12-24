@@ -9,6 +9,7 @@ using System.Windows;
 using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
 using bonita_smile_v1.Interfaz.Administrador.Paciente;
+using bonita_smile_v1.Interfaz.Marketing;
 using bonita_smile_v1.Interfaz.Administrador.Clinica;
 using bonita_smile_v1.Interfaz;
 using bonita_smile_v1.Interfaz.Administrador.Usuario;
@@ -209,9 +210,9 @@ namespace bonita_smile_v1.Servicios
                 else
                     if(rol.Equals("Marketing"))
                 {
-                    //Mark marketing = new Mark();
-                    //marketing.ShowDialog();
+                    
                     System.Windows.MessageBox.Show("Marketing");
+                    new Market().ShowDialog();
                 }
             }
         }

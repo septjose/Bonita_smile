@@ -1,5 +1,7 @@
 ﻿using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
+using bonita_smile_v1.Interfaz.Marketing;
+
 using bonita_smile_v1.Modelos;
 using System;
 using System.Collections.Generic;
@@ -66,12 +68,22 @@ namespace bonita_smile_v1
                 //System.Windows.MessageBox.Show("hi");
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+                Market market = System.Windows.Application.Current.Windows.OfType<Market>().FirstOrDefault();
 
                 if (admin != null)
+                {
                     admin.Main.Content = new Page2(paciente);
+                }
+                    
                 else
+                if( clin != null)
                 {
                     clin.Main2.Content = new Page2(paciente);
+                }
+                else
+                    if(market != null)
+                {
+                    market.Main3.Content = new Page2(paciente);
                 }
                     
 

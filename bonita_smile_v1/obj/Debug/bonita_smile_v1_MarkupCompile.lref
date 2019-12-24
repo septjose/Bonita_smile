@@ -16,6 +16,7 @@ FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Admini
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Usuario\Ventana_Usuario.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Administrador\Ventana_Administrador.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Clinica\Clin.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Interfaz\Marketing\Market.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page1.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page2.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page2_Abonos.xaml;;
@@ -34,4 +35,8 @@ FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page7_Actualiza
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page7_Ingresar.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page8_ActualizarFoto.xaml;;
 FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Page8_IngresarFoto.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Pagina_Correo.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Pagina_Marketing.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Pagina_Messenger.xaml;;
+FE:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\Pagina_Whatssap.xaml;;
 
