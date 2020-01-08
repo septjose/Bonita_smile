@@ -1,4 +1,5 @@
-﻿using bonita_smile_v1.Servicios;
+﻿using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,9 @@ namespace bonita_smile_v1
             if (correcto)
             {
                 MessageBox.Show("SI");
+                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                if (admin != null)
+                    admin.Main.Content = new Pagina_Ingresar_Permisos();
             }
             else
             {

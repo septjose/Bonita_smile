@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\PortableGit\programs_c#\bs_v1.0\Bonita_smile\bonita_smile_v1\App.xaml
-40901140891
+31-1611035733
 1-1665918769
-76-959333620
+70698163920
 166-51472057
-Interfaz\Administrador\Admin.xaml;Interfaz\Administrador\Antecedentes\Actualizar_Antecedentes.xaml;Interfaz\Administrador\Antecedentes\Ingresar_Antecedentes_Clinicos.xaml;Interfaz\Administrador\Clinica\Actualizar_Clinica.xaml;Interfaz\Administrador\Clinica\Ingresar Clinica.xaml;Interfaz\Administrador\Clinica\ventana_Clinica.xaml;Interfaz\Administrador\Historial_clinico.xaml;Interfaz\Administrador\Ingresar_Motivo.xaml;Interfaz\Administrador\Paciente\ActualizarPaciente.xaml;Interfaz\Administrador\Paciente\Insertar_Paciente.xaml;Interfaz\Administrador\Paciente\MostrarPacientes.xaml;Interfaz\Administrador\Usuario\Actualizar_Usuario.xaml;Interfaz\Administrador\Usuario\Insertar_Usuario.xaml;Interfaz\Administrador\Usuario\Ventana_Usuario.xaml;Interfaz\Administrador\Ventana_Administrador.xaml;Interfaz\Clinica\Clin.xaml;Interfaz\IniciarSesionWindow.xaml;Interfaz\Marketing\Market.xaml;Page1.xaml;Page2.xaml;Page2_Abonos.xaml;Page2_notas.xaml;Page3.xaml;Page4.xaml;Page4_Actualizar.xaml;Page4_Ingresar.xaml;Page5.xaml;Page5_Actualizar.xaml;Page5_Ingresar.xaml;Page6.xaml;Page6_Actualizar.xaml;Page6_Ingresar.xaml;Page7_Actualizar.xaml;Page7_Ingresar.xaml;Page8_ActualizarFoto.xaml;Page8_IngresarFoto.xaml;Pagina_Correo.xaml;Pagina_Marketing.xaml;Pagina_Messenger.xaml;Pagina_Whatssap.xaml;
+Interfaz\Administrador\Admin.xaml;Interfaz\Clinica\Clin.xaml;Interfaz\IniciarSesionWindow.xaml;Interfaz\Marketing\Market.xaml;Page1.xaml;Page2.xaml;Page2_Abonos.xaml;Page2_notas.xaml;Page3.xaml;Page4.xaml;Page4_Actualizar.xaml;Page4_Ingresar.xaml;Page5.xaml;Page5_Actualizar.xaml;Page5_Ingresar.xaml;Page6.xaml;Page6_Actualizar.xaml;Page6_Ingresar.xaml;Page7_Actualizar.xaml;Page7_Ingresar.xaml;Page8_ActualizarFoto.xaml;Page8_IngresarFoto.xaml;Pagina_Actualizar_Permisos.xaml;Pagina_Agregar_Estudios.xaml;Pagina_Clinica.xaml;Pagina_Correo.xaml;Pagina_Estudios.xaml;Pagina_Ingresar_Permisos.xaml;Pagina_Marketing.xaml;Pagina_Messenger.xaml;Pagina_Whatssap.xaml;
 
-True
+False
 

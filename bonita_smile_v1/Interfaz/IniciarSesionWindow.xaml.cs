@@ -37,7 +37,18 @@ namespace bonita_smile_v1
             //user.redireccionarLogin();
             //Rol r = new Rol();
             //r.eliminarRol(5);
-            user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+            Test_Internet ti = new Test_Internet();
+            bool verdad = ti.Test();
+            if(verdad)
+            {
+                user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+            }
+            else
+            {
+                MessageBox.Show("Offline");
+
+            }
+            
             
         }
     }

@@ -69,6 +69,53 @@ namespace bonita_smile_v1.Servicios
             return listaPaciente;
         }
 
+        public List<PacienteModel> MostrarPaciente_Clinica(int id)
+        {
+
+            List<PacienteModel> listaPaciente = new List<PacienteModel>();
+            query = "SELECT * FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where clinica.id_clinica="+id;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    PacienteModel pacienteModel = new PacienteModel();
+                    ClinicaModel clinicaModel = new ClinicaModel();
+
+                    pacienteModel.id_paciente = int.Parse(reader[0].ToString());
+                    pacienteModel.nombre = reader[1].ToString();
+                    pacienteModel.apellidos = reader[2].ToString();
+                    pacienteModel.direccion = reader[3].ToString();
+                    pacienteModel.telefono = reader[4].ToString();
+                    pacienteModel.foto = reader[5].ToString();
+                    pacienteModel.imagen = LoadImage(@"C:\bs\" + reader[5].ToString());
+                    pacienteModel.email = reader[6].ToString();
+                    if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
+                    //pacienteModel.marketing = reader[6].ToString();
+
+                    pacienteModel.antecedente = reader[9].ToString();
+                    clinicaModel.id_clinica = int.Parse(reader[10].ToString());
+                    clinicaModel.nombre_sucursal = reader[11].ToString();
+                    clinicaModel.color = reader[12].ToString();
+                    pacienteModel.clinica = clinicaModel;
+
+
+                    listaPaciente.Add(pacienteModel);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return listaPaciente;
+        }
+
         public List<PacienteModel> MostrarPaciente_unico(string nombre)
         {
             List<PacienteModel> listaPaciente = new List<PacienteModel>();

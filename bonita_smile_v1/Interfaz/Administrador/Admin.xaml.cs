@@ -104,5 +104,9 @@ namespace bonita_smile_v1.Interfaz.Administrador
             Main.Content = new Page6();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -21,5 +21,7 @@ namespace bonita_smile_v1.Servicios
             MySqlConnection conexionBD = new MySqlConnection(cadena);
             return conexionBD;
         }
+
+
     }
 }

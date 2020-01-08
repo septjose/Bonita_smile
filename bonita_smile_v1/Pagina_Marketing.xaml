@@ -17,93 +17,98 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
     <Border>
-        <Grid HorizontalAlignment="Center" >
-            <Grid.RowDefinitions>
-                <RowDefinition  Height="90" />
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="500"/>
-                <RowDefinition Height="70"/>
-            </Grid.RowDefinitions>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
+            <Grid HorizontalAlignment="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="90" />
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="500"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold" Margin="0 20 0 0"><Run Text="Marketing"/></TextBlock>
-            <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="800"/>
-                    <ColumnDefinition Width=" 195"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Height="25"  FontSize="17" x:Name="txtNombre" BorderBrush="LightGray"  TextWrapping="Wrap" Margin="0 30 0 0" Style="{DynamicResource MaterialDesignTitleTextBox}" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Left"   Width="800"  TextChanged="txtNombre_TextChanged" />
-                <Button  Grid.Column="1"  Height="30" Content="Correo" Margin="30 30 0 0" Click="Button_Click" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold" Margin="0 20 0 0"><Run Text="Marketing"/></TextBlock>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="800"/>
+                        <ColumnDefinition Width=" 195"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Height="25"  FontSize="17" x:Name="txtNombre" BorderBrush="LightGray"  TextWrapping="Wrap" Margin="0 30 0 0" Style="{DynamicResource MaterialDesignTitleTextBox}" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Left"   Width="800"  TextChanged="txtNombre_TextChanged" />
+                    <Button  Grid.Column="1"  Height="30" Content="Correo" Margin="30 30 0 0" Click="Button_Click" />
+                </Grid>
+
+
+
+                <ListView Grid.Row="2"  Grid.Column="1"  x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Height" Value="80"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Control.Background" Value="White" />
+                            <Setter Property="Control.BorderThickness" Value="0.2" />
+                            <Setter Property="Control.BorderBrush" Value="Black" />
+                            <Setter Property="FontFamily" Value="Arial"/>
+                            <Setter Property="FontSize" Value="13"/>
+
+
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.View >
+                        <GridView >
+                            <GridViewColumn Header="Foto" Width="250">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel >
+                                            <Border BorderBrush="{Binding clinica.color}" BorderThickness="2" Height="80" Width="80">
+                                                <Image Source="{Binding imagen}" VerticalAlignment="Center" Height="80" Width="80"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
+                            <GridViewColumn Width="400" Header="Nombre Completo" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="nombre" />
+                                                    <Binding Path="apellidos" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Dirección" Width="250"  DisplayMemberBinding="{Binding direccion}"  />
+                            <GridViewColumn Header="Telefono" Width="250" DisplayMemberBinding="{Binding telefono}" />
+                            <GridViewColumn Header="Email" Width="250" DisplayMemberBinding="{Binding email}" />
+                            <GridViewColumn Header="Clinica" Width="250" DisplayMemberBinding="{Binding clinica.nombre_sucursal}" />
+                            <GridViewColumn Header="Marketing" Width="250" DisplayMemberBinding="{Binding marketing}" />
+
+                        </GridView>
+                    </ListView.View>
+
+                </ListView>
+                <Button Content="Whatssap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Grid.Column="1" Margin="300,40,0,0" Click="Button_Click_1"/>
+                <Button Content="Messenger" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Grid.Column="1" Margin="420,38,0,0" Click="Button_Click_2"/>
+
+
+
+
+
             </Grid>
-
-
-
-            <ListView Grid.Row="2"  Grid.Column="1"  x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                        <Setter Property="Height" Value="80"/>
-                        <Setter Property="Background" Value="White"/>
-                        <Setter Property="Control.Background" Value="White" />
-                        <Setter Property="Control.BorderThickness" Value="0.2" />
-                        <Setter Property="Control.BorderBrush" Value="Black" />
-                        <Setter Property="FontFamily" Value="Arial"/>
-                        <Setter Property="FontSize" Value="13"/>
-
-
-                    </Style>
-                </ListView.ItemContainerStyle>
-
-                <ListView.View >
-                    <GridView >
-                        <GridViewColumn Header="Foto" Width="250">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel >
-                                        <Image Source="{Binding imagen}" VerticalAlignment="Center" Height="80" Width="80"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-
-                        <GridViewColumn Width="400" Header="Nombre Completo" >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="nombre" />
-                                                <Binding Path="apellidos" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Dirección" Width="250"  DisplayMemberBinding="{Binding direccion}"  />
-                        <GridViewColumn Header="Telefono" Width="250" DisplayMemberBinding="{Binding telefono}" />
-                        <GridViewColumn Header="Email" Width="250" DisplayMemberBinding="{Binding email}" />
-                        <GridViewColumn Header="Clinica" Width="250" DisplayMemberBinding="{Binding clinica.nombre_sucursal}" />
-                        <GridViewColumn Header="Marketing" Width="250" DisplayMemberBinding="{Binding marketing}" />
-
-                    </GridView>
-                </ListView.View>
-
-            </ListView>
-            <Button Content="Whatssap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Grid.Column="1" Margin="300,40,0,0" Click="Button_Click_1"/>
-            <Button Content="Messenger" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Grid.Column="1" Margin="420,38,0,0" Click="Button_Click_2"/>
-
-
-
-
-
-        </Grid>
+        </ScrollViewer>
     </Border>
+        
 </Page>

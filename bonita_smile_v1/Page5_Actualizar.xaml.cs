@@ -1,4 +1,5 @@
-﻿using bonita_smile_v1.Modelos;
+﻿using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using System;
 using System.Collections.Generic;
@@ -44,10 +45,13 @@ namespace bonita_smile_v1
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
             Clinicas cl = new Clinicas();
+            Usuarios usu = new Usuarios();
             string nombre_clinica = txtNombre.Text;
             int id_clinica = id_clin;
             int combo = cmbColor.SelectedIndex;
             string color = "";
+            string alias = "";
+            string id_permiso="";
             if (combo > -1)
             {
                 color = cmbColor.SelectedItem.ToString().Replace("System.Windows.Media.Color", "");
@@ -57,7 +61,12 @@ namespace bonita_smile_v1
                 {
                     System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                    if (admin != null)
+                        alias = usu.Buscar_Alias(id_clinica);
+                    id_permiso = usu.Buscar_Permiso(id_clinica);
 
+                    admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica,id_permiso);
 
                 }
                 else
@@ -73,7 +82,12 @@ namespace bonita_smile_v1
                 if (actualizo)
                 {
                     System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                    if (admin != null)
+                        alias = usu.Buscar_Alias(id_clinica);
+                    id_permiso = usu.Buscar_Permiso(id_clinica);
 
+                    admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica,id_permiso);
 
 
                 }

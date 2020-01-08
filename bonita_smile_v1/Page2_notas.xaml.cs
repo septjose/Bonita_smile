@@ -96,5 +96,17 @@ namespace bonita_smile_v1
             }
         }
 
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+            Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+
+            if (admin != null)
+                admin.Main.Content = new Pagina_Estudios(paciente);
+            else
+            {
+                clin.Main2.Content = new Pagina_Estudios(paciente);
+            }
+        }
     }
 }

@@ -7,132 +7,132 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="900"
       Title="Page4">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
+        <Grid>
 
-    <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="100" />
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="200"/>
 
-        <Grid.RowDefinitions>
-            <RowDefinition  Height="100" />
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
 
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
-            <ColumnDefinition Width="1000"/>
-            <ColumnDefinition Width="120"/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Usuarios" Margin="0,20,0,0"/>
-        <ListView Grid.Row="1" Grid.Column="1" x:Name="lv_Users" HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="1000" Style="{StaticResource MetroListView}" >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="Height" Value="30"/>
-                    <Setter Property="Background" Value="White"/>
-                    <Setter Property="Control.Background" Value="White" />
-                    <Setter Property="Control.BorderThickness" Value="0.2" />
-                    <Setter Property="Control.BorderBrush" Value="Black" />
-                    <Setter Property="FontFamily" Value="Arial"/>
-                    <Setter Property="FontSize" Value="13"/>
-
-
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View >
-                <GridView >
-
-                    <GridViewColumn Header="Nombre Completo" Width="250" DisplayMemberBinding="{Binding nombre}" />
-                    <GridViewColumn Header="Apellidos" Width="250" DisplayMemberBinding="{Binding apellidos}" />
-                    <GridViewColumn Header="Alias" Width="250" DisplayMemberBinding="{Binding alias}" />
-                    <GridViewColumn Header="Contraseña" Width="250" DisplayMemberBinding="{Binding password}" />
-                    <GridViewColumn Header="Rol" Width="250" DisplayMemberBinding="{Binding rol.descripcion}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-        <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="498,52,0,0" VerticalAlignment="Top" Width="129" Height="43" Click="Button_Click">
-            <Button.Template>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                        <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\eliminar.png">
-                        </Image>
-                        <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="RenderTransform" TargetName="grid">
-                                <Setter.Value>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                        <SkewTransform AngleX="0" AngleY="0"/>
-                                        <RotateTransform Angle="0"/>
-                                        <TranslateTransform X="0" Y="0"/>
-                                    </TransformGroup>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-
-        <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="43" Margin="264,51,0,0" VerticalAlignment="Top" Width="132" Click="Button_Click_2">
-            <Button.Template>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                        <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\actualizar.png">
-                        </Image>
-                        <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="RenderTransform" TargetName="grid">
-                                <Setter.Value>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                        <SkewTransform AngleX="0" AngleY="0"/>
-                                        <RotateTransform Angle="0"/>
-                                        <TranslateTransform X="0" Y="0"/>
-                                    </TransformGroup>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-
-        <Button Grid.Row="2" Grid.Column="1" Content="Ingresar" HorizontalAlignment="Left" Margin="26,50,0,0" VerticalAlignment="Top" Width="138" Height="43" Click="Button_Click_1">
-            <Button.Template>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                        <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\agregar.png">
-                        </Image>
-                        <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="RenderTransform" TargetName="grid">
-                                <Setter.Value>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                        <SkewTransform AngleX="0" AngleY="0"/>
-                                        <RotateTransform Angle="0"/>
-                                        <TranslateTransform X="0" Y="0"/>
-                                    </TransformGroup>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="1000"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Usuarios" Margin="0,20,0,0"/>
+            <ListView Grid.Row="1" Grid.Column="1" x:Name="lv_Users" HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="1000" Style="{StaticResource MetroListView}" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Control.Background" Value="White" />
+                        <Setter Property="Control.BorderThickness" Value="0.2" />
+                        <Setter Property="Control.BorderBrush" Value="Black" />
+                        <Setter Property="FontFamily" Value="Arial"/>
+                        <Setter Property="FontSize" Value="13"/>
 
 
-    </Grid>
-    
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View >
+                    <GridView >
+
+                        <GridViewColumn Header="Nombre Completo" Width="250" DisplayMemberBinding="{Binding nombre}" />
+                        <GridViewColumn Header="Apellidos" Width="250" DisplayMemberBinding="{Binding apellidos}" />
+                        <GridViewColumn Header="Alias" Width="250" DisplayMemberBinding="{Binding alias}" />
+                        <GridViewColumn Header="Contraseña" Width="250" DisplayMemberBinding="{Binding password}" />
+                        <GridViewColumn Header="Rol" Width="250" DisplayMemberBinding="{Binding rol.descripcion}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="498,52,0,0" VerticalAlignment="Top" Width="129" Height="43" Click="Button_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                            <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\eliminar.png">
+                            </Image>
+                            <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="RenderTransform" TargetName="grid">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                            <SkewTransform AngleX="0" AngleY="0"/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform X="0" Y="0"/>
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="43" Margin="264,51,0,0" VerticalAlignment="Top" Width="132" Click="Button_Click_2">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                            <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\actualizar.png">
+                            </Image>
+                            <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="RenderTransform" TargetName="grid">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                            <SkewTransform AngleX="0" AngleY="0"/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform X="0" Y="0"/>
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button Grid.Row="2" Grid.Column="1" Content="Ingresar" HorizontalAlignment="Left" Margin="26,50,0,0" VerticalAlignment="Top" Width="138" Height="43" Click="Button_Click_1">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                            <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\agregar.png">
+                            </Image>
+                            <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="RenderTransform" TargetName="grid">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                            <SkewTransform AngleX="0" AngleY="0"/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform X="0" Y="0"/>
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+        </Grid>
+    </ScrollViewer>
 </Page>

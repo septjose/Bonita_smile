@@ -7,22 +7,23 @@
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="800"
       Title="Page4_Actualizar">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
+        <Grid>
+            <Label Content="Nombre Completo" HorizontalAlignment="Left" Margin="36,64,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+            <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Height="42" Margin="230,64,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
+            <Label Content="Apellidos" HorizontalAlignment="Left" Margin="36,126,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+            <TextBox x:Name="txtApellido" HorizontalAlignment="Left" Height="42" Margin="230,126,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
+            <Label Content="Nombre de usuario" HorizontalAlignment="Left" Margin="36,188,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+            <TextBox x:Name="txtAlias" HorizontalAlignment="Left" Height="42" Margin="230,188,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
+            <Label Content="Contraseña" HorizontalAlignment="Left" Margin="36,249,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+            <PasswordBox x:Name="pwbPassword" HorizontalAlignment="Left" Height="42" Margin="230,249,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroButtonRevealedPasswordBox}"/>
+            <Label Content="Actualizar Usuario" HorizontalAlignment="Left" Height="33" Margin="311,10,0,0" VerticalAlignment="Top" Width="126" Style="{StaticResource MetroLabel}"/>
+            <Label Content="Seleccionar Rol" HorizontalAlignment="Left" Margin="36,319,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
+            <ComboBox x:Name="cmbRol" HorizontalAlignment="Left" Height="42" Margin="230,319,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroComboBox}"/>
+            <Button x:Name="btnFinalizar" Content="Finalizar" HorizontalAlignment="Left" Height="47" Margin="610,396,0,0" VerticalAlignment="Top" Width="160" Click="btnFinalizar_Click"/>
 
-    <Grid>
-        <Label Content="Nombre Completo" HorizontalAlignment="Left" Margin="36,64,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
-        <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Height="42" Margin="230,64,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
-        <Label Content="Apellidos" HorizontalAlignment="Left" Margin="36,126,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
-        <TextBox x:Name="txtApellido" HorizontalAlignment="Left" Height="42" Margin="230,126,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
-        <Label Content="Nombre de usuario" HorizontalAlignment="Left" Margin="36,188,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
-        <TextBox x:Name="txtAlias" HorizontalAlignment="Left" Height="42" Margin="230,188,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="366" Style="{StaticResource MetroTextBox}"/>
-        <Label Content="Contraseña" HorizontalAlignment="Left" Margin="36,249,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
-        <PasswordBox x:Name="pwbPassword" HorizontalAlignment="Left" Height="42" Margin="230,249,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroButtonRevealedPasswordBox}"/>
-        <Label Content="Actualizar Usuario" HorizontalAlignment="Left" Height="33" Margin="311,10,0,0" VerticalAlignment="Top" Width="126" Style="{StaticResource MetroLabel}"/>
-        <Label Content="Seleccionar Rol" HorizontalAlignment="Left" Margin="36,319,0,0" VerticalAlignment="Top" Height="42" Width="173" Style="{StaticResource MetroLabel}"/>
-        <ComboBox x:Name="cmbRol" HorizontalAlignment="Left" Height="42" Margin="230,319,0,0" VerticalAlignment="Top" Width="366" Style="{StaticResource MetroComboBox}"/>
-        <Button x:Name="btnFinalizar" Content="Finalizar" HorizontalAlignment="Left" Height="47" Margin="610,396,0,0" VerticalAlignment="Top" Width="160" Click="btnFinalizar_Click"/>
 
 
-  
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>

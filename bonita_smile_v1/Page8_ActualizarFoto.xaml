@@ -5,10 +5,27 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bonita_smile_v1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="900"
       Title="Page8_ActualizarFoto">
 
-    <Grid>
-        
-    </Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
+        <Grid>
+            <Grid x:Name="btnEncender" Margin="0,0,0,-5" Height="426" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="521*"/>
+                    <ColumnDefinition Width="272*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Añadir Paciente" HorizontalAlignment="Left" Height="41" Margin="360,0,0,0" VerticalAlignment="Top" Width="161" FontSize="20" Style="{StaticResource MetroLabel}"/>
+                <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="26" Margin="189,57,0,0" VerticalAlignment="Top" Width="180"  Style="{StaticResource MetroComboBox}"/>
+                <Label Content="Seleccionar Dispositivo" HorizontalAlignment="Left" Height="26" Margin="10,52,0,0" VerticalAlignment="Top" Width="148" Style="{StaticResource MetroLabel}"/>
+                <Button  x:Name="btnencender" Content="Encender Camara" Height="26" Margin="79,112,282.333,0" VerticalAlignment="Top" Click="Button_Click" RenderTransformOrigin="0.501,0.5"/>
+                <Button x:Name="btncapturar" Content="Capturar" HorizontalAlignment="Left" Height="26" Margin="9.667,112,0,0" VerticalAlignment="Top" Width="93" Grid.Column="1" Click="Button_Click_2"/>
+                <Button x:Name="btnSiguiente" Content="Finalizar" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="157.667,240,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
+                <Image x:Name="img1" HorizontalAlignment="Left" Height="247" Margin="400,160,0,0" VerticalAlignment="Top" Width="330" Grid.ColumnSpan="2"/>
+                <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="255" Margin="35,165,0,0" Stroke="Black" VerticalAlignment="Top" Width="340"/>
+            </Grid>
+            <RadioButton  x:Name="rbt_si"   Content="Si tomar foto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="542,62,0,0" Checked="rbt_si_Checked"/>
+            <RadioButton x:Name="rbt_no"   Content="No tomar foto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="712,67,0,0" Checked="rbt_no_Checked" />
+        </Grid>
+    </ScrollViewer>
 </Page>

@@ -6,7 +6,7 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:bonita_smile_v1.Interfaz.Administrador"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:controlzex="urn:controlzex" x:Class="bonita_smile_v1.Interfaz.Administrador.Admin"
-        mc:Ignorable="d"
+        
         Height="600" Width="1024" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Controls:MetroWindow.Resources>
         <Storyboard x:Key="OpenMenu">
@@ -140,7 +140,7 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="AccountSearch" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <materialDesign:PackIcon Kind="AccountTie" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="Usuarios" Margin="10" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ListViewItem>
@@ -154,7 +154,7 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Facebook" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <materialDesign:PackIcon Kind="HospitalBuilding" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="Clinicas" Margin="10" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ListViewItem>
@@ -168,7 +168,7 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Twitter" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <materialDesign:PackIcon Kind="ClipboardAccountOutline" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="Pacientes" Margin="10" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ListViewItem>
@@ -181,10 +181,10 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
+                   <!-- <StackPanel Orientation="Horizontal" Margin="10 0">
                         <materialDesign:PackIcon Kind="Skype" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="Skype" Margin="10" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    </StackPanel>-->
                 </ListViewItem>
             </ListView>
         </StackPanel>
@@ -240,7 +240,7 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Frame   x:Name="Main"  NavigationUIVisibility="Hidden" Margin="0,52,0.333,0" Grid.ColumnSpan="2"/>
+            <Frame   x:Name="Main"  NavigationUIVisibility="Visible" Margin="0,52,0.333,0" Grid.ColumnSpan="2"/>
             <!--<ListView x:Name="lv_Paciente" HorizontalAlignment="Center" Height="283" Margin="24,224,0,0" VerticalAlignment="Top" Width="724" Foreground="Black" >
                 <ListView.View >
                     <GridView >

@@ -1,7 +1,6 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
 using bonita_smile_v1.Interfaz.Administrador;
-using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using MahApps.Metro.Controls;
@@ -42,11 +41,12 @@ namespace bonita_smile_v1
         string valor = "";
         string antecedentes = "";
         int id_pacientes = 0;
+        string foto = "";
         public Page6_Actualizar(PacienteModel paciente)
         {
             this.conexionBD = obj.conexion();
             InitializeComponent();
-            CargaDispositivos();
+            
             llenar_Combo();
             txtApellidos.Text = paciente.apellidos;
             txtDireccion.Text = paciente.direccion;
@@ -56,6 +56,7 @@ namespace bonita_smile_v1
             cmbClinica.SelectedItem = paciente.clinica.nombre_sucursal;
             antecedentes = paciente.antecedente;
             id_pacientes = paciente.id_paciente;
+            foto = paciente.foto;
 
         }
 
@@ -99,20 +100,7 @@ namespace bonita_smile_v1
         {
 
         }
-        public void CargaDispositivos()
-        {
-            MisDispositivios = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            if (MisDispositivios.Count > 0)
-            {
-                HayDispositivos = true;
-                for (int i = 0; i < MisDispositivios.Count; i++)
-                    comboBox1.Items.Add(MisDispositivios[i].Name.ToString());
-                comboBox1.Text = MisDispositivios[0].Name.ToString();
-            }
-            else
-                HayDispositivos = false;
-
-        }
+       
         private void CerrarWebCam()
         {
             if (MiWebCam != null && MiWebCam.IsRunning)
@@ -122,41 +110,8 @@ namespace bonita_smile_v1
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            CerrarWebCam();
-            int i = comboBox1.SelectedIndex;
-            string NombreVideo = MisDispositivios[i].MonikerString;
-            MiWebCam = new VideoCaptureDevice(NombreVideo);
-            MiWebCam.NewFrame += new NewFrameEventHandler(Capturando);
-            MiWebCam.Start();
-
-
-        }
-        private void Capturando(object sender, NewFrameEventArgs eventArgs)
-        {
-            try
-            {
-                System.Drawing.Image img = (Bitmap)eventArgs.Frame.Clone();
-
-                MemoryStream ms = new MemoryStream();
-                img.Save(ms, ImageFormat.Bmp);
-                ms.Seek(0, SeekOrigin.Begin);
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.StreamSource = ms;
-                bi.EndInit();
-
-                bi.Freeze();
-                Dispatcher.BeginInvoke(new ThreadStart(delegate
-                {
-                    img1.Source = bi;
-                }));
-            }
-            catch (Exception ex)
-            {
-            }
-        }
+        
+        
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -169,7 +124,7 @@ namespace bonita_smile_v1
             pacienteModel.nombre = txtNombre.Text;
             pacienteModel.direccion = txtDireccion.Text;
             pacienteModel.telefono = txtTelefono.Text;
-            pacienteModel.foto = txtNombre.Text + "" + txtApellidos.Text;
+            pacienteModel.foto = foto;
             pacienteModel.email = txtEmail.Text;
             pacienteModel.marketing = 0;
             pacienteModel.antecedente = antecedentes;
@@ -217,18 +172,7 @@ namespace bonita_smile_v1
             return id;
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            if (MiWebCam != null && MiWebCam.IsRunning)
-            {
-                CerrarWebCam();
-                string filePath = ruta + "img.jpg";
-                var encoder = new JpegBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
-                using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                    encoder.Save(stream);
-            }
-        }
+       
 
         private void cmbClinica_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

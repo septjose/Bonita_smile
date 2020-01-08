@@ -1,5 +1,4 @@
-﻿using bonita_smile_v1.Interfaz.Administrador.Usuario;
-using bonita_smile_v1.Modelos;
+﻿using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using MySql.Data.MySqlClient;
 using System;
@@ -85,7 +84,7 @@ namespace bonita_smile_v1
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
-            Ventana_Usuario vu = new Ventana_Usuario();
+            //Ventana_Usuario vu = new Ventana_Usuario();
             UsuarioModel usu = new UsuarioModel();
             RolModel rolModel = new RolModel();
             valor = cmbRol.SelectedItem.ToString();

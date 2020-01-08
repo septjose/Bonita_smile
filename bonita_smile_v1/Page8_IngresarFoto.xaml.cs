@@ -24,7 +24,6 @@ using System.Windows.Interop;
 using System.Threading;
 using Size = System.Windows.Size;
 using bonita_smile_v1.Modelos;
-using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
 using MySql.Data.MySqlClient;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Interfaz.Administrador;
@@ -115,6 +114,8 @@ namespace bonita_smile_v1
                 if (subir)
                 {
                     System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
+                        @"C:\bs\" + foto, 10);
                 }
                 else
                 {
@@ -177,6 +178,50 @@ namespace bonita_smile_v1
             }
             return verdad;
 
+        }
+
+        public bool downloadFile(string servidor, string usuario, string password, string archivoOrigen, string carpetaDestino, int bufferdes)
+        {
+            bool descargar;
+            try
+            {
+                FtpWebRequest reqFTP;
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(servidor + archivoOrigen);
+                reqFTP.Credentials = new NetworkCredential(usuario, password);
+                reqFTP.KeepAlive = false;
+                reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
+                reqFTP.UseBinary = true;
+                reqFTP.Proxy = null;
+                reqFTP.UsePassive = true;
+                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                FileStream writeStream = new FileStream(@carpetaDestino, FileMode.Create);
+                int Length = bufferdes;
+                Byte[] buffer = new Byte[Length];
+                int bytesRead = responseStream.Read(buffer, 0, Length);
+                while (bytesRead > 0)
+                {
+                    writeStream.Write(buffer, 0, bytesRead);
+                    bytesRead = responseStream.Read(buffer, 0, Length);
+                }
+                writeStream.Close();
+                response.Close();
+                descargar = true;
+            }
+            catch (WebException wEx)
+            {
+                descargar = false;
+                throw wEx;
+
+            }
+            catch (Exception ex)
+            {
+                descargar = false;
+                throw ex;
+
+
+            }
+            return descargar;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

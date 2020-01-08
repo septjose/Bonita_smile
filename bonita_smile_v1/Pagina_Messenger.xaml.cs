@@ -23,7 +23,7 @@ namespace bonita_smile_v1
         public Pagina_Messenger()
         {
             InitializeComponent();
-            wbMessenger.Navigate("https://www.facebook.com/");
+            wbMessenger.Navigate("https://www.Facebook.com/");
         }
     }
 }

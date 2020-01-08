@@ -7,9 +7,10 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Pagina_Messenger">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
+        <Grid>
+            <WebBrowser x:Name="wbMessenger" HorizontalAlignment="Left"  Height="450" VerticalAlignment="Top" Width="790"/>
 
-    <Grid>
-        <WebBrowser x:Name="wbMessenger" HorizontalAlignment="Left"  Height="450" VerticalAlignment="Top" Width="790"/>
-
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>

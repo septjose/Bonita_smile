@@ -24,7 +24,6 @@ using System.Windows.Interop;
 using System.Threading;
 using Size = System.Windows.Size;
 using bonita_smile_v1.Modelos;
-using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
 using MySql.Data.MySqlClient;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Interfaz.Administrador;

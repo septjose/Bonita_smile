@@ -35,6 +35,11 @@ namespace bonita_smile_v1
             
             InitializeComponent();
             rt_imagen.Fill= Imagen(@"C:\bs\" + paciente.foto);
+            string color = paciente.clinica.color;
+
+            
+           
+            
 
 
             txtNombre.Text = paciente.nombre+" "+paciente.apellidos;

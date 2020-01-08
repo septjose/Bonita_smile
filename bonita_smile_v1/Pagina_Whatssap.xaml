@@ -7,15 +7,16 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Pagina_Whatssap">
-
-    <Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
         <Grid>
-            <Button Background="LightGreen" Content="Enviar Mensaje" HorizontalAlignment="Left" Margin="280,325,0,0" VerticalAlignment="Top" Width="125" Height="45" Click="Button_Click"/>
-            <Label Content="Numero de Telefono" HorizontalAlignment="Left" Margin="156,145,0,0" VerticalAlignment="Top"/>
-            <Label Content="Mensaje a enviar" HorizontalAlignment="Left" Margin="160,190,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtTelefono" HorizontalAlignment="Left" Height="23" Margin="325,155,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="200"/>
-            <TextBox x:Name="txtMensaje" HorizontalAlignment="Left" Height="60" Margin="320,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="230"/>
+            <Grid>
+                <Button Background="LightGreen" Content="Enviar Mensaje" HorizontalAlignment="Left" Margin="280,325,0,0" VerticalAlignment="Top" Width="125" Height="45" Click="Button_Click"/>
+                <Label Content="Numero de Telefono" HorizontalAlignment="Left" Margin="156,145,0,0" VerticalAlignment="Top"/>
+                <Label Content="Mensaje a enviar" HorizontalAlignment="Left" Margin="160,190,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="txtTelefono" HorizontalAlignment="Left" Height="23" Margin="325,155,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="200"/>
+                <TextBox x:Name="txtMensaje" HorizontalAlignment="Left" Height="60" Margin="320,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="230"/>
 
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </Page>

@@ -17,7 +17,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
     <Border>
-    <Grid HorizontalAlignment="Center" >
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide="True" Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True" Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="True" >
+            <Grid HorizontalAlignment="Center" >
+          
         <Grid.RowDefinitions>
            <RowDefinition  Height="90" />
            <RowDefinition Height="60"/>
@@ -66,8 +68,10 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel >
-                                        <Image Source="{Binding imagen}" VerticalAlignment="Center" Height="80" Width="80"/>
-                                    </StackPanel>
+                                            <Border BorderBrush="{Binding clinica.color}" BorderThickness="2" Height="80" Width="80">
+                                                <Image Source="{Binding imagen}" VerticalAlignment="Center" Height="80" Width="80"/>
+                                           </Border>
+                                        </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -100,8 +104,9 @@
 
 
 
-            
-        
-    </Grid>
+
+           
+        </Grid>
+        </ScrollViewer>
     </Border>
 </Page>

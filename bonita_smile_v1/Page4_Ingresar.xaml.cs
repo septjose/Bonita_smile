@@ -1,4 +1,5 @@
-﻿using bonita_smile_v1.Servicios;
+﻿using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Servicios;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,8 @@ namespace bonita_smile_v1
             if (inserto)
             {
                 MessageBox.Show("si");
+              
+               
             }
             else
             {

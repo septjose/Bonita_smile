@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
-using bonita_smile_v1.Interfaz.Administrador.Paciente;
+
 using bonita_smile_v1.Interfaz.Marketing;
-using bonita_smile_v1.Interfaz.Administrador.Clinica;
+
 using bonita_smile_v1.Interfaz;
-using bonita_smile_v1.Interfaz.Administrador.Usuario;
-using bonita_smile_v1.Interfaz.Administrador.Antecedentes;
+
+
 using System.Windows.Forms;
 
 namespace bonita_smile_v1.Servicios
@@ -160,8 +160,6 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
                     return rol;
 
-
-
                 }
             }
             catch (MySqlException ex)
@@ -185,7 +183,7 @@ namespace bonita_smile_v1.Servicios
                 if(rol.Equals("Administrador"))
                 {
                     //Admin admin = new Admin();
-                    Insertar_Paciente ip = new Insertar_Paciente();
+                    
                     //Ingresar_Clinica ic = new Ingresar_Clinica();
                     //Insertar_Color ic = new Insertar_Color();
                     //Insertar_Usuario iu = new Insertar_Usuario();
@@ -202,10 +200,13 @@ namespace bonita_smile_v1.Servicios
                 else
                     if(rol.Equals("Clinica"))
                 {
-                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int id = Convert.ToInt32(Buscar_Clinica(alias));
+
+                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias +"el id de la clinica es "+id, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     //System.Windows.Application.Current.Windows[0].Close();
-                    // Application.Current.Windows[0].Close();
-                    new Clin().ShowDialog();
+                     //Application.Current.Windows[0].Close();
+                    new Clin(id).ShowDialog();
                 }
                 else
                     if(rol.Equals("Marketing"))
@@ -295,9 +296,109 @@ namespace bonita_smile_v1.Servicios
 
         }
 
+        public string Buscar_Clinica(String alias)
+        {
+            string id ="";
+            MySqlCommand cmd;
+            string query = "select clinica.id_clinica as id from usuario inner join permisos on permisos.id_usuario=usuario.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where usuario.alias='"+alias+"' and usuario.id_rol=2";
+            try
+            {
+                conexionBD.Open();
+                cmd = new MySqlCommand(query, conexionBD);
+                int existe = Convert.ToInt32(cmd.ExecuteScalar());
+                if (existe == 0)
+                {
+                    conexionBD.Close();
+                    return "";
+                }
+                else
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    id = reader[0].ToString();
+                    conexionBD.Close();
+                    return id;
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return "";
+            }
+        }
+
+        public string Buscar_Alias(int id_clinica)
+        {
+            string id = "";
+            MySqlCommand cmd;
+            string query = "select usuario.alias from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where clinica.id_clinica="+id_clinica;
+            try
+            {
+                conexionBD.Open();
+                cmd = new MySqlCommand(query, conexionBD);
+                System.Windows.MessageBox.Show(cmd.ExecuteScalar().ToString());
+                string existe = cmd.ExecuteScalar().ToString();
+                if (("".Equals(existe)))
+                {
+                    conexionBD.Close();
+                    return "";
+                }
+                else
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    id = reader[0].ToString();
+                    conexionBD.Close();
+                    return id;
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return "";
+            }
+        }
+
+        public string Buscar_Permiso(int id_clinica)
+        {
+            string id = "";
+            MySqlCommand cmd;
+            string query = "select permisos.id_permiso from permisos where permisos.id_clinica="+id_clinica;
+            try
+            {
+                conexionBD.Open();
+                cmd = new MySqlCommand(query, conexionBD);
+                
+                int existe = Convert.ToInt32(cmd.ExecuteScalar());
+                if (existe==0)
+                {
+                    conexionBD.Close();
+                    return "";
+                }
+                else
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    id = reader[0].ToString();
+                    conexionBD.Close();
+                    return id;
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return "";
+            }
+        }
         //public bool Validar_usu(string alias,string password)
         //{
-            
+
         //    MySqlCommand cmd;
         //    string query = "SELECT * FROM usuario where alias='" + alias+"'";
         //    try
@@ -331,7 +432,7 @@ namespace bonita_smile_v1.Servicios
         //            {
         //                return false;
         //            }
-                    
+
         //        }
         //    }
         //    catch (MySqlException ex)

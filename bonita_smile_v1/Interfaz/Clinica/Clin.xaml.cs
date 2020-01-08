@@ -22,10 +22,10 @@ namespace bonita_smile_v1.Interfaz.Clinica
     public partial class Clin : MetroWindow
     {
         ObservableCollection<PacienteModel> GPaciente;
-        public Clin()
+        public Clin(int id)
         {
             InitializeComponent();
-            Main2.Content = new Page1();
+            Main2.Content = new Pagina_Clinica(id);
             //llenar_list_view();
 
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);

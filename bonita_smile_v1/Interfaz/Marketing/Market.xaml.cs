@@ -86,22 +86,22 @@ namespace bonita_smile_v1.Interfaz.Marketing
 
         private void listViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main3.Content = new Page1();
+            Main3.Content = new Pagina_Marketing();
         }
 
         private void listViewItem1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main3.Content = new Page4();
+            Main3.Content = new Pagina_Marketing();
         }
 
         private void listViewItem2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main3.Content = new Page5();
+            Main3.Content = new Pagina_Marketing();
         }
 
         private void listViewItem3_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main3.Content = new Page6();
+            Main3.Content = new Pagina_Marketing();
         }
 
     }
