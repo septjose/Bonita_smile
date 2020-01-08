@@ -301,9 +301,8 @@
     <Compile Include="Servicios\Antecedentes_clinicos.cs" />
     <Compile Include="Servicios\Carpeta_archivos.cs" />
     <Compile Include="Servicios\Clinicas.cs" />
-    <Compile Include="Servicios\Clinica_paciente.cs" />
     <Compile Include="Servicios\Conexion.cs" />
-    <Compile Include="Servicios\Conexion_Oflline.cs" />
+    <Compile Include="Servicios\Conexion_Offline.cs" />
     <Compile Include="Servicios\Foto_estudio_carpeta.cs" />
     <Compile Include="Servicios\Marketing.cs" />
     <Compile Include="Servicios\Motivo_cita.cs" />
@@ -313,6 +312,17 @@
     <Compile Include="Servicios\Seguridad.cs" />
     <Compile Include="Servicios\Test_Internet.cs" />
     <Compile Include="Servicios\Usuarios.cs" />
+    <Compile Include="Offline\Abonos_Offline.cs" />
+    <Compile Include="Offline\Antecedentes_Clinicos_Offline.cs" />
+    <Compile Include="Offline\Carpeta_archivos_Offline.cs" />
+    <Compile Include="Offline\Clinicas_Offline.cs" />
+    <Compile Include="Offline\Fotos_estudio_carpeta_Offline.cs" />
+    <Compile Include="Offline\Marketing_Offline.cs" />
+    <Compile Include="Offline\Motivo_cita_Offline.cs" />
+    <Compile Include="Offline\Nota_de_digi_evolucion_Offline.cs" />
+    <Compile Include="Offline\Paciente_Offline.cs" />
+    <Compile Include="Offline\Rol_Offline.cs" />
+    <Compile Include="Offline\Usuarios_Offline.cs" />
     <Page Include="Interfaz\Administrador\Admin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -450,7 +460,6 @@
     <Compile Include="Modelos\AbonosModel.cs" />
     <Compile Include="Modelos\Carpeta_archivosModel.cs" />
     <Compile Include="Modelos\ClinicaModel.cs" />
-    <Compile Include="Modelos\Clinica_pacienteModel.cs" />
     <Compile Include="Modelos\Fotos_estudio_carpetaModel.cs" />
     <Compile Include="Modelos\MarketingModel.cs" />
     <Compile Include="Modelos\Motivo_citaModel.cs" />

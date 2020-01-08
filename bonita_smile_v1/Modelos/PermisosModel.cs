@@ -10,5 +10,7 @@ namespace bonita_smile_v1.Modelos
     {
         public ClinicaModel clinica { get; set; }
         public UsuarioModel usuario { get; set; }
+
+        public string fecha { get; set; }
     }
 }

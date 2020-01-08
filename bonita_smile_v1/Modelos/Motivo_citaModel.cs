@@ -12,5 +12,7 @@ namespace bonita_smile_v1.Modelos
         public string descripcion { get; set; }
         public double costo { get; set; }
         public PacienteModel paciente { get; set; }
+
+        public string fecha { get; set; }
     }
 }
