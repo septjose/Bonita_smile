@@ -14,11 +14,11 @@ namespace bonita_smile_v1.Servicios
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
-        Conexion obj = new Conexion();
 
         public Abonos()
         {
-            this.conexionBD = obj.conexion();
+            Conexion obj = new Conexion();
+
         }
 
         public List<AbonosModel> MostrarAbonos(int id_motivo,int id_paciente)

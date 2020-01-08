@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
-using bonita_smile_v1.Offline;
 
 
 namespace bonita_smile_v1
@@ -35,26 +34,11 @@ namespace bonita_smile_v1
         {
             // MessageBox.Show("txtx  :" +txtUsuario.Text+"    "+ "pass :"+pbPassword.Password);
             Usuarios user = new Usuarios();
-            Usuarios_Offline u_o = new Usuarios_Offline();
             Seguridad secure = new Seguridad();
             //user.redireccionarLogin();
             //Rol r = new Rol();
             //r.eliminarRol(5);
-            Test_Internet ti = new Test_Internet();
-            bool verdad = ti.Test();
-            if(verdad)
-            {
                 user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
-            }
-            else
-            {
-                MessageBox.Show("Offline");
-                u_o.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
-                
-
-            }
-            
-            
         }
     }
 }
