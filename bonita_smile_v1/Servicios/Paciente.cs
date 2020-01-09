@@ -17,6 +17,7 @@ namespace bonita_smile_v1.Servicios
         private string query;
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
+        Test_Internet ti = new Test_Internet();
 
         public Paciente()
         {
@@ -73,7 +74,7 @@ namespace bonita_smile_v1.Servicios
         {
 
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
-            query = "SELECT * FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where clinica.id_clinica="+id;
+            query = "SELECT * FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where clinica.id_clinica="+id+ ";";
 
             try
             {
@@ -180,6 +181,11 @@ namespace bonita_smile_v1.Servicios
             {
                 MessageBox.Show(ex.ToString());
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return false;
             }
         }
@@ -194,6 +200,11 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
             }
             catch (MySqlException ex)
@@ -213,6 +224,11 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
             }
             catch (MySqlException ex)

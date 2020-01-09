@@ -56,6 +56,16 @@ namespace bonita_smile_v1
             {
                 color = cmbColor.SelectedItem.ToString().Replace("System.Windows.Media.Color", "");
                 System.Windows.Forms.MessageBox.Show("se eligio un color     " + color);
+
+
+
+
+
+
+
+
+
+
                 bool actualizo = cl.actualizarClinica(id_clinica, nombre_clinica, color);
                 if (actualizo)
                 {

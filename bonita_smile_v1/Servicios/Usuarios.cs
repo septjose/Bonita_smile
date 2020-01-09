@@ -26,6 +26,7 @@ namespace bonita_smile_v1.Servicios
         private MySqlConnection conexionBD;
         private UsuarioModel usuarioModel;
         private Conexion obj = new Conexion();
+        Test_Internet ti = new Test_Internet();
         
 
         public Usuarios()
@@ -80,6 +81,11 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
 
             }
@@ -101,6 +107,11 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
 
             }
@@ -122,6 +133,11 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
 
             }
@@ -192,7 +208,7 @@ namespace bonita_smile_v1.Servicios
                     //Ventana_Usuario vu = new Ventana_Usuario();
 
                     System.Windows.Forms.MessageBox.Show("Bienvenido usuario: "+alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.Windows.Application.Current.Windows[0].Close();
+                    //System.Windows.Application.Current.Windows[0].Close();
                     new Admin().ShowDialog();
 
 

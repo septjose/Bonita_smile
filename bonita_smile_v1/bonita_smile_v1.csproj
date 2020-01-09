@@ -304,6 +304,7 @@
     <Compile Include="Servicios\Conexion.cs" />
     <Compile Include="Servicios\Conexion_Offline.cs" />
     <Compile Include="Servicios\Datos_Conexion.cs" />
+    <Compile Include="Servicios\Escribir_Archivo.cs" />
     <Compile Include="Servicios\Foto_estudio_carpeta.cs" />
     <Compile Include="Servicios\Marketing.cs" />
     <Compile Include="Servicios\Motivo_cita.cs" />

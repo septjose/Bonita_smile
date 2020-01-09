@@ -15,6 +15,7 @@ namespace bonita_smile_v1.Servicios
         private string query;
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
+        Test_Internet ti = new Test_Internet();
 
         public Clinicas()
         {
@@ -62,6 +63,13 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query+";");
+                }
+
                 return true;
 
             }
@@ -84,7 +92,14 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Open();        
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
-                conexionBD.Close();                
+                conexionBD.Close();
+
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
+
                 return true;
 
             }
@@ -109,6 +124,11 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
 
             }
@@ -130,6 +150,11 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
 
             }
@@ -150,6 +175,11 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
 
             }
