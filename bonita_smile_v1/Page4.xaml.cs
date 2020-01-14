@@ -60,22 +60,27 @@ namespace bonita_smile_v1
             {
                 int id_usuario = usuario.id_usuario;
                 string alias = usuario.alias;
-                var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + alias + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (confirmation == System.Windows.Forms.DialogResult.Yes)
+                Test_Internet ti = new Test_Internet();
+                if(ti.Test())
                 {
-                    Usuarios user = new Usuarios();
-
-                    bool elimino = user.eliminarUsuario(id_usuario);
-                    if (elimino)
+                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + alias + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
-                        Gusuario.Remove((UsuarioModel)lv_Users.SelectedItem);
-                        System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                        Usuarios user = new Usuarios();
 
+                        bool elimino = user.eliminarUsuario(id_usuario);
+                        if (elimino)
+                        {
+                            Gusuario.Remove((UsuarioModel)lv_Users.SelectedItem);
+                            System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                    }
                 }
+               
                 else
                 {
-
+                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

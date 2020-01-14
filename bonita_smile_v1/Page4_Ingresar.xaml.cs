@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -60,7 +61,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
         }
@@ -78,13 +79,13 @@ namespace bonita_smile_v1
             bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
             if (inserto)
             {
-                MessageBox.Show("si");
-              
-               
+                System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
             }
             else
             {
-                MessageBox.Show("no");
+                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -112,7 +113,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 return 0;
             }
             conexionBD.Close();

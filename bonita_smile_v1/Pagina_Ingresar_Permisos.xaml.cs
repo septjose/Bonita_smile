@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using bonita_smile_v1.Servicios;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1
 {
@@ -62,7 +63,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
             }
             conexionBD2.Close();
         }
@@ -92,7 +93,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
         }
@@ -113,13 +114,13 @@ namespace bonita_smile_v1
             bool inserto = c.insertar_Permisos(id_usuario,id_clinica);
             if (inserto)
             {
-                MessageBox.Show("si");
+                System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
             }
             else
             {
-                MessageBox.Show("no");
+                System.Windows.Forms.MessageBox.Show("No se Ingreso ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -152,7 +153,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 return 0;
             }
             conexionBD.Close();
@@ -184,7 +185,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 return 0;
             }
             conexionBD.Close();

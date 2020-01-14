@@ -40,6 +40,7 @@ namespace bonita_smile_v1
         private VideoCaptureDevice MiWebCam;
         private bool HayDispositivos;
         private string ruta = @"C:\capturas\";
+        private string ruta_offline = @"C:\fotos_offline\";
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
@@ -95,7 +96,17 @@ namespace bonita_smile_v1
             }
             else
             {
-                string filePath = ruta + foto;
+                string filePath = "";
+                Test_Internet ti = new Test_Internet();
+                if(ti.Test())
+                {
+                    filePath = ruta + foto;
+                }
+                else
+                {
+                    filePath = ruta_offline + foto;
+                }
+                
                 var encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
@@ -109,19 +120,27 @@ namespace bonita_smile_v1
             if (insertarPaciente)
             {
                 System.Windows.Forms.MessageBox.Show("Se registro correctamente el Paciente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                bool subir = SubirFicheroStockFTP(foto, ruta);
-                if (subir)
+                Test_Internet ti = new Test_Internet();
+                if (ti.Test())
                 {
-                    System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
-                        @"C:\bs\" + foto, 10);
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    bool subir = SubirFicheroStockFTP(foto, ruta);
+                    if (subir)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
+                            @"C:\bs\" + foto, 10);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
 
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No se pudo subir la foto por el internet ", "Error por falta de internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {

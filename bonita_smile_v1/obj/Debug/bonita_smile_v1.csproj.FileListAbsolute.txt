@@ -603,3 +603,13 @@ E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita
 E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj.CopyComplete
 E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.exe
 E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.pdb
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\bin\Debug\MySqlBackup.dll
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\bin\Debug\Google.Protobuf.xml
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\bin\Debug\Renci.SshNet.xml
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Agregar_Carpetas.resources
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\Fotos_de_Estudios.g.cs
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\Fotos_de_Estudios.baml
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\bin\Debug\itextsharp.dll
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\bin\Debug\itextsharp.xml
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.MessageBoxAbono.resources
+E:\PortableGit\programs_c#\bs_v1.1\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Form1.resources

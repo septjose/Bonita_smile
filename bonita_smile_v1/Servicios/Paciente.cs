@@ -53,9 +53,9 @@ namespace bonita_smile_v1.Servicios
                     //pacienteModel.marketing = reader[6].ToString();
 
                     pacienteModel.antecedente = reader[9].ToString();
-                    clinicaModel.id_clinica = int.Parse(reader[10].ToString());
-                    clinicaModel.nombre_sucursal = reader[11].ToString();
-                    clinicaModel.color = reader[12].ToString();
+                    clinicaModel.id_clinica = int.Parse(reader[11].ToString());
+                    clinicaModel.nombre_sucursal = reader[12].ToString();
+                    clinicaModel.color = reader[13].ToString();
                     pacienteModel.clinica = clinicaModel;
 
 
@@ -181,11 +181,7 @@ namespace bonita_smile_v1.Servicios
             {
                 MessageBox.Show(ex.ToString());
                 conexionBD.Close();
-                if (!ti.Test())
-                {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
-                }
+               
                 return false;
             }
         }

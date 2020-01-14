@@ -18,10 +18,12 @@ namespace bonita_smile_v1.Servicios
 
         public MySqlConnection conexion()
         {
+            
             Test_Internet ti = new Test_Internet();
             if (ti.Test())
             {
-                MessageBox.Show("Estas Online");
+                //MessageBox.Show("Estas Online");
+                
                 servidor = "162.241.60.126";
                 puerto = "3306";
                 usuario = "jjdevelo_dentist";
@@ -30,12 +32,12 @@ namespace bonita_smile_v1.Servicios
             }
             else
             {
-                MessageBox.Show("Estas Offline");
+                //MessageBox.Show("Estas Offline");
                 servidor = "localhost";
                 puerto = "3306";
                 usuario = "root";
                 password = "";
-                database = "bs";
+                database = "dentista";
             }
 
             string cadena = "server=" + servidor + ";port=" + puerto + "; user id=" + usuario + "; password=" + password + "; database=" + database;
@@ -43,6 +45,21 @@ namespace bonita_smile_v1.Servicios
             return conexionBD;
         }
 
+        public string verificar()
+        {
+            string ver = "";
+            Test_Internet ti = new Test_Internet();
+            if (ti.Test())
+            {
+                ver = "Online";
+            }
+            else
+            {
+                ver = "Offline";
+            }
+            return ver;
+
+        }
 
     }
 }

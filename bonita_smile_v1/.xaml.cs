@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using bonita_smile_v1.Servicios;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -32,6 +33,8 @@ namespace bonita_smile_v1
         {
             InitializeComponent();
             llenar_list_view();
+            Conexion con = new Conexion();
+            txt_Titulo.Text = "Paciente       Modo "  + con.verificar();
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
             view.Filter = UserFilter;

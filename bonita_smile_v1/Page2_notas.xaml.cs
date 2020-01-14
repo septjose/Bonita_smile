@@ -76,9 +76,15 @@ namespace bonita_smile_v1
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            DialogResult resultado = new DialogResult();
-            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente);
-            resultado = mensaje.ShowDialog();
+            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+            Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+
+            if (admin != null)
+                admin.Main.Content = new Pagina_Estudios(paciente);
+            else
+            {
+                clin.Main2.Content = new Pagina_Estudios(paciente);
+            }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -96,17 +102,6 @@ namespace bonita_smile_v1
             }
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-            Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
-
-            if (admin != null)
-                admin.Main.Content = new Pagina_Estudios(paciente);
-            else
-            {
-                clin.Main2.Content = new Pagina_Estudios(paciente);
-            }
-        }
+       
     }
 }

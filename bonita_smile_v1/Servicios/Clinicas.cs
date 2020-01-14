@@ -64,11 +64,7 @@ namespace bonita_smile_v1.Servicios
                 cmd.ExecuteReader();
                 conexionBD.Close();
                 
-                if (!ti.Test())
-                {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query+";");
-                }
+               
 
                 return true;
 

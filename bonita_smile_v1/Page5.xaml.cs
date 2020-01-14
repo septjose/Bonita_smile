@@ -73,23 +73,32 @@ namespace bonita_smile_v1
             {
                 int id_clinica = clinica.id_clinica;
                 string nombre_sucursal = clinica.nombre_sucursal;
-                var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar la clinica :" + nombre_sucursal + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (confirmation == System.Windows.Forms.DialogResult.Yes)
+                Test_Internet ti = new Test_Internet();
+                if (ti.Test())
                 {
-                    Clinicas clin = new Clinicas();
-
-                    bool elimino = clin.eliminarClinica(id_clinica);
-                    if (elimino)
+                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar la clinica :" + nombre_sucursal + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
-                        Gclinica.Remove((ClinicaModel)lv_Clinica.SelectedItem);
-                        System.Windows.Forms.MessageBox.Show("Se elimino la clinica correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                        Clinicas clin = new Clinicas();
 
+                        bool elimino = clin.eliminarClinica(id_clinica);
+                        if (elimino)
+                        {
+                            Gclinica.Remove((ClinicaModel)lv_Clinica.SelectedItem);
+                            System.Windows.Forms.MessageBox.Show("Se elimino la clinica correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
             }
             else
             {

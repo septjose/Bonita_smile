@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using bonita_smile_v1.Modelos;
+using bonita_smile_v1.Servicios;
 
 namespace bonita_smile_v1
 {
@@ -23,9 +26,20 @@ namespace bonita_smile_v1
     public partial class Pagina_Agregar_Estudios : Page
     {
         string ruta = "";
-        public Pagina_Agregar_Estudios()
+        Test_Internet ti = new Test_Internet();
+        string result="";
+        string nombre_carpeta="";
+        int id_paciente= 0;
+        int id_carpeta = 0;
+
+        public Pagina_Agregar_Estudios(Carpeta_archivosModel carpeta)
         {
+           
             InitializeComponent();
+            this.id_paciente = carpeta.id_paciente;
+            this.id_carpeta = carpeta.id_carpeta;
+            this.nombre_carpeta = carpeta.nombre_carpeta;
+           // MessageBox.Show(carpeta.nombre_carpeta);
 
         }
 
@@ -91,37 +105,80 @@ namespace bonita_smile_v1
             // MessageBox.Show(div.ToString());
             string ruta_foto = @"";
             lblCantidad.Content = "/ " + lista.Items.Count;
-            for (int i = 0; i < lista.Items.Count; i++)
+            if(ti.Test())
             {
-                ruta_foto = lista.Items[i].ToString();
-
-                bool inserto = false;
-                for (int j = 0; j <= 100; j++)
+                for (int i = 0; i < lista.Items.Count; i++)
                 {
-                    lblNombre.Content = "Subiendo al servidor : " + ruta_foto;
-                    //lblNombre.Content = "Subiendo al servidor : " + lista.Items[i].ToString();
+                    ruta_foto = lista.Items[i].ToString();
 
-                    //pb_imagen.Value = j;
-                    lblcontador.Content = i;
+                    bool inserto = false;
+                    for (int j = 0; j <= 100; j++)
+                    {
+                        lblNombre.Content = "Subiendo al servidor : " + ruta_foto;
+                        //lblNombre.Content = "Subiendo al servidor : " + lista.Items[i].ToString();
+
+                        //pb_imagen.Value = j;
+                        lblcontador.Content = i;
+                    }
+                    inserto = SubirFicheroStockFTP(nombre_carpeta+"_imagen_" + i + ".jpg", ruta_foto);
+                    if (inserto)
+                    {
+                        lblcontador.Content = i;
+                        lblNombre.Content = "Subiendo al servidor : " + ruta_foto;
+                        MessageBox.Show("SE VA AINSERTAR EN LA BASE DE DATOS " + ruta_foto);
+                        Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta();
+                        bool verdad = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, nombre_carpeta + "_imagen_" + i + ".jpg");
+                        if(verdad)
+                        {
+                            MessageBox.Show("se subio a la bd");
+                        }
+                        else
+                        {
+                            MessageBox.Show("no se subio a la bd");
+                        }
+
+
+                    }
+
                 }
-                inserto = SubirFicheroStockFTP("imagen_" + i + ".jpg", ruta_foto);
-                if (inserto)
+            }else
+            {
+                for (int i = 0; i < lista.Items.Count; i++)
                 {
-                    lblcontador.Content = i;
-                    lblNombre.Content = "Subiendo al servidor : " + ruta_foto;
-                    MessageBox.Show("SE VA AINSERTAR EN LA BASE DE DATOS " + ruta_foto);
+                    ruta_foto = lista.Items[i].ToString();
+
+                    for (int j = 0; j <= 100; j++)
+                    {
+                        lblNombre.Content = "Subiendo al servidor : " + ruta_foto;
+                      
+                        lblcontador.Content = i;
+                    }
+                    result = System.IO.Path.GetFileName(ruta_foto);
+                    string destFile = System.IO.Path.Combine(@"C:\fotos_offline\" , result);
+                    //MessageBox.Show("el valor de result es " + result);
+                   System.IO.File.Copy(ruta_foto, destFile, true);
+                    renombrar(result, "imagen_" + i+"_.jpg");
+                    //inserto = SubirFicheroStockFTP("imagen_" + i + ".jpg", ruta_foto);
+                    //if (inserto)
+                   // {
+                        lblcontador.Content = i;
+                        lblNombre.Content = "Subiendo al servidor : " + ruta_foto;
+                        MessageBox.Show("SE VA AINSERTAR EN LA BASE DE DATOS " + ruta_foto);
 
 
+
+                    //}
 
                 }
-
             }
+            
+            
             lblcontador.Content = lista.Items.Count;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            /*if (lista.SelectedItem != null)
+            if (lista.SelectedItem != null)
             {
 
                 lista.Items.RemoveAt(lista.Items.IndexOf(ruta));
@@ -130,7 +187,7 @@ namespace bonita_smile_v1
             else
             {
                 MessageBox.Show("no selecciono ningun registro ");
-            }*/
+            }
 
 
         }
@@ -183,6 +240,21 @@ namespace bonita_smile_v1
             }
             return verdad;
 
+        }
+
+        public void renombrar(string nombre_viejo,string nombre_nuevo)
+        {
+            string sourceFile = @"C:\fotos_offline\"+nombre_viejo;
+            // Create a FileInfo  
+            System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile);
+            // Check if file is there  
+            if (fi.Exists)
+            {
+                //MessageBox.Show("Si esta");
+                // Move file with a new name. Hence renamed.  
+                fi.MoveTo(@"C:\fotos_offline\" + nombre_nuevo);
+                //MessageBox.Show("se pudo bitches");
+            }
         }
         
     }

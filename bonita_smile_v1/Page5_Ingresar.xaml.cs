@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -40,19 +41,19 @@ namespace bonita_smile_v1
 
             //MessageBox.Show(color);
             string nombre_sucursal = txtNombre.Text;
-            MessageBox.Show(nombre_sucursal);
+            //MessageBox.Show(nombre_sucursal);
             Clinicas c = new Clinicas();
             bool correcto = c.insertarClinica(nombre_sucursal, color);
             if (correcto)
             {
-                MessageBox.Show("SI");
+                System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                     admin.Main.Content = new Pagina_Ingresar_Permisos();
             }
             else
             {
-                MessageBox.Show("No");
+                System.Windows.Forms.MessageBox.Show("No se ingreso la Clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
 

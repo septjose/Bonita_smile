@@ -36,7 +36,7 @@ namespace bonita_smile_v1
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("la foto es :" + paciente.foto);
+           // MessageBox.Show("la foto es :" + paciente.foto);
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
                 admin.Main.Content = new Page8_ActualizarFoto(paciente); ;

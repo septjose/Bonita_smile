@@ -38,7 +38,30 @@ namespace bonita_smile_v1
             //user.redireccionarLogin();
             //Rol r = new Rol();
             //r.eliminarRol(5);
-                user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+            user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+           /*Sincronizar s = new Sincronizar();
+            s.Backup();
+            bool verdad = s.borrar_bd();
+            if (verdad)
+            {
+                MessageBox.Show("Se borro la bd");
+                bool verdad2 = s.crear_bd();
+                if(verdad2)
+                {
+                    MessageBox.Show("se creo la bd");
+                    s.Restore();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo crear bd ");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se pudo borrar");
+            }*/
+
+            
         }
     }
 }

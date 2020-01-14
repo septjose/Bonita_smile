@@ -42,7 +42,7 @@ namespace bonita_smile_v1.Servicios
                     motivo_CitaModel.id_motivo = int.Parse(reader[0].ToString());
                     motivo_CitaModel.descripcion = reader[1].ToString();
                     motivo_CitaModel.costo = double.Parse(reader[2].ToString());
-                    pacienteModel.id_paciente= int.Parse(reader[4].ToString());
+                    pacienteModel.id_paciente= int.Parse(reader[5].ToString());
                     motivo_CitaModel.paciente = pacienteModel;
                     listaMotivo_cita.Add(motivo_CitaModel);
                 }
@@ -64,11 +64,7 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
-                {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
-                }
+                
                 return true;
 
             }

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -66,7 +67,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
             }
             conexionBD2.Close();
         }
@@ -96,7 +97,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
         }
@@ -113,19 +114,19 @@ namespace bonita_smile_v1
             int id_clinica = obtener_id_Clinica(valor2);
             int id_permiso = Convert.ToInt32(permiso);
 
-            MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
+           // MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
 
             Clinicas c = new Clinicas();
             bool inserto = c.actualizar_Permisos(id_usuario, id_clinica,id_permiso);
             if (inserto)
             {
-                MessageBox.Show("si");
+                System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 
             }
             else
             {
-                MessageBox.Show("no");
+                System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -158,7 +159,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 return 0;
             }
             conexionBD.Close();
@@ -190,7 +191,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 return 0;
             }
             conexionBD.Close();

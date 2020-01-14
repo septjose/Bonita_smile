@@ -21,6 +21,36 @@ namespace bonita_smile_v1.Servicios
             this.conexionBD = obj.conexion();
         }
 
+        public List<Carpeta_archivosModel> MostrarCarpeta_archivos_paciente(int id_paciente)
+        {
+            List<Carpeta_archivosModel> listaCarpeta_archivos = new List<Carpeta_archivosModel>();
+            query = "SELECT * FROM carpeta_archivos where id_paciente="+id_paciente;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Carpeta_archivosModel carpeta_ArchivosModel = new Carpeta_archivosModel();
+
+                    carpeta_ArchivosModel.id_carpeta = int.Parse(reader[0].ToString());
+                    carpeta_ArchivosModel.nombre_carpeta = reader[1].ToString();
+                    carpeta_ArchivosModel.id_paciente = int.Parse(reader[2].ToString());
+
+                    listaCarpeta_archivos.Add(carpeta_ArchivosModel);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return listaCarpeta_archivos;
+        }
         public List<Carpeta_archivosModel> MostrarCarpeta_archivos()
         {
             List<Carpeta_archivosModel> listaCarpeta_archivos = new List<Carpeta_archivosModel>();

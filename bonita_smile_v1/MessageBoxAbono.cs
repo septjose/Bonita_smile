@@ -16,5 +16,10 @@ namespace bonita_smile_v1
         {
             InitializeComponent();
         }
+
+        private void txt_efectivo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

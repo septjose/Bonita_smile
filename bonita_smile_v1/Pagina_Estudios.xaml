@@ -9,8 +9,36 @@
       Title="Pagina_Estudios">
 
     <Grid>
-        <Button Content="Agregar carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155" RenderTransformOrigin="1.267,2.5" Margin="90,75,0,0"/>
-        <Button Content="Agregar Estudios" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Margin="115,185,0,0" Click="Button_Click"/>
+
+        <Button Content="Crear Nueva Carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="175" RenderTransformOrigin="1.267,2.5" Margin="15,280,0,0" Click="Button_Click_1"/>
+        <Button Content="Agregar Estudios a la carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Margin="5,345,0,0" Click="Button_Click"/>
+        <ListView  x:Name="lvCarpetas"  Margin="400,90,180,65"   Style="{StaticResource MetroListView}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Control.Background" Value="White" />
+                    <Setter Property="Control.BorderThickness" Value="0.2" />
+                    <Setter Property="Control.BorderBrush" Value="Black" />
+                    <Setter Property="FontFamily" Value="Arial"/>
+                    <Setter Property="FontSize" Value="13"/>
+
+
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View >
+                <GridView >
+
+                    <GridViewColumn Header="Nombre de Carpeta" Width="250" DisplayMemberBinding="{Binding nombre_carpeta}" />
+
+                   <!-- <GridViewColumn Header="Nombre Paciente" Width="250" DisplayMemberBinding="{Binding costo}" />-->
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Mostrar Imagenes de la Carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Margin="10,398,0,0" Click="Button_Click_2"/>
 
     </Grid>
 </Page>

@@ -60,7 +60,7 @@ namespace bonita_smile_v1
             CargaDispositivos();
             this.paciente = paciente;
             //File.Delete(ruta2 + paciente.foto);
-            System.Windows.MessageBox.Show("el paciente es " + paciente.foto);
+            //System.Windows.MessageBox.Show("el paciente es " + paciente.foto);
             if(paciente.foto.Equals(""))
             {
                 string ruta2 = @"C:\bs\img1.jpg";
@@ -73,12 +73,12 @@ namespace bonita_smile_v1
                 bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", paciente.foto, ruta2 + paciente.foto, 10);
                 if (descargo)
                 {
-                    System.Windows.MessageBox.Show(":)");
+                    //System.Windows.MessageBox.Show(":)");
                     rt_imagen.Fill = Imagen(@"C:\paciente_foto\" + paciente.foto);
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show(":(");
+                    //System.Windows.MessageBox.Show(":(");
                 }
             }
            

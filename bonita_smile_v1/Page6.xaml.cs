@@ -39,23 +39,32 @@ namespace bonita_smile_v1
             {
                 int id_paciente = paciente.id_paciente;
                 string nombre_paciente = paciente.nombre;
-                var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el  paciente :" + nombre_paciente + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (confirmation == System.Windows.Forms.DialogResult.Yes)
+                Test_Internet ti = new Test_Internet();
+                if (ti.Test())
                 {
-                    Paciente clin = new Paciente();
-
-                    bool elimino = clin.eliminarPaciente(id_paciente);
-                    if (elimino)
+                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el  paciente :" + nombre_paciente + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
-                        GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
-                        System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                        Paciente clin = new Paciente();
 
+                        bool elimino = clin.eliminarPaciente(id_paciente);
+                        if (elimino)
+                        {
+                            GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
+                            System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
             }
             else
             {
@@ -94,7 +103,7 @@ namespace bonita_smile_v1
         {
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
-                admin.Main.Content = new Page6_Ingresar(); ;
+                admin.Main.Content = new Page6_Ingresar();
         }
     }
 }

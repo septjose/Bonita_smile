@@ -93,7 +93,7 @@ namespace bonita_smile_v1
             string apellidos = txtApellido.Text;
             string alias = txtAlias.Text;
             string password = pwbPassword.Password;
-            System.Windows.MessageBox.Show(id_usu.ToString() + " " + nombre + " " + apellidos + " " + alias + " " + password + "" + " " + id_rol);
+            //System.Windows.MessageBox.Show(id_usu.ToString() + " " + nombre + " " + apellidos + " " + alias + " " + password + "" + " " + id_rol);
             Usuarios user = new Usuarios();
             string pass_tabla = obtener_password(id_usu);
             bool inserto = false;

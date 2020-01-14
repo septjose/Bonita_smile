@@ -27,6 +27,9 @@ namespace bonita_smile_v1
         ObservableCollection<AbonosModel> GAbono;
         PacienteModel paciente;
         Motivo_citaModel motivo;
+        double restante = 0.0;
+        double abonado = 0.0;
+        double total = 0.0;
         public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo)
         {
 
@@ -51,8 +54,11 @@ namespace bonita_smile_v1
             txtAbonado.IsEnabled = false;
             txtRestante.IsEnabled = false;
             txtTotal.Text = "$" + motivo.costo.ToString();
+            total = motivo.costo;
             txtAbonado.Text = "$" + abono.Abonados(motivo.id_motivo).ToString();
             txtRestante.Text = "$" + abono.Restante(motivo.id_motivo).ToString();
+            restante = abono.Restante(motivo.id_motivo);
+            abonado = abono.Abonados(motivo.id_motivo);
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
 
         }
@@ -67,7 +73,7 @@ namespace bonita_smile_v1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente);
+            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text,restante,abonado, total);
             resultado = mensaje.ShowDialog();
         }
     }
