@@ -74,7 +74,7 @@ namespace bonita_smile_v1.Servicios
         {
 
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
-            query = "SELECT * FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where clinica.id_clinica="+id+ ";";
+            query = "SELECT * FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where clinica.id_clinica=" + id + ";";
 
             try
             {
@@ -120,7 +120,7 @@ namespace bonita_smile_v1.Servicios
         public List<PacienteModel> MostrarPaciente_unico(string nombre)
         {
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
-            query = "SELECT * FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where paciente.nombre='"+nombre+"'";
+            query = "SELECT * FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where paciente.nombre='" + nombre + "'";
 
             try
             {
@@ -141,7 +141,7 @@ namespace bonita_smile_v1.Servicios
                     pacienteModel.telefono = reader[4].ToString();
 
                     string ruta = reader[5].ToString();
-                    
+
                     pacienteModel.imagen = LoadImage(@"C:\bs\" + ruta);
                     pacienteModel.email = reader[6].ToString();
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
@@ -181,14 +181,28 @@ namespace bonita_smile_v1.Servicios
             {
                 MessageBox.Show(ex.ToString());
                 conexionBD.Close();
-               
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
                 return false;
             }
         }
 
         public bool insertarPaciente(string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, int id_clinica)
         {
-            query = "INSERT INTO paciente (nombre,apellidos,direccion,telefono,foto,antecedente,email,marketing,id_clinica) VALUES('" + nombre + "','" + apellidos + "','" + direccion + "','" + telefono + "','" + foto + "','" + antecedente + "','" + email + "'," + marketing + "," + id_clinica + ")";
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                Seguridad seguridad = new Seguridad();
+                string auxiliar_identificador = seguridad.Encriptar(nombre + apellidos + direccion + telefono + foto + antecedente + email + marketing + id_clinica);
+                query = "INSERT INTO paciente (nombre,apellidos,direccion,telefono,foto,antecedente,email,marketing,id_clinica,auxiliar_identificador) VALUES('" + nombre + "','" + apellidos + "','" + direccion + "','" + telefono + "','" + foto + "','" + antecedente + "','" + email + "'," + marketing + "," + id_clinica + ",'" + auxiliar_identificador + "')";
+            }
+            else
+            {
+                query = "INSERT INTO paciente (nombre,apellidos,direccion,telefono,foto,antecedente,email,marketing,id_clinica) VALUES('" + nombre + "','" + apellidos + "','" + direccion + "','" + telefono + "','" + foto + "','" + antecedente + "','" + email + "'," + marketing + "," + id_clinica + ")";
+            }
             MessageBox.Show(query);
             try
             {
@@ -196,10 +210,10 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
             }
@@ -211,19 +225,30 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarPaciente(int id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing,int id_clinica)
+        public bool actualizarPaciente(int id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, int id_clinica)
         {
-            query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto + "',email = '" + email + "',marketing = " + marketing + ",id_clinica = " + id_clinica + ",antecedente='"+antecedente +"' where id_paciente = " + id_paciente;
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                //Seguridad seguridad = new Seguridad();
+                // seguridad.Encriptar(nombre + apellidos + direccion + telefono + foto + antecedente + email + marketing + id_clinica);
+                string auxiliar_identificador = MostrarPaciente_Update(id_paciente);
+                query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto + "',email = '" + email + "',marketing = " + marketing + ",id_clinica = " + id_clinica + ",antecedente='" + antecedente + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_paciente = " + id_paciente;
+            }
+            else
+            {
+                query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto + "',email = '" + email + "',marketing = " + marketing + ",id_clinica = " + id_clinica + ",antecedente='" + antecedente + "' where id_paciente = " + id_paciente;
+            }
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
             }
@@ -234,17 +259,44 @@ namespace bonita_smile_v1.Servicios
                 return false;
             }
         }
+
+        public string MostrarPaciente_Update(int id_paciente)
+        {
+            string aux_identi = "";
+            query = "SELECT auxiliar_identificador from paciente where id_paciente=" + id_paciente;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    aux_identi = reader[0].ToString();
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return aux_identi;
+        }
         private BitmapImage LoadImage(string filename)
         {
             BitmapImage bi;
-          
-            if(File.Exists(filename))
+
+            if (File.Exists(filename))
             {
-               bi =new BitmapImage(new Uri(filename));
+                bi = new BitmapImage(new Uri(filename));
             }
             else
             {
-                bi= new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
+                bi = new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
             }
             return bi;
         }

@@ -236,8 +236,8 @@
     <Compile Include="Interfaz\Administrador\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
-    <Compile Include=".xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
+    <Compile Include="Interfaz\Administrador\.xaml.cs">
+      <DependentUpon>Principal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\Clinica\Clin.xaml.cs">
       <DependentUpon>Clin.xaml</DependentUpon>
@@ -251,88 +251,88 @@
     <Compile Include="MessageBoxAbono.Designer.cs">
       <DependentUpon>MessageBoxAbono.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Categoria.cs" />
     <Compile Include="Modelos\Imagen.cs" />
     <Compile Include="Modelos\PermisosModel.cs" />
-    <Compile Include="Page2.xaml.cs">
-      <DependentUpon>Page2.xaml</DependentUpon>
+    <Compile Include="Interfaz\Datos_Personales.xaml.cs">
+      <DependentUpon>Datos_Personales.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page2_Abonos.xaml.cs">
-      <DependentUpon>Page2_Abonos.xaml</DependentUpon>
+    <Compile Include="Interfaz\Abonos.xaml.cs">
+      <DependentUpon>Abonos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page2_notas.xaml.cs">
-      <DependentUpon>Page2_notas.xaml</DependentUpon>
+    <Compile Include="Interfaz\Notas.xaml.cs">
+      <DependentUpon>Notas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page3.xaml.cs">
-      <DependentUpon>Page3.xaml</DependentUpon>
+    <Compile Include="Interfaz\Ingresar_Motivo.xaml.cs">
+      <DependentUpon>Ingresar_Motivo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page4.xaml.cs">
-      <DependentUpon>Page4.xaml</DependentUpon>
+    <Compile Include="Interfaz\Administrador\Usuarios.xaml.cs">
+      <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page4_Actualizar.xaml.cs">
-      <DependentUpon>Page4_Actualizar.xaml</DependentUpon>
+    <Compile Include="Interfaz\Administrador\Actualizar_Usuario.xaml.cs">
+      <DependentUpon>Actualizar_Usuario.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page4_Ingresar.xaml.cs">
-      <DependentUpon>Page4_Ingresar.xaml</DependentUpon>
+    <Compile Include="Interfaz\Administrador\Ingresar_Usuario.xaml.cs">
+      <DependentUpon>Ingresar_Usuario.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page5.xaml.cs">
-      <DependentUpon>Page5.xaml</DependentUpon>
+    <Compile Include="Interfaz\Administrador\Clinica.xaml.cs">
+      <DependentUpon>Clinica.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page5_Actualizar.xaml.cs">
-      <DependentUpon>Page5_Actualizar.xaml</DependentUpon>
+    <Compile Include="Interfaz\Administrador\Actualizar_Clinica.xaml.cs">
+      <DependentUpon>Actualizar_Clinica.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page5_Ingresar.xaml.cs">
-      <DependentUpon>Page5_Ingresar.xaml</DependentUpon>
+    <Compile Include="Interfaz\Administrador\Ingresar_Clinica.xaml.cs">
+      <DependentUpon>Ingresar_Clinica.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page6.xaml.cs">
-      <DependentUpon>Page6.xaml</DependentUpon>
+    <Compile Include="Interfaz\Paciente.xaml.cs">
+      <DependentUpon>Paciente.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page6_Actualizar.xaml.cs">
-      <DependentUpon>Page6_Actualizar.xaml</DependentUpon>
+    <Compile Include="Interfaz\Actualizar_Paciente.xaml.cs">
+      <DependentUpon>Actualizar_Paciente.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page6_Ingresar.xaml.cs">
-      <DependentUpon>Page6_Ingresar.xaml</DependentUpon>
+    <Compile Include="Interfaz\Ingresar_Paciente.xaml.cs">
+      <DependentUpon>Ingresar_Paciente.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page7_Actualizar.xaml.cs">
-      <DependentUpon>Page7_Actualizar.xaml</DependentUpon>
+    <Compile Include="Interfaz\Actualizar_Antecedente_Clinico.xaml.cs">
+      <DependentUpon>Actualizar_Antecedente_Clinico.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page7_Ingresar.xaml.cs">
-      <DependentUpon>Page7_Ingresar.xaml</DependentUpon>
+    <Compile Include="Interfaz\Ingresar_Antecedente_Clinico.xaml.cs">
+      <DependentUpon>Ingresar_Antecedente_Clinico.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page8_ActualizarFoto.xaml.cs">
-      <DependentUpon>Page8_ActualizarFoto.xaml</DependentUpon>
+    <Compile Include="Interfaz\Actualizar_Foto.xaml.cs">
+      <DependentUpon>Actualizar_Foto.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page8_IngresarFoto.xaml.cs">
-      <DependentUpon>Page8_IngresarFoto.xaml</DependentUpon>
+    <Compile Include="Interfaz\Ingresar_Foto.xaml.cs">
+      <DependentUpon>Ingresar_Foto.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Actualizar_Permisos.xaml.cs">
-      <DependentUpon>Pagina_Actualizar_Permisos.xaml</DependentUpon>
+    <Compile Include="Interfaz\Actualizar_Permisos.xaml.cs">
+      <DependentUpon>Actualizar_Permisos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Agregar_Estudios.xaml.cs">
-      <DependentUpon>Pagina_Agregar_Estudios.xaml</DependentUpon>
+    <Compile Include="Interfaz\Agregar_Estudios.xaml.cs">
+      <DependentUpon>Agregar_Estudios.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Clinica.xaml.cs">
-      <DependentUpon>Pagina_Clinica.xaml</DependentUpon>
+    <Compile Include="Interfaz\Clinica\Clinica_Principal.xaml.cs">
+      <DependentUpon>Clinica_Principal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Correo.xaml.cs">
-      <DependentUpon>Pagina_Correo.xaml</DependentUpon>
+    <Compile Include="Interfaz\Correo_Marketing.xaml.cs">
+      <DependentUpon>Correo_Marketing.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Estudios.xaml.cs">
-      <DependentUpon>Pagina_Estudios.xaml</DependentUpon>
+    <Compile Include="Interfaz\Estudios.xaml.cs">
+      <DependentUpon>Estudios.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Ingresar_Permisos.xaml.cs">
-      <DependentUpon>Pagina_Ingresar_Permisos.xaml</DependentUpon>
+    <Compile Include="Interfaz\Administrador\Ingresar_Permisos.xaml.cs">
+      <DependentUpon>Ingresar_Permisos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Marketing.xaml.cs">
-      <DependentUpon>Pagina_Marketing.xaml</DependentUpon>
+    <Compile Include="Interfaz\Marketing_Princpial.xaml.cs">
+      <DependentUpon>Marketing_Princpial.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Messenger.xaml.cs">
-      <DependentUpon>Pagina_Messenger.xaml</DependentUpon>
+    <Compile Include="Interfaz\Messenger_Principal.xaml.cs">
+      <DependentUpon>Messenger_Principal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pagina_Whatssap.xaml.cs">
-      <DependentUpon>Pagina_Whatssap.xaml</DependentUpon>
+    <Compile Include="Interfaz\Whatsap_Marketing.xaml.cs">
+      <DependentUpon>Whatsap_Marketing.xaml</DependentUpon>
     </Compile>
     <Compile Include="Servicios\Abonos.cs" />
-    <Compile Include="Servicios\Antecedentes_clinicos.cs" />
     <Compile Include="Servicios\Carpeta_archivos.cs" />
     <Compile Include="Servicios\Clinicas.cs" />
     <Compile Include="Servicios\Conexion.cs" />
@@ -340,6 +340,7 @@
     <Compile Include="Servicios\Escribir_Archivo.cs" />
     <Compile Include="Servicios\Foto_estudio_carpeta.cs" />
     <Compile Include="Servicios\Marketing.cs" />
+    <Compile Include="Servicios\Migrar_Archivo_Servidor.cs" />
     <Compile Include="Servicios\Motivo_cita.cs" />
     <Compile Include="Servicios\Nota_de_digi_evolucion.cs" />
     <Compile Include="Servicios\Paciente.cs" />
@@ -376,111 +377,111 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page1.xaml">
+    <Page Include="Interfaz\Administrador\Principal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page2.xaml">
+    <Page Include="Interfaz\Datos_Personales.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page2_Abonos.xaml">
+    <Page Include="Interfaz\Abonos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page2_notas.xaml">
+    <Page Include="Interfaz\Notas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page3.xaml">
+    <Page Include="Interfaz\Ingresar_Motivo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page4.xaml">
+    <Page Include="Interfaz\Administrador\Usuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page4_Actualizar.xaml">
+    <Page Include="Interfaz\Administrador\Actualizar_Usuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page4_Ingresar.xaml">
+    <Page Include="Interfaz\Administrador\Ingresar_Usuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page5.xaml">
+    <Page Include="Interfaz\Administrador\Clinica.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page5_Actualizar.xaml">
+    <Page Include="Interfaz\Administrador\Actualizar_Clinica.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page5_Ingresar.xaml">
+    <Page Include="Interfaz\Administrador\Ingresar_Clinica.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page6.xaml">
+    <Page Include="Interfaz\Paciente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page6_Actualizar.xaml">
+    <Page Include="Interfaz\Actualizar_Paciente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page6_Ingresar.xaml">
+    <Page Include="Interfaz\Ingresar_Paciente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page7_Actualizar.xaml">
+    <Page Include="Interfaz\Actualizar_Antecedente_Clinico.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page7_Ingresar.xaml">
+    <Page Include="Interfaz\Ingresar_Antecedente_Clinico.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page8_ActualizarFoto.xaml">
+    <Page Include="Interfaz\Actualizar_Foto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page8_IngresarFoto.xaml">
+    <Page Include="Interfaz\Ingresar_Foto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Actualizar_Permisos.xaml">
+    <Page Include="Interfaz\Actualizar_Permisos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Agregar_Estudios.xaml">
+    <Page Include="Interfaz\Agregar_Estudios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Clinica.xaml">
+    <Page Include="Interfaz\Clinica\Clinica_Principal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Correo.xaml">
+    <Page Include="Interfaz\Correo_Marketing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Estudios.xaml">
+    <Page Include="Interfaz\Estudios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Ingresar_Permisos.xaml">
+    <Page Include="Interfaz\Administrador\Ingresar_Permisos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Marketing.xaml">
+    <Page Include="Interfaz\Marketing_Princpial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Messenger.xaml">
+    <Page Include="Interfaz\Messenger_Principal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pagina_Whatssap.xaml">
+    <Page Include="Interfaz\Whatsap_Marketing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

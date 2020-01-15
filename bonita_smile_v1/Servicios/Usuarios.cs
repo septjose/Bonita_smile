@@ -27,7 +27,7 @@ namespace bonita_smile_v1.Servicios
         private UsuarioModel usuarioModel;
         private Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
-        
+
 
         public Usuarios()
         {
@@ -71,17 +71,21 @@ namespace bonita_smile_v1.Servicios
             return listaUsuario;
         }
 
-        
+
         public bool eliminarUsuario(int id_usuario)
         {
-            query = "DELETE FROM usuario where id_usuario="+ id_usuario;
+            query = "DELETE FROM usuario where id_usuario=" + id_usuario;
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
                 return true;
 
             }
@@ -95,18 +99,28 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarUsuario(string alias, string nombre, string apellidos, string password, int id_rol)
         {
+            bool internet = ti.Test();
             password = new Seguridad().Encriptar(password);
-            query = "INSERT INTO usuario (alias,nombre,apellidos,password,id_rol) VALUES('"+ alias +"','" + nombre +"','" + apellidos +"','"+ password +"',"+ id_rol +")";
+            if (!internet)
+            {
+                Seguridad seguridad = new Seguridad();
+                string auxiliar_identificador = seguridad.Encriptar(alias + nombre + apellidos + password + id_rol);
+                query = "INSERT INTO usuario (alias,nombre,apellidos,password,id_rol,auxiliar_identificador) VALUES('" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ",'" + auxiliar_identificador + "')";
+            }
+            else
+            {
+                query = "INSERT INTO usuario (alias,nombre,apellidos,password,id_rol) VALUES('" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
+            }
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -121,8 +135,19 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarUsuario(int id_usuario, string alias, string nombre, string apellidos, string password, int id_rol)
         {
+            bool internet = ti.Test();
             //password = new Seguridad().Encriptar(password);
-            query = "UPDATE usuario set alias = '"+ alias +"',nombre = '"+ nombre +"',apellidos = '"+ apellidos +"',password = '"+ password +"',id_rol = '"+ id_rol +"' where id_usuario = "+ id_usuario;
+            if (!internet)
+            {
+                //Seguridad seguridad = new Seguridad();
+                // seguridad.Encriptar(alias + nombre + apellidos + password + id_rol);
+                string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
+                query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = '" + id_rol + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_usuario = " + id_usuario;
+            }
+            else
+            {
+                query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = '" + id_rol + "' where id_usuario = " + id_usuario;
+            }
             try
             {
                 conexionBD.Open();
@@ -132,7 +157,7 @@ namespace bonita_smile_v1.Servicios
                 if (!ti.Test())
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -145,6 +170,33 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
+        public string MostrarUsuario_Update(int id_usuario)
+        {
+            string aux_identi = "";
+            query = "SELECT auxiliar_identificador from usuario where id_usuario=" + id_usuario;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    aux_identi = reader[0].ToString();
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return aux_identi;
+        }
+
 
 
         //verifica el tipo de rol. Devuelve el rol del alias
@@ -153,7 +205,7 @@ namespace bonita_smile_v1.Servicios
         {
             string rol = "";
             MySqlCommand cmd;
-            string query = "SELECT *FROM  rol where id_rol="+ id_rol;
+            string query = "SELECT *FROM  rol where id_rol=" + id_rol;
             try
             {
                 conexionBD.Open();
@@ -189,13 +241,13 @@ namespace bonita_smile_v1.Servicios
         {
             string rol = "";
             bool valido = Validar_login(alias, password);
-            if(valido)
+            if (valido)
             {
                 rol = verificarRol(usuarioModel.rol.id_rol);
-                if(rol.Equals("Administrador"))
+                if (rol.Equals("Administrador"))
                 {
                     //Admin admin = new Admin();
-                    
+
                     //Ingresar_Clinica ic = new Ingresar_Clinica();
                     //Insertar_Color ic = new Insertar_Color();
                     //Insertar_Usuario iu = new Insertar_Usuario();
@@ -203,34 +255,34 @@ namespace bonita_smile_v1.Servicios
                     //Ventana_Administrador va = new Ventana_Administrador();
                     //Ventana_Usuario vu = new Ventana_Usuario();
 
-                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: "+alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //System.Windows.Application.Current.Windows[0].Close();
                     new Admin().ShowDialog();
 
 
                 }
                 else
-                    if(rol.Equals("Clinica"))
+                    if (rol.Equals("Clinica"))
                 {
                     int id = Convert.ToInt32(Buscar_Clinica(alias));
 
-                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias +"el id de la clinica es "+id, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias + "el id de la clinica es " + id, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     //System.Windows.Application.Current.Windows[0].Close();
-                     //Application.Current.Windows[0].Close();
+                    //Application.Current.Windows[0].Close();
                     new Clin(id).ShowDialog();
                 }
                 else
-                    if(rol.Equals("Marketing"))
+                    if (rol.Equals("Marketing"))
                 {
-                    
+
                     System.Windows.MessageBox.Show("Marketing");
                     new Market().ShowDialog();
                 }
             }
         }
 
-       
+
         public bool Validar_login(string alias, string password)
         {
             bool verdad;
@@ -245,7 +297,7 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
 
                 reader = cmd.ExecuteReader();
-                
+
                 while (reader.Read())
                 {
                     usuarioModel = new UsuarioModel();
@@ -257,7 +309,7 @@ namespace bonita_smile_v1.Servicios
                     usuarioModel.apellidos = reader[3].ToString();
                     usuarioModel.password = reader[4].ToString();
                     rolModel.id_rol = int.Parse(reader[5].ToString());
-                    rolModel.descripcion= reader[7].ToString();
+                    rolModel.descripcion = reader[7].ToString();
                     usuarioModel.rol = rolModel;
 
                     listaUsuario.Add(usuarioModel);
@@ -273,7 +325,7 @@ namespace bonita_smile_v1.Servicios
                     foreach (UsuarioModel um in listaUsuario)
                     {
                         pass = um.password.ToString();
-                       
+
                     }
                     Seguridad secure = new Seguridad();
                     string contraseña_desenc = secure.Desencriptar(pass);
@@ -283,15 +335,14 @@ namespace bonita_smile_v1.Servicios
 
                     if (result)
                     {
-                        
-                       conexionBD.Close();
-                        verdad= true;
+                        conexionBD.Close();
+                        verdad = true;
                     }
                     else
                     {
                         System.Windows.MessageBox.Show("contraseña esta incorrecta");
                         conexionBD.Close();
-                       verdad= false;
+                        verdad = false;
                     }
                 }
 
@@ -304,15 +355,15 @@ namespace bonita_smile_v1.Servicios
 
             }
             return verdad;
-            
+
 
         }
 
         public string Buscar_Clinica(String alias)
         {
-            string id ="";
+            string id = "";
             MySqlCommand cmd;
-            string query = "select clinica.id_clinica as id from usuario inner join permisos on permisos.id_usuario=usuario.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where usuario.alias='"+alias+"' and usuario.id_rol=2";
+            string query = "select clinica.id_clinica as id from usuario inner join permisos on permisos.id_usuario=usuario.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where usuario.alias='" + alias + "' and usuario.id_rol=2";
             try
             {
                 conexionBD.Open();
@@ -345,7 +396,7 @@ namespace bonita_smile_v1.Servicios
         {
             string id = "";
             MySqlCommand cmd;
-            string query = "select usuario.alias from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where clinica.id_clinica="+id_clinica;
+            string query = "select usuario.alias from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where clinica.id_clinica=" + id_clinica;
             try
             {
                 conexionBD.Open();
@@ -379,14 +430,14 @@ namespace bonita_smile_v1.Servicios
         {
             string id = "";
             MySqlCommand cmd;
-            string query = "select permisos.id_permiso from permisos where permisos.id_clinica="+id_clinica;
+            string query = "select permisos.id_permiso from permisos where permisos.id_clinica=" + id_clinica;
             try
             {
                 conexionBD.Open();
                 cmd = new MySqlCommand(query, conexionBD);
-                
+
                 int existe = Convert.ToInt32(cmd.ExecuteScalar());
-                if (existe==0)
+                if (existe == 0)
                 {
                     conexionBD.Close();
                     return "";

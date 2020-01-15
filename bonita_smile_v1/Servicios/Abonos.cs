@@ -22,7 +22,7 @@ namespace bonita_smile_v1.Servicios
             conexionBD = obj.conexion();
         }
 
-        public List<AbonosModel> MostrarAbonos(int id_motivo,int id_paciente)
+        public List<AbonosModel> MostrarAbonos(int id_motivo, int id_paciente)
         {
             List<AbonosModel> listaAbonos = new List<AbonosModel>();
             query = "SELECT id_abono,id_paciente,id_motivo,date_format(fecha, '%d/%m/%Y') as fecha,monto,comentario FROM abonos where id_paciente=" + id_paciente + " and id_motivo=" + id_motivo;
@@ -41,7 +41,7 @@ namespace bonita_smile_v1.Servicios
                     abonosModel.id_abono = int.Parse(reader[0].ToString());
                     abonosModel.id_paciente = int.Parse(reader[1].ToString());
                     abonosModel.id_motivo = int.Parse(reader[2].ToString());
-                    abonosModel.fecha =reader[3].ToString();                 
+                    abonosModel.fecha = reader[3].ToString();
                     abonosModel.monto = double.Parse(reader[4].ToString());
                     abonosModel.comentario = reader[5].ToString();
 
@@ -56,11 +56,10 @@ namespace bonita_smile_v1.Servicios
             return listaAbonos;
         }
 
-        public double Abonados(int id_motivo)
+        public string MostrarAbonos_Update(int id_abono)
         {
-            double abonado = 0.0;
-           
-            query = "select  IFNULL(sum(monto),0)as abonado from abonos where id_motivo = "+id_motivo;
+            string aux_identi = "";
+            query = "SELECT auxiliar_identificador from abonos where id_abono=" + id_abono;
 
             try
             {
@@ -71,12 +70,40 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                    
+
+                    aux_identi = reader[0].ToString();
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return aux_identi;
+        }
+
+        public double Abonados(int id_motivo)
+        {
+            double abonado = 0.0;
+
+            query = "select  IFNULL(sum(monto),0)as abonado from abonos where id_motivo = " + id_motivo;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
 
                     abonado = double.Parse(reader[0].ToString());
-                  
 
-                    
+
+
                 }
             }
             catch (MySqlException ex)
@@ -87,7 +114,7 @@ namespace bonita_smile_v1.Servicios
             if (!ti.Test())
             {
                 Escribir_Archivo ea = new Escribir_Archivo();
-                ea.escribir(query + ";");
+                ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
             }
             return abonado;
         }
@@ -96,7 +123,7 @@ namespace bonita_smile_v1.Servicios
         {
             double restante = 0.0;
 
-            query = "select IFNULL(((select costo from motivo_cita where id_motivo="+id_motivo+")-(select sum(monto) from abonos where id_motivo ="+ id_motivo+")),0) as restante";
+            query = "select IFNULL(((select costo from motivo_cita where id_motivo=" + id_motivo + ")-(select sum(monto) from abonos where id_motivo =" + id_motivo + ")),0) as restante";
 
             try
             {
@@ -140,7 +167,11 @@ namespace bonita_smile_v1.Servicios
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
                     conexionBD.Close();
-                   
+                    if (!ti.Test())
+                    {
+                        Escribir_Archivo ea = new Escribir_Archivo();
+                        ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    }
                     return true;
                 }
             }
@@ -152,19 +183,30 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarAbono(int id_paciente, int id_motivo, string fecha, double monto,string comentario)
+        public bool insertarAbono(int id_paciente, int id_motivo, string fecha, double monto, string comentario)
         {
-            query = "INSERT INTO abonos (id_paciente,id_motivo,fecha,monto,comentario) VALUES("+ id_paciente +","+ id_motivo +",'"+ fecha +"',"+ monto +",'"+comentario+"')";
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                Seguridad seguridad = new Seguridad();
+                string auxiliar_identificador = seguridad.Encriptar(id_paciente + id_motivo + fecha + monto + comentario);
+                query = "INSERT INTO abonos (id_paciente,id_motivo,fecha,monto,comentario,auxiliar_identificador) VALUES(" + id_paciente + "," + id_motivo + ",'" + fecha + "'," + monto + ",'" + comentario + "','" + auxiliar_identificador + "')";
+            }
+            else
+            {
+                query = "INSERT INTO abonos (id_paciente,id_motivo,fecha,monto,comentario) VALUES(" + id_paciente + "," + id_motivo + ",'" + fecha + "'," + monto + ",'" + comentario + "')";
+            }
+
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -179,17 +221,30 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarAbono(int id_abono, int id_paciente, int id_motivo, string fecha, double monto)
         {
-            query = "UPDATE abonos set id_paciente = "+ id_paciente +",id_motivo = "+ id_motivo +",fecha = '"+ fecha +"',monto = "+ monto +"where id_abono = "+ id_abono;
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                string auxiliar_identificador = MostrarAbonos_Update(id_abono);
+                Seguridad seguridad = new Seguridad();
+                //string auxiliar_identificador = seguridad.Encriptar(id_paciente.ToString()+id_motivo+fecha+monto);
+                query = "UPDATE abonos set id_paciente = " + id_paciente + ",id_motivo = " + id_motivo + ",fecha = '" + fecha + "',monto = " + monto + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->'where id_abono = " + id_abono;
+            }
+            else
+            {
+                query = "UPDATE abonos set id_paciente = " + id_paciente + ",id_motivo = " + id_motivo + ",fecha = '" + fecha + "',monto = " + monto + "where id_abono = " + id_abono;
+            }
+
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
+
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -205,7 +260,7 @@ namespace bonita_smile_v1.Servicios
         private bool ValidarExistencia(int id_abono)
         {
             MySqlCommand cmd;
-            string query = "SELECT * FROM rol where id_abono="+ id_abono;
+            string query = "SELECT * FROM rol where id_abono=" + id_abono;
             try
             {
                 cmd = new MySqlCommand(query, conexionBD);
@@ -226,5 +281,7 @@ namespace bonita_smile_v1.Servicios
                 return false;
             }
         }
+
+
     }
 }

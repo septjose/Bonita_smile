@@ -15,6 +15,7 @@ namespace bonita_smile_v1.Servicios
         private MySqlConnection conexionBD;
         Conexion_Offline obj = new Conexion_Offline();
         Test_Internet ti = new Test_Internet();
+        Conexion obj2 = new Conexion();
 
         public Sincronizar()
         {
@@ -104,6 +105,35 @@ namespace bonita_smile_v1.Servicios
                 MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
+            }
+        }
+
+        public bool SincronizarLocalServidor()
+        {
+            conexionBD = obj2.conexion();
+            Escribir_Archivo ea = new Escribir_Archivo();
+            bool internet = ti.Test();
+            List<String> lQuery = new List<string>();
+            lQuery = ea.corregirArchivo();
+            if (!internet)
+            {
+                MessageBox.Show("Intentelo más tarde, no cuenta con acceso a internet");
+                return false;
+            }
+            else
+            {
+                //CREAR TRANSACCION
+                foreach(var query in lQuery)
+                {
+                    if (!query.Equals(""))
+                    {
+                        conexionBD.Open();
+                        MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                        cmd.ExecuteReader();
+                        conexionBD.Close();
+                    }
+                }
+                return true;
             }
         }
 

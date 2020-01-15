@@ -15,6 +15,7 @@ namespace bonita_smile_v1.Servicios
         private string query;
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
+        Test_Internet ti = new Test_Internet();
 
         public Rol()
         {
@@ -54,7 +55,7 @@ namespace bonita_smile_v1.Servicios
         public bool eliminarRol(int id_rol)
         {
             MySqlCommand cmd;
-            query = "DELETE FROM rol where id_rol="+ id_rol;
+            query = "DELETE FROM rol where id_rol=" + id_rol;
             try
             {
                 conexionBD.Open();
@@ -68,6 +69,11 @@ namespace bonita_smile_v1.Servicios
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
                     conexionBD.Close();
+                    if (!ti.Test())
+                    {
+                        Escribir_Archivo ea = new Escribir_Archivo();
+                        ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    }
                     return true;
                 }
             }
@@ -81,13 +87,21 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarRol(string descripcion)
         {
-            query = "INSERT INTO rol (descripcion) VALUES('"+ descripcion +"')";
+            query = "INSERT INTO rol (descripcion) VALUES('" + descripcion + "')";
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Seguridad seguridad = new Seguridad();
+                    string auxiliar_identificador = seguridad.Encriptar(descripcion);
+                    query = "INSERT INTO rol (descripcion,auxiliar_identificador) VALUES('" + descripcion + "','" + auxiliar_identificador + "')";
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
                 return true;
             }
             catch (MySqlException ex)
@@ -100,13 +114,21 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarRol(int id_rol, string descripcion)
         {
-            query = "UPDATE rol set descripcion = '"+ descripcion +"' where id_rol = "+ id_rol;
+            query = "UPDATE rol set descripcion = '" + descripcion + "' where id_rol = " + id_rol;
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Seguridad seguridad = new Seguridad();
+                    string auxiliar_identificador = seguridad.Encriptar(descripcion);
+                    query = "UPDATE rol set descripcion = '" + descripcion + "',auxiliar_identificador = '" + auxiliar_identificador + "' where id_rol = " + id_rol;
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
                 return true;
 
             }
@@ -121,7 +143,7 @@ namespace bonita_smile_v1.Servicios
         private bool ValidarExistencia(int id_rol)
         {
             MySqlCommand cmd;
-            string query = "SELECT * FROM rol where id_rol="+ id_rol;
+            string query = "SELECT * FROM rol where id_rol=" + id_rol;
             try
             {
                 cmd = new MySqlCommand(query, conexionBD);

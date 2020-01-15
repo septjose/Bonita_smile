@@ -56,14 +56,18 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarMarketing(int id_marketing)
         {
-            query = "DELETE FROM clinica where id_marketing="+ id_marketing;
+            query = "DELETE FROM clinica where id_marketing=" + id_marketing;
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
                 return true;
 
             }
@@ -77,17 +81,27 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarMarketing(string descripcion, string fecha_de_envio, int id_paciente)
         {
-            query = "INSERT INTO marketing (descripcion,fecha_de_envio,id_paciente) VALUES('"+ descripcion +"','"+ fecha_de_envio +"',"+ id_paciente +")";
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                Seguridad seguridad = new Seguridad();
+                string auxiliar_identificador = seguridad.Encriptar(descripcion + fecha_de_envio + id_paciente);
+                query = "INSERT INTO marketing (descripcion,fecha_de_envio,id_paciente,auxiliar_identificador) VALUES('" + descripcion + "','" + fecha_de_envio + "'," + id_paciente + ",'" + auxiliar_identificador + "')";
+            }
+            else
+            {
+                query = "INSERT INTO marketing (descripcion,fecha_de_envio,id_paciente) VALUES('" + descripcion + "','" + fecha_de_envio + "'," + id_paciente + ")";
+            }
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -102,17 +116,28 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarMarketing(int id_marketing, string descripcion, string fecha_de_envio, int id_paciente)
         {
-            query = "UPDATE marketing set descripcion = '"+ descripcion +"',fecha_de_envio = '" + fecha_de_envio +"',id_paciente = "+ id_paciente +" where id_marketing = "+ id_marketing;
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                //Seguridad seguridad = new Seguridad();
+                //seguridad.Encriptar(descripcion + fecha_de_envio + id_paciente);
+                string auxiliar_identificador = MostrarMarketing_Update(id_marketing);
+                query = "UPDATE marketing set descripcion = '" + descripcion + "',fecha_de_envio = '" + fecha_de_envio + "',id_paciente = " + id_paciente + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_marketing = " + id_marketing;
+            }
+            else
+            {
+                query = "UPDATE marketing set descripcion = '" + descripcion + "',fecha_de_envio = '" + fecha_de_envio + "',id_paciente = " + id_paciente + " where id_marketing = " + id_marketing;
+            }
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -123,6 +148,33 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 return false;
             }
+        }
+
+        public string MostrarMarketing_Update(int id_marketing)
+        {
+            string aux_identi = "";
+            query = "SELECT auxiliar_identificador from marketing where id_marketing=" + id_marketing;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    aux_identi = reader[0].ToString();
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return aux_identi;
         }
     }
 }

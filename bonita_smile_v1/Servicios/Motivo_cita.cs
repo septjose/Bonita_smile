@@ -25,7 +25,7 @@ namespace bonita_smile_v1.Servicios
         public List<Motivo_citaModel> Mostrar_MotivoCita(int id_paciente)
         {
             List<Motivo_citaModel> listaMotivo_cita = new List<Motivo_citaModel>();
-            query = "select * from motivo_cita inner join paciente on paciente.id_paciente=motivo_cita.id_paciente where paciente.id_paciente="+id_paciente;
+            query = "select * from motivo_cita inner join paciente on paciente.id_paciente=motivo_cita.id_paciente where paciente.id_paciente=" + id_paciente;
 
             try
             {
@@ -42,7 +42,7 @@ namespace bonita_smile_v1.Servicios
                     motivo_CitaModel.id_motivo = int.Parse(reader[0].ToString());
                     motivo_CitaModel.descripcion = reader[1].ToString();
                     motivo_CitaModel.costo = double.Parse(reader[2].ToString());
-                    pacienteModel.id_paciente= int.Parse(reader[5].ToString());
+                    pacienteModel.id_paciente = int.Parse(reader[4].ToString());
                     motivo_CitaModel.paciente = pacienteModel;
                     listaMotivo_cita.Add(motivo_CitaModel);
                 }
@@ -57,14 +57,18 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarMotivo_cita(int id_motivo)
         {
-            query = "DELETE FROM motivo_cita where id_motivo="+ id_motivo;
+            query = "DELETE FROM motivo_cita where id_motivo=" + id_motivo;
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
                 return true;
 
             }
@@ -78,17 +82,27 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarMotivo_cita(string descripcion, double costo, int id_paciente)
         {
-            query = "INSERT INTO motivo_cita (descripcion,costo,id_paciente) VALUES('"+ descripcion +"',"+ costo +","+ id_paciente +")";
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                Seguridad seguridad = new Seguridad();
+                string auxiliar_identificador = seguridad.Encriptar(descripcion + costo + id_paciente);
+                query = "INSERT INTO motivo_cita (descripcion,costo,id_paciente,auxiliar_identificador) VALUES('" + descripcion + "'," + costo + "," + id_paciente + ",'" + auxiliar_identificador + "')";
+            }
+            else
+            {
+                query = "INSERT INTO motivo_cita (descripcion,costo,id_paciente) VALUES('" + descripcion + "'," + costo + "," + id_paciente + ")";
+            }
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -103,17 +117,28 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarMotivo_cita(int id_motivo, string descripcion, double costo, int id_paciente)
         {
-            query = "UPDATE motivo_cita set descripcion = '"+ descripcion +"',costo = "+ costo +",id_paciente = "+ id_paciente +" where id_motivo = "+ id_motivo;
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                //Seguridad seguridad = new Seguridad();
+                // seguridad.Encriptar(descripcion + costo + id_paciente);
+                string auxiliar_identificador = MostrarMotivo_Cita_Update(id_motivo);
+                query = "UPDATE motivo_cita set descripcion = '" + descripcion + "',costo = " + costo + ",id_paciente = " + id_paciente + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_motivo = " + id_motivo;
+            }
+            else
+            {
+                query = "UPDATE motivo_cita set descripcion = '" + descripcion + "',costo = " + costo + ",id_paciente = " + id_paciente + " where id_motivo = " + id_motivo;
+            }
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                 cmd.ExecuteReader();
                 conexionBD.Close();
-                if (!ti.Test())
+                if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -124,6 +149,33 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 return false;
             }
+        }
+
+        public string MostrarMotivo_Cita_Update(int id_motivo)
+        {
+            string aux_identi = "";
+            query = "SELECT auxiliar_identificador from motivo_cita where id_motivo=" + id_motivo;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    aux_identi = reader[0].ToString();
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return aux_identi;
         }
     }
 }

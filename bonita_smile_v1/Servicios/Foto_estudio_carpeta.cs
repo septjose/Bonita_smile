@@ -14,10 +14,10 @@ namespace bonita_smile_v1.Servicios
 {
     class Fotos_estudio_carpeta
     {
+        private string ruta2 = @"C:\bs\";
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
-        private string ruta2 = @"C:\bs\";
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
 
@@ -25,8 +25,8 @@ namespace bonita_smile_v1.Servicios
         {
             this.conexionBD = obj.conexion();
         }
-        
-        public List<Fotos_estudio_carpetaModel> MostrarFoto_estudio_carpeta(int id_carpeta,int id_paciente)
+
+        public List<Fotos_estudio_carpetaModel> MostrarFoto_estudio_carpeta(int id_carpeta, int id_paciente)
         {
             List<Fotos_estudio_carpetaModel> listaFoto_estudio_carpeta = new List<Fotos_estudio_carpetaModel>();
             query = "SELECT  * FROM fotos_estudio_carpeta where id_carpeta=" + id_carpeta + " and id_paciente=" + id_paciente;
@@ -46,7 +46,7 @@ namespace bonita_smile_v1.Servicios
                     fotos_Estudio_CarpetaModel.id_carpeta = int.Parse(reader[1].ToString());
                     fotos_Estudio_CarpetaModel.id_paciente = int.Parse(reader[2].ToString());
                     fotos_Estudio_CarpetaModel.foto = reader[3].ToString();
-                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@"C:\bs\"+reader[3].ToString());
+                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@"C:\bs\" + reader[3].ToString());
 
                     listaFoto_estudio_carpeta.Add(fotos_Estudio_CarpetaModel);
                 }
@@ -60,6 +60,144 @@ namespace bonita_smile_v1.Servicios
 
         }
 
+        public bool eliminarFoto_estudio_carpeta(int id_foto)
+        {
+            query = "DELETE FROM fotos_estudio_carpeta where id_foto=" + id_foto;
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                cmd.ExecuteReader();
+                conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return false;
+            }
+        }
+
+        public bool insertarFoto_estudio_carpeta(int id_carpeta, int id_paciente, string foto)
+        {
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                Seguridad seguridad = new Seguridad();
+                string auxiliar_identificador = seguridad.Encriptar(id_carpeta + id_paciente + foto);
+                query = "INSERT INTO fotos_Estudio_carpeta (id_carpeta,id_paciente,auxiliar_identificador) VALUES(" + id_carpeta + "," + id_paciente + ",'" + foto + "','" + auxiliar_identificador + "')";
+            }
+            else
+            {
+                query = "INSERT INTO fotos_Estudio_carpeta (id_carpeta,id_paciente) VALUES(" + id_carpeta + "," + id_paciente + ",'" + foto + "')";
+            }
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                cmd.ExecuteReader();
+                conexionBD.Close();
+                if (!internet)
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
+                return true;
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return false;
+            }
+        }
+
+        public bool actualizarFoto_estudio_carpeta(int id_foto, int id_carpeta, int id_paciente, string foto)
+        {
+            bool internet = ti.Test();
+            if (!internet)
+            {
+                //Seguridad seguridad = new Seguridad();
+                // = seguridad.Encriptar(id_carpeta + id_paciente + foto);
+                string auxiliar_identificador = MostrarFotos_Update(id_foto);
+                query = "UPDATE fotos_estudio_carpeta set id_paciente = " + id_paciente + ",id_carpeta = " + id_carpeta + ",foto = '" + foto + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_foto = " + id_foto;
+            }
+            else
+            {
+                query = "UPDATE fotos_estudio_carpeta set id_paciente = " + id_paciente + ",id_carpeta = " + id_carpeta + ",foto = '" + foto + "' where id_foto = " + id_foto;
+            }
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                cmd.ExecuteReader();
+                conexionBD.Close();
+                if (!ti.Test())
+                {
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                }
+                return true;
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return false;
+            }
+        }
+
+        public string MostrarFotos_Update(int id_foto)
+        {
+            string aux_identi = "";
+            query = "SELECT auxiliar_identificador from fotos_estudio_carpeta where id_foto=" + id_foto;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    aux_identi = reader[0].ToString();
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return aux_identi;
+        }
+        private BitmapImage LoadImage(string filename)
+        {
+            BitmapImage bi;
+
+            if (File.Exists(filename))
+            {
+                MessageBox.Show("si lo encontro la" + filename);
+                bi = new BitmapImage(new Uri(filename));
+            }
+            else
+            {
+                MessageBox.Show("No la encontro");
+                bi = new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
+            }
+            return bi;
+        }
         public void fotos(int id_carpeta, int id_paciente)
         {
             string fotito = "";
@@ -75,14 +213,14 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                   
 
-                    
-                    fotito= reader[0].ToString();
+
+
+                    fotito = reader[0].ToString();
 
                     listaFoto_estudio_carpeta.Add(fotito);
                 }
-                foreach(var l in listaFoto_estudio_carpeta)
+                foreach (var l in listaFoto_estudio_carpeta)
                 {
                     bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", l, ruta2 + l, 10);
                     if (descargo)
@@ -95,7 +233,7 @@ namespace bonita_smile_v1.Servicios
                         System.Windows.MessageBox.Show(":(");
                     }
                 }
-               
+
             }
             catch (MySqlException ex)
             {
@@ -148,94 +286,6 @@ namespace bonita_smile_v1.Servicios
 
             }
             return descargar;
-        }
-
-       
-
-        public bool eliminarFoto_estudio_carpeta(int id_foto)
-        {
-            query = "DELETE FROM fotos_estudio_carpeta where id_foto="+ id_foto;
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
-                
-                return true;
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return false;
-            }
-        }
-
-        public bool insertarFoto_estudio_carpeta(int id_carpeta, int id_paciente, string foto)
-        {
-            query = "INSERT INTO fotos_estudio_carpeta (id_carpeta,id_paciente,foto) VALUES(" + id_carpeta +","+ id_paciente +",'"+ foto +"')";
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
-                if (!ti.Test())
-                {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
-                }
-                return true;
-
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return false;
-            }
-        }
-
-        public bool actualizarFoto_estudio_carpeta(int id_foto, int id_carpeta, int id_paciente, string foto)
-        {
-            query = "UPDATE fotos_estudio_carpeta set id_paciente = "+ id_paciente +",id_carpeta = "+ id_carpeta +",foto = '"+ foto +"' where id_foto = "+ id_foto;
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
-                if (!ti.Test())
-                {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
-                }
-                return true;
-
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return false;
-            }
-        }
-        private BitmapImage LoadImage(string filename)
-        {
-            BitmapImage bi;
-
-            if (File.Exists(filename))
-            {
-                MessageBox.Show("si lo encontro la"+filename);
-                bi = new BitmapImage(new Uri(filename));
-            }
-            else
-            {
-                MessageBox.Show("No la encontro");
-                bi = new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
-            }
-            return bi;
         }
     }
 }

@@ -39,6 +39,13 @@ namespace bonita_smile_v1
             //Rol r = new Rol();
             //r.eliminarRol(5);
             user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+
+            /*Escribir_Archivo ea = new Escribir_Archivo();
+            ea.corregirArchivo();*/
+
+            /*Sincronizar sincronizar = new Sincronizar();
+            sincronizar.SincronizarLocalServidor();*/
+
            /*Sincronizar s = new Sincronizar();
             s.Backup();
             bool verdad = s.borrar_bd();
@@ -61,7 +68,7 @@ namespace bonita_smile_v1
                 MessageBox.Show("No se pudo borrar");
             }*/
 
-            
+
         }
     }
 }
