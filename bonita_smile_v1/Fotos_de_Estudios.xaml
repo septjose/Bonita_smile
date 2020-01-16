@@ -7,22 +7,28 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Fotos_de_Estudios">
-
     <Grid>
-        <ListBox x:Name="lb_imagen"   SelectionChanged="lb_imagen_SelectionChanged" Margin="25,30,540,55"   >
-            <ListBox.ItemTemplate>
+        <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="215" Margin="0,50,50,0" Stroke="Black" VerticalAlignment="Top" Width="260"/>
+        <ListView  x:Name="lb_imagen"  Margin="0,50,300,65" SelectionChanged="lb_imagen_SelectionChanged" Width="1000"
+            SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
+              ItemContainerStyle="{StaticResource FileItemStyle}">
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid >
-                        <!--<TextBlock Text="{Binding foto}" />-->
-                        <Image Source="{Binding imagen}" Width="150" Height="150" />
-
-                    </Grid>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Bottom" Text="{Binding foto}"/>
+                        <Image Source="{Binding imagen}" Width="32" Height="32" />
+                    </DockPanel>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-            <Rectangle Fill="#FFF4F4F5" Height="100" Stroke="Black" Width="100"/>
+            </ListView.ItemTemplate>
+        </ListView>
 
 
-        </ListBox>
-        <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="415" Margin="325,15,0,0" Stroke="Black" VerticalAlignment="Top" Width="460"/>
     </Grid>
 </Page>

@@ -17,7 +17,10 @@ using System.Windows.Shapes;
 using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
 using bonita_smile_v1.Modelos;
+
+
 namespace bonita_smile_v1
+
 {
     /// <summary>
     /// Lógica de interacción para Pagina_Estudios.xaml
@@ -35,9 +38,9 @@ namespace bonita_smile_v1
             llenar_list_view(id_paciente);
         }
 
-        void llenar_list_view( int id_paciente)
+        void llenar_list_view(int id_paciente)
         {
-            var carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente( id_paciente));
+            var carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
 
             lvCarpetas.ItemsSource = carpetas;
             GCarpetas = carpetas;
@@ -67,18 +70,20 @@ namespace bonita_smile_v1
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-           Form mensaje = new Agregar_Carpetas(id_paciente);
+            Form mensaje = new Agregar_Carpetas(id_paciente);
             resultado = mensaje.ShowDialog();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+
+
+        private void lvCarpetas_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Carpeta_archivosModel carpeta = (Carpeta_archivosModel)lvCarpetas.SelectedItem;
             if (lvCarpetas.SelectedItems.Count > 0)
 
             {
-               // System.Windows.MessageBox.Show(carpeta.id_carpeta + "");
-               // System.Windows.MessageBox.Show(carpeta.id_paciente + "");
+                // System.Windows.MessageBox.Show(carpeta.id_carpeta + "");
+                // System.Windows.MessageBox.Show(carpeta.id_paciente + "");
                 //System.Windows.MessageBox.Show("hi");
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
@@ -90,6 +95,21 @@ namespace bonita_smile_v1
                     clin.Main2.Content = new Fotos_de_Estudios(carpeta);
                 }
             }
+        }
+
+       
+        private void EditZoneInfoContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult resultado = new DialogResult();
+            Form mensaje = new Agregar_Carpetas(id_paciente);
+            resultado = mensaje.ShowDialog();
+        }
+
+        
+
+        private void lvCarpetas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

@@ -46,6 +46,45 @@
                 <Setter Property="Margin" Value="50" />
                 <Setter Property="BorderBrush" Value="#FF1449DC" />
             </Style>
+
+
+<!--Esto es para el de notas -->
+
+            <Style x:Key="FileItemStyle" TargetType="{x:Type ListViewItem}">
+                <Setter Property="Margin" Value="5,5,5,5"/>
+                <Setter Property="Padding" Value="0,0,0,0"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate  TargetType="{x:Type ListViewItem}">
+
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" >
+                                <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="2.5"/>
+                                <StackPanel HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                                    <ContentPresenter/>
+                                </StackPanel>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="true">
+                        <Setter Property="Background" Value="Chocolate"/>
+                        <Setter Property="Foreground" Value="Chocolate"/>
+                        <Setter Property="BorderBrush" Value="Chocolate" />
+                        <Setter Property="FontFamily" Value="Arial"/>
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="TextElement.FontWeight" Value="Heavy" />
+                        <!--<Setter Property="TextDecorations" Value="Underline" />-->
+
+
+                    </Trigger>
+                   
+                </Style.Triggers>
+               
+            </Style>
+           
+            
         </ResourceDictionary>
     </Application.Resources>
     

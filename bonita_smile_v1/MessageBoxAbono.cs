@@ -21,5 +21,10 @@ namespace bonita_smile_v1
         {
 
         }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+
+        }
     }
 }

@@ -139,8 +139,8 @@
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                             <Setter Property="VerticalAlignment" Value="Center"/>
                             <Setter Property="Height" Value="200"/>
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="Control.Background" Value="White" />
+                            <Setter Property="Background" Value="LightYellow"/>
+                            <Setter Property="Control.Background" Value="LightYellow" />
                             <Setter Property="Control.BorderThickness" Value="0.2" />
                             <Setter Property="Control.BorderBrush" Value="Black" />
                             <Setter Property="FontFamily" Value="Arial"/>
@@ -149,7 +149,55 @@
 
                         </Style>
                     </ListView.ItemContainerStyle>
-                    <ListView.View >
+                   
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <!--<DockPanel>
+                                <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Left" Text="{Binding fecha}"/>
+                                <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Text="{Binding descripcion}"/>
+
+
+                            </DockPanel>-->
+                           <!-- <StackPanel Orientation="Vertical">
+                                <TextBlock  HorizontalAlignment="Left" Text="{Binding fecha}"/>
+                                <TextBlock  HorizontalAlignment="Center" Text=""/>
+                                <TextBlock  HorizontalAlignment="Center" Text=""/>
+                                <TextBlock  HorizontalAlignment="Center" Text=""/>
+                                <TextBlock  HorizontalAlignment="Center" Text=""/>
+                                <TextBlock  HorizontalAlignment="Center" Text=""/>
+                                <TextBlock  HorizontalAlignment="Center" Text="{Binding descripcion}"/>
+                            </StackPanel>-->
+                            
+                            <Grid>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Text="{Binding fecha}"/>
+                                <Grid Grid.Row="0" Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="10"/>
+                                    </Grid.RowDefinitions>
+                                   
+                                    <TextBlock  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding descripcion}" TextWrapping="Wrap" Width="300"/>
+                                    <TextBlock  Grid.Row="2" Grid.Column="1" Text=""/>
+                                </Grid>
+
+
+                               
+                            </Grid>
+                            
+                            
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!--<ListView.View >
                         <GridView >
 
                             <GridViewColumn Header="Fecha" Width="250" DisplayMemberBinding="{Binding fecha}" />
@@ -157,7 +205,24 @@
 
                         </GridView>
                     </ListView.View>
-                </ListView>
+                </ListView>-->
+
+                    <!-- <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Top" Text="{Binding fecha}"/>
+                                <TextBlock Text="{Binding descripcion}"/>
+                                <Image Source="C:\bs\carpeta.png"  Width="32" Height="32"/>
+                    </DockPanel>
+                    </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>-->
             </Grid>
 
             <!-- <Label Content="Nombre" HorizontalAlignment="Left" Margin="196,67,0,0" VerticalAlignment="Top" Width="59"/>

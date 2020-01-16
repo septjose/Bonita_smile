@@ -52,7 +52,8 @@
                     <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="Height" Value="80"/>
                         <Setter Property="Background" Value="White"/>
-                        <Setter Property="Control.Background" Value="White" />
+                            
+                            <Setter Property="Control.Background" Value="White" />
                         <Setter Property="Control.BorderThickness" Value="0.2" />
                         <Setter Property="Control.BorderBrush" Value="Black" />
                         <Setter Property="FontFamily" Value="Arial"/>
