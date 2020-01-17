@@ -132,7 +132,7 @@ namespace bonita_smile_v1
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             valor = cmbClinica.SelectedItem.ToString();
-            int id_clinica = obtener_id_clinica(valor);
+            string id_clinica = obtener_id_clinica(valor);
             PacienteModel pacienteModel = new PacienteModel();
             ClinicaModel clinicaModel = new ClinicaModel();
 
@@ -155,9 +155,9 @@ namespace bonita_smile_v1
 
         }
 
-        public int obtener_id_clinica(string nombre_sucursal)
+        public string obtener_id_clinica(string nombre_sucursal)
         {
-            int id = 0;
+            string id = "";
             query = "SELECT id_clinica FROM clinica where nombre_sucursal='" + nombre_sucursal + "'";
 
             try
@@ -174,13 +174,13 @@ namespace bonita_smile_v1
                     //coloresModel.id_color = int.Parse(reader[0].ToString());
                     //coloresModel.descripcion = reader[1].ToString();
 
-                    id = int.Parse(reader[0].ToString());
+                    id = reader[0].ToString();
                 }
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.ToString());
-                return 0;
+                return "";
             }
             conexionBD.Close();
 

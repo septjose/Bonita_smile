@@ -39,7 +39,7 @@ namespace bonita_smile_v1.Servicios
                     ClinicaModel clinicaModel = new ClinicaModel();
 
 
-                    clinicaModel.id_clinica = int.Parse(reader[0].ToString());
+                    clinicaModel.id_clinica = reader[0].ToString();
                     clinicaModel.nombre_sucursal = reader[1].ToString();
                     clinicaModel.color = reader[2].ToString();
                     listaClinica.Add(clinicaModel);
@@ -54,9 +54,9 @@ namespace bonita_smile_v1.Servicios
 
         }
 
-        public bool eliminarClinica(int id_clinica)
+        public bool eliminarClinica(string id_clinica)
         {
-            query = "DELETE FROM clinica where id_clinica=" + id_clinica;
+            query = "DELETE FROM clinica where id_clinica='" + id_clinica+"'";
             try
             {
                 conexionBD.Open();
@@ -66,8 +66,8 @@ namespace bonita_smile_v1.Servicios
 
                 if (!ti.Test())
                 {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                   //Escribir_Archivo ea = new Escribir_Archivo();
+                    //ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
 
                 return true;
@@ -83,16 +83,18 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarClinica(string nombre_sucursal, string color)
         {
+            string auxiliar_identificador = "";
+            Seguridad seguridad = new Seguridad();
+            auxiliar_identificador = seguridad.SHA1(nombre_sucursal + color);
             bool internet = ti.Test();
             if (!internet)
             {
-                Seguridad seguridad = new Seguridad();
-                string auxiliar_identificador = seguridad.Encriptar(nombre_sucursal + color);
-                query = "INSERT INTO clinica (nombre_sucursal,color,auxiliar_identificador) VALUES('" + nombre_sucursal + "','" + color + "','<!--" + auxiliar_identificador + "-->')";
+               
+                query = "INSERT INTO clinica (id_clinica,nombre_sucursal,color,auxiliar_identificador) VALUES('"+ auxiliar_identificador+"','"+ nombre_sucursal + "','" + color + "','<!--" + auxiliar_identificador + "-->')";
             }
             else
             {
-                query = "INSERT INTO clinica (nombre_sucursal,color) VALUES('" + nombre_sucursal + "','" + color + "')";
+                query = "INSERT INTO clinica (id_clinica,nombre_sucursal,color) VALUES('" + auxiliar_identificador + "','" + nombre_sucursal + "','" + color + "')";
             }
             //query = "INSERT INTO clinica (nombre_sucursal,id_color) VALUES('Clinica Salamanca',1)";
             Console.WriteLine(query);
@@ -121,18 +123,20 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertar_Permisos(int id_usuario, int id_clinica)
+        public bool insertar_Permisos(string id_usuario, string id_clinica)
         {
+            string auxiliar_identificador = "";
+            Seguridad seguridad = new Seguridad();
+            auxiliar_identificador = seguridad.SHA1(id_usuario + id_clinica);
             bool internet = ti.Test();
             if (!internet)
             {
-                Seguridad seguridad = new Seguridad();
-                string auxiliar_identificador = seguridad.Encriptar(id_usuario.ToString() + id_clinica);
-                query = "INSERT INTO permisos (id_usuario,id_clinica,auxiliar_identificador) VALUES(" + id_usuario + "," + id_clinica + ",'<!--" + auxiliar_identificador + "-->')";
+               
+                query = "INSERT INTO permisos (id_permiso,id_usuario,id_clinica,auxiliar_identificador) VALUES('"+auxiliar_identificador+"','" + id_usuario + "','" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
             }
             else
             {
-                query = "INSERT INTO permisos (id_usuario,id_clinica) VALUES(" + id_usuario + "," + id_clinica + ")";
+                query = "INSERT INTO permisos (id_permiso,id_usuario,id_clinica) VALUES('" + auxiliar_identificador + "','" + id_usuario + "','" + id_clinica + "')";
             }
             //query = "INSERT INTO clinica (nombre_sucursal,id_color) VALUES('Clinica Salamanca',1)";
             Console.WriteLine(query);
@@ -159,7 +163,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarClinica(int id_clinica, string nombre_sucursal, string color)
+        public bool actualizarClinica(string id_clinica, string nombre_sucursal, string color)
         {
             bool internet = ti.Test();
             if (!internet)
@@ -167,12 +171,12 @@ namespace bonita_smile_v1.Servicios
                 //Seguridad seguridad = new Seguridad();
                 //string auxiliar_identificador = seguridad.Encriptar(nombre_sucursal+ color);
                 string auxiliar_identificador = MostrarClinica_Update(id_clinica);
-                query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "',auxiliar_identificador = '" + auxiliar_identificador + "' where id_clinica = " + id_clinica;
+                query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "',auxiliar_identificador = '" + auxiliar_identificador + "' where id_clinica = '" + id_clinica+"'";
                 MessageBox.Show(query);
             }
             else
             {
-                query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "' where id_clinica = " + id_clinica;
+                query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "' where id_clinica = '" + id_clinica+"'";
             }
             try
             {
@@ -196,7 +200,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizar_Permisos(int id_usuario, int id_clinica, int id_permiso)
+        public bool actualizar_Permisos(string id_usuario, string id_clinica, string id_permiso)
         {
             bool internet = ti.Test();
             if (!internet)
@@ -204,11 +208,11 @@ namespace bonita_smile_v1.Servicios
                 //Seguridad seguridad = new Seguridad();
                 // = seguridad.Encriptar(id_usuario.ToString() + id_clinica);
                 string auxiliar_identificador = MostrarPermisos_Update(id_permiso);
-                query = "UPDATE permisos set id_usuario = " + id_usuario + ",id_clinica = " + id_clinica + ",auxiliar_identificador = '" + auxiliar_identificador + "' where id_permiso = " + id_permiso;
+                query = "UPDATE permisos set id_usuario = '" + id_usuario + "',id_clinica = '" + id_clinica + "',auxiliar_identificador = '" + auxiliar_identificador + "' where id_permiso = '" + id_permiso+"'";
             }
             else
             {
-                query = "UPDATE permisos set id_usuario = " + id_usuario + ",id_clinica = " + id_clinica + " where id_permiso = " + id_permiso;
+                query = "UPDATE permisos set id_usuario = '" + id_usuario + "',id_clinica = '" + id_clinica + "' where id_permiso = '" + id_permiso+"'";
             }
 
             try
@@ -233,10 +237,10 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string MostrarClinica_Update(int id_clinica)
+        public string MostrarClinica_Update(string id_clinica)
         {
             string aux_identi = "";
-            query = "SELECT auxiliar_identificador from clinica where id_clinica=" + id_clinica;
+            query = "SELECT auxiliar_identificador from clinica where id_clinica='" + id_clinica+"'";
 
             try
             {
@@ -260,10 +264,10 @@ namespace bonita_smile_v1.Servicios
             return aux_identi;
         }
 
-        public string MostrarPermisos_Update(int id_permiso)
+        public string MostrarPermisos_Update(string id_permiso)
         {
             string aux_identi = "";
-            query = "SELECT auxiliar_identificador from permisos where id_permiso=" + id_permiso;
+            query = "SELECT auxiliar_identificador from permisos where id_permiso='" + id_permiso+"'";
 
             try
             {

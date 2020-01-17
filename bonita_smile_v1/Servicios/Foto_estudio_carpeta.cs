@@ -26,10 +26,10 @@ namespace bonita_smile_v1.Servicios
             this.conexionBD = obj.conexion();
         }
 
-        public List<Fotos_estudio_carpetaModel> MostrarFoto_estudio_carpeta(int id_carpeta, int id_paciente)
+        public List<Fotos_estudio_carpetaModel> MostrarFoto_estudio_carpeta(string id_carpeta, string id_paciente)
         {
             List<Fotos_estudio_carpetaModel> listaFoto_estudio_carpeta = new List<Fotos_estudio_carpetaModel>();
-            query = "SELECT  * FROM fotos_estudio_carpeta where id_carpeta=" + id_carpeta + " and id_paciente=" + id_paciente;
+            query = "SELECT  * FROM fotos_estudio_carpeta where id_carpeta='" + id_carpeta + "' and id_paciente='" + id_paciente+"'";
 
             try
             {
@@ -42,9 +42,9 @@ namespace bonita_smile_v1.Servicios
                 {
                     Fotos_estudio_carpetaModel fotos_Estudio_CarpetaModel = new Fotos_estudio_carpetaModel();
 
-                    fotos_Estudio_CarpetaModel.id_foto = int.Parse(reader[0].ToString());
-                    fotos_Estudio_CarpetaModel.id_carpeta = int.Parse(reader[1].ToString());
-                    fotos_Estudio_CarpetaModel.id_paciente = int.Parse(reader[2].ToString());
+                    fotos_Estudio_CarpetaModel.id_foto = reader[0].ToString();
+                    fotos_Estudio_CarpetaModel.id_carpeta = reader[1].ToString();
+                    fotos_Estudio_CarpetaModel.id_paciente = reader[2].ToString();
                     fotos_Estudio_CarpetaModel.foto = reader[3].ToString();
                     fotos_Estudio_CarpetaModel.imagen = LoadImage(@"C:\bs\" + reader[3].ToString());
 
@@ -60,9 +60,9 @@ namespace bonita_smile_v1.Servicios
 
         }
 
-        public bool eliminarFoto_estudio_carpeta(int id_foto)
+        public bool eliminarFoto_estudio_carpeta(string id_foto)
         {
-            query = "DELETE FROM fotos_estudio_carpeta where id_foto=" + id_foto;
+            query = "DELETE FROM fotos_estudio_carpeta where id_foto='" + id_foto+"'";
             try
             {
                 conexionBD.Open();
@@ -71,8 +71,8 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 if (!ti.Test())
                 {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                   // Escribir_Archivo ea = new Escribir_Archivo();
+                   // ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
             }
@@ -84,18 +84,30 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarFoto_estudio_carpeta(int id_carpeta, int id_paciente, string foto)
+        public bool insertarFoto_estudio_carpeta(string id_carpeta, string id_paciente, string foto)
         {
+            string auxiliar_identificador = "";
+            Seguridad seguridad = new Seguridad();
+            MessageBox.Show((foto.Length/2)+"");
+            MessageBox.Show(foto.Length + "");
+            foto = foto.Substring((foto.Length/4)*3);
+
+
+            MessageBox.Show("foto = " + foto);
+            //string auxiliar_carpeta = seguridad.Encriptar(id_carpeta);
+           //string  auxiliar_paciente = seguridad.Encriptar(id_paciente);
+           //string  auxiliar_foto = seguridad.Encriptar(foto);
+            auxiliar_identificador=seguridad.SHA1(id_carpeta+id_paciente+foto);
+            //auxiliar_identificador = seguridad.Encriptar(id_carpeta + id_paciente + foto);
             bool internet = ti.Test();
             if (!internet)
             {
-                Seguridad seguridad = new Seguridad();
-                string auxiliar_identificador = seguridad.Encriptar(id_carpeta + id_paciente + foto);
-                query = "INSERT INTO fotos_Estudio_carpeta (id_carpeta,id_paciente,auxiliar_identificador) VALUES(" + id_carpeta + "," + id_paciente + ",'" + foto + "','" + auxiliar_identificador + "')";
+               
+                query = "INSERT INTO fotos_estudio_carpeta (id_foto,id_carpeta,id_paciente,foto,auxiliar_identificador) VALUES('"+auxiliar_identificador +"','"+ id_carpeta + "','" + id_paciente + "','" + foto + "','<!--" + auxiliar_identificador + "-->')";
             }
             else
             {
-                query = "INSERT INTO fotos_Estudio_carpeta (id_carpeta,id_paciente) VALUES(" + id_carpeta + "," + id_paciente + ",'" + foto + "')";
+                query = "INSERT INTO fotos_estudio_carpeta (id_foto,id_carpeta,id_paciente,foto) VALUES('" + auxiliar_identificador + "','" + id_carpeta + "','" + id_paciente + "','" + foto + "')";
             }
 
             try
@@ -120,7 +132,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarFoto_estudio_carpeta(int id_foto, int id_carpeta, int id_paciente, string foto)
+        public bool actualizarFoto_estudio_carpeta(string id_foto, string id_carpeta, string id_paciente, string foto)
         {
             bool internet = ti.Test();
             if (!internet)
@@ -128,11 +140,11 @@ namespace bonita_smile_v1.Servicios
                 //Seguridad seguridad = new Seguridad();
                 // = seguridad.Encriptar(id_carpeta + id_paciente + foto);
                 string auxiliar_identificador = MostrarFotos_Update(id_foto);
-                query = "UPDATE fotos_estudio_carpeta set id_paciente = " + id_paciente + ",id_carpeta = " + id_carpeta + ",foto = '" + foto + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_foto = " + id_foto;
+                query = "UPDATE fotos_estudio_carpeta set id_paciente = '" + id_paciente + "',id_carpeta = '" + id_carpeta + "',foto = '" + foto + ",auxiliar_identificador = '" + auxiliar_identificador + "' where id_foto = '" + id_foto+"'";
             }
             else
             {
-                query = "UPDATE fotos_estudio_carpeta set id_paciente = " + id_paciente + ",id_carpeta = " + id_carpeta + ",foto = '" + foto + "' where id_foto = " + id_foto;
+                query = "UPDATE fotos_estudio_carpeta set id_paciente = '" + id_paciente + "',id_carpeta = '" + id_carpeta + "',foto = '" + foto + "' where id_foto = '" + id_foto+"'";
             }
             try
             {
@@ -156,10 +168,10 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string MostrarFotos_Update(int id_foto)
+        public string MostrarFotos_Update(string id_foto)
         {
             string aux_identi = "";
-            query = "SELECT auxiliar_identificador from fotos_estudio_carpeta where id_foto=" + id_foto;
+            query = "SELECT auxiliar_identificador from fotos_estudio_carpeta where id_foto='" + id_foto+"'";
 
             try
             {
@@ -198,11 +210,11 @@ namespace bonita_smile_v1.Servicios
             }
             return bi;
         }
-        public void fotos(int id_carpeta, int id_paciente)
+        public void fotos(string id_carpeta, string id_paciente)
         {
             string fotito = "";
             List<string> listaFoto_estudio_carpeta = new List<string>();
-            query = "SELECT  foto FROM fotos_estudio_carpeta where id_carpeta=" + id_carpeta + " and id_paciente=" + id_paciente;
+            query = "SELECT  foto FROM fotos_estudio_carpeta where id_carpeta='" + id_carpeta + "' and id_paciente='" + id_paciente+"'";
 
             try
             {

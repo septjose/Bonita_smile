@@ -37,7 +37,7 @@ namespace bonita_smile_v1
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             if (lv_Paciente.SelectedItems.Count > 0)
             {
-                int id_paciente = paciente.id_paciente;
+                string id_paciente = paciente.id_paciente;
                 string nombre_paciente = paciente.nombre;
                 Test_Internet ti = new Test_Internet();
                 if (ti.Test())

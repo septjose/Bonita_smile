@@ -800,7 +800,6 @@ C:\Users\José Alberto\Pictures\nueva\Bonita_smile\bonita_smile_v1\obj\Debug\bon
 C:\Users\José Alberto\Pictures\nueva\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Properties.Resources.resources
 C:\Users\José Alberto\Pictures\nueva\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj.GenerateResource.cache
 C:\Users\José Alberto\Pictures\nueva\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj.CopyComplete
-E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csprojAssemblyReference.cache
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\IniciarSesionWindow.baml
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Fotos_de_Estudios.g.cs
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Admin.g.cs
@@ -986,3 +985,4 @@ E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj.GenerateResource.cache
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj.CopyComplete
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.exe
+E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csprojAssemblyReference.cache

@@ -110,9 +110,9 @@ namespace bonita_smile_v1
         {
             valor = cmbUsuario.SelectedItem.ToString();
             valor2 = cmbClinica.SelectedItem.ToString();
-            int id_usuario = obtener_id_usuario(valor);
-            int id_clinica = obtener_id_Clinica(valor2);
-            int id_permiso = Convert.ToInt32(permiso);
+            string id_usuario = obtener_id_usuario(valor);
+            string id_clinica = obtener_id_Clinica(valor2);
+            string id_permiso = permiso;
 
            // MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
 
@@ -135,9 +135,9 @@ namespace bonita_smile_v1
 
         }
 
-        public int obtener_id_usuario(string descripcion)
+        public string obtener_id_usuario(string descripcion)
         {
-            int id = 0;
+           string id = "";
             query = "SELECT id_usuario FROM usuario where alias='" + descripcion + "'";
 
             try
@@ -154,22 +154,22 @@ namespace bonita_smile_v1
                     //coloresModel.id_color = int.Parse(reader[0].ToString());
                     //coloresModel.descripcion = reader[1].ToString();
 
-                    id = int.Parse(reader[0].ToString());
+                    id = reader[0].ToString();
                 }
             }
             catch (MySqlException ex)
             {
                 System.Windows.MessageBox.Show(ex.ToString());
-                return 0;
+                return "";
             }
             conexionBD.Close();
 
             return id;
         }
 
-        public int obtener_id_Clinica(string descripcion)
+        public string obtener_id_Clinica(string descripcion)
         {
-            int id = 0;
+             string id = "";
             query = "SELECT id_clinica FROM clinica where nombre_sucursal='" + descripcion + "'";
 
             try
@@ -186,13 +186,13 @@ namespace bonita_smile_v1
                     //coloresModel.id_color = int.Parse(reader[0].ToString());
                     //coloresModel.descripcion = reader[1].ToString();
 
-                    id = int.Parse(reader[0].ToString());
+                    id = reader[0].ToString();
                 }
             }
             catch (MySqlException ex)
             {
                 System.Windows.MessageBox.Show(ex.ToString());
-                return 0;
+                return "";
             }
             conexionBD.Close();
 

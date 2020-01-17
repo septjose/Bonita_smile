@@ -8,9 +8,9 @@ namespace bonita_smile_v1.Modelos
 {
     public class Nota_de_digi_evolucionModel
     {
-        public int id_nota { get; set; }
-        public int id_paciente { get; set; }
-        public int id_motivo { get; set; }
+        public string id_nota { get; set; }
+        public string id_paciente { get; set; }
+        public string id_motivo { get; set; }
         public string descripcion { get; set; }
         public string fecha { get; set; }
     }

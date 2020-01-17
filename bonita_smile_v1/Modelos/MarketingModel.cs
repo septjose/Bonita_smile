@@ -8,10 +8,10 @@ namespace bonita_smile_v1.Modelos
 {
     class MarketingModel
     {
-        public int id_marketing { get; set; }
+        public string id_marketing { get; set; }
         public string descripcion { get; set; }
         public string fecha_de_envio { get; set; }
-        public int id_paciente { get; set; }
+        public string id_paciente { get; set; }
 
         public string fecha { get; set; }
     }

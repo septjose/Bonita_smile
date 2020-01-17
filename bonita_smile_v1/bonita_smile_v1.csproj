@@ -343,6 +343,12 @@
     <Compile Include="Servicios\Sincronizar.cs" />
     <Compile Include="Servicios\Test_Internet.cs" />
     <Compile Include="Servicios\Usuarios.cs" />
+    <Compile Include="Visualizador_Imagenes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualizador_Imagenes.Designer.cs">
+      <DependentUpon>Visualizador_Imagenes.cs</DependentUpon>
+    </Compile>
     <Page Include="Fotos_de_Estudios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

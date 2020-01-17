@@ -51,7 +51,7 @@ namespace bonita_smile_v1.Servicios
                     usuarioModel = new UsuarioModel();
                     RolModel rolModel = new RolModel();
 
-                    usuarioModel.id_usuario = int.Parse(reader[0].ToString());
+                    usuarioModel.id_usuario = reader[0].ToString();
                     usuarioModel.alias = reader[1].ToString();
                     usuarioModel.nombre = reader[2].ToString();
                     usuarioModel.apellidos = reader[3].ToString();
@@ -72,9 +72,9 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        public bool eliminarUsuario(int id_usuario)
+        public bool eliminarUsuario(string id_usuario)
         {
-            query = "DELETE FROM usuario where id_usuario=" + id_usuario;
+            query = "DELETE FROM usuario where id_usuario='" + id_usuario+"'";
             try
             {
                 conexionBD.Open();
@@ -83,8 +83,8 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 if (!ti.Test())
                 {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                   // Escribir_Archivo ea = new Escribir_Archivo();
+                    //ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -99,17 +99,19 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarUsuario(string alias, string nombre, string apellidos, string password, int id_rol)
         {
+            string auxiliar_identificador = "";
+            Seguridad seguridad = new Seguridad();
+            auxiliar_identificador = seguridad.SHA1(alias + nombre + apellidos + password + id_rol);
             bool internet = ti.Test();
             password = new Seguridad().Encriptar(password);
             if (!internet)
             {
-                Seguridad seguridad = new Seguridad();
-                string auxiliar_identificador = seguridad.Encriptar(alias + nombre + apellidos + password + id_rol);
-                query = "INSERT INTO usuario (alias,nombre,apellidos,password,id_rol,auxiliar_identificador) VALUES('" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ",'" + auxiliar_identificador + "')";
+              
+                query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol,auxiliar_identificador) VALUES('"+ auxiliar_identificador+"','"+ alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ",'<!--" + auxiliar_identificador + "-->')";
             }
             else
             {
-                query = "INSERT INTO usuario (alias,nombre,apellidos,password,id_rol) VALUES('" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
+                query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
             }
             try
             {
@@ -133,7 +135,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarUsuario(int id_usuario, string alias, string nombre, string apellidos, string password, int id_rol)
+        public bool actualizarUsuario(string id_usuario, string alias, string nombre, string apellidos, string password, int id_rol)
         {
             bool internet = ti.Test();
             //password = new Seguridad().Encriptar(password);
@@ -142,11 +144,11 @@ namespace bonita_smile_v1.Servicios
                 //Seguridad seguridad = new Seguridad();
                 // seguridad.Encriptar(alias + nombre + apellidos + password + id_rol);
                 string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = '" + id_rol + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_usuario = " + id_usuario;
+                query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + ",auxiliar_identificador = '" + auxiliar_identificador + "' where id_usuario = '" + id_usuario+"'";
             }
             else
             {
-                query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = '" + id_rol + "' where id_usuario = " + id_usuario;
+                query = "UPDATE usuario set alias = '"+ alias +"',nombre = '" +nombre+ "',apellidos = '" +apellidos+ "',password = '" +password+ "',id_rol = " +id_rol +" where id_usuario = '"+ id_usuario+ "'";
             }
             try
             {
@@ -170,10 +172,10 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string MostrarUsuario_Update(int id_usuario)
+        public string MostrarUsuario_Update(string id_usuario)
         {
             string aux_identi = "";
-            query = "SELECT auxiliar_identificador from usuario where id_usuario=" + id_usuario;
+            query = "SELECT auxiliar_identificador from usuario where id_usuario='" + id_usuario+"'";
 
             try
             {
@@ -264,7 +266,7 @@ namespace bonita_smile_v1.Servicios
                 else
                     if (rol.Equals("Clinica"))
                 {
-                    int id = Convert.ToInt32(Buscar_Clinica(alias));
+                    string id = Buscar_Clinica(alias);
 
                     System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias + "el id de la clinica es " + id, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -303,7 +305,7 @@ namespace bonita_smile_v1.Servicios
                     usuarioModel = new UsuarioModel();
                     RolModel rolModel = new RolModel();
 
-                    usuarioModel.id_usuario = int.Parse(reader[0].ToString());
+                    usuarioModel.id_usuario = reader[0].ToString();
                     usuarioModel.alias = reader[1].ToString();
                     usuarioModel.nombre = reader[2].ToString();
                     usuarioModel.apellidos = reader[3].ToString();
@@ -392,11 +394,11 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string Buscar_Alias(int id_clinica)
+        public string Buscar_Alias(string id_clinica)
         {
             string id = "";
             MySqlCommand cmd;
-            string query = "select usuario.alias from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where clinica.id_clinica=" + id_clinica;
+            string query = "select usuario.alias from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where clinica.id_clinica='" + id_clinica+"'";
             try
             {
                 conexionBD.Open();
@@ -426,18 +428,18 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string Buscar_Permiso(int id_clinica)
+        public string Buscar_Permiso(string id_clinica)
         {
             string id = "";
             MySqlCommand cmd;
-            string query = "select permisos.id_permiso from permisos where permisos.id_clinica=" + id_clinica;
+            string query = "select permisos.id_permiso from permisos where permisos.id_clinica='"+ id_clinica+"'";
             try
             {
                 conexionBD.Open();
                 cmd = new MySqlCommand(query, conexionBD);
 
-                int existe = Convert.ToInt32(cmd.ExecuteScalar());
-                if (existe == 0)
+                String existe = cmd.ExecuteScalar().ToString();
+                if (existe.Equals(""))
                 {
                     conexionBD.Close();
                     return "";

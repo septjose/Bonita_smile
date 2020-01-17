@@ -38,9 +38,9 @@ namespace bonita_smile_v1.Servicios
                 {
                     Carpeta_archivosModel carpeta_ArchivosModel = new Carpeta_archivosModel();
 
-                    carpeta_ArchivosModel.id_carpeta = int.Parse(reader[0].ToString());
+                    carpeta_ArchivosModel.id_carpeta = reader[0].ToString();
                     carpeta_ArchivosModel.nombre_carpeta = reader[1].ToString();
-                    carpeta_ArchivosModel.id_paciente = int.Parse(reader[2].ToString());
+                    carpeta_ArchivosModel.id_paciente =reader[2].ToString();
 
                     listaCarpeta_archivos.Add(carpeta_ArchivosModel);
                 }
@@ -53,9 +53,9 @@ namespace bonita_smile_v1.Servicios
             return listaCarpeta_archivos;
         }
 
-        public bool eliminarCarpeta_archivos(int id_carpeta)
+        public bool eliminarCarpeta_archivos(string id_carpeta)
         {
-            query = "DELETE FROM carpeta_archivos where id_carpeta=" + id_carpeta;
+            query = "DELETE FROM carpeta_archivos where id_carpeta='" + id_carpeta+"'";
             try
             {
                 conexionBD.Open();
@@ -73,18 +73,23 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarCarpeta_archivos(string nombre_carpeta, int id_paciente)
+        public bool insertarCarpeta_archivos(string nombre_carpeta, string id_paciente)
         {
+            string auxiliar_identificador = "";
+            Seguridad seguridad = new Seguridad();
+            auxiliar_identificador = seguridad.SHA1(nombre_carpeta + id_paciente);
             bool internet = ti.Test();
+
             if (!internet)
             {
-                Seguridad seguridad = new Seguridad();
-                string auxiliar_identificador = seguridad.Encriptar(nombre_carpeta + id_paciente);
-                query = "INSERT INTO carpeta_archivos (nombre_carpeta,id_paciente,auxiliar_identificador) VALUES('" + nombre_carpeta + "'," + id_paciente + ",'" + auxiliar_identificador + "')";
+               
+                 
+                query = "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,auxiliar_identificador) VALUES('"+auxiliar_identificador +"','"+ nombre_carpeta + "','" + id_paciente + "','<!--" + auxiliar_identificador + "-->')";
             }
             else
             {
-                query = "INSERT INTO carpeta_archivos (nombre_carpeta,id_paciente) VALUES('" + nombre_carpeta + "'," + id_paciente + ")";
+                
+                query = "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente) VALUES('" + auxiliar_identificador + "','" + nombre_carpeta + "','" + id_paciente +"')";
             }
             try
             {
@@ -108,7 +113,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarCarpeta_archivos(int id_carpeta, string nombre_carpeta, int id_paciente)
+        public bool actualizarCarpeta_archivos(string id_carpeta, string nombre_carpeta, int id_paciente)
         {
             bool internet = ti.Test();
             if (!internet)
@@ -116,11 +121,11 @@ namespace bonita_smile_v1.Servicios
                 //Seguridad seguridad = new Seguridad();
                 // = seguridad.Encriptar(nombre_carpeta + id_paciente);
                 string auxiliar_identificador = MostrarCarpeta_Archivos_Update(id_carpeta);
-                query = "UPDATE carpeta_archivos set nombre_carpeta = '" + nombre_carpeta + "',id_paciente = " + id_paciente + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_carpeta = " + id_carpeta;
+                query = "UPDATE carpeta_archivos set nombre_carpeta = '" + nombre_carpeta + "',id_paciente = '" + id_paciente + "',auxiliar_identificador = '" + auxiliar_identificador + "' where id_carpeta = '" + id_carpeta+"'";
             }
             else
             {
-                query = "UPDATE carpeta_archivos set nombre_carpeta = '" + nombre_carpeta + "',id_paciente = " + id_paciente + " where id_carpeta = " + id_carpeta;
+                query = "UPDATE carpeta_archivos set nombre_carpeta = '" + nombre_carpeta + "',id_paciente = '" + id_paciente + "' where id_carpeta = '" + id_carpeta+"'";
             }
             try
             {
@@ -144,10 +149,10 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string MostrarCarpeta_Archivos_Update(int id_carpeta)
+        public string MostrarCarpeta_Archivos_Update(string id_carpeta)
         {
             string aux_identi = "";
-            query = "SELECT auxiliar_identificador from carpeta_archivos where id_carpeta=" + id_carpeta;
+            query = "SELECT auxiliar_identificador from carpeta_archivos where id_carpeta='" + id_carpeta+"'";
 
             try
             {
@@ -170,10 +175,10 @@ namespace bonita_smile_v1.Servicios
             conexionBD.Close();
             return aux_identi;
         }
-        public List<Carpeta_archivosModel> MostrarCarpeta_archivos_paciente(int id_paciente)
+        public List<Carpeta_archivosModel> MostrarCarpeta_archivos_paciente(string id_paciente)
         {
             List<Carpeta_archivosModel> listaCarpeta_archivos = new List<Carpeta_archivosModel>();
-            query = "SELECT * FROM carpeta_archivos where id_paciente=" + id_paciente;
+            query = "SELECT * FROM carpeta_archivos where id_paciente='" + id_paciente+"'";
 
             try
             {
@@ -186,9 +191,9 @@ namespace bonita_smile_v1.Servicios
                 {
                     Carpeta_archivosModel carpeta_ArchivosModel = new Carpeta_archivosModel();
 
-                    carpeta_ArchivosModel.id_carpeta = int.Parse(reader[0].ToString());
+                    carpeta_ArchivosModel.id_carpeta = reader[0].ToString();
                     carpeta_ArchivosModel.nombre_carpeta = reader[1].ToString();
-                    carpeta_ArchivosModel.id_paciente = int.Parse(reader[2].ToString());
+                    carpeta_ArchivosModel.id_paciente = reader[2].ToString();
 
                     listaCarpeta_archivos.Add(carpeta_ArchivosModel);
                 }

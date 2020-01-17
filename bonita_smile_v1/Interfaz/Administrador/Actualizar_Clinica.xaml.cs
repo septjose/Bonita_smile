@@ -25,7 +25,7 @@ namespace bonita_smile_v1
     public partial class Page5_Actualizar : Page
     {
         //string valor = "";
-        public int id_clin = 0;
+        public string id_clin = "";
 
         public Page5_Actualizar(ClinicaModel clinica)
         {
@@ -47,7 +47,7 @@ namespace bonita_smile_v1
             Clinicas cl = new Clinicas();
             Usuarios usu = new Usuarios();
             string nombre_clinica = txtNombre.Text;
-            int id_clinica = id_clin;
+            string id_clinica = id_clin;
             int combo = cmbColor.SelectedIndex;
             string color = "";
             string alias = "";
@@ -65,6 +65,7 @@ namespace bonita_smile_v1
                     if (admin != null)
                         alias = usu.Buscar_Alias(id_clinica);
                     id_permiso = usu.Buscar_Permiso(id_clinica);
+                    System.Windows.MessageBox.Show("id_clinica "+id_clinica);
 
                     admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica,id_permiso);
 
@@ -83,12 +84,11 @@ namespace bonita_smile_v1
                 {
                     System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                    if (admin != null)
+                    if (admin != null) { 
                         alias = usu.Buscar_Alias(id_clinica);
-                    id_permiso = usu.Buscar_Permiso(id_clinica);
-
-                    admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica,id_permiso);
-
+                        id_permiso = usu.Buscar_Permiso(id_clinica);
+                        admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica,id_permiso);
+                    }
 
                 }
                 else

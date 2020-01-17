@@ -28,7 +28,7 @@ namespace bonita_smile_v1
     {
         ObservableCollection<Motivo_citaModel> GMotivo;
 
-        int id = 0;
+        string id = "";
         PacienteModel paciente;
         public Page2(PacienteModel paciente)
         {
@@ -63,7 +63,7 @@ namespace bonita_smile_v1
         {
         }
 
-        void llenar_list_view(int id_paciente)
+        void llenar_list_view(string id_paciente)
         {
             var motivos = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita().Mostrar_MotivoCita(id_paciente));
 

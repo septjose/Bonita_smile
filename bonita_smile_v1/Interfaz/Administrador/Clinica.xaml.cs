@@ -55,7 +55,7 @@ namespace bonita_smile_v1
             ClinicaModel clinica = (ClinicaModel)lv_Clinica.SelectedItem;
             if (lv_Clinica.SelectedItems.Count > 0)
             {
-                int id_clinica = clinica.id_clinica;
+                string id_clinica = clinica.id_clinica;
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                     admin.Main.Content = new Page5_Actualizar(clinica); 
@@ -71,7 +71,7 @@ namespace bonita_smile_v1
             ClinicaModel clinica = (ClinicaModel)lv_Clinica.SelectedItem;
             if (lv_Clinica.SelectedItems.Count > 0)
             {
-                int id_clinica = clinica.id_clinica;
+                string id_clinica = clinica.id_clinica;
                 string nombre_sucursal = clinica.nombre_sucursal;
                 Test_Internet ti = new Test_Internet();
                 if (ti.Test())

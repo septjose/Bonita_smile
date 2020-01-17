@@ -28,7 +28,7 @@ namespace bonita_smile_v1
     public partial class Pagina_Clinica : Page
     {
         ObservableCollection<PacienteModel> GPaciente;
-        public Pagina_Clinica(int id)
+        public Pagina_Clinica(string id)
         {
             InitializeComponent();
             llenar_list_view(id);
@@ -45,7 +45,7 @@ namespace bonita_smile_v1
                 return ((item as PacienteModel).nombre.IndexOf(txtNombre.Text, StringComparison.OrdinalIgnoreCase) >= 0 || (item as PacienteModel).apellidos.IndexOf(txtNombre.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
-        void llenar_list_view(int id)
+        void llenar_list_view(string id)
         {
             var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente_Clinica(id));
 

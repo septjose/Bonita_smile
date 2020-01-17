@@ -58,7 +58,7 @@ namespace bonita_smile_v1
             UsuarioModel usuario = (UsuarioModel)lv_Users.SelectedItem;
             if (lv_Users.SelectedItems.Count > 0)
             {
-                int id_usuario = usuario.id_usuario;
+                string id_usuario = usuario.id_usuario;
                 string alias = usuario.alias;
                 Test_Internet ti = new Test_Internet();
                 if(ti.Test())

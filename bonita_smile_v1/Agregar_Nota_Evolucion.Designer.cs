@@ -17,9 +17,9 @@ namespace bonita_smile_v1
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        int id_motivo = 0;
-        int id_paciente = 0;
-        public Agregar_Nota_Evolucion(int id_motivo, int id_paciente)
+        string id_motivo = "";
+        string id_paciente = "";
+        public Agregar_Nota_Evolucion(string id_motivo, string id_paciente)
         {
             this.id_motivo = id_motivo;
             this.id_paciente = id_paciente;

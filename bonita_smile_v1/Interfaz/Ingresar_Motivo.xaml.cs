@@ -22,8 +22,8 @@ namespace bonita_smile_v1
     /// </summary>
     public partial class Page3 : Page
     {
-        int id = 0;
-        public Page3(int id_paciente)
+        string id = "";
+        public Page3(string id_paciente)
         {
             InitializeComponent();
             id = id_paciente;

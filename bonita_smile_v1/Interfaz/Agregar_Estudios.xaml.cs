@@ -29,8 +29,8 @@ namespace bonita_smile_v1
         Test_Internet ti = new Test_Internet();
         string result="";
         string nombre_carpeta="";
-        int id_paciente= 0;
-        int id_carpeta = 0;
+        string id_paciente= "";
+        string id_carpeta = "";
 
         public Pagina_Agregar_Estudios(Carpeta_archivosModel carpeta)
         {

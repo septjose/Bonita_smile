@@ -9,7 +9,7 @@ namespace bonita_smile_v1.Modelos
 {
     public class PacienteModel
     {
-        public int id_paciente { get; set; }
+        public string id_paciente { get; set; }
         public string nombre { get; set; }
         public string apellidos { get; set; }
         public string direccion { get; set; }

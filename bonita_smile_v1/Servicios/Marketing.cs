@@ -38,10 +38,10 @@ namespace bonita_smile_v1.Servicios
                 {
                     MarketingModel marketingModel = new MarketingModel();
 
-                    marketingModel.id_marketing = int.Parse(reader[0].ToString());
+                    marketingModel.id_marketing = reader[0].ToString();
                     marketingModel.descripcion = reader[1].ToString();
                     marketingModel.fecha_de_envio = reader[2].ToString();
-                    marketingModel.id_paciente = int.Parse(reader[3].ToString());
+                    marketingModel.id_paciente = reader[3].ToString();
 
                     listaMarketing.Add(marketingModel);
                 }
@@ -85,7 +85,7 @@ namespace bonita_smile_v1.Servicios
             if (!internet)
             {
                 Seguridad seguridad = new Seguridad();
-                string auxiliar_identificador = seguridad.Encriptar(descripcion + fecha_de_envio + id_paciente);
+                string auxiliar_identificador = seguridad.SHA1(descripcion + fecha_de_envio + id_paciente);
                 query = "INSERT INTO marketing (descripcion,fecha_de_envio,id_paciente,auxiliar_identificador) VALUES('" + descripcion + "','" + fecha_de_envio + "'," + id_paciente + ",'" + auxiliar_identificador + "')";
             }
             else

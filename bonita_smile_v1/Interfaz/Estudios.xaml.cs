@@ -28,7 +28,7 @@ namespace bonita_smile_v1
     public partial class Pagina_Estudios : Page
     {
         ObservableCollection<Carpeta_archivosModel> GCarpetas;
-        int id_paciente = 0;
+        string id_paciente = "";
         public Pagina_Estudios(PacienteModel paciente)
         {
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace bonita_smile_v1
             llenar_list_view(id_paciente);
         }
 
-        void llenar_list_view(int id_paciente)
+        void llenar_list_view(string id_paciente)
         {
             var carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
 

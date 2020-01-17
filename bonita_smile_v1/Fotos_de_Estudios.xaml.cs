@@ -27,9 +27,11 @@ namespace bonita_smile_v1
     public partial class Fotos_de_Estudios : Page
     {
         //ObservableCollection<Imagen> GPaciente;
+        string id_carpeta = "";
+        string id_paciente = "";
+        string ruta = "";
 
-
-        void llenar_list_view(int id_carpeta, int id_paciente)
+        void llenar_list_view(string id_carpeta, string id_paciente)
         {
             Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta();
             List<Fotos_estudio_carpetaModel> lista = f_estudio.MostrarFoto_estudio_carpeta(id_carpeta, id_paciente);
@@ -53,6 +55,8 @@ namespace bonita_smile_v1
             InitializeComponent();
 
             llenar_list_view(carpeta.id_carpeta, carpeta.id_paciente);
+            id_carpeta = carpeta.id_carpeta;
+            id_paciente = carpeta.id_paciente;
             //llenar_list_view2();
         }
 
@@ -90,7 +94,8 @@ namespace bonita_smile_v1
                 {
                     //MessageBox.Show(selectedOffer.foto);
                     Imagen(@"C:\bs\" + selectedOffer.foto);
-                    DialogResult resultado = new DialogResult();
+                    //DialogResult resultado = new DialogResult();
+                    this.ruta = @"C:\bs\" + selectedOffer.foto;
                    // Form mensaje = new Form1(@"C:\bs\" + selectedOffer.foto);
                     //resultado = mensaje.ShowDialog();
                 }
@@ -119,6 +124,149 @@ namespace bonita_smile_v1
 
         }
 
+        private BitmapImage LoadImage(string filename)
+        {
+            BitmapImage bi;
 
+            if (File.Exists(filename))
+            {
+                bi = new BitmapImage(new Uri(filename));
+            }
+            else
+            {
+                bi = new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
+            }
+            return bi;
+        }
+
+        private void lb_imagen_DragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            //Comprobamos el tipo de dato que se arrastra
+            if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+                e.Effects = System.Windows.DragDropEffects.All;
+            else
+                e.Effects = System.Windows.DragDropEffects.None;
+        }
+
+        private void lb_imagen_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            bool inserto = false;
+            string result = "";
+            Test_Internet ti = new Test_Internet();
+
+            string extension = "";
+            Fotos_estudio_carpetaModel f = new Fotos_estudio_carpetaModel();
+            //Recuperamos la lista de los elementos arrastrados y y los añadimos a la lista
+            string[] s = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop, false);
+            int i;
+            System.Windows.MessageBox.Show("valor de s es " + s.Length);
+            
+            for (i = 0; i < s.Length; i++)
+            {
+                System.Windows.MessageBox.Show("el valor de s[i] es " + s[i]);
+                extension = System.IO.Path.GetExtension(s[i]);
+                if(extension.Equals(".png")||extension.Equals(".jpg"))
+                {
+                    System.Windows.MessageBox.Show("Es imagen "+s[i]);
+                    f.foto = s[i];
+                    f.imagen = LoadImage(s[i]);
+
+
+                    lb_imagen.Items.Add(f);
+                    result = System.IO.Path.GetFileName(s[i]);
+                    if(ti.Test())
+                    {
+                        System.Windows.MessageBox.Show("Hay Internet");
+                        inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
+                        if (inserto)
+                        {
+                            System.Windows.MessageBox.Show("se subio al servidor");
+                            Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta();
+                            bool verdad = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
+                            if (verdad)
+                            {
+                                System.Windows.MessageBox.Show("se subio a la bd");
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("no se subio a la bd");
+                            }
+                        }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("No se subio");
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                    
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("No es imagen "+s[i]);
+                }
+
+            }
+
+        }
+
+        public bool SubirFicheroStockFTP(string foto, string ruta)
+        {
+            bool verdad;
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(
+                        "ftp://jjdeveloperswdm.com" +
+                        "/" +
+                       foto);
+
+                // string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                //      ruta,
+                //       foto);
+
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+
+                request.Credentials = new NetworkCredential(
+                        "bonita_smile@jjdeveloperswdm.com",
+                        "bonita_smile");
+
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = false;
+
+                using (var fileStream = File.OpenRead(ruta))
+                {
+                    using (var requestStream = request.GetRequestStream())
+                    {
+                        fileStream.CopyTo(requestStream);
+                        requestStream.Close();
+                    }
+                }
+
+                var response = (FtpWebResponse)request.GetResponse();
+
+                response.Close();
+                verdad = true;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("Error " + ex.Message + " " + ex.StackTrace);
+                verdad = false;
+                System.Windows.MessageBox.Show("Error " + ex.Message + " " + ex.StackTrace);
+
+
+            }
+            return verdad;
+
+        }
+
+        private void lb_imagen_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DialogResult resultado = new DialogResult();
+            Form mensaje = new Visualizador_Imagenes(this.ruta);
+            resultado = mensaje.ShowDialog();
+        }
     }
 }

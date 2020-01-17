@@ -59,7 +59,7 @@ namespace bonita_smile_v1
                 
         }
         
-        void llenar_list_view(int id_motivo,int id_paciente)
+        void llenar_list_view(string id_motivo,string id_paciente)
         {
             var notas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion().MostrarNota_de_digi_evolucion(id_motivo,id_paciente));
 

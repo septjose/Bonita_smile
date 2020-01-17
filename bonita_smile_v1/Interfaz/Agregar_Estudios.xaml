@@ -20,9 +20,8 @@
             <Label x:Name="lblNombre"  HorizontalAlignment="Left" Margin="405,355,0,0" VerticalAlignment="Top" Height="31" Width="360"/>
             <Label x:Name="lblcontador"  HorizontalAlignment="Left" Height="20" Margin="485,435,0,0" VerticalAlignment="Top" Width="80"/>
             <Label x:Name="lblCantidad"  HorizontalAlignment="Left" Margin="600,430,0,0" VerticalAlignment="Top" Height="36" Width="70"/>
-            <Rectangle x:Name="rt_prueba" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="135" Margin="790,305,0,0" Stroke="Black" VerticalAlignment="Top" Width="125"/>
-            
-          
+
+
 
 
         </Grid>

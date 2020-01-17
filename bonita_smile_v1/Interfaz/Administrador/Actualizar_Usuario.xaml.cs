@@ -29,7 +29,7 @@ namespace bonita_smile_v1
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         string valor = "";
-        public int id_usu = 0;
+        public string id_usu = "";
         UsuarioModel usu;
         System.Windows.Controls.ListView lv_aux;
 
@@ -184,7 +184,7 @@ namespace bonita_smile_v1
             return id;
         }
 
-        public string obtener_password(int id_usuario)
+        public string obtener_password(string id_usuario)
         {
             string password = "";
             query = "SELECT password FROM usuario where id_usuario='" + id_usuario + "'";

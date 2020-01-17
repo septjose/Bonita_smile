@@ -11,7 +11,7 @@
         <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="215" Margin="0,50,50,0" Stroke="Black" VerticalAlignment="Top" Width="260"/>
         <ListView  x:Name="lb_imagen"  Margin="0,50,300,65" SelectionChanged="lb_imagen_SelectionChanged" Width="1000"
             SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
-              ItemContainerStyle="{StaticResource FileItemStyle}">
+              ItemContainerStyle="{StaticResource FileItemStyle}" DragEnter="lb_imagen_DragEnter" Drop="lb_imagen_Drop" AllowDrop="True" MouseDoubleClick="lb_imagen_MouseDoubleClick">
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

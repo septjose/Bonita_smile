@@ -62,7 +62,7 @@ namespace bonita_smile_v1
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
 
         }
-        void llenar_list_view(int id_motivo, int id_paciente)
+        void llenar_list_view(string id_motivo, string id_paciente)
         {
             var notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos().MostrarAbonos(id_motivo, id_paciente));
 

@@ -97,7 +97,7 @@ namespace bonita_smile_v1.Servicios
                 if (!ti.Test())
                 {
                     Seguridad seguridad = new Seguridad();
-                    string auxiliar_identificador = seguridad.Encriptar(descripcion);
+                    string auxiliar_identificador = seguridad.SHA1(descripcion);
                     query = "INSERT INTO rol (descripcion,auxiliar_identificador) VALUES('" + descripcion + "','" + auxiliar_identificador + "')";
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
@@ -124,7 +124,7 @@ namespace bonita_smile_v1.Servicios
                 if (!ti.Test())
                 {
                     Seguridad seguridad = new Seguridad();
-                    string auxiliar_identificador = seguridad.Encriptar(descripcion);
+                    string auxiliar_identificador = seguridad.SHA1(descripcion);
                     query = "UPDATE rol set descripcion = '" + descripcion + "',auxiliar_identificador = '" + auxiliar_identificador + "' where id_rol = " + id_rol;
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(@"c:\offline\script_temporal.txt", query + ";");

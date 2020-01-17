@@ -24,15 +24,15 @@ namespace bonita_smile_v1
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        int id_motivo = 0;
-        int id_paciente = 0;
+        string id_motivo = "";
+        string id_paciente = "";
         string nombre = "";
         string motivo = "";
         double restante = 0.0;
         double abonado = 0.0;
         double total = 0.0;
 
-        public MessageBoxAbono(int id_motivo, int id_paciente, string nombre, string motivo, double restante, double abonado, double total)
+        public MessageBoxAbono(string id_motivo, string id_paciente, string nombre, string motivo, double restante, double abonado, double total)
         {
             this.id_motivo = id_motivo;
             this.id_paciente = id_paciente;

@@ -18,8 +18,8 @@ namespace bonita_smile_v1
         /// </summary>
         private System.ComponentModel.IContainer components = null;
         
-        int id_paciente = 0;
-        public Agregar_Carpetas( int id_paciente)
+        string id_paciente = "";
+        public Agregar_Carpetas( string id_paciente)
         {
             
             this.id_paciente = id_paciente;

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
-
+using System.Security.Cryptography;
 
 namespace bonita_smile_v1
 {
@@ -39,36 +39,41 @@ namespace bonita_smile_v1
             //Rol r = new Rol();
             //r.eliminarRol(5);
             user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
-
+            //string r1 = SHA1("n,vnak.nv.al.v.vnl.SML.VJ,CMA-klnmdxlk,gnvIKLneMDLK,JFMOPLÑj,endjgknvMKLE,NDIGKLVNoioekldjkgmoibqkfjhoibrkfjiksjffmigkjviskdjdgivsnmhkakjzlfjanjznjndkajnvikdhdofilhankjvhnajznvkn<dj");
+            //string r2 = SHA1("n,vnak.nv.al.v.vnl.SML.VJ,CMA-klnmdxlk,gnvIKLneMDLK,JFMOPLÑj,endjgknvMKLE,NDIGKLVNoioekldjkgmoibqkfjhoibrkfjiksjffmigkjviskdjdgivsn");
+            //MessageBox.Show("Muestro r1 su longitud es de "+r1.Length+"    su incriptacion es "+r1);
+            //MessageBox.Show("Muestro r2 su longitud es de " + r2.Length + "    su incriptacion es " + r2);
             /*Escribir_Archivo ea = new Escribir_Archivo();
             ea.corregirArchivo();*/
 
             /*Sincronizar sincronizar = new Sincronizar();
             sincronizar.SincronizarLocalServidor();*/
 
-           /*Sincronizar s = new Sincronizar();
-            s.Backup();
-            bool verdad = s.borrar_bd();
-            if (verdad)
-            {
-                MessageBox.Show("Se borro la bd");
-                bool verdad2 = s.crear_bd();
-                if(verdad2)
-                {
-                    MessageBox.Show("se creo la bd");
-                    s.Restore();
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo crear bd ");
-                }
-            }
-            else
-            {
-                MessageBox.Show("No se pudo borrar");
-            }*/
+            /*Sincronizar s = new Sincronizar();
+             s.Backup();
+             bool verdad = s.borrar_bd();
+             if (verdad)
+             {
+                 MessageBox.Show("Se borro la bd");
+                 bool verdad2 = s.crear_bd();
+                 if(verdad2)
+                 {
+                     MessageBox.Show("se creo la bd");
+                     s.Restore();
+                 }
+                 else
+                 {
+                     MessageBox.Show("No se pudo crear bd ");
+                 }
+             }
+             else
+             {
+                 MessageBox.Show("No se pudo borrar");
+             }*/
 
 
         }
+
+       
     }
 }

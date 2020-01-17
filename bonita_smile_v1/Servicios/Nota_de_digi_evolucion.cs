@@ -22,10 +22,10 @@ namespace bonita_smile_v1.Servicios
             this.conexionBD = obj.conexion();
         }
 
-        public List<Nota_de_digi_evolucionModel> MostrarNota_de_digi_evolucion(int id_motivo, int id_paciente)
+        public List<Nota_de_digi_evolucionModel> MostrarNota_de_digi_evolucion(string id_motivo, string id_paciente)
         {
             List<Nota_de_digi_evolucionModel> listaNota_de_digi_evolucion = new List<Nota_de_digi_evolucionModel>();
-            query = "SELECT id_nota,id_paciente,id_motivo,descripcion,date_format(fecha, '%d/%m/%Y') as fecha FROM nota_de_digi_evolucion where id_paciente=" + id_paciente + " and id_motivo=" + id_motivo;
+            query = "SELECT id_nota,id_paciente,id_motivo,descripcion,date_format(fecha, '%d/%m/%Y') as fecha FROM nota_de_digi_evolucion where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo+"'";
 
             try
             {
@@ -38,9 +38,9 @@ namespace bonita_smile_v1.Servicios
                 {
                     Nota_de_digi_evolucionModel nota_De_Digi_EvolucionModel = new Nota_de_digi_evolucionModel();
 
-                    nota_De_Digi_EvolucionModel.id_nota = int.Parse(reader[0].ToString());
-                    nota_De_Digi_EvolucionModel.id_paciente = int.Parse(reader[1].ToString());
-                    nota_De_Digi_EvolucionModel.id_motivo = int.Parse(reader[2].ToString());
+                    nota_De_Digi_EvolucionModel.id_nota = reader[0].ToString();
+                    nota_De_Digi_EvolucionModel.id_paciente = reader[1].ToString();
+                    nota_De_Digi_EvolucionModel.id_motivo = reader[2].ToString();
                     nota_De_Digi_EvolucionModel.descripcion = reader[3].ToString();
                     nota_De_Digi_EvolucionModel.fecha = reader[4].ToString();
 
@@ -55,9 +55,9 @@ namespace bonita_smile_v1.Servicios
             return listaNota_de_digi_evolucion;
         }
 
-        public bool eliminarMotivo_cita(int id_nota)
+        public bool eliminarMotivo_cita(string id_nota)
         {
-            query = "DELETE FROM nota_de_digi_evolucion where id_nota=" + id_nota;
+            query = "DELETE FROM nota_de_digi_evolucion where id_nota='" + id_nota+"'";
             try
             {
                 conexionBD.Open();
@@ -66,8 +66,8 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 if (!ti.Test())
                 {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                   // Escribir_Archivo ea = new Escribir_Archivo();
+                    //ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
                 }
                 return true;
 
@@ -80,18 +80,22 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarNota_de_digi_evolucion(int id_paciente, int id_motivo, string descripcion, string fecha)
+        public bool insertarNota_de_digi_evolucion(string id_paciente, string id_motivo, string descripcion, string fecha)
         {
+            Seguridad seguridad = new Seguridad();
+
+            string auxiliar_identificador = "";
+            auxiliar_identificador = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha);
             bool internet = ti.Test();
             if (!internet)
             {
-                Seguridad seguridad = new Seguridad();
-                string auxiliar_identificador = seguridad.Encriptar(id_paciente + id_motivo + descripcion + fecha);
-                query = "INSERT INTO nota_de_digi_evolucion (id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador) VALUES(" + id_paciente + "," + id_motivo + ",'" + descripcion + "','" + fecha + "','" + auxiliar_identificador + "')";
+               
+                query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador) VALUES('"+auxiliar_identificador+"','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','<!--" + auxiliar_identificador + "-->')";
             }
             else
             {
-                query = "INSERT INTO nota_de_digi_evolucion (id_paciente,id_motivo,descripcion,fecha) VALUES(" + id_paciente + "," + id_motivo + ",'" + descripcion + "','" + fecha + "')";
+               
+                query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha) VALUES('" + auxiliar_identificador + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "')";
             }
             try
             {
@@ -115,7 +119,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarNota_de_digi_evolucion(int id_nota, int id_paciente, int id_motivo, string descripcion, string fecha)
+        public bool actualizarNota_de_digi_evolucion(string id_nota, string id_paciente, string id_motivo, string descripcion, string fecha)
         {
             bool internet = ti.Test();
             if (!internet)
@@ -123,11 +127,11 @@ namespace bonita_smile_v1.Servicios
                 //Seguridad seguridad = new Seguridad();
                 // seguridad.Encriptar(id_paciente + id_motivo + descripcion + fecha);
                 string auxiliar_identificador = MostrarNotas_Update(id_nota);
-                query = "UPDATE nota_de_digi_evolucion set id_paciente = " + id_paciente + ",id_motivo = " + id_motivo + "',descripcion = '" + descripcion + "',fecha = " + fecha + ",auxiliar_identificador = '<!--" + auxiliar_identificador + "-->' where id_nota = " + id_nota;
+                query = "UPDATE nota_de_digi_evolucion set id_paciente =' " + id_paciente + "',id_motivo = '" + id_motivo + "',descripcion = '" + descripcion + "',fecha = " + fecha + ",auxiliar_identificador = '" + auxiliar_identificador + "' where id_nota = '" + id_nota+"'";
             }
             else
             {
-                query = "UPDATE nota_de_digi_evolucion set id_paciente = " + id_paciente + ",id_motivo = " + id_motivo + "',descripcion = '" + descripcion + "',fecha = " + fecha + " where id_nota = " + id_nota;
+                query = "UPDATE nota_de_digi_evolucion set id_paciente = '" + id_paciente + "',id_motivo = '" + id_motivo + "',descripcion = '" + descripcion + "',fecha = " + fecha + " where id_nota = '" + id_nota+"'";
             }
             try
             {
@@ -151,10 +155,10 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string MostrarNotas_Update(int id_nota)
+        public string MostrarNotas_Update(string id_nota)
         {
             string aux_identi = "";
-            query = "SELECT auxiliar_identificador from nota_de_digi_evolucion where id_nota=" + id_nota;
+            query = "SELECT auxiliar_identificador from nota_de_digi_evolucion where id_nota='" + id_nota+"'";
 
             try
             {
