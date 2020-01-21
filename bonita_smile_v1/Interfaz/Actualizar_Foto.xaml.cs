@@ -55,8 +55,6 @@ namespace bonita_smile_v1
             //MessageBox.Show(paciente.apellidos + "  "+paciente.nombre+"  "+paciente.clinica.id_clinica.ToString()+"   "+paciente.antecedente);
            
             InitializeComponent();
-            btncapturar.IsEnabled = false;
-            btnencender.IsEnabled = false;
             CargaDispositivos();
             this.paciente = paciente;
             //File.Delete(ruta2 + paciente.foto);
@@ -210,12 +208,13 @@ namespace bonita_smile_v1
             Servicios.Paciente paciente = new Servicios.Paciente();
 
             bool insertarPaciente = paciente.actualizarPaciente(this.paciente.id_paciente,this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
-
+            Test_Internet ti = new Test_Internet();
+            
             if (insertarPaciente)
             {
                 
-                if(valor_bandera)
-                {
+                    if(ti.Test())
+                { 
                     System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     bool subir = SubirFicheroStockFTP(foto, ruta);
 
@@ -223,7 +222,7 @@ namespace bonita_smile_v1
                     {
                         System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         
-bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
+                        bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
                         @"C:\bs\" + foto, 10);
                         // File.Delete(ruta+foto);
                         //File.Delete(ruta2 + foto);
@@ -235,14 +234,14 @@ bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdevel
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente el Paciente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", " Falta de Internet ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-               
 
             }
             else
             {
                 System.Windows.Forms.MessageBox.Show("No se pudo registrar el paciente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
 
 
@@ -342,25 +341,8 @@ bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdevel
        
         
 
-        private void rbt_si_Checked(object sender, RoutedEventArgs e)
-        {
-            if (rbt_si.IsChecked == true)
-            {
-                btncapturar.IsEnabled = true;
-                btnencender.IsEnabled = true;
-                valor_bandera = true;
-                
-            }
-        }
+        
 
-        private void rbt_no_Checked(object sender, RoutedEventArgs e)
-        {
-            if (rbt_si.IsChecked == false)
-            {
-                btncapturar.IsEnabled = false;
-                btnencender.IsEnabled = false;
-                valor_bandera = false;
-            }
-        }
+        
     }
 }

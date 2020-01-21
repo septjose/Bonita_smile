@@ -4,15 +4,40 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bonita_smile_v1"
-      mc:Ignorable="d" 
+       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page7_Actualizar">
-
+      Title="Page7_Ingresar">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
         <Grid>
-            <Label Content="Ingresar Antecedentes Clinicos" HorizontalAlignment="Left" Height="52" Margin="276,10,0,0" VerticalAlignment="Top" Width="186" Style="{StaticResource MetroLabel}"/>
-            <Button x:Name="btnFinalizar" Content="Siguiente" HorizontalAlignment="Left" Margin="580,357,0,0" VerticalAlignment="Top" Width="181" Height="48" Click="btnFinalizar_Click"/>
-            <TextBox x:Name="txtAntecedentes" HorizontalAlignment="Left" Height="261" Margin="132,67,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="423" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Auto" Style="{StaticResource MetroTextBox}" />
+
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="100" />
+                <RowDefinition Height="500"/>
+                <RowDefinition Height="20"/>
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="1000"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+                <Grid Margin="10">
+                    <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Actualizar antecedentes clinicos" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="1"  Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+                <Grid HorizontalAlignment="Center">
+                    <Button x:Name="btnFinalizar" Content="Siguiente" HorizontalAlignment="Left" Margin="580,357,0,0" VerticalAlignment="Top" Width="181" Height="48" Click="btnFinalizar_Click"/>
+                    <Button x:Name="btnOmitir" Content="Omitir tomar foto" HorizontalAlignment="Left" Margin="0,370,0,0" VerticalAlignment="Top" Width="181" Height="48" Click="btnOmitir_Click"/>
+                    <TextBox x:Name="txtAntecedentes" HorizontalAlignment="Left" Height="261" Margin="132,67,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="423" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Auto" Style="{StaticResource MetroTextBox}" />
+
+                </Grid>
+            </Border>
+            <!--<Label Content="Ingresar Antecedentes Clinicos" HorizontalAlignment="Left" Height="52" Margin="276,10,0,0" VerticalAlignment="Top" Width="186" Style="{StaticResource MetroLabel}"/>
+            -->
 
         </Grid>
     </ScrollViewer>

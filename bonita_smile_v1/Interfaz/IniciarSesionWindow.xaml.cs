@@ -16,6 +16,7 @@ using MahApps.Metro.Controls;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using System.Security.Cryptography;
+using System.Net;
 
 namespace bonita_smile_v1
 {
@@ -35,10 +36,23 @@ namespace bonita_smile_v1
             // MessageBox.Show("txtx  :" +txtUsuario.Text+"    "+ "pass :"+pbPassword.Password);
             Usuarios user = new Usuarios();
             Seguridad secure = new Seguridad();
+
+            user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+            /*Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/imagen_a_.jpg");
+            bool verdad= DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+             if (verdad)
+            {
+                MessageBox.Show("si");
+            }
+            else
+            {
+                MessageBox.Show("nno");
+            }
             //user.redireccionarLogin();
             //Rol r = new Rol();
             //r.eliminarRol(5);
-            user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+
             //string r1 = SHA1("n,vnak.nv.al.v.vnl.SML.VJ,CMA-klnmdxlk,gnvIKLneMDLK,JFMOPLÑj,endjgknvMKLE,NDIGKLVNoioekldjkgmoibqkfjhoibrkfjiksjffmigkjviskdjdgivsnmhkakjzlfjanjznjndkajnvikdhdofilhankjvhnajznvkn<dj");
             //string r2 = SHA1("n,vnak.nv.al.v.vnl.SML.VJ,CMA-klnmdxlk,gnvIKLneMDLK,JFMOPLÑj,endjgknvMKLE,NDIGKLVNoioekldjkgmoibqkfjhoibrkfjiksjffmigkjviskdjdgivsn");
             //MessageBox.Show("Muestro r1 su longitud es de "+r1.Length+"    su incriptacion es "+r1);
@@ -73,7 +87,34 @@ namespace bonita_smile_v1
 
 
         }
+        public static bool DeleteFileOnServer(Uri serverUri,string ftpUsername,string ftpPassword)
+        {
 
-       
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+
+                //If you need to use network credentials
+                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+                //additionally, if you want to use the current user's network credentials, just use:
+                //System.Net.CredentialCache.DefaultNetworkCredentials
+
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                MessageBox.Show(response.StatusDescription);
+                Console.WriteLine("Delete status: {0}", response.StatusDescription);
+                response.Close();
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+            
+            
+        }
+
+
+
     }
 }

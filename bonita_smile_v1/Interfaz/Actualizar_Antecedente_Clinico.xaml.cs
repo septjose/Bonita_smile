@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -53,6 +54,25 @@ namespace bonita_smile_v1
             {
                 MessageBox.Show("No se inserto");
             }*/
+        }
+
+        private void btnOmitir_Click(object sender, RoutedEventArgs e)
+        {
+            Paciente pa = new Paciente();
+            bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+            if (inserto)
+            {
+
+
+
+                //vu.refrescar_listview(this.usu, usu, lv_aux);
+                System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+
+                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

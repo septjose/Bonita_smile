@@ -15,6 +15,7 @@ using MahApps.Metro.Controls;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Interfaz.Administrador;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1
 {
@@ -39,5 +40,20 @@ namespace bonita_smile_v1
                 admin.Main.Content = new Page8_IngresarFoto(paciente); 
         }
 
+        private void btnOmitir_Click(object sender, RoutedEventArgs e)
+        {
+            Paciente pa = new Paciente();
+            bool inserto = pa.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+            if (inserto)
+            {
+                System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }

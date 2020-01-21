@@ -18,6 +18,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -90,7 +91,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
         }
@@ -164,7 +165,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 return "";
             }
             conexionBD.Close();
@@ -177,6 +178,27 @@ namespace bonita_smile_v1
         private void cmbClinica_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            valor = cmbClinica.SelectedItem.ToString();
+            string id_clinica = obtener_id_clinica(valor);
+            Paciente pa = new Paciente();
+           bool inserto = pa.actualizarPaciente(id_pacientes,txtNombre.Text,txtApellidos.Text,txtDireccion.Text,txtTelefono.Text,foto, antecedentes,txtEmail.Text,0, id_clinica);
+            if (inserto)
+            {
+               
+
+
+                //vu.refrescar_listview(this.usu, usu, lv_aux);
+                System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+
+                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

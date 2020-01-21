@@ -43,7 +43,7 @@
             </Grid>
 
 
-                <Border Grid.Row="2"  Grid.Column="1" Background="GhostWhite"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 ">
+                <Border Grid.Row="2"  Grid.Column="1" Background="GhostWhite"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Margin="0 20 0 0">
                    
                         <Grid Margin="10">
                             <ListView   x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top"  >
@@ -98,7 +98,7 @@
                                         <GridViewColumn Header="Telefono" Width="250" DisplayMemberBinding="{Binding telefono}" />
                                         <GridViewColumn Header="Email" Width="250" DisplayMemberBinding="{Binding email}" />
                                         <GridViewColumn Header="Clinica" Width="250" DisplayMemberBinding="{Binding clinica.nombre_sucursal}" />
-                                        <GridViewColumn Header="Marketing" Width="250" DisplayMemberBinding="{Binding marketing}" />
+                                        <!--<GridViewColumn Header="Marketing" Width="250" DisplayMemberBinding="{Binding marketing}" />-->
 
                                     </GridView>
                                 </ListView.View>

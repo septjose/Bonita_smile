@@ -27,6 +27,7 @@ using bonita_smile_v1.Modelos;
 using MySql.Data.MySqlClient;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Interfaz.Administrador;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1
 {
@@ -82,7 +83,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
         }
@@ -131,12 +132,12 @@ namespace bonita_smile_v1
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            valor = cmbClinica.SelectedItem.ToString();
-            string id_clinica = obtener_id_clinica(valor);
+           // valor = cmbClinica.SelectedItem.ToString();
+            //string id_clinica = obtener_id_clinica(valor);
             PacienteModel pacienteModel = new PacienteModel();
-            ClinicaModel clinicaModel = new ClinicaModel();
+            //ClinicaModel clinicaModel = new ClinicaModel();
 
-            pacienteModel.apellidos = txtApellidos.Text;
+            /*pacienteModel.apellidos = txtApellidos.Text;
             pacienteModel.nombre = txtNombre.Text;
             pacienteModel.direccion = txtDireccion.Text;
             pacienteModel.telefono = txtTelefono.Text;
@@ -146,7 +147,7 @@ namespace bonita_smile_v1
             clinicaModel.id_clinica = id_clinica;
             //pacienteModel.id_clinica = int.Parse(txtclinica.Text.ToString());
             pacienteModel.clinica = clinicaModel;
-            // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
+            // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();*/
 
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
@@ -154,8 +155,25 @@ namespace bonita_smile_v1
             //MessageBox.Show(nombre + " " + apellidos + " " + direccion + " " + telefono + " " + email);
 
         }
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            valor = cmbClinica.SelectedItem.ToString();
+            string id_clinica = obtener_id_clinica(valor);
+            Paciente pa = new Paciente();
+            bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
+            if(inserto)
+            {
+                System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        public string obtener_id_clinica(string nombre_sucursal)
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+            public string obtener_id_clinica(string nombre_sucursal)
         {
             string id = "";
             query = "SELECT id_clinica FROM clinica where nombre_sucursal='" + nombre_sucursal + "'";
@@ -179,7 +197,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 return "";
             }
             conexionBD.Close();

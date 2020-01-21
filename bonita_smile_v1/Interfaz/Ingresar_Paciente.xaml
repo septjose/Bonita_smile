@@ -5,31 +5,137 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bonita_smile_v1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="1000"
       Title="Page6_Ingresar">
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
         <Grid>
-            <Grid x:Name="btnEncender" Margin="0,0,0,-5" Height="426" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="100" />
+                <RowDefinition Height="500"/>
+                <RowDefinition Height="20"/>
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="1000"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+                <Grid Margin="10">
+                    <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Nuevo paciente" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+            <Grid Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Grid.Column="0" Content="Nombre Completo" HorizontalAlignment="Left"  Margin="0,0,0,50" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                            <Label Grid.Row="1"  Grid.Column="0" Content="Direccion" HorizontalAlignment="Left"  Margin="0,0,0,50" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                            <Label Grid.Row="2"  Grid.Column="0" Content="Email" HorizontalAlignment="Left"  Margin="0,0,0,50" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtNombre" HorizontalAlignment="Left" Height="42" Margin="0,0,0,50" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Style="{StaticResource MetroTextBox}"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtDireccion" HorizontalAlignment="Left" Height="42" Margin="0,0,0,50" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Style="{StaticResource MetroTextBox}"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtEmail" HorizontalAlignment="Left" Height="42" Margin="0,0,0,50" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Style="{StaticResource MetroTextBox}"/>
+                            <Button Grid.Row="3" Grid.Column="1" x:Name="btnOmitir" Content="Omitir foto y Antecedentes" HorizontalAlignment="Left" Height="42" Margin="0,0,0,0" VerticalAlignment="Top" Width="250" Click="Button_Click_2"/>
+
+                        </Grid>
+                    
+                    
+
+
+
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+
+                            <Label Grid.Row="0"  Grid.Column="0" Content="Apellidos " HorizontalAlignment="Left" Margin="0,0,0,50" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                            <Label Grid.Row="1"  Grid.Column="0" Content="Telefono" HorizontalAlignment="Left"  Margin="0,0,0,50" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                            <Label  Grid.Row="2"  Grid.Column="0" Content="Clínica" HorizontalAlignment="Left"  Margin="0,0,0,50" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                       
+                    </Grid>
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtApellidos" HorizontalAlignment="Left" Height="42" Margin="0,0,0,50" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Style="{StaticResource MetroTextBox}" Grid.ColumnSpan="2"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtTelefono" HorizontalAlignment="Left" Height="42" Margin="0,0,0,50" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Style="{StaticResource MetroTextBox}" Grid.ColumnSpan="2"/>
+                        <ComboBox  Grid.Row="2" Grid.Column="1" x:Name="cmbClinica" HorizontalAlignment="Left" Margin="0,0,0,50" VerticalAlignment="Top" Width="250" Grid.ColumnSpan="2" SelectionChanged="cmbClinica_SelectionChanged" Style="{StaticResource MetroComboBox}"/>
+                            <Button Grid.Row="3" Grid.Column="1" x:Name="btnSiguiente" Content="Siguiente" HorizontalAlignment="Left" Height="42" Margin="0,0,0,0" VerticalAlignment="Top" Width="250" Click="Button_Click_1"/>
+                        </Grid>
+
+
+
+                </Grid>
+
+
+
+
+            </Grid>
+            </Border>
+            <!--<Grid x:Name="btnEncender" Margin="0,0,0,-5" Height="426" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="521*"/>
                     <ColumnDefinition Width="272*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Añadir Paciente" HorizontalAlignment="Left" Height="41" Margin="360,0,0,0" VerticalAlignment="Top" Width="161" FontSize="20" Style="{StaticResource MetroLabel}"/>
-                <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Height="26" Margin="153,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Style="{StaticResource MetroTextBox}"/>
-                <TextBox x:Name="txtApellidos" HorizontalAlignment="Left" Height="26" Margin="504,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Style="{StaticResource MetroTextBox}" Grid.ColumnSpan="2"/>
-                <TextBox x:Name="txtDireccion" HorizontalAlignment="Left" Height="26" Margin="153,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Style="{StaticResource MetroTextBox}"/>
-                <TextBox x:Name="txtTelefono" HorizontalAlignment="Left" Height="26" Margin="506,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Style="{StaticResource MetroTextBox}" Grid.ColumnSpan="2"/>
-                <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="26" Margin="153,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Style="{StaticResource MetroTextBox}"/>
-                <Label Content="Nombre Completo" HorizontalAlignment="Left" Height="26" Margin="10,46,0,0" VerticalAlignment="Top" Width="111" Style="{StaticResource MetroLabel}"/>
-                <Label Content="Apellidos " HorizontalAlignment="Left" Height="26" Margin="398,46,0,0" VerticalAlignment="Top" Width="111" Style="{StaticResource MetroLabel}"/>
-                <Label Content="Direccion" HorizontalAlignment="Left" Height="26" Margin="10,84,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.538,2.286" Style="{StaticResource MetroLabel}"/>
-                <Label Content="Telefono" HorizontalAlignment="Left" Height="26" Margin="395,84,0,0" VerticalAlignment="Top" Width="111" Style="{StaticResource MetroLabel}"/>
-                <Label Content="Email" HorizontalAlignment="Left" Height="26" Margin="10,132,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.538,2.286" Style="{StaticResource MetroLabel}"/>
-                <Button x:Name="btnSiguiente" Content="Siguiente" HorizontalAlignment="Left" Height="30" Margin="311,281,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
-                <Label Content="Clínica" HorizontalAlignment="Left" Height="26" Margin="398,132,0,0" VerticalAlignment="Top" Width="132" Style="{StaticResource MetroLabel}" Grid.ColumnSpan="2"/>
-                <ComboBox x:Name="cmbClinica" HorizontalAlignment="Left" Margin="506,132,0,0" VerticalAlignment="Top" Width="188" Grid.ColumnSpan="2" SelectionChanged="cmbClinica_SelectionChanged"/>
-            </Grid>
+               
+                
+               
+                
+                
+                
+                
+               
+                
+                
+               
+               
+               
+            </Grid>-->
         </Grid>
     </ScrollViewer>
 </Page>

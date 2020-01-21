@@ -9,26 +9,50 @@
       Title="Page5_Actualizar">
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
-        <Grid Margin="0,0,0,-0.333" HorizontalAlignment="Left" Width="454">
-            <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Height="23" Margin="234,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="183" Style="{StaticResource MetroTextBox}"/>
-            <Label Content="Nombre de la clinica" HorizontalAlignment="Left" Margin="81,83,0,0" VerticalAlignment="Top" Width="124" Style="{StaticResource MetroLabel}"/>
-            <ComboBox x:Name="cmbColor" HorizontalAlignment="Left" VerticalAlignment="Top" Width="183" Margin="234,227,0,0" Height="28" Style="{StaticResource MetroComboBox}" SelectionChanged="cmbColor_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
-                            <TextBlock Text="{Binding Name}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <Label Content="Elige el color" HorizontalAlignment="Left" Margin="81,227,0,0" VerticalAlignment="Top" Width="124" Style="{StaticResource MetroLabel}"/>
-            <Button x:Name="btnFinalizar" Content="Siguiente" HorizontalAlignment="Left" Height="42" Margin="164,295,0,0" VerticalAlignment="Top" Width="163" Click="btnFinalizar_Click"/>
-            <Label Content="Actualizar Clinica" HorizontalAlignment="Left" Height="33" Margin="166,10,0,0" VerticalAlignment="Top" Width="161"/>
-            <Label Content="Color de la Clinica" HorizontalAlignment="Left" Height="32" Margin="81,114,0,0" VerticalAlignment="Top" Width="124"/>
-            <Label x:Name="lblColor" Content="" HorizontalAlignment="Left" Margin="234,120,0,0" VerticalAlignment="Top" Width="75"/>
-            <Label Content="Panel para actualizar el color de la clinica" HorizontalAlignment="Left" Height="33" Margin="81,168,0,0" VerticalAlignment="Top" Width="336"/>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="100" />
+                <RowDefinition Height="500"/>
+                <RowDefinition Height="20"/>
 
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="1000"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+                <Grid Margin="10">
+                    <TextBlock Foreground="#FF3580BF" FontSize="55"  FontWeight="Bold"   Text="Actualizar Clinica" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="1"  Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Height="23" Margin="234,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="183" Style="{StaticResource MetroTextBox}"/>
+                    <Label Content="Nombre de la clinica" HorizontalAlignment="Left" Margin="81,83,0,0" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                    <ComboBox x:Name="cmbColor" HorizontalAlignment="Left" VerticalAlignment="Top" Width="183" Margin="234,227,0,0" Height="28" Style="{StaticResource MetroComboBox}" SelectionChanged="cmbColor_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label Content="Elige el color" HorizontalAlignment="Left" Margin="81,227,0,0" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                    <Button x:Name="btnFinalizar" Content="Siguiente" HorizontalAlignment="Left" Height="42" Margin="164,295,0,0" VerticalAlignment="Top" Width="163" Click="btnFinalizar_Click"/>
+                    <Label Content="Actualizar Clinica" HorizontalAlignment="Left"  Margin="166,10,0,0" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                    <Label Content="Color de la Clinica" HorizontalAlignment="Left"  Margin="81,114,0,0" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                    <Label x:Name="lblColor" Content="" HorizontalAlignment="Left" Margin="234,120,0,0" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                    <Label Content="Panel para actualizar el color de la clinica" HorizontalAlignment="Left" Margin="81,168,0,0" VerticalAlignment="Top"  Height="42" Width="200" FontSize="15" Foreground="Black"/>
+                    <Image HorizontalAlignment="Right"  VerticalAlignment="Top"  Margin="500,90,0,0" Source="C:\bs\captura.png" Height="400" Width="400"/>
+
+                </Grid>
+            </Border>
+           
         </Grid>
     </ScrollViewer>
 </Page>

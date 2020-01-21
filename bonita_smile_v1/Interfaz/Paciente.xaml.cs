@@ -30,6 +30,16 @@ namespace bonita_smile_v1
         {
             InitializeComponent();
             llenar_list_view();
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
+            view.Filter = UserFilter;
+        }
+
+        private bool UserFilter(object item)
+        {
+            if (String.IsNullOrEmpty(txtNombre.Text))
+                return true;
+            else
+                return ((item as PacienteModel).nombre.IndexOf(txtNombre.Text, StringComparison.OrdinalIgnoreCase) >= 0 || (item as PacienteModel).apellidos.IndexOf(txtNombre.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private void Borrar(object sender, RoutedEventArgs e)
@@ -99,11 +109,17 @@ namespace bonita_smile_v1
             GPaciente = pacientes;
         }
 
+
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
                 admin.Main.Content = new Page6_Ingresar();
+        }
+        private void txtNombre_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource).Refresh();
         }
     }
 }

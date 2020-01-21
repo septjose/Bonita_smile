@@ -9,6 +9,7 @@ namespace bonita_smile_v1.Servicios
 {
     class Seguridad
     {
+        ////////https://odan.github.io/2017/08/10/aes-256-encryption-and-decryption-in-php-and-csharp.html
         public string Encriptar(string cadena)
         {
             string encriptada = string.Empty;

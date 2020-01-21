@@ -45,6 +45,8 @@ namespace bonita_smile_v1
             txtNombre.Text = usu.nombre;
             pwbPassword.Password = usu.password;
             cmbRol.SelectedItem = usu.rol.descripcion;
+            
+            System.Windows.MessageBox.Show("imprimir :" + usu.rol.descripcion);
             id_usu = usu.id_usuario;
             llenar_Combo();
 

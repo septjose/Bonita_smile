@@ -22,10 +22,12 @@ namespace bonita_smile_v1.Interfaz.Clinica
     public partial class Clin : MetroWindow
     {
         ObservableCollection<PacienteModel> GPaciente;
+        string id = "";
         public Clin(string id)
         {
             InitializeComponent();
             Main2.Content = new Pagina_Clinica(id);
+            this.id = id;
             //llenar_list_view();
 
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -86,7 +88,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
 
         private void listViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main2.Content = new Page1();
+            Main2.Content = new Pagina_Clinica(this.id);
         }
 
         private void listViewItem1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

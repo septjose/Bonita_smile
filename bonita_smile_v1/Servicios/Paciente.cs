@@ -101,8 +101,8 @@ namespace bonita_smile_v1.Servicios
 
                     pacienteModel.antecedente = reader[9].ToString();
                     clinicaModel.id_clinica = reader[10].ToString();
-                    clinicaModel.nombre_sucursal = reader[11].ToString();
-                    clinicaModel.color = reader[12].ToString();
+                    clinicaModel.nombre_sucursal = reader[12].ToString();
+                    clinicaModel.color = reader[13].ToString();
                     pacienteModel.clinica = clinicaModel;
 
 

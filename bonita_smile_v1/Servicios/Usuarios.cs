@@ -57,7 +57,7 @@ namespace bonita_smile_v1.Servicios
                     usuarioModel.apellidos = reader[3].ToString();
                     usuarioModel.password = reader[4].ToString();
                     rolModel.id_rol = int.Parse(reader[5].ToString());
-                    rolModel.descripcion = reader[7].ToString();
+                    rolModel.descripcion = reader[8].ToString();
                     usuarioModel.rol = rolModel;
 
                     listaUsuario.Add(usuarioModel);

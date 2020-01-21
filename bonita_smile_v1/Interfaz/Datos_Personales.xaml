@@ -12,22 +12,23 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition  Height="100" />
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="250"/>
                 <RowDefinition Height="600"/>
 
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
+            
             <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Datos Personales" Margin="0 20 0 0"/>
 
 
 
-
-            <Grid Grid.Row="1" Grid.Column="1">
+            <Border Grid.Row="1" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+            <Grid Margin=" 10">
                 <Grid.RowDefinitions>
 
                     <RowDefinition Height="200"/>
@@ -110,6 +111,8 @@
 
 
             </Grid>
+            </Border>
+
             <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
@@ -153,32 +156,38 @@
                     <Label Grid.Column="0" Content="Motivos de Cita" Margin=" 315 0 0  0" FontSize="20"/>
                     <Button Grid.Column="1" Content="Ver historial del motivo"  Margin="0,0,360,20" Width="200" Height="30" Click="Button_Click"/>
                 </Grid>
-                <ListView Grid.Row="2" x:Name="lvMotivo" Height="200" Width="500"  Margin="0,0,0,0"   Style="{StaticResource MetroListView}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="Height" Value="30"/>
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="Control.Background" Value="White" />
-                            <Setter Property="Control.BorderThickness" Value="0.2" />
-                            <Setter Property="Control.BorderBrush" Value="Black" />
-                            <Setter Property="FontFamily" Value="Arial"/>
-                            <Setter Property="FontSize" Value="13"/>
+
+                <Border Grid.Row="2" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="400" Width="400">
+                    <Grid Margin=" 10" Height="400" Width="400">
+                        <ListView  x:Name="lvMotivo" Height="400" Width="400"  Margin="0,0,0,0"   Style="{StaticResource MetroListView}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Height" Value="30"/>
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Control.Background" Value="White" />
+                                    <Setter Property="Control.BorderThickness" Value="0.2" />
+                                    <Setter Property="Control.BorderBrush" Value="Black" />
+                                    <Setter Property="FontFamily" Value="Arial"/>
+                                    <Setter Property="FontSize" Value="13"/>
 
 
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.View >
-                        <GridView >
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View >
+                                <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
 
-                            <GridViewColumn Header="Descripcion" Width="250" DisplayMemberBinding="{Binding descripcion}" />
+                                    <GridViewColumn Header="Descripcion" Width="250" DisplayMemberBinding="{Binding descripcion}" />
 
-                            <GridViewColumn Header="Costo" Width="150" DisplayMemberBinding="{Binding costo}" />
+                                    <GridViewColumn Header="Costo" Width="150" DisplayMemberBinding="{Binding costo}" />
 
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </Border>
+               
 
             </Grid >
 
