@@ -4,6 +4,7 @@ using bonita_smile_v1.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,10 +90,13 @@ namespace bonita_smile_v1
             {
 
                 //ActualizarPaciente ap = new ActualizarPaciente(paciente);
-                //ap.ShowDialog();
+                //ap.ShowDialog()
+                string destFile = System.IO.Path.Combine();
+                
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
-                    admin.Main.Content = new Page6_Actualizar(paciente); ;
+                    admin.Main.Content = new Page6_Actualizar(paciente);
+                
 
             }
             else

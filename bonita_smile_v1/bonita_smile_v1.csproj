@@ -327,6 +327,7 @@
       <DependentUpon>Whatsap_Marketing.xaml</DependentUpon>
     </Compile>
     <Compile Include="Servicios\Abonos.cs" />
+    <Compile Include="Servicios\Archivo_Binario.cs" />
     <Compile Include="Servicios\Carpeta_archivos.cs" />
     <Compile Include="Servicios\Clinicas.cs" />
     <Compile Include="Servicios\Conexion.cs" />

@@ -40,8 +40,9 @@ namespace bonita_smile_v1
         private FilterInfoCollection MisDispositivios;
         private VideoCaptureDevice MiWebCam;
         private bool HayDispositivos;
-        private string ruta = @"C:\capturas\";
+        private string ruta = @"C:\bs\";
         private string ruta2 = @"C:\paciente_foto\";
+        private string ruta_offline = @"C:\fotos_offline\";
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
@@ -59,6 +60,7 @@ namespace bonita_smile_v1
             this.paciente = paciente;
             //File.Delete(ruta2 + paciente.foto);
             //System.Windows.MessageBox.Show("el paciente es " + paciente.foto);
+
             if(paciente.foto.Equals(""))
             {
                 string ruta2 = @"C:\bs\img1.jpg";
@@ -66,24 +68,15 @@ namespace bonita_smile_v1
             }
             else
             {
-                
+                rt_imagen.Fill = Imagen(ruta + paciente.foto);
 
-                bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", paciente.foto, ruta2 + paciente.foto, 10);
-                if (descargo)
-                {
-                    //System.Windows.MessageBox.Show(":)");
-                    rt_imagen.Fill = Imagen(@"C:\paciente_foto\" + paciente.foto);
-                }
-                else
-                {
-                    //System.Windows.MessageBox.Show(":(");
-                }
+                
             }
            
         }
         public ImageBrush Imagen(string ruta)
         {
-            string ruta2 = @"C:\bs\img1.jpg";
+           
             if (File.Exists(ruta))
             {
                 Image image = new Image();
@@ -102,58 +95,18 @@ namespace bonita_smile_v1
                 Image image = new Image();
                 BitmapImage bi = new BitmapImage();
                 bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta2);
+                bi.UriSource = new System.Uri(@"C:\bs\img1.jpg");
                 bi.EndInit();
                 image.Source = bi;
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = bi;
                 return ib;
-                //rt_imagen.Fill = ib;
+                
             }
         }
-        public bool downloadFile(string servidor, string usuario, string password, string archivoOrigen, string carpetaDestino, int bufferdes)
-        {
-            bool descargar;
-            try
-            {
-                FtpWebRequest reqFTP;
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(servidor + archivoOrigen);
-                reqFTP.Credentials = new NetworkCredential(usuario, password);
-                reqFTP.KeepAlive = false;
-                reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
-                reqFTP.UseBinary = true;
-                reqFTP.Proxy = null;
-                reqFTP.UsePassive = true;
-                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
-                Stream responseStream = response.GetResponseStream();
-                FileStream writeStream = new FileStream(@carpetaDestino, FileMode.Create);
-                int Length = bufferdes;
-                Byte[] buffer = new Byte[Length];
-                int bytesRead = responseStream.Read(buffer, 0, Length);
-                while (bytesRead > 0)
-                {
-                    writeStream.Write(buffer, 0, bytesRead);
-                    bytesRead = responseStream.Read(buffer, 0, Length);
-                }
-                writeStream.Close();
-                response.Close();
-                descargar = true;
-            }
-            catch (WebException wEx)
-            {
-                descargar = false;
-                throw wEx;
 
-            }
-            catch (Exception ex)
-            {
-                descargar = false;
-                throw ex;
+       
 
-
-            }
-            return descargar;
-        }
         public void CargaDispositivos()
         {
             MisDispositivios = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -166,7 +119,6 @@ namespace bonita_smile_v1
             }
             else
                 HayDispositivos = false;
-
         }
         private void CerrarWebCam()
         {
@@ -181,28 +133,35 @@ namespace bonita_smile_v1
 
             string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.clinica.nombre_sucursal + ".jpg";
             foto = foto.Replace(" ", "_");
-            if(valor_bandera==true)
-            {
-                if (MiWebCam != null && MiWebCam.IsRunning)
-                {
 
-                    /*CerrarWebCam();
-                    string filePath = ruta +foto;
-                    var encoder = new JpegBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
-                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                        encoder.Save(stream);*/
-                    System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (MiWebCam != null && MiWebCam.IsRunning)
+            {
+
+                /*CerrarWebCam();
+                string filePath = ruta +foto;
+                var encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    encoder.Save(stream);*/
+                System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                string filePath = "";
+                Test_Internet test_i = new Test_Internet();
+                if (test_i.Test())
+                {
+                    filePath = ruta2 + foto;
                 }
                 else
                 {
-                    string filePath = ruta + foto;
-                    var encoder = new JpegBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
-                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                        encoder.Save(stream);
+                    filePath = ruta_offline + foto;
                 }
 
+                var encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    encoder.Save(stream);
             }
 
             Servicios.Paciente paciente = new Servicios.Paciente();
@@ -214,18 +173,26 @@ namespace bonita_smile_v1
             {
                 
                     if(ti.Test())
-                { 
+                 {
+                    
                     System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    bool subir = SubirFicheroStockFTP(foto, ruta);
+
+                    bool subir = SubirFicheroStockFTP(foto, ruta2);
 
                     if (subir)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        
-                        bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
-                        @"C:\bs\" + foto, 10);
-                        // File.Delete(ruta+foto);
+                        rt_imagen.Fill = null;
+
+                        string destFile = System.IO.Path.Combine(@"C:\bs\", "temp_"+foto);
+                        //MessageBox.Show("el valor de result es " + result);
+                        System.IO.File.Copy(ruta2 + foto, destFile, true);
+                        File.Delete(ruta2 + foto);
+                       
+                        //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
+                        //@"C:\bs\" + foto, 10);
+                         File.Delete(ruta+foto);
                         //File.Delete(ruta2 + foto);
+                        System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -305,6 +272,7 @@ namespace bonita_smile_v1
             MiWebCam.Start();
 
         }
+
         private void Capturando(object sender, NewFrameEventArgs eventArgs)
         {
             try

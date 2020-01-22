@@ -132,12 +132,12 @@ namespace bonita_smile_v1
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-           // valor = cmbClinica.SelectedItem.ToString();
-            //string id_clinica = obtener_id_clinica(valor);
+            valor = cmbClinica.SelectedItem.ToString();
+            string id_clinica = obtener_id_clinica(valor);
             PacienteModel pacienteModel = new PacienteModel();
-            //ClinicaModel clinicaModel = new ClinicaModel();
+            ClinicaModel clinicaModel = new ClinicaModel();
 
-            /*pacienteModel.apellidos = txtApellidos.Text;
+            pacienteModel.apellidos = txtApellidos.Text;
             pacienteModel.nombre = txtNombre.Text;
             pacienteModel.direccion = txtDireccion.Text;
             pacienteModel.telefono = txtTelefono.Text;
@@ -147,7 +147,7 @@ namespace bonita_smile_v1
             clinicaModel.id_clinica = id_clinica;
             //pacienteModel.id_clinica = int.Parse(txtclinica.Text.ToString());
             pacienteModel.clinica = clinicaModel;
-            // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();*/
+            // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
 
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)

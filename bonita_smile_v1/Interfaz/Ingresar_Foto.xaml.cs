@@ -127,9 +127,15 @@ namespace bonita_smile_v1
                     bool subir = SubirFicheroStockFTP(foto, ruta);
                     if (subir)
                     {
+                       
+                        //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
+                        //  @"C:\bs\" + foto, 10);
+                        string destFile = System.IO.Path.Combine(@"C:\bs\", foto);
+                        //MessageBox.Show("el valor de result es " + result);
+                        System.IO.File.Copy(ruta+foto, destFile, true);
+                        //File.Delete(ruta + foto);
                         System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
-                            @"C:\bs\" + foto, 10);
+
                     }
                     else
                     {
@@ -140,6 +146,11 @@ namespace bonita_smile_v1
                 else
                 {
                     System.Windows.Forms.MessageBox.Show("No se pudo subir la foto por el internet ", "Error por falta de internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string destFile = System.IO.Path.Combine(ruta_offline, foto);
+                    //MessageBox.Show("el valor de result es " + result);
+                    System.IO.File.Copy(ruta + foto, destFile, true);
+                    File.Delete(ruta + foto);
+                    System.Windows.Forms.MessageBox.Show("Se subira la foto cuando tengas internet y des click en sincronizar ", "Se guardara la foto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
