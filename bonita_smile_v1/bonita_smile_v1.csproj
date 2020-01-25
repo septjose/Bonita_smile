@@ -210,6 +210,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actualizar_Nombre_Carpeta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Actualizar_Nombre_Carpeta.Designer.cs">
+      <DependentUpon>Actualizar_Nombre_Carpeta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Agregar_Nota_Evolucion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,6 +239,9 @@
     <Compile Include="Interfaz\Administrador\.xaml.cs">
       <DependentUpon>Principal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\Administrador\Ganancias_Clinica.xaml.cs">
+      <DependentUpon>Ganancias_Clinica.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\Clinica\Clin.xaml.cs">
       <DependentUpon>Clin.xaml</DependentUpon>
     </Compile>
@@ -246,6 +255,7 @@
       <DependentUpon>MessageBoxAbono.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\Categoria.cs" />
+    <Compile Include="Modelos\Ganancias.cs" />
     <Compile Include="Modelos\Imagen.cs" />
     <Compile Include="Modelos\PermisosModel.cs" />
     <Compile Include="Interfaz\Datos_Personales.xaml.cs">
@@ -355,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaz\Administrador\Admin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Administrador\Ganancias_Clinica.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

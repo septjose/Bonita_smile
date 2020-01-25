@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace bonita_smile_v1
 {
@@ -28,13 +29,13 @@ namespace bonita_smile_v1
     /// </summary>
     public partial class Page1 : Page
     {
-        ObservableCollection<PacienteModel> GPaciente;
+       // ObservableCollection<PacienteModel> GPaciente;
         public Page1()
         {
             InitializeComponent();
             llenar_list_view();
             Conexion con = new Conexion();
-            txt_Titulo.Text = "Paciente       Modo "  + con.verificar();
+            
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
             view.Filter = UserFilter;
@@ -50,10 +51,10 @@ namespace bonita_smile_v1
 
         void llenar_list_view()
         {
-            var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente());
-
+            //var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente());
+            List<PacienteModel> pacientes=new Servicios.Paciente().MostrarPaciente();
             lv_Paciente.ItemsSource = pacientes;
-            GPaciente = pacientes;
+            //GPaciente = pacientes;
         }
 
         private void txtNombre_TextChanged(object sender, TextChangedEventArgs e)
@@ -63,11 +64,12 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+           // File.Delete(@"C:\bs\"+paci)
            
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             if (lv_Paciente.SelectedItems.Count > 0)
             {
+                
                 //System.Windows.MessageBox.Show("hi");
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
@@ -97,6 +99,93 @@ namespace bonita_smile_v1
             }
 
         }
-        
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            //verificar si hay internet   -listo
+            //subir los scripts del archivo -listo
+            //hacer respaldo y restaurar - listo
+            //subir fotos a la nube - listo
+            //descargar las fotos   
+
+            Test_Internet ti = new Test_Internet();
+            Sincronizar sinc = new Sincronizar();
+            bool verificar = ti.Test();
+            if (verificar)
+            {
+                System.Windows.MessageBox.Show("hi");
+                try
+                {
+                    System.Windows.MessageBox.Show("hii x2");
+                    bool subir_scripts = sinc.SincronizarLocalServidor();
+                    if (subir_scripts) { System.Windows.MessageBox.Show("se subieron los scripts"); }
+                    System.Windows.MessageBox.Show("hii x3");
+                    if (verificar)
+                        {
+                        System.Windows.MessageBox.Show("se hace el backup");
+                            sinc.Backup();
+                        System.Windows.MessageBox.Show("despues backup");
+                        bool borrar = sinc.borrar_bd();
+                            if (borrar)
+                            {
+                                System.Windows.MessageBox.Show("Se borro la bd");
+                                bool si_creo = sinc.crear_bd();
+                                if (si_creo)
+                                {
+                                    System.Windows.MessageBox.Show("se creo la bd");
+                                    sinc.Restore();
+
+                                    bool subio_fotos = sinc.subir_fotos();
+                                    if (subio_fotos)
+                                    {
+                                        System.Windows.MessageBox.Show("se subieron las fotos correctamente");
+                                        bool descargar_fotos = sinc.descargar_fotos();
+                                        if (descargar_fotos)
+                                        {
+                                            System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
+                                        }
+                                        else
+                                        {
+                                            System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    System.Windows.MessageBox.Show("No se pudo crear bd ");
+                                }
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("No se pudo borrar");
+                            }
+                        }
+
+                    
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No hay conexión a internet intente más tarde.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+
+
+
     }
 }

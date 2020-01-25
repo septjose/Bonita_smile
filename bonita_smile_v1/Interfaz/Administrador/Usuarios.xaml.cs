@@ -104,7 +104,7 @@ namespace bonita_smile_v1
                 //au.ShowDialog();
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
-                    System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
                     admin.Main.Content = new Page4_Actualizar(usuario, lv_aux);
             }
             else

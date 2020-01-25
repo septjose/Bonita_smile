@@ -114,7 +114,7 @@ namespace bonita_smile_v1.Servicios
             if (!ti.Test())
             {
                 Escribir_Archivo ea = new Escribir_Archivo();
-                ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                ea.escribir( query + ";");
             }
             return abonado;
         }
@@ -188,7 +188,7 @@ namespace bonita_smile_v1.Servicios
             bool internet = ti.Test();
             Seguridad seguridad = new Seguridad();
             string id_abono = "";
-            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario);
+            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario+DateTime.Now);
             if (!internet)
             {
                 
@@ -212,7 +212,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 
@@ -250,7 +250,7 @@ namespace bonita_smile_v1.Servicios
                 {
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 
@@ -287,6 +287,185 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 return false;
             }
+        }
+
+
+        private List<string> Mostrar_ids_clinicas()
+        {
+            List<string> lista = new List<string>();
+           
+            query = "select id_clinica from clinica";
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                   
+
+                  lista.Add( reader[0].ToString());
+                   
+                    
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return lista;
+        }
+
+        public List<Ganancias> Mostrar_Ganancias()
+        {
+            List<string> lista = Mostrar_ids_clinicas();
+            List<Ganancias> lista_ganancias = new List<Ganancias>();
+            foreach(var id in lista)
+            {
+                query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '"+id+"'";
+
+
+
+                try
+                {
+                    conexionBD.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Ganancias ganancia = new Ganancias();
+
+                        ganancia.clinica = reader[0].ToString();
+                        ganancia.ganancia = double.Parse(reader[1].ToString());
+                        ganancia.fecha = reader[2].ToString();
+
+                        lista_ganancias.Add(ganancia);
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                conexionBD.Close();
+            }
+            
+            return lista_ganancias;
+        }
+
+        public List<Ganancias> Ganacioas_c_clinica(string id)
+        {
+           
+            List<Ganancias> lista_ganancias = new List<Ganancias>();
+           
+                query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "'";
+
+
+
+                try
+                {
+                    conexionBD.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Ganancias ganancia = new Ganancias();
+
+                        ganancia.clinica = reader[0].ToString();
+                        ganancia.ganancia = double.Parse(reader[1].ToString());
+                        ganancia.fecha = reader[2].ToString();
+
+                        lista_ganancias.Add(ganancia);
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                conexionBD.Close();
+            
+
+            return lista_ganancias;
+        }
+
+        public List<Ganancias> Ganacioas_c_clinica_fecha(string id,string fecha)
+        {
+
+            List<Ganancias> lista_ganancias = new List<Ganancias>();
+
+            query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'),'"+fecha+"') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "' and a.fecha='"+fecha+"'";
+
+
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Ganancias ganancia = new Ganancias();
+
+                    ganancia.clinica = reader[0].ToString();
+                    ganancia.ganancia = double.Parse(reader[1].ToString());
+                    ganancia.fecha = reader[2].ToString();
+
+                    lista_ganancias.Add(ganancia);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+
+
+            return lista_ganancias;
+        }
+
+        public List<Ganancias> Ganacioas_c_clinica_fecha2(string id, string fecha,string fecha2)
+        {
+
+            List<Ganancias> lista_ganancias = new List<Ganancias>();
+
+            query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'),'" + fecha + "'' - ''"+fecha2+"') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '"+id+"' and (a.fecha BETWEEN '"+fecha+"' AND '"+fecha2+"')";
+
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Ganancias ganancia = new Ganancias();
+
+                    ganancia.clinica = reader[0].ToString();
+                    ganancia.ganancia = double.Parse(reader[1].ToString());
+                    ganancia.fecha = reader[2].ToString();
+
+                    lista_ganancias.Add(ganancia);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+
+
+            return lista_ganancias;
         }
 
 

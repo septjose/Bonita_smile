@@ -37,7 +37,7 @@ namespace bonita_smile_v1.Servicios
                 puerto = "3306";
                 usuario = "root";
                 password = "";
-                database = "dentista";
+                database = "dentist";
             }
 
             string cadena = "server=" + servidor + ";port=" + puerto + "; user id=" + usuario + "; password=" + password + "; database=" + database;

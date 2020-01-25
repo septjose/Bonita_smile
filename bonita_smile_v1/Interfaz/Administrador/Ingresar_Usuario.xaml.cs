@@ -68,25 +68,48 @@ namespace bonita_smile_v1
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
-            valor = cmbRol.SelectedItem.ToString();
-            int id_rol = obtener_id_rol(valor);
-            string nombre = txtNombre.Text;
-            string apellidos = txtApellido.Text;
-            string alias = txtAlias.Text;
-            string password = pwbPassword.Password;
-
-            Usuarios user = new Usuarios();
-            bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
-            if (inserto)
+            if(txtNombre.Text.Equals("") || txtApellido.Text.Equals("")|| txtAlias.Text.Equals("")|| pwbPassword.Password.Equals(""))
             {
-                System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
+                System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    valor = cmbRol.SelectedItem.ToString();
+                    int id_rol = obtener_id_rol(valor);
+                    string nombre = txtNombre.Text;
+                    string apellidos = txtApellido.Text;
+                    string alias = txtAlias.Text;
+                    string password = pwbPassword.Password;
+
+                    Usuarios user = new Usuarios();
+                    bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+                    if (inserto)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        if (admin != null)
+                            //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                            admin.Main.Content = new Page4();
+
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("No selecciono Nada en el combobox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (txtNombre.Text.Equals("") || txtApellido.Text.Equals("") || txtAlias.Text.Equals("") || pwbPassword.Password.Equals(""))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
+           
+            
 
         }
         public int obtener_id_rol(string descripcion)

@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
 using bonita_smile_v1.Modelos;
-
+using bonita_smile_v1.Servicios;
 
 namespace bonita_smile_v1
 
@@ -28,6 +28,8 @@ namespace bonita_smile_v1
     public partial class Pagina_Estudios : Page
     {
         ObservableCollection<Carpeta_archivosModel> GCarpetas;
+        ObservableCollection<Carpeta_archivosModel> carpetas;
+        Carpeta_archivosModel item_carpeta;
         string id_paciente = "";
         public Pagina_Estudios(PacienteModel paciente)
         {
@@ -40,7 +42,7 @@ namespace bonita_smile_v1
 
         void llenar_list_view(string id_paciente)
         {
-            var carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+            carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
 
             lvCarpetas.ItemsSource = carpetas;
             GCarpetas = carpetas;
@@ -72,6 +74,9 @@ namespace bonita_smile_v1
             DialogResult resultado = new DialogResult();
             Form mensaje = new Agregar_Carpetas(id_paciente);
             resultado = mensaje.ShowDialog();
+
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+
         }
 
 
@@ -97,19 +102,75 @@ namespace bonita_smile_v1
             }
         }
 
-       
         private void EditZoneInfoContextMenu_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
             Form mensaje = new Agregar_Carpetas(id_paciente);
             resultado = mensaje.ShowDialog();
+
+            lvCarpetas.ItemsSource = null;
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
         }
 
-        
+
+        private void OnListViewItemPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.item_carpeta = ((FrameworkElement)e.OriginalSource).DataContext as Carpeta_archivosModel;
+            //System.Windows.MessageBox.Show(item_carpeta.nombre_carpeta);
+            // System.Windows.MessageBox.Show("Clic Derecho");
+            System.Windows.Controls.ContextMenu cm = this.FindResource("cmButton") as System.Windows.Controls.ContextMenu;
+            cm.PlacementTarget = sender as System.Windows.Controls.Button;
+            cm.IsOpen = true;
+            e.Handled = true;
+        }
 
         private void lvCarpetas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
 
         }
+
+        private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
+        {
+            //System.Windows.MessageBox.Show(this.item_carpeta.nombre_carpeta);
+            //Carpeta_archivosModel carpeta = (Carpeta_archivosModel)lvCarpetas.SelectedItem;
+            //if (lvCarpetas.SelectedIndex == -1)
+            //{
+            //    return;
+            //}
+            new Carpeta_archivos().eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+            lvCarpetas.ItemsSource = null;
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+        }
+
+        private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult resultado = new DialogResult();
+            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta);
+            resultado = mensaje.ShowDialog();
+
+            lvCarpetas.ItemsSource = null;
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

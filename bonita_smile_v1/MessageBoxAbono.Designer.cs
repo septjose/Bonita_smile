@@ -171,38 +171,38 @@ namespace bonita_smile_v1
         private void btnAceptar_Click(object sender, EventArgs e)
         {
 
-            //string comentario = txtComentario.Text;
+            string comentario = txtComentario.Text;
 
-            //DateTime fecha = DateTime.Now;
-            //double abono = double.Parse(txtAbono.Text);
-            //double efectivo = double.Parse(txt_efectivo.Text);
-            ////System.Windows.MessageBox.Show("el restante es " + restante);
-            ////System.Windows.MessageBox.Show("el abono es de " + abono);
-            //double cambio =efectivo-abono;
-            //if(abono<=restante || abonado==0.0)
-            //{
-            //    bool insertarAbono = new Servicios.Abonos().insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono, comentario);
-            //    if (insertarAbono)
-            //    {
+            DateTime fecha = DateTime.Now;
+            double abono = double.Parse(txtAbono.Text);
+            double efectivo = double.Parse(txt_efectivo.Text);
+            //System.Windows.MessageBox.Show("el restante es " + restante);
+            //System.Windows.MessageBox.Show("el abono es de " + abono);
+            double cambio = efectivo - abono;
+            if (abono <= restante || abonado == 0.0)
+            {
+                bool insertarAbono = new Servicios.Abonos().insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono, comentario);
+                if (insertarAbono)
+                {
 
-            //        System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        System.Windows.Forms.MessageBox.Show("El cambio es de "+cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        imprimir_recibo(fecha.ToString("yyyy/MM/dd"), nombre, abono, motivo,restante,cambio);
-            //    }
-            //    else
-            //    {
-            //        System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    }
+                    System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Windows.Forms.MessageBox.Show("El cambio es de " + cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //imprimir_recibo(fecha.ToString("yyyy/MM/dd"), nombre, abono, motivo, restante, cambio);
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
-            //    this.DialogResult = DialogResult.OK;
-            //}
-            //else
-            //{
-            //    System.Windows.Forms.MessageBox.Show("Excedio el restante", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Excedio el restante", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-            imprimir_recibo();
+            //imprimir_recibo();
 
 
         }

@@ -66,7 +66,7 @@ namespace bonita_smile_v1.Servicios
                 if (!ti.Test())
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 
@@ -85,7 +85,7 @@ namespace bonita_smile_v1.Servicios
             if (!internet)
             {
                 Seguridad seguridad = new Seguridad();
-                string auxiliar_identificador = seguridad.SHA1(descripcion + fecha_de_envio + id_paciente);
+                string auxiliar_identificador = seguridad.SHA1(descripcion + fecha_de_envio + id_paciente + DateTime.Now);
                 query = "INSERT INTO marketing (descripcion,fecha_de_envio,id_paciente,auxiliar_identificador) VALUES('" + descripcion + "','" + fecha_de_envio + "'," + id_paciente + ",'" + auxiliar_identificador + "')";
             }
             else
@@ -101,7 +101,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 
@@ -137,7 +137,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 

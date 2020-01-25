@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using bonita_smile_v1.Servicios;
 using System.Windows.Forms;
+using bonita_smile_v1.Interfaz.Administrador;
 
 namespace bonita_smile_v1
 {
@@ -105,23 +106,34 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            valor = cmbUsuario.SelectedItem.ToString();
-            valor2 = cmbClinica.SelectedItem.ToString();
-            string id_usuario = obtener_id_usuario(valor);
-            string id_clinica = obtener_id_Clinica(valor2);
-
-            Clinicas c = new Clinicas();
-            bool inserto = c.insertar_Permisos(id_usuario,id_clinica);
-            if (inserto)
+            
+            try
             {
-                System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                valor = cmbUsuario.SelectedItem.ToString();
+                valor2 = cmbClinica.SelectedItem.ToString();
+                string id_usuario = obtener_id_usuario(valor);
+                string id_clinica = obtener_id_Clinica(valor2);
 
+                Clinicas c = new Clinicas();
+                bool inserto = c.insertar_Permisos(id_usuario, id_clinica);
+                if (inserto)
+                {
+                    System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                    if (admin != null)
+                        admin.Main.Content = new Page5();
 
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No se Ingreso ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("No se Ingreso ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.Windows.Forms.MessageBox.Show("No selecciono Nada en el combobox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+           
         }
 
         private void cmbUsuario_SelectionChanged(object sender, SelectionChangedEventArgs e)

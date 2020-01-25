@@ -17,6 +17,8 @@ namespace bonita_smile_v1.Servicios
         private string query;
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
+         string ruta = @"C:\bs\";
+         string ruta2= @"C:\bs_auxiliar\";
         Test_Internet ti = new Test_Internet();
 
         public Paciente()
@@ -47,7 +49,7 @@ namespace bonita_smile_v1.Servicios
                     pacienteModel.direccion = reader[3].ToString();
                     pacienteModel.telefono = reader[4].ToString();
                     pacienteModel.foto = reader[5].ToString();
-                    pacienteModel.imagen = LoadImage(@"C:\bs\" + reader[5].ToString());
+                    pacienteModel.imagen = LoadImage( reader[5].ToString());
                     pacienteModel.email = reader[6].ToString();
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                     //pacienteModel.marketing = reader[6].ToString();
@@ -69,6 +71,8 @@ namespace bonita_smile_v1.Servicios
             conexionBD.Close();
             return listaPaciente;
         }
+
+
 
         public List<PacienteModel> MostrarPaciente_Clinica(string id)
         {
@@ -94,7 +98,7 @@ namespace bonita_smile_v1.Servicios
                     pacienteModel.direccion = reader[3].ToString();
                     pacienteModel.telefono = reader[4].ToString();
                     pacienteModel.foto = reader[5].ToString();
-                    pacienteModel.imagen = LoadImage(@"C:\bs\" + reader[5].ToString());
+                    pacienteModel.imagen = LoadImage(reader[5].ToString());
                     pacienteModel.email = reader[6].ToString();
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                     //pacienteModel.marketing = reader[6].ToString();
@@ -116,6 +120,8 @@ namespace bonita_smile_v1.Servicios
             conexionBD.Close();
             return listaPaciente;
         }
+
+
 
         //public List<PacienteModel> MostrarPaciente_unico(string nombre)
         //{
@@ -194,7 +200,7 @@ namespace bonita_smile_v1.Servicios
         {
             string auxiliar_identificador="";
             Seguridad seguridad = new Seguridad();
-            auxiliar_identificador = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto + antecedente + email + marketing + id_clinica);
+            auxiliar_identificador = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto + antecedente + email + marketing + id_clinica+DateTime.Now);
             bool internet = ti.Test();
             if (!internet)
             {
@@ -205,7 +211,7 @@ namespace bonita_smile_v1.Servicios
             {
                 query = "INSERT INTO paciente (id_paciente,nombre,apellidos,direccion,telefono,foto,antecedente,email,marketing,id_clinica) VALUES('" + auxiliar_identificador + "','" + nombre + "','" + apellidos + "','" + direccion + "','" + telefono + "','" + foto + "','" + antecedente + "','" + email + "'," + marketing + ",'" + id_clinica + "')";
             }
-            MessageBox.Show(query);
+            //MessageBox.Show(query);
             try
             {
                 conexionBD.Open();
@@ -215,7 +221,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
             }
@@ -250,7 +256,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
             }
@@ -290,16 +296,55 @@ namespace bonita_smile_v1.Servicios
         }
         private BitmapImage LoadImage(string filename)
         {
+            string rutisima = "";
             BitmapImage bi;
-
-            if (File.Exists(filename))
+            bool carpeta_bs = File.Exists(ruta + filename);
+            bool carptea_bs_auxilar= File.Exists(ruta2 + filename); 
+            if (carpeta_bs && carptea_bs_auxilar )
             {
-                bi = new BitmapImage(new Uri(filename));
+                try
+                {
+                    File.Delete(ruta + filename);
+                    string destFile = System.IO.Path.Combine(@"C:\bs\", filename);
+                    //MessageBox.Show("el valor de result es " + result);
+                    System.IO.File.Copy(ruta2 + filename, destFile, true);
+                    File.Delete(ruta2 + filename);
+                    rutisima = ruta + filename;
+                }
+                catch (Exception ex)
+                {
+                    //File.Delete(ruta + filename);
+                    //string destFile = System.IO.Path.Combine(@"C:\bs\", filename);
+                    //MessageBox.Show("el valor de result es " + result);
+                    //System.IO.File.Copy(ruta2 + filename, destFile, true);
+                    //File.Delete(ruta2 + filename);
+                    rutisima = ruta2 + filename;
+                }
+               
+                
+                bi = new BitmapImage(new Uri(rutisima));
+
             }
+            else
+                if(File.Exists(ruta+filename))
+                {
+               // MessageBox.Show("ESTA EN BS"+ruta +filename);
+                bi = new BitmapImage(new Uri(ruta + filename));
+                }
+            
+            else
+            
+                if (File.Exists(ruta2 + filename))
+                {
+                    bi = new BitmapImage(new Uri(ruta2 + filename));
+                }
             else
             {
                 bi = new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
             }
+                
+                
+            
             return bi;
         }
     }

@@ -80,7 +80,7 @@ namespace bonita_smile_v1
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
            
-            string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.clinica.nombre_sucursal+".jpg";
+            string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.id_paciente+".jpg";
             foto = foto.Replace(" ", "_");
 
             if (MiWebCam != null && MiWebCam.IsRunning)
@@ -104,7 +104,7 @@ namespace bonita_smile_v1
                 }
                 else
                 {
-                    filePath = ruta_offline + foto;
+                    filePath = ruta + foto;
                 }
                 
                 var encoder = new JpegBitmapEncoder();
@@ -135,7 +135,9 @@ namespace bonita_smile_v1
                         System.IO.File.Copy(ruta+foto, destFile, true);
                         //File.Delete(ruta + foto);
                         System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        if (admin != null)
+                            admin.Main.Content = new Page6();
                     }
                     else
                     {
@@ -147,10 +149,15 @@ namespace bonita_smile_v1
                 {
                     System.Windows.Forms.MessageBox.Show("No se pudo subir la foto por el internet ", "Error por falta de internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     string destFile = System.IO.Path.Combine(ruta_offline, foto);
+                    string destFile2 = System.IO.Path.Combine(@"C:\bs\", foto);
                     //MessageBox.Show("el valor de result es " + result);
                     System.IO.File.Copy(ruta + foto, destFile, true);
+                    System.IO.File.Copy(ruta + foto, destFile2, true);
                     File.Delete(ruta + foto);
                     System.Windows.Forms.MessageBox.Show("Se subira la foto cuando tengas internet y des click en sincronizar ", "Se guardara la foto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                    if (admin != null)
+                        admin.Main.Content = new Page6();
                 }
             }
             else

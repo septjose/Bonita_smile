@@ -1,4 +1,5 @@
-﻿using bonita_smile_v1.Servicios;
+﻿using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Servicios;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -108,26 +109,37 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            valor = cmbUsuario.SelectedItem.ToString();
-            valor2 = cmbClinica.SelectedItem.ToString();
-            string id_usuario = obtener_id_usuario(valor);
-            string id_clinica = obtener_id_Clinica(valor2);
-            string id_permiso = permiso;
 
-           // MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
-
-            Clinicas c = new Clinicas();
-            bool inserto = c.actualizar_Permisos(id_usuario, id_clinica,id_permiso);
-            if (inserto)
+            try
             {
-                System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                valor = cmbUsuario.SelectedItem.ToString();
+                valor2 = cmbClinica.SelectedItem.ToString();
+                string id_usuario = obtener_id_usuario(valor);
+                string id_clinica = obtener_id_Clinica(valor2);
+                string id_permiso = permiso;
 
+                // MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
 
+                Clinicas c = new Clinicas();
+                bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_permiso);
+                if (inserto)
+                {
+                    System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                    if (admin != null)
+                        admin.Main.Content = new Page5();
+
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No selecciono Nada en el combobox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
 
         private void cmbUsuario_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -85,7 +85,7 @@ namespace bonita_smile_v1.Servicios
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
-            auxiliar_identificador = seguridad.SHA1(nombre_sucursal + color);
+            auxiliar_identificador = seguridad.SHA1(nombre_sucursal + color + DateTime.Now);
             bool internet = ti.Test();
             if (!internet)
             {
@@ -108,7 +108,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
 
                 return true;
@@ -127,7 +127,7 @@ namespace bonita_smile_v1.Servicios
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
-            auxiliar_identificador = seguridad.SHA1(id_usuario + id_clinica);
+            auxiliar_identificador = seguridad.SHA1(id_usuario + id_clinica + DateTime.Now);
             bool internet = ti.Test();
             if (!internet)
             {
@@ -149,7 +149,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 
@@ -171,7 +171,7 @@ namespace bonita_smile_v1.Servicios
                 //Seguridad seguridad = new Seguridad();
                 //string auxiliar_identificador = seguridad.Encriptar(nombre_sucursal+ color);
                 string auxiliar_identificador = MostrarClinica_Update(id_clinica);
-                query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "',auxiliar_identificador = '" + auxiliar_identificador + "' where id_clinica = '" + id_clinica+"'";
+                query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "',auxiliar_identificador ='" + auxiliar_identificador + "' where id_clinica = '" + id_clinica+"'";
                 MessageBox.Show(query);
             }
             else
@@ -187,7 +187,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir(query + ";");
                 }
                 return true;
 
@@ -224,7 +224,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 

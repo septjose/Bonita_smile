@@ -29,12 +29,14 @@ namespace bonita_smile_v1
         ObservableCollection<Motivo_citaModel> GMotivo;
 
         string id = "";
+        string ruta = @"C:\bs\";
+        string ruta2 = @"C:\bs_auxiliar\";
         PacienteModel paciente;
         public Page2(PacienteModel paciente)
         {
             
             InitializeComponent();
-            rt_imagen.Fill= Imagen(@"C:\bs\" + paciente.foto);
+            rt_imagen.Fill= Imagen( paciente.foto);
             string color = paciente.clinica.color;
 
             
@@ -71,28 +73,79 @@ namespace bonita_smile_v1
             GMotivo = motivos;
         }
 
-        public ImageBrush Imagen(string ruta)
+        public ImageBrush Imagen(string filename)
         {
-            string ruta2 = @"C:\bs\img1.jpg";
-            if (File.Exists(ruta))
+            string rutisima = "";
+            string ruta3 = @"C:\bs\img1.jpg";
+            if (File.Exists(ruta + filename) && File.Exists(ruta2 + filename))
+            {
+                try
+                {
+                    File.Delete(ruta + filename);
+                    string destFile = System.IO.Path.Combine(@"C:\bs\", filename);
+                    //MessageBox.Show("el valor de result es " + result);
+                    System.IO.File.Copy(ruta2 + filename, destFile, true);
+                    File.Delete(ruta2 + filename);
+                    rutisima = ruta + filename;
+                    Image image = new Image();
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.UriSource = new System.Uri(rutisima);
+                    bi.EndInit();
+                    image.Source = bi;
+                    ImageBrush ib = new ImageBrush();
+                    ib.ImageSource = bi;
+                    return ib;
+                }
+                catch (Exception ex)
+                {
+                    rutisima = ruta2 + filename;
+                    Image image = new Image();
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.UriSource = new System.Uri(rutisima);
+                    bi.EndInit();
+                    image.Source = bi;
+                    ImageBrush ib = new ImageBrush();
+                    ib.ImageSource = bi;
+                    return ib;
+                }
+
+
+                //rt_imagen.Fill = ib;
+            }
+            else
+            if (File.Exists(ruta + filename))
             {
                 Image image = new Image();
                 BitmapImage bi = new BitmapImage();
                 bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta);
+                bi.UriSource = new System.Uri(ruta+filename);
                 bi.EndInit();
                 image.Source = bi;
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = bi;
                 return ib;
-                //rt_imagen.Fill = ib;
+            }
+            else
+            if (File.Exists(ruta2 + filename))
+            {
+                Image image = new Image();
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+                bi.UriSource = new System.Uri(ruta2 + filename);
+                bi.EndInit();
+                image.Source = bi;
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = bi;
+                return ib;
             }
             else
             {
                 Image image = new Image();
                 BitmapImage bi = new BitmapImage();
                 bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta2);
+                bi.UriSource = new System.Uri(ruta3);
                 bi.EndInit();
                 image.Source = bi;
                 ImageBrush ib = new ImageBrush();

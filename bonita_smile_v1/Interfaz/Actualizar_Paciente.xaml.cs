@@ -116,26 +116,53 @@ namespace bonita_smile_v1
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            valor = cmbClinica.SelectedItem.ToString();
-            string id_clinica = obtener_id_clinica(valor);
-            PacienteModel pacienteModel = new PacienteModel();
-            ClinicaModel clinicaModel = new ClinicaModel();
+            if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
+            {
+                System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                try
+                {
+                    valor = cmbClinica.SelectedItem.ToString();
+                    string id_clinica = obtener_id_clinica(valor);
+                    PacienteModel pacienteModel = new PacienteModel();
+                    ClinicaModel clinicaModel = new ClinicaModel();
+                    bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
+                    if (email_correcto)
+                    {
+                        pacienteModel.apellidos = txtApellidos.Text;
+                        pacienteModel.nombre = txtNombre.Text;
+                        pacienteModel.direccion = txtDireccion.Text;
+                        pacienteModel.telefono = txtTelefono.Text;
+                        pacienteModel.foto = foto;
+                        pacienteModel.email = txtEmail.Text;
+                        pacienteModel.marketing = 0;
+                        pacienteModel.antecedente = antecedentes;
+                        pacienteModel.id_paciente = id_pacientes;
+                        clinicaModel.id_clinica = id_clinica;
+                        pacienteModel.clinica = clinicaModel;
+                        // new Actualizar_Antecedentes(pacienteModel).ShowDialog();
+                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        if (admin != null)
+                            admin.Main.Content = new Page7_Actualizar(pacienteModel); ;
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Correo no valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
-            pacienteModel.apellidos = txtApellidos.Text;
-            pacienteModel.nombre = txtNombre.Text;
-            pacienteModel.direccion = txtDireccion.Text;
-            pacienteModel.telefono = txtTelefono.Text;
-            pacienteModel.foto = foto;
-            pacienteModel.email = txtEmail.Text;
-            pacienteModel.marketing = 0;
-            pacienteModel.antecedente = antecedentes;
-            pacienteModel.id_paciente = id_pacientes;
-            clinicaModel.id_clinica = id_clinica;
-            pacienteModel.clinica = clinicaModel;
-            // new Actualizar_Antecedentes(pacienteModel).ShowDialog();
-            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-            if (admin != null)
-                admin.Main.Content = new Page7_Actualizar(pacienteModel); ;
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("No selecciono el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+             
 
             //MessageBox.Show(nombre + " " + apellidos + " " + direccion + " " + telefono + " " + email);
 
@@ -182,23 +209,51 @@ namespace bonita_smile_v1
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            valor = cmbClinica.SelectedItem.ToString();
-            string id_clinica = obtener_id_clinica(valor);
-            Paciente pa = new Paciente();
-           bool inserto = pa.actualizarPaciente(id_pacientes,txtNombre.Text,txtApellidos.Text,txtDireccion.Text,txtTelefono.Text,foto, antecedentes,txtEmail.Text,0, id_clinica);
-            if (inserto)
+            if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
             {
-               
-
-
-                //vu.refrescar_listview(this.usu, usu, lv_aux);
-                System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
+                try
+                {
+                    valor = cmbClinica.SelectedItem.ToString();
+                    string id_clinica = obtener_id_clinica(valor);
+                    Paciente pa = new Paciente();
+                    bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
+                    if (email_correcto)
+                    {
+                        bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                        if (inserto)
+                        {
 
-                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+
+                            //vu.refrescar_listview(this.usu, usu, lv_aux);
+                            System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+
+                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Correo no valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("No selecciono el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }       
         }
     }
 }

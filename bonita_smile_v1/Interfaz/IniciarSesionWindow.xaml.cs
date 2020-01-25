@@ -17,6 +17,7 @@ using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using System.Security.Cryptography;
 using System.Net;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1
 {
@@ -36,8 +37,19 @@ namespace bonita_smile_v1
             // MessageBox.Show("txtx  :" +txtUsuario.Text+"    "+ "pass :"+pbPassword.Password);
             Usuarios user = new Usuarios();
             Seguridad secure = new Seguridad();
+            if(txtUsuario.Text.Equals("")||pbPassword.Password.Equals(""))
+            {
+                System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+            }
 
-            user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
+            
+
+            //new Sincronizar().SincronizarLocalServidor() ;
+
             /*Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/imagen_a_.jpg");
             bool verdad= DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
 
@@ -87,29 +99,7 @@ namespace bonita_smile_v1
 
 
         }
-        public static bool DeleteFileOnServer(Uri serverUri,string ftpUsername,string ftpPassword)
-        {
-
-            try
-            {
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
-
-                //If you need to use network credentials
-                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
-                //additionally, if you want to use the current user's network credentials, just use:
-                //System.Net.CredentialCache.DefaultNetworkCredentials
-
-                request.Method = WebRequestMethods.Ftp.DeleteFile;
-                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-                MessageBox.Show(response.StatusDescription);
-                Console.WriteLine("Delete status: {0}", response.StatusDescription);
-                response.Close();
-                return true;
-            }
-            catch(Exception e)
-            {
-                return false;
-            }
+        
             
             
         }
@@ -117,4 +107,4 @@ namespace bonita_smile_v1
 
 
     }
-}
+

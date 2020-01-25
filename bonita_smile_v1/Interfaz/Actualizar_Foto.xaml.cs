@@ -37,14 +37,17 @@ namespace bonita_smile_v1
     /// </summary>
     public partial class Page8_ActualizarFoto : Page
     {
+
         private FilterInfoCollection MisDispositivios;
         private VideoCaptureDevice MiWebCam;
         private bool HayDispositivos;
         private string ruta = @"C:\bs\";
-        private string ruta2 = @"C:\paciente_foto\";
+        private string ruta_aux = @"C:\bs_auxiliar\";
+        private string ruta2 = @"C:\capturas\";
         private string ruta_offline = @"C:\fotos_offline\";
         private MySqlDataReader reader = null;
         private string query;
+        string foto_vieja = "";
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         string valor = "";
@@ -58,6 +61,7 @@ namespace bonita_smile_v1
             InitializeComponent();
             CargaDispositivos();
             this.paciente = paciente;
+            foto_vieja = paciente.foto;
             //File.Delete(ruta2 + paciente.foto);
             //System.Windows.MessageBox.Show("el paciente es " + paciente.foto);
 
@@ -68,21 +72,85 @@ namespace bonita_smile_v1
             }
             else
             {
-                rt_imagen.Fill = Imagen(ruta + paciente.foto);
+                rt_imagen.Fill = Imagen( paciente.foto);
 
                 
             }
            
         }
-        public ImageBrush Imagen(string ruta)
+        public ImageBrush Imagen(string filename)
         {
-           
-            if (File.Exists(ruta))
+            string rutisima = "";
+            string ruta3 = @"C:\bs\img1.jpg";
+            if (File.Exists(ruta + filename) && File.Exists(ruta_aux + filename))
+            {
+                try
+                {
+                    File.Delete(ruta + filename);
+                    string destFile = System.IO.Path.Combine(@"C:\bs\", filename);
+                    //MessageBox.Show("el valor de result es " + result);
+                    System.IO.File.Copy(ruta_aux + filename, destFile, true);
+                    File.Delete(ruta_aux + filename);
+                    rutisima = ruta + filename;
+                    Image image = new Image();
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.UriSource = new System.Uri(rutisima);
+                    bi.EndInit();
+                    image.Source = bi;
+                    ImageBrush ib = new ImageBrush();
+                    ib.ImageSource = bi;
+                    return ib;
+                }
+                catch (Exception ex)
+                {
+                    rutisima = ruta_aux + filename;
+                    Image image = new Image();
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.UriSource = new System.Uri(rutisima);
+                    bi.EndInit();
+                    image.Source = bi;
+                    ImageBrush ib = new ImageBrush();
+                    ib.ImageSource = bi;
+                    return ib;
+                }
+
+
+                //rt_imagen.Fill = ib;
+            }
+            else
+            if (File.Exists(ruta + filename))
             {
                 Image image = new Image();
                 BitmapImage bi = new BitmapImage();
                 bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta);
+                bi.UriSource = new System.Uri(ruta + filename);
+                bi.EndInit();
+                image.Source = bi;
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = bi;
+                return ib;
+            }
+            else
+            if (File.Exists(ruta_aux + filename))
+            {
+                Image image = new Image();
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+                bi.UriSource = new System.Uri(ruta_aux + filename);
+                bi.EndInit();
+                image.Source = bi;
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = bi;
+                return ib;
+            }
+            else
+            {
+                Image image = new Image();
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+                bi.UriSource = new System.Uri(ruta3);
                 bi.EndInit();
                 image.Source = bi;
                 ImageBrush ib = new ImageBrush();
@@ -90,22 +158,9 @@ namespace bonita_smile_v1
                 return ib;
                 //rt_imagen.Fill = ib;
             }
-            else
-            {
-                Image image = new Image();
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new System.Uri(@"C:\bs\img1.jpg");
-                bi.EndInit();
-                image.Source = bi;
-                ImageBrush ib = new ImageBrush();
-                ib.ImageSource = bi;
-                return ib;
-                
-            }
         }
 
-       
+
 
         public void CargaDispositivos()
         {
@@ -131,7 +186,7 @@ namespace bonita_smile_v1
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
-            string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.clinica.nombre_sucursal + ".jpg";
+            string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.id_paciente + ".jpg";
             foto = foto.Replace(" ", "_");
 
             if (MiWebCam != null && MiWebCam.IsRunning)
@@ -143,7 +198,7 @@ namespace bonita_smile_v1
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     encoder.Save(stream);*/
-                System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Error no capturo la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -162,57 +217,82 @@ namespace bonita_smile_v1
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     encoder.Save(stream);
-            }
+                Servicios.Paciente paciente = new Servicios.Paciente();
 
-            Servicios.Paciente paciente = new Servicios.Paciente();
+                bool insertarPaciente = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+                Test_Internet ti = new Test_Internet();
 
-            bool insertarPaciente = paciente.actualizarPaciente(this.paciente.id_paciente,this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
-            Test_Internet ti = new Test_Internet();
-            
-            if (insertarPaciente)
-            {
-                
-                    if(ti.Test())
-                 {
-                    
-                    System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                if (insertarPaciente)
+                {
 
-                    bool subir = SubirFicheroStockFTP(foto, ruta2);
-
-                    if (subir)
+                    if (ti.Test())
                     {
-                        rt_imagen.Fill = null;
 
-                        string destFile = System.IO.Path.Combine(@"C:\bs\", "temp_"+foto);
-                        //MessageBox.Show("el valor de result es " + result);
-                        System.IO.File.Copy(ruta2 + foto, destFile, true);
-                        File.Delete(ruta2 + foto);
-                       
-                        //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
-                        //@"C:\bs\" + foto, 10);
-                         File.Delete(ruta+foto);
-                        //File.Delete(ruta2 + foto);
-                        System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/"+foto_vieja);
+                        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                        if(verdad)
+                        {
+                            bool subir = SubirFicheroStockFTP(foto, ruta2);
+
+                            if (subir)
+                            {
+                                rt_imagen.Fill = null;
+                                try
+                                {
+                                    string destFile = System.IO.Path.Combine(@"C:\bs_auxiliar\", foto);
+                                    //MessageBox.Show("el valor de result es " + result);
+                                    System.IO.File.Copy(ruta2 + foto, destFile, true);
+                                    File.Delete(ruta2 + foto);
+                                }
+                                catch (Exception ex)
+                                {
+                                    string destFile = System.IO.Path.Combine(@"C:\bs\", foto);
+                                    //MessageBox.Show("el valor de result es " + result);
+                                    System.IO.File.Copy(ruta2 + foto, destFile, true);
+                                    File.Delete(ruta2 + foto);
+                                }
+
+
+                                //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
+                                //@"C:\bs\" + foto, 10);
+
+
+
+                                //System.IO.File.Delete(ruta + foto);
+
+
+                                System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page6();
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }    
+                        
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", " Falta de Internet ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", " Falta de Internet ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("No se pudo registrar el paciente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
-
             }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show("No se pudo registrar el paciente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            }
+           
 
 
         }
+         
         public bool SubirFicheroStockFTP(string foto, string ruta)
         {
             bool verdad;
@@ -262,7 +342,32 @@ namespace bonita_smile_v1
             return verdad;
 
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public static bool DeleteFileOnServer(Uri serverUri, string ftpUsername, string ftpPassword)
+        {
+
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+
+                //If you need to use network credentials
+                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+                //additionally, if you want to use the current user's network credentials, just use:
+                //System.Net.CredentialCache.DefaultNetworkCredentials
+
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+                Console.WriteLine("Delete status: {0}", response.StatusDescription);
+                response.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
         {
             CerrarWebCam();
             int i = comboBox1.SelectedIndex;

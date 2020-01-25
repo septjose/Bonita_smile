@@ -101,7 +101,7 @@ namespace bonita_smile_v1.Servicios
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
-            auxiliar_identificador = seguridad.SHA1(alias + nombre + apellidos + password + id_rol);
+            auxiliar_identificador = seguridad.SHA1(alias + nombre + apellidos + password + id_rol+DateTime.Now);
             bool internet = ti.Test();
             password = new Seguridad().Encriptar(password);
             if (!internet)
@@ -122,7 +122,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 
@@ -159,7 +159,7 @@ namespace bonita_smile_v1.Servicios
                 if (!ti.Test())
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir( query + ";");
                 }
                 return true;
 
@@ -403,22 +403,29 @@ namespace bonita_smile_v1.Servicios
             {
                 conexionBD.Open();
                 cmd = new MySqlCommand(query, conexionBD);
-                System.Windows.MessageBox.Show(cmd.ExecuteScalar().ToString());
-                string existe = cmd.ExecuteScalar().ToString();
-                if (("".Equals(existe)))
+                //System.Windows.MessageBox.Show(cmd.ExecuteScalar().ToString());
+                try
                 {
-                    conexionBD.Close();
-                    return "";
-                }
-                else
-                {
-                    reader = cmd.ExecuteReader();
-                    reader.Read();
-                    id = reader[0].ToString();
-                    conexionBD.Close();
-                    return id;
+                    string existe = cmd.ExecuteScalar().ToString();
+                    if (("".Equals(existe)))
+                    {
+                        conexionBD.Close();
+                        return "";
+                    }
+                    else
+                    {
+                        reader = cmd.ExecuteReader();
+                        reader.Read();
+                        id = reader[0].ToString();
+                        conexionBD.Close();
+                        return id;
 
+                    }
                 }
+                catch (Exception ex) {
+                   
+                    conexionBD.Close(); return ""; }
+                
             }
             catch (MySqlException ex)
             {
@@ -437,22 +444,31 @@ namespace bonita_smile_v1.Servicios
             {
                 conexionBD.Open();
                 cmd = new MySqlCommand(query, conexionBD);
-
-                String existe = cmd.ExecuteScalar().ToString();
-                if (existe.Equals(""))
+                //System.Windows.MessageBox.Show(cmd.ExecuteScalar().ToString());
+                try
                 {
-                    conexionBD.Close();
-                    return "";
-                }
-                else
-                {
-                    reader = cmd.ExecuteReader();
-                    reader.Read();
-                    id = reader[0].ToString();
-                    conexionBD.Close();
-                    return id;
+                    string existe = cmd.ExecuteScalar().ToString();
+                    if (("".Equals(existe)))
+                    {
+                        conexionBD.Close();
+                        return "";
+                    }
+                    else
+                    {
+                        reader = cmd.ExecuteReader();
+                        reader.Read();
+                        id = reader[0].ToString();
+                        conexionBD.Close();
+                        return id;
 
+                    }
                 }
+                catch (Exception ex)
+                {
+                  
+                    conexionBD.Close(); return "";
+                }
+
             }
             catch (MySqlException ex)
             {

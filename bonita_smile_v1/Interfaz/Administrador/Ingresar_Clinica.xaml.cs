@@ -23,6 +23,7 @@ namespace bonita_smile_v1
     /// </summary>
     public partial class Page5_Ingresar : Page
     {
+        string color = "";
         public Page5_Ingresar()
         {
 
@@ -34,27 +35,47 @@ namespace bonita_smile_v1
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
-
-            string color = cmbColor.SelectedItem.ToString().Replace("System.Windows.Media.Color", "");
-
-            // MessageBox.Show(color);
-
-            //MessageBox.Show(color);
-            string nombre_sucursal = txtNombre.Text;
-            //MessageBox.Show(nombre_sucursal);
-            Clinicas c = new Clinicas();
-            bool correcto = c.insertarClinica(nombre_sucursal, color);
-            if (correcto)
+            if(txtNombre.Text.Equals(""))
             {
-                System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                if (admin != null)
-                    admin.Main.Content = new Pagina_Ingresar_Permisos();
+                System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No se ingreso la Clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                     color = cmbColor.SelectedItem.ToString().Replace("System.Windows.Media.Color", "");
+
+                    // MessageBox.Show(color);
+
+                    //MessageBox.Show(color);
+                    string nombre_sucursal = txtNombre.Text;
+                    //MessageBox.Show(nombre_sucursal);
+                    Clinicas c = new Clinicas();
+                    bool correcto = c.insertarClinica(nombre_sucursal, color);
+                    if (correcto)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        if (admin != null)
+                            admin.Main.Content = new Pagina_Ingresar_Permisos();
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("No se pudo insertar la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("No selecciono Nada en el combobox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (txtNombre.Text.Equals(""))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
+            
+
+           
 
 
         }

@@ -44,58 +44,97 @@ namespace bonita_smile_v1
         }
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
-            Clinicas cl = new Clinicas();
-            Usuarios usu = new Usuarios();
-            string nombre_clinica = txtNombre.Text;
-            string id_clinica = id_clin;
-            int combo = cmbColor.SelectedIndex;
-            string color = "";
-            string alias = "";
-            string id_permiso="";
-            if (combo > -1)
+            if (txtNombre.Text.Equals(""))
             {
-                color = cmbColor.SelectedItem.ToString().Replace("System.Windows.Media.Color", "");
-               // System.Windows.Forms.MessageBox.Show("se eligio un color     " + color);
-                bool actualizo = cl.actualizarClinica(id_clinica, nombre_clinica, color);
-                if (actualizo)
-                {
-                    System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                    if (admin != null)
-                        alias = usu.Buscar_Alias(id_clinica);
-                    id_permiso = usu.Buscar_Permiso(id_clinica);
-                    System.Windows.MessageBox.Show("id_clinica "+id_clinica);
-
-                    admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica,id_permiso);
-
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                color = lblColor.Content.ToString();
-                //System.Windows.Forms.MessageBox.Show("No se eligio ningun color      " + color);
-                bool actualizo = cl.actualizarClinica(id_clinica, nombre_clinica, color);
-                if (actualizo)
-                {
-                    System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                    if (admin != null) { 
-                        alias = usu.Buscar_Alias(id_clinica);
-                        id_permiso = usu.Buscar_Permiso(id_clinica);
-                        admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica,id_permiso);
+              
+                    Clinicas cl = new Clinicas();
+                    Usuarios usu = new Usuarios();
+                    string nombre_clinica = txtNombre.Text;
+                    string id_clinica = id_clin;
+                    int combo = cmbColor.SelectedIndex;
+                    string color = "";
+                    string alias = "";
+                    string id_permiso = "";
+                    if (combo > -1)
+                    {
+                        color = cmbColor.SelectedItem.ToString().Replace("System.Windows.Media.Color", "");
+                        // System.Windows.Forms.MessageBox.Show("se eligio un color     " + color);
+                        bool actualizo = cl.actualizarClinica(id_clinica, nombre_clinica, color);
+                    if (actualizo)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        if (admin != null) 
+                        {
+                            alias = usu.Buscar_Alias(id_clinica);
+                            id_permiso = usu.Buscar_Permiso(id_clinica);
+                            if (alias.Equals("") || id_permiso.Equals(""))
+                            {
+                                System.Windows.Forms.MessageBox.Show("No le asignaste el usuario a la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                if (admin != null)
+                                    admin.Main.Content = new Pagina_Ingresar_Permisos();
+                            }
+                            else
+                            {
+                                
+
+                                System.Windows.MessageBox.Show("id_clinica " + id_clinica);
+
+                                admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica, id_permiso);
+                            }
+                        }  
+
+                    }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        color = lblColor.Content.ToString();
+                        //System.Windows.Forms.MessageBox.Show("No se eligio ningun color      " + color);
+                        bool actualizo = cl.actualizarClinica(id_clinica, nombre_clinica, color);
+                        if (actualizo)
+                        {
+                            System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                            if (admin != null)
+                            {
+                            alias = usu.Buscar_Alias(id_clinica);
+                            id_permiso = usu.Buscar_Permiso(id_clinica);
+                            if (alias.Equals("") || id_permiso.Equals(""))
+                            {
+                               
+                               
+                                System.Windows.Forms.MessageBox.Show("No le asignaste el usuarioa la clinica ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                if (admin != null)
+                                    admin.Main.Content = new Pagina_Ingresar_Permisos();
+                            }
+                            else
+                            {
+                                
+
+                                System.Windows.MessageBox.Show("id_clinica " + id_clinica);
+
+                                admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica, id_permiso);
+                            }
+                        }
+
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
                     }
 
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
+               
             }
         }
 

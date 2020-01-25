@@ -44,7 +44,7 @@
                     </ComboBox>
                     <Label Content="Elige el color" HorizontalAlignment="Left" Margin="81,227,0,0" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
                     <Button x:Name="btnFinalizar" Content="Siguiente" HorizontalAlignment="Left" Height="42" Margin="164,295,0,0" VerticalAlignment="Top" Width="163" Click="btnFinalizar_Click"/>
-                    <Label Content="Actualizar Clinica" HorizontalAlignment="Left"  Margin="166,10,0,0" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
+                   
                     <Label Content="Color de la Clinica" HorizontalAlignment="Left"  Margin="81,114,0,0" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
                     <Label x:Name="lblColor" Content="" HorizontalAlignment="Left" Margin="234,120,0,0" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
                     <Label Content="Panel para actualizar el color de la clinica" HorizontalAlignment="Left" Margin="81,168,0,0" VerticalAlignment="Top"  Height="42" Width="200" FontSize="15" Foreground="Black"/>

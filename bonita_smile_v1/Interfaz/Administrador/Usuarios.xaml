@@ -13,8 +13,8 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition  Height="100" />
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="300"/>
-                <RowDefinition Height="200"/>
 
             </Grid.RowDefinitions>
 
@@ -28,7 +28,8 @@
                 <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Usuarios" Margin="0,0,0,0" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " >
+            
+                <Border Grid.Row="2" Grid.Column="1" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " >
                 <Grid  Margin=" 10"  HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="1000">
 
                     <ListView  x:Name="lv_Users" Style="{StaticResource MetroListView}" Width="1000" Height="250" HorizontalAlignment="Center" BorderBrush="AntiqueWhite" BorderThickness="1 1 1 1" >
@@ -53,7 +54,7 @@
                         <GridViewColumn Header="Nombre Completo" Width="250" DisplayMemberBinding="{Binding nombre}" />
                         <GridViewColumn Header="Apellidos" Width="250" DisplayMemberBinding="{Binding apellidos}" />
                         <GridViewColumn Header="Alias" Width="250" DisplayMemberBinding="{Binding alias}" />
-                        <GridViewColumn Header="Contraseña" Width="250" DisplayMemberBinding="{Binding password}" />
+                        
                         <GridViewColumn Header="Rol" Width="250" DisplayMemberBinding="{Binding rol.descripcion}" />
                     </GridView>
                 </ListView.View>
@@ -61,14 +62,14 @@
             </Grid>
                 
             </Border>
-            <Border Grid.Row="2" Grid.Column="1" Background="White"  BorderBrush="Silver" Margin="0 20 0 0" BorderThickness="1" CornerRadius="8 8 3 3 " Height="85" VerticalAlignment="Top">
+            <Border Grid.Row="1" Grid.Column="1" Background="White"  BorderBrush="Silver" Margin="0 20 0 0" BorderThickness="1" CornerRadius="8 8 3 3 " Height="50" VerticalAlignment="Top">
                 <DockPanel>
 
                     <Button  Content="Ingresar" HorizontalAlignment="Left" Margin="250,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" Click="Button_Click_1">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                    <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\agregar.png">
+                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="C:\bs\agregar.png">
                                     </Image>
                                     <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                     </Border>
@@ -95,7 +96,7 @@
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                    <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\actualizar.png">
+                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="C:\bs\actualizar.png">
                                     </Image>
                                     <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                     </Border>
@@ -123,7 +124,7 @@
                 <Button.Template>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                            <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\eliminar.png">
+                            <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="C:\bs\eliminar.png">
                             </Image>
                             <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                             </Border>

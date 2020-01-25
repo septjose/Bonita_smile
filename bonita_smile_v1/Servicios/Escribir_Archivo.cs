@@ -12,7 +12,7 @@ namespace bonita_smile_v1.Servicios
 {
     class Escribir_Archivo
     {
-        string ruta = @"c:\offline\script_temporal.txt";
+        string ruta = @"C:\backup_bs\script_temporal.txt";
         List<string> abonos = new List<string>();
         List<string> carpeta_archivos = new List<string>();
         List<string> clinica = new List<string>();
@@ -86,25 +86,52 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        public void escribir(string ruta, string script)
+        public void escribir(string script)
         {
+            //FileAttributes attributes = File.GetAttributes(ruta);
+            FileStream fs = null;
             try
             {
-                // Create the file, or overwrite if the file exists.
-                StreamWriter sw = new StreamWriter(ruta, true);
-                sw.WriteLine(script);
-                sw.Close();
+
+                if (File.Exists(ruta))
+                {
+                    SetFileReadAccess(ruta, false);
+                    // Create the file, or overwrite if the file exists.
+                    StreamWriter sw = new StreamWriter(ruta, true);
+                    sw.WriteLine(script);
+                    sw.Close();
+                    File.SetAttributes(ruta, File.GetAttributes(ruta) | FileAttributes.Hidden);
+                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
+                    SetFileReadAccess(ruta, true);
+                }
+                else
+                {
+                    fs = new FileStream(ruta, FileMode.Create, FileAccess.Write);
+                    fs.Close();
+                    StreamWriter sw = new StreamWriter(ruta, true);
+                    sw.WriteLine(script);
+                    sw.Close();
+                    File.SetAttributes(ruta, File.GetAttributes(ruta) | FileAttributes.Hidden);
+                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
+                    SetFileReadAccess(ruta, true);
+                }
             }
 
             catch (Exception ex)
             {
+                MessageBox.Show("Archivo no encontrado");
                 Console.WriteLine(ex.ToString());
             }
         }
 
+        private  FileAttributes RemoveAttribute(FileAttributes attributes, FileAttributes attributesToRemove)
+        {
+            return attributes & ~attributesToRemove;
+        }
+
         public List<String> leer(string ruta)
         {
-            List<string> datosArchivo = new List<string>(); 
+            List<string> datosArchivo = new List<string>();
             using (StreamReader sr = File.OpenText(ruta))
             {
                 string linea = "";
@@ -501,6 +528,40 @@ namespace bonita_smile_v1.Servicios
                 i++;
             }
             return aux_categoria;
+        }
+
+        public void SetFileReadAccess(string FileName, bool SetReadOnly)
+        {
+            // Create a new FileInfo object.
+            FileInfo fInfo = new FileInfo(FileName);
+
+            // Set the IsReadOnly property.
+            fInfo.IsReadOnly = SetReadOnly;
+        }
+
+        public List<string> obtenerQueryArchivo()
+        {
+            List<string> lista = new List<string>();
+            if (File.Exists(ruta))
+            {
+                using (StreamReader sr = File.OpenText(ruta))
+                {
+
+                    string query = "";
+                    while ((query = sr.ReadLine()) != null)
+                    {
+                        lista.Add(query);
+                    }
+                    return lista;
+                }
+            }
+            else
+            {
+                return lista=null;
+            }
+           
+
+           
         }
     }
 }

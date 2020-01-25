@@ -33,10 +33,8 @@ namespace bonita_smile_v1
         public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo)
         {
 
-          
-
             InitializeComponent();
-            rt_imagen.Fill = new Page2().Imagen(@"C:\bs\" + paciente.foto);
+            rt_imagen.Fill = new Page2().Imagen( paciente.foto);
             this.paciente = paciente;
             this.motivo = motivo;
             //lblNombre.Content = paciente.nombre + " " + paciente.apellidos;

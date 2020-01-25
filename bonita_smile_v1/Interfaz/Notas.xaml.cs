@@ -34,7 +34,7 @@ namespace bonita_smile_v1
 
             
             InitializeComponent();
-           rt_imagen.Fill =new Page2().Imagen(@"C:\bs\" + paciente.foto);
+           rt_imagen.Fill =new Page2().Imagen(paciente.foto);
 
 
             this.paciente = paciente;

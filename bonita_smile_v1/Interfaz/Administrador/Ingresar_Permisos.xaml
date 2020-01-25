@@ -4,10 +4,47 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bonita_smile_v1"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Pagina_Ingresar_Permisos">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+       mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="516.318"
+      Title="Page5_Ingresar">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="100" />
+                <RowDefinition Height="500"/>
+                <RowDefinition Height="20"/>
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="1000"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+                <Grid Margin="10">
+                    <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Añadir usuario a al clinica" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1"  Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Label Content="Elige el nombre del usuario" HorizontalAlignment="Left" Margin="80,134,0,0" VerticalAlignment="Top"   Width="200" FontSize="15" Foreground="Black"/>
+                    <Label Content="Elige el nombre de la clinica" HorizontalAlignment="Left" Margin="85,199,0,0" VerticalAlignment="Top"   Width="200" FontSize="15" Foreground="Black"/>
+                    <ComboBox x:Name="cmbUsuario" HorizontalAlignment="Left" Height="42" Margin="300,125,0,0" VerticalAlignment="Top" Width="250" Style="{StaticResource MetroComboBox}" SelectionChanged="cmbUsuario_SelectionChanged"/>
+                    <ComboBox x:Name="cmbClinica" HorizontalAlignment="Left" Height="42" Margin="300,193,0,0" VerticalAlignment="Top" Width="250" Style="{StaticResource MetroComboBox}" SelectionChanged="cmbClinica_SelectionChanged"/>
+                    <Button Content="Finalizar" HorizontalAlignment="Left" VerticalAlignment="Top" Width="265" Margin="250,325,0,0" Height="60" Click="Button_Click"/>
+                    <Image HorizontalAlignment="Right"  VerticalAlignment="Top"  Margin="550,90,0,0" Source="C:\bs\captura.png" Height="400" Width="400"/>
+
+
+                </Grid>
+            </Border>
+
+        </Grid>
+    </ScrollViewer>
+</Page>
+
+<!--<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
         <Grid>
             <Label Content="Elige el nombre del usuario" HorizontalAlignment="Left" Margin="80,134,0,0" VerticalAlignment="Top" Width="180"/>
@@ -18,4 +55,4 @@
 
         </Grid>
     </ScrollViewer>
-</Page>
+</Page>-->

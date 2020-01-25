@@ -85,7 +85,7 @@ namespace bonita_smile_v1.Servicios
             Seguridad seguridad = new Seguridad();
 
             string auxiliar_identificador = "";
-            auxiliar_identificador = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha);
+            auxiliar_identificador = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha + DateTime.Now);
             bool internet = ti.Test();
             if (!internet)
             {
@@ -106,7 +106,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir(query + ";");
                 }
                 return true;
 
@@ -142,7 +142,7 @@ namespace bonita_smile_v1.Servicios
                 if (!internet)
                 {
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    ea.escribir(query + ";");
                 }
                 return true;
 
