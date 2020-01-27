@@ -48,7 +48,7 @@ namespace bonita_smile_v1
 
         void llenar_list_view()
         {
-            var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente());
+            var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente(false).MostrarPaciente());
 
             lv_Paciente.ItemsSource = pacientes;
             GPaciente = pacientes;

@@ -47,7 +47,7 @@ namespace bonita_smile_v1
         string valor = "";
         public Page6_Ingresar()
         {
-            this.conexionBD = obj.conexion();
+            this.conexionBD = obj.conexion(false);
             InitializeComponent();
            
             llenar_Combo();
@@ -195,13 +195,16 @@ namespace bonita_smile_v1
                 {
                     valor = cmbClinica.SelectedItem.ToString();
                     string id_clinica = obtener_id_clinica(valor);
-                    Paciente pa = new Paciente();
+                    Paciente pa = new Paciente(false);
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
                     if (email_correcto)
                     {
                         bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
                         if (inserto)
+
                         {
+                            pa = new Paciente(true);
+                            pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             if (admin != null)
                                 admin.Main.Content = new Page6();

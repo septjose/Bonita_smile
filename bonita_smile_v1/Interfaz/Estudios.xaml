@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bonita_smile_v1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Pagina_Estudios">
     <Page.Resources>
         <ContextMenu x:Key="cmButton">
@@ -23,12 +23,29 @@
     </Page.Resources>
     <Grid>
 
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="100" />
 
-        <Button Content="Crear Nueva Carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="175" RenderTransformOrigin="1.267,2.5" Margin="15,280,0,0" Click="Button_Click_1"/>
-        <Button Content="Agregar Estudios a la carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Margin="5,345,0,0" Click="Button_Click"/>
-        <ListView  x:Name="lvCarpetas"  Margin="400,90,180,65"   Style="{StaticResource MetroListView}"
+            <RowDefinition Height="500"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="1000"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+            <Grid Margin="10">
+                <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Estudios Carpetas" Margin="0,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!--<Button Content="Crear Nueva Carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="175" RenderTransformOrigin="1.267,2.5" Margin="15,280,0,0" Click="Button_Click_1"/>-->
+        <!--<Button Content="Agregar Estudios a la carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Margin="5,345,0,0" Click="Button_Click"/>-->
+        <ListView Grid.Row="1" x:Name="lvCarpetas"  Margin="5,10,225,40"   Style="{StaticResource MetroListView}"
             SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
-               MouseDoubleClick="lvCarpetas_MouseDoubleClick">
+               MouseDoubleClick="lvCarpetas_MouseDoubleClick" Grid.Column="1">
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">

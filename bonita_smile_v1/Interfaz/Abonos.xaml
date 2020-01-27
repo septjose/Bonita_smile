@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bonita_smile_v1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="900"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Page2_Abonos">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
         <Grid>
@@ -27,73 +27,73 @@
             <Border Grid.Row="1" Grid.Column="1" Background="GhostWhite"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Margin="0 20 0 0" Width="auto" Height="auto">
 
                 <Grid Margin="10">
-                <Grid.RowDefinitions>
-
-                    <RowDefinition Height="200"/>
-
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="500"/>
-                    <ColumnDefinition Width="500"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Row="0" Grid.Column="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
-
-
-                    </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Column="0" x:Name="rt_imagen" Fill="#FFF4F4F5"  Margin="0,0,0,0"/>
-
-                </Grid>
-
-
-                <Grid Grid.Row="0" Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" x:Name="lblNombre" Content="Nombre :"  Margin="50,0,0,0" FontSize="15" />
-                    <TextBox Grid.Row="1" x:Name="txtNombre" Margin="50 0 0 0" Height="15"  FontSize="15"/>
-                    <Label Grid.Row="2" x:Name="lblMotivo" Content="Motivo de cita :"  Margin="50 0 0 0" FontSize="15" />
-                    <TextBox Grid.Row="3" x:Name="txtMotivo" Margin="50 0 0 0" Height="15"  FontSize="15"/>
-
-
-
-
-                </Grid>
-
-                <Grid Grid.Row="0" Grid.Column="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-
+                        <RowDefinition Height="200"/>
 
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="500"/>
+                        <ColumnDefinition Width="500"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0"  x:Name="lblTotal" Content="Total :"  Margin="119,0,0,0" FontSize="15" />
-                    <TextBox  Grid.Column="1" Grid.Row="0" x:Name="txtTotal" Margin="0 0 0 0"  FontSize="15"/>
-                    <Label Grid.Column="0" Grid.Row="1"  x:Name="lblAbonado" Content="Abonado :"  Margin="120,0,0,0" FontSize="15" />
-                    <TextBox  Grid.Column="1" Grid.Row="1" x:Name="txtAbonado" Margin="0 0 0 0" FontSize="15"/>
-                    <Label Grid.Column="0" Grid.Row="2"  x:Name="lblRestante" Content="Restante :"  Margin="120,0,0,0" FontSize="15" />
-                    <TextBox  Grid.Column="1" Grid.Row="2" x:Name="txtRestante" Margin="0 0 0 0" FontSize="15"/>
+
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+
+
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" x:Name="rt_imagen" Fill="#FFF4F4F5"  Margin="0,0,0,0"/>
+
+                    </Grid>
+
+
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" x:Name="lblNombre" Content="Nombre :"  Margin="50,0,0,0" FontSize="15" />
+                        <TextBox Grid.Row="1" x:Name="txtNombre" Margin="50 0 0 0" Height="15"  FontSize="15"/>
+                        <Label Grid.Row="2" x:Name="lblMotivo" Content="Motivo de cita :"  Margin="50 0 0 0" FontSize="15" />
+                        <TextBox Grid.Row="3" x:Name="txtMotivo" Margin="50 0 0 0" Height="15"  FontSize="15"/>
+
+
+
+
+                    </Grid>
+
+                    <Grid Grid.Row="0" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0"  x:Name="lblTotal" Content="Total :"  Margin="119,0,0,0" FontSize="15" />
+                        <TextBox  Grid.Column="1" Grid.Row="0" x:Name="txtTotal" Margin="0 0 0 0"  FontSize="15"/>
+                        <Label Grid.Column="0" Grid.Row="1"  x:Name="lblAbonado" Content="Abonado :"  Margin="120,0,0,0" FontSize="15" />
+                        <TextBox  Grid.Column="1" Grid.Row="1" x:Name="txtAbonado" Margin="0 0 0 0" FontSize="15"/>
+                        <Label Grid.Column="0" Grid.Row="2"  x:Name="lblRestante" Content="Restante :"  Margin="120,0,0,0" FontSize="15" />
+                        <TextBox  Grid.Column="1" Grid.Row="2" x:Name="txtRestante" Margin="0 0 0 0" FontSize="15"/>
+
+                    </Grid>
+
+
+
+
+
 
                 </Grid>
-
-
-
-
-
-
-            </Grid>
             </Border>
 
             <Grid Grid.Row="2" Grid.Column="1">
@@ -101,6 +101,8 @@
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="800"/>
                 </Grid.ColumnDefinitions>
+
+
                 <Button Grid.Column="0" Margin="0,0,0,0" Name="btn1" Click="Button_Click" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -108,7 +110,7 @@
                                 <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="C:\\bs\agregar.png">
                                 </Image>
                                 <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
-                                    <TextBlock Width="Auto" Height="Auto" Text="mi boton 1" TextWrapping="Wrap" x:Name="btn1" TextAlignment="Center" Background="{x:Null}" FontSize="14" Margin="5,5,5,5" Foreground="#FFFFFFFF" FontWeight="Normal" VerticalAlignment="Center" FontFamily="Segoe" IsEnabled="False" Cursor="None"/>
+
                                 </Border>
                             </Grid>
                             <ControlTemplate.Triggers>
@@ -129,7 +131,62 @@
                     </Button.Template>
                 </Button>
 
-                <ListView Grid.Column="1" x:Name="lvNotas" Style="{StaticResource MetroListView}" Margin="50 0 0 0">
+                <Button Grid.Column="1" Margin="829.333,65,-178.667,0"   Click="Button_Click_2" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="C:\\bs\actualizar.png">
+                                </Image>
+                                <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter Property="RenderTransform" TargetName="grid">
+                                        <Setter.Value>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                                <SkewTransform AngleX="0" AngleY="0"/>
+                                                <RotateTransform Angle="0"/>
+                                                <TranslateTransform X="0" Y="0"/>
+                                            </TransformGroup>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button Grid.Column="1" Margin="834.333,190,-183.667,0"  Click="Button_Click_1" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="C:\\bs\eliminar.png">
+                                </Image>
+                                <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter Property="RenderTransform" TargetName="grid">
+                                        <Setter.Value>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                                <SkewTransform AngleX="0" AngleY="0"/>
+                                                <RotateTransform Angle="0"/>
+                                                <TranslateTransform X="0" Y="0"/>
+                                            </TransformGroup>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock Grid.Column="1" Text="Abonos registrados" HorizontalAlignment="Center" FontSize="25" Margin="50 10 0 0"></TextBlock>
+                <ListView Grid.Column="1" x:Name="lvNotas" Style="{StaticResource MetroListView}" Margin="50 50 0 0">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>

@@ -36,50 +36,61 @@
             // 
             // btnCancelat
             // 
-            this.btnCancelat.Location = new System.Drawing.Point(430, 277);
+            this.btnCancelat.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnCancelat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelat.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnCancelat.Location = new System.Drawing.Point(429, 346);
+            this.btnCancelat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancelat.Name = "btnCancelat";
-            this.btnCancelat.Size = new System.Drawing.Size(163, 46);
+            this.btnCancelat.Size = new System.Drawing.Size(238, 58);
             this.btnCancelat.TabIndex = 8;
             this.btnCancelat.Text = "Cancelar";
-            this.btnCancelat.UseVisualStyleBackColor = true;
+            this.btnCancelat.UseVisualStyleBackColor = false;
             this.btnCancelat.Click += new System.EventHandler(this.btnCancelat_Click);
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(207, 277);
+            this.btnAceptar.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnAceptar.Location = new System.Drawing.Point(109, 346);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(160, 46);
+            this.btnAceptar.Size = new System.Drawing.Size(232, 58);
             this.btnAceptar.TabIndex = 7;
             this.btnAceptar.Text = "Aceptar";
-            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.UseVisualStyleBackColor = false;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // txtAbono
             // 
-            this.txtAbono.Location = new System.Drawing.Point(346, 128);
+            this.txtAbono.Location = new System.Drawing.Point(357, 173);
+            this.txtAbono.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAbono.Name = "txtAbono";
-            this.txtAbono.Size = new System.Drawing.Size(276, 22);
+            this.txtAbono.Size = new System.Drawing.Size(310, 26);
             this.txtAbono.TabIndex = 6;
             this.txtAbono.TextChanged += new System.EventHandler(this.txtAbono_TextChanged);
             // 
             // lblAbono
             // 
             this.lblAbono.AutoSize = true;
-            this.lblAbono.Location = new System.Drawing.Point(178, 128);
+            this.lblAbono.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbono.Location = new System.Drawing.Point(78, 169);
             this.lblAbono.Name = "lblAbono";
-            this.lblAbono.Size = new System.Drawing.Size(152, 17);
+            this.lblAbono.Size = new System.Drawing.Size(246, 29);
             this.lblAbono.TabIndex = 5;
-            this.lblAbono.Text = "Nombre de las carpeta";
+            this.lblAbono.Text = "Nombre de la carpeta";
             // 
             // Actualizar_Nombre_Carpeta
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(781, 562);
             this.Controls.Add(this.btnCancelat);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtAbono);
             this.Controls.Add(this.lblAbono);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Actualizar_Nombre_Carpeta";
             this.Text = "Form1";
             this.ResumeLayout(false);

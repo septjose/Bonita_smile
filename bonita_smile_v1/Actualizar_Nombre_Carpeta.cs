@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bonita_smile_v1.Servicios;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,7 @@ namespace bonita_smile_v1
     {
         string id_paciente = "";
         string id_carpeta = "";
+        bool bandera_online_offline = false;
         public Actualizar_Nombre_Carpeta(string id_paciente, string id_carpeta)
         {
             this.id_paciente = id_paciente;
@@ -23,10 +25,14 @@ namespace bonita_smile_v1
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            bool insertarCarpeta = new Servicios.Carpeta_archivos().actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente);
+            Carpeta_archivos ca = new Carpeta_archivos(bandera_online_offline);
+            bool insertarCarpeta =ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente);
             if (insertarCarpeta)
             {
+                
                 System.Windows.Forms.MessageBox.Show("Se actualizò Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ca = new Carpeta_archivos(bandera_online_offline);
+                ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente);
             }
             else
             {

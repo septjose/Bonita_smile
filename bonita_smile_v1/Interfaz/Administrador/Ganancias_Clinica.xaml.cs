@@ -34,7 +34,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
         string fecha2 = "";
         public Ganancias_Clinica()
         {
-            this.conexionBD = obj.conexion();
+            this.conexionBD = obj.conexion(false);
             InitializeComponent();
             llenar_Combo();
             llena_listview();
@@ -43,7 +43,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
         private void llena_listview()
         {
 
-            var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos().Mostrar_Ganancias());
+            var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos(false).Mostrar_Ganancias());
 
             lv_Gannacias.ItemsSource = ganancias;
             Gganancias = ganancias;
@@ -142,7 +142,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
                 {
 
                     string id_clinica = obtener_id_clinica(valor);
-                    var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos().Ganacioas_c_clinica(id_clinica));
+                    var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos(false).Ganacioas_c_clinica(id_clinica));
 
                     lv_Gannacias.ItemsSource = ganancias;
                     Gganancias = ganancias;
@@ -161,7 +161,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
                     fecha = fecha.Substring(0, fecha.Length - 8);
 
-                    var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos().Ganacioas_c_clinica_fecha(id_clinica, fecha));
+                    var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos(false).Ganacioas_c_clinica_fecha(id_clinica, fecha));
 
                     lv_Gannacias.ItemsSource = ganancias;
                     Gganancias = ganancias;
@@ -176,7 +176,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
                     string id_clinica = obtener_id_clinica(valor);
                     fecha = fecha.Substring(0, fecha.Length - 8);
                     fecha2 = fecha2.Substring(0, fecha2.Length - 8);
-                    var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos().Ganacioas_c_clinica_fecha2(id_clinica, fecha, fecha2));
+                    var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos(false).Ganacioas_c_clinica_fecha2(id_clinica, fecha, fecha2));
 
                     lv_Gannacias.ItemsSource = ganancias;
                     Gganancias = ganancias;

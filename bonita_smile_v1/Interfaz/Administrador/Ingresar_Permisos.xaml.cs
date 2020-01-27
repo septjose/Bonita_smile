@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using bonita_smile_v1.Servicios;
+
 using System.Windows.Forms;
 using bonita_smile_v1.Interfaz.Administrador;
 
@@ -30,10 +30,11 @@ namespace bonita_smile_v1
         private MySqlConnection conexionBD,conexionBD2;
         Conexion obj = new Conexion();
         string valor = "",valor2="";
+        bool bandera_online_offline = false;
         public Pagina_Ingresar_Permisos()
         {
-            this.conexionBD = obj.conexion();
-            this.conexionBD2 = obj.conexion();
+            this.conexionBD = obj.conexion(bandera_online_offline);
+            this.conexionBD2 = obj.conexion(bandera_online_offline);
             InitializeComponent();
             llenar_Combo_Usuario();
             llenar_Combo_Clinica();
@@ -114,11 +115,13 @@ namespace bonita_smile_v1
                 string id_usuario = obtener_id_usuario(valor);
                 string id_clinica = obtener_id_Clinica(valor2);
 
-                Clinicas c = new Clinicas();
+                Clinicas c = new Clinicas(bandera_online_offline);
                 bool inserto = c.insertar_Permisos(id_usuario, id_clinica);
                 if (inserto)
                 {
                     System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    c = new Clinicas(!bandera_online_offline);
+                    c.insertar_Permisos(id_usuario, id_clinica);
                     Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                     if (admin != null)
                         admin.Main.Content = new Page5();

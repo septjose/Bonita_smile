@@ -16,10 +16,12 @@ namespace bonita_smile_v1.Servicios
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
+        private bool online;
 
-        public Clinicas()
+        public Clinicas(bool online)
         {
-            this.conexionBD = obj.conexion();
+            this.conexionBD = obj.conexion(online);
+            this.online = online;
         }
 
         public List<ClinicaModel> MostrarClinica()
@@ -56,26 +58,43 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarClinica(string id_clinica)
         {
-            query = "DELETE FROM clinica where id_clinica='" + id_clinica+"'";
+            
+            bool internet = ti.Test();
             try
             {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
 
-                if (!ti.Test())
+                MySqlCommand cmd; ;
+                if (online)
                 {
-                   //Escribir_Archivo ea = new Escribir_Archivo();
-                    //ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
                 }
+                else
+                {
+                    query = "DELETE FROM clinica where id_clinica='" + id_clinica + "'";
 
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
-
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
@@ -87,37 +106,42 @@ namespace bonita_smile_v1.Servicios
             Seguridad seguridad = new Seguridad();
             auxiliar_identificador = seguridad.SHA1(nombre_sucursal + color + DateTime.Now);
             bool internet = ti.Test();
-            if (!internet)
-            {
-               
-                query = "INSERT INTO clinica (id_clinica,nombre_sucursal,color,auxiliar_identificador) VALUES('"+ auxiliar_identificador+"','"+ nombre_sucursal + "','" + color + "','<!--" + auxiliar_identificador + "-->')";
-            }
-            else
-            {
-                query = "INSERT INTO clinica (id_clinica,nombre_sucursal,color) VALUES('" + auxiliar_identificador + "','" + nombre_sucursal + "','" + color + "')";
-            }
-            //query = "INSERT INTO clinica (nombre_sucursal,id_color) VALUES('Clinica Salamanca',1)";
-            Console.WriteLine(query);
             try
             {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
 
-                if (!internet)
+                MySqlCommand cmd; ;
+                if (online)
                 {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir( query + ";");
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
                 }
+                else
+                {
+                    query = "INSERT INTO clinica (id_clinica,nombre_sucursal,color,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre_sucursal + "','" + color + "','<!--" + auxiliar_identificador + "-->')";
 
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
                 return true;
-
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("E");
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
@@ -129,35 +153,43 @@ namespace bonita_smile_v1.Servicios
             Seguridad seguridad = new Seguridad();
             auxiliar_identificador = seguridad.SHA1(id_usuario + id_clinica + DateTime.Now);
             bool internet = ti.Test();
-            if (!internet)
-            {
-               
-                query = "INSERT INTO permisos (id_permiso,id_usuario,id_clinica,auxiliar_identificador) VALUES('"+auxiliar_identificador+"','" + id_usuario + "','" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
-            }
-            else
-            {
-                query = "INSERT INTO permisos (id_permiso,id_usuario,id_clinica) VALUES('" + auxiliar_identificador + "','" + id_usuario + "','" + id_clinica + "')";
-            }
-            //query = "INSERT INTO clinica (nombre_sucursal,id_color) VALUES('Clinica Salamanca',1)";
-            Console.WriteLine(query);
+
             try
             {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
-                if (!internet)
+
+                MySqlCommand cmd; ;
+                if (online)
                 {
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
+                }
+                else
+                {
+                    query = "INSERT INTO permisos (id_permiso,id_usuario,id_clinica,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + id_usuario + "','" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
+
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir( query + ";");
+                    ea.escribir(query + ";");
                 }
                 return true;
-
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("E");
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
@@ -165,36 +197,46 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarClinica(string id_clinica, string nombre_sucursal, string color)
         {
+            
+
             bool internet = ti.Test();
-            if (!internet)
-            {
-                //Seguridad seguridad = new Seguridad();
-                //string auxiliar_identificador = seguridad.Encriptar(nombre_sucursal+ color);
-                string auxiliar_identificador = MostrarClinica_Update(id_clinica);
-                query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "',auxiliar_identificador ='" + auxiliar_identificador + "' where id_clinica = '" + id_clinica+"'";
-                MessageBox.Show(query);
-            }
-            else
-            {
-                query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "' where id_clinica = '" + id_clinica+"'";
-            }
             try
             {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
-                if (!internet)
+
+                MySqlCommand cmd; ;
+                if (online)
                 {
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSEACTUALIZARRTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
+                }
+                else
+                {
+                    //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
+                    query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "',auxiliar_identificador ='" + id_clinica + "' where id_clinica = '" + id_clinica + "'";
+
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
                 }
                 return true;
-
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
@@ -202,36 +244,45 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizar_Permisos(string id_usuario, string id_clinica, string id_permiso)
         {
-            bool internet = ti.Test();
-            if (!internet)
-            {
-                //Seguridad seguridad = new Seguridad();
-                // = seguridad.Encriptar(id_usuario.ToString() + id_clinica);
-                string auxiliar_identificador = MostrarPermisos_Update(id_permiso);
-                query = "UPDATE permisos set id_usuario = '" + id_usuario + "',id_clinica = '" + id_clinica + "',auxiliar_identificador = '" + auxiliar_identificador + "' where id_permiso = '" + id_permiso+"'";
-            }
-            else
-            {
-                query = "UPDATE permisos set id_usuario = '" + id_usuario + "',id_clinica = '" + id_clinica + "' where id_permiso = '" + id_permiso+"'";
-            }
 
+            bool internet = ti.Test();
             try
             {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
-                if (!internet)
+
+                MySqlCommand cmd; ;
+                if (online)
                 {
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSEACTUALIZARRTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
+                }
+                else
+                {
+                    //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
+                    query = "UPDATE permisos set id_usuario = '" + id_usuario + "',id_clinica = '" + id_clinica + "',auxiliar_identificador = '" + id_permiso + "' where id_permiso = '" + id_permiso + "'";
+
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir( query + ";");
+                    ea.escribir(query + ";");
                 }
                 return true;
-
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }

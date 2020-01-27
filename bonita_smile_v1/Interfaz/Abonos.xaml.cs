@@ -30,6 +30,7 @@ namespace bonita_smile_v1
         double restante = 0.0;
         double abonado = 0.0;
         double total = 0.0;
+        bool bandera_online_offline = false;
         public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo)
         {
 
@@ -40,7 +41,7 @@ namespace bonita_smile_v1
             //lblNombre.Content = paciente.nombre + " " + paciente.apellidos;
             //lblmotivo.Content = motivo.descripcion;
             //lblTotal.Content = motivo.costo.ToString();
-            Abonos abono = new Abonos();
+            Abonos abono = new Abonos(bandera_online_offline);
             //lblAbonado.Content = abono.Abonados(motivo.id_motivo).ToString();
             //lblRestante.Content = abono.Restante(motivo.id_motivo).ToString();
             //System.Windows.MessageBox.Show(motivo.id_motivo.ToString() + "  " + paciente.id_paciente.ToString());
@@ -62,7 +63,7 @@ namespace bonita_smile_v1
         }
         void llenar_list_view(string id_motivo, string id_paciente)
         {
-            var notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos().MostrarAbonos(id_motivo, id_paciente));
+            var notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(id_motivo, id_paciente));
 
             lvNotas.ItemsSource = notas;
             GAbono = notas;
@@ -73,6 +74,72 @@ namespace bonita_smile_v1
             DialogResult resultado = new DialogResult();
             Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text,restante,abonado, total);
             resultado = mensaje.ShowDialog();
+            lvNotas.ItemsSource = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(this.motivo.id_motivo, this.paciente.id_paciente));
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            AbonosModel abono = (AbonosModel)lvNotas.SelectedItem;
+            if (lvNotas.SelectedItems.Count > 0)
+            {
+
+                Test_Internet ti = new Test_Internet();
+                if (ti.Test())
+                {
+                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + abono.comentario + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    if (confirmation == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        Abonos abo = new Abonos(bandera_online_offline);
+
+                        bool elimino = abo.eliminarAbono(abono.id_abono);
+                        if (elimino)
+                        {
+                        
+                            GAbono.Remove((AbonosModel)lvNotas.SelectedItem);
+                            System.Windows.Forms.MessageBox.Show("Se elimino el Motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            abo = new Abonos(!bandera_online_offline);
+
+                           abo.eliminarAbono(abono.id_abono);
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("No se pudo eliminar el abono", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
+
+                    }
+                    
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+       
+
+            private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            AbonosModel abono = (AbonosModel)lvNotas.SelectedItem;
+            if (lvNotas.SelectedItems.Count > 0)
+            {
+                DialogResult resultado = new DialogResult();
+                Form mensaje = new Actualizar_Abono("","","","",0.0,0.0,0.0,abono);
+                resultado = mensaje.ShowDialog();
+               
+
+                lvNotas.ItemsSource = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

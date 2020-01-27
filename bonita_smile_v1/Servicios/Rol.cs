@@ -19,7 +19,7 @@ namespace bonita_smile_v1.Servicios
 
         public Rol()
         {
-            this.conexionBD = obj.conexion();
+            this.conexionBD = obj.conexion(false);
         }
 
         public List<RolModel> MostrarRol()

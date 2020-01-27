@@ -35,7 +35,7 @@ namespace bonita_smile_v1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // MessageBox.Show("txtx  :" +txtUsuario.Text+"    "+ "pass :"+pbPassword.Password);
-            Usuarios user = new Usuarios();
+            Usuarios user = new Usuarios(false);
             Seguridad secure = new Seguridad();
             if(txtUsuario.Text.Equals("")||pbPassword.Password.Equals(""))
             {

@@ -43,9 +43,10 @@ namespace bonita_smile_v1
         string antecedentes = "";
         string id_pacientes = "";
         string foto = "";
+        bool bandera_online_offline = false;
         public Page6_Actualizar(PacienteModel paciente)
         {
-            this.conexionBD = obj.conexion();
+            this.conexionBD = obj.conexion(bandera_online_offline);
             InitializeComponent();
             
             llenar_Combo();
@@ -219,7 +220,7 @@ namespace bonita_smile_v1
                 {
                     valor = cmbClinica.SelectedItem.ToString();
                     string id_clinica = obtener_id_clinica(valor);
-                    Paciente pa = new Paciente();
+                    Paciente pa = new Paciente(bandera_online_offline);
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
                     if (email_correcto)
                     {
@@ -231,6 +232,8 @@ namespace bonita_smile_v1
 
                             //vu.refrescar_listview(this.usu, usu, lv_aux);
                             System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            pa = new Paciente(!bandera_online_offline);
+                            pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                         }
                         else
                         {

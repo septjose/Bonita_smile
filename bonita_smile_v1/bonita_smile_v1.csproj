@@ -210,11 +210,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actualizar_Abono.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Actualizar_Abono.Designer.cs">
+      <DependentUpon>Actualizar_Abono.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actualizar_Motivo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Actualizar_Motivo.Designer.cs">
+      <DependentUpon>Actualizar_Motivo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Actualizar_Nombre_Carpeta.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Actualizar_Nombre_Carpeta.Designer.cs">
       <DependentUpon>Actualizar_Nombre_Carpeta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actualizar_Nota_Evolucion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Actualizar_Nota_Evolucion.Designer.cs">
+      <DependentUpon>Actualizar_Nota_Evolucion.cs</DependentUpon>
     </Compile>
     <Compile Include="Agregar_Nota_Evolucion.cs">
       <SubType>Form</SubType>
@@ -233,6 +251,12 @@
       <DependentUpon>Fotos_de_Estudios.xaml</DependentUpon>
     </Compile>
     <Compile Include="IEmailSender.cs" />
+    <Compile Include="IngresarMotivo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IngresarMotivo.Designer.cs">
+      <DependentUpon>IngresarMotivo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\Administrador\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
@@ -311,9 +335,6 @@
     </Compile>
     <Compile Include="Interfaz\Actualizar_Permisos.xaml.cs">
       <DependentUpon>Actualizar_Permisos.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaz\Agregar_Estudios.xaml.cs">
-      <DependentUpon>Agregar_Estudios.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\Clinica\Clinica_Principal.xaml.cs">
       <DependentUpon>Clinica_Principal.xaml</DependentUpon>
@@ -468,10 +489,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interfaz\Agregar_Estudios.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Interfaz\Clinica\Clinica_Principal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -525,8 +542,26 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Actualizar_Abono.resx">
+      <DependentUpon>Actualizar_Abono.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actualizar_Motivo.resx">
+      <DependentUpon>Actualizar_Motivo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actualizar_Nombre_Carpeta.resx">
+      <DependentUpon>Actualizar_Nombre_Carpeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actualizar_Nota_Evolucion.resx">
+      <DependentUpon>Actualizar_Nota_Evolucion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Agregar_Carpetas.resx">
       <DependentUpon>Agregar_Carpetas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agregar_Nota_Evolucion.resx">
+      <DependentUpon>Agregar_Nota_Evolucion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IngresarMotivo.resx">
+      <DependentUpon>IngresarMotivo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MessageBoxAbono.resx">
       <DependentUpon>MessageBoxAbono.cs</DependentUpon>

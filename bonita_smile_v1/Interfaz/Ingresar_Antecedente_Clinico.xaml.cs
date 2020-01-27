@@ -42,10 +42,12 @@ namespace bonita_smile_v1
 
         private void btnOmitir_Click(object sender, RoutedEventArgs e)
         {
-            Paciente pa = new Paciente();
+            Paciente pa = new Paciente(false);
             bool inserto = pa.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
             if (inserto)
             {
+                pa = new Paciente(true);
+                 pa.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                     admin.Main.Content = new Page6();

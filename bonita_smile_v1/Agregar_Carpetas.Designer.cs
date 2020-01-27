@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
 using SystemColors = System.Drawing.SystemColors;
+using bonita_smile_v1.Servicios;
+
 namespace bonita_smile_v1
 {
     partial class Agregar_Carpetas
@@ -19,6 +21,7 @@ namespace bonita_smile_v1
         private System.ComponentModel.IContainer components = null;
         
         string id_paciente = "";
+        bool bandera_online_offline = false;
         public Agregar_Carpetas( string id_paciente)
         {
             
@@ -56,15 +59,16 @@ namespace bonita_smile_v1
             // lblAbono
             // 
             this.lblAbono.AutoSize = true;
-            this.lblAbono.Location = new System.Drawing.Point(77, 206);
+            this.lblAbono.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbono.Location = new System.Drawing.Point(13, 202);
             this.lblAbono.Name = "lblAbono";
-            this.lblAbono.Size = new System.Drawing.Size(169, 20);
+            this.lblAbono.Size = new System.Drawing.Size(246, 29);
             this.lblAbono.TabIndex = 0;
-            this.lblAbono.Text = "Nombre de las carpeta";
+            this.lblAbono.Text = "Nombre de la carpeta";
             // 
             // txtAbono
             // 
-            this.txtAbono.Location = new System.Drawing.Point(265, 206);
+            this.txtAbono.Location = new System.Drawing.Point(277, 205);
             this.txtAbono.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAbono.Name = "txtAbono";
             this.txtAbono.Size = new System.Drawing.Size(310, 26);
@@ -72,24 +76,30 @@ namespace bonita_smile_v1
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(109, 392);
+            this.btnAceptar.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnAceptar.Location = new System.Drawing.Point(66, 392);
             this.btnAceptar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(180, 58);
+            this.btnAceptar.Size = new System.Drawing.Size(223, 70);
             this.btnAceptar.TabIndex = 3;
             this.btnAceptar.Text = "Aceptar";
-            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.UseVisualStyleBackColor = false;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnCancelat
             // 
+            this.btnCancelat.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnCancelat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelat.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnCancelat.Location = new System.Drawing.Point(360, 392);
             this.btnCancelat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancelat.Name = "btnCancelat";
-            this.btnCancelat.Size = new System.Drawing.Size(183, 58);
+            this.btnCancelat.Size = new System.Drawing.Size(215, 65);
             this.btnCancelat.TabIndex = 4;
             this.btnCancelat.Text = "Cancelar";
-            this.btnCancelat.UseVisualStyleBackColor = true;
+            this.btnCancelat.UseVisualStyleBackColor = false;
             this.btnCancelat.Click += new System.EventHandler(this.btnCancelat_Click);
             // 
             // Agregar_Carpetas
@@ -120,10 +130,13 @@ namespace bonita_smile_v1
 
             DateTime fecha = DateTime.Now;
             //double abono = double.Parse(txtAbono.Text);
-            bool insertarAbono = new Servicios.Carpeta_archivos().insertarCarpeta_archivos(txtAbono.Text,id_paciente);
+            Carpeta_archivos ca = new Carpeta_archivos(bandera_online_offline);
+            bool insertarAbono = ca.insertarCarpeta_archivos(txtAbono.Text,id_paciente);
             if (insertarAbono)
             {
                 System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ca = new Carpeta_archivos(!bandera_online_offline);
+                 ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente);
             }
             else
             {

@@ -29,9 +29,10 @@ namespace bonita_smile_v1
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         string valor = "";
+        bool bandera_online_offline = false;
         public Page4_Ingresar()
         {
-            this.conexionBD = obj.conexion();
+            this.conexionBD = obj.conexion(bandera_online_offline);
             InitializeComponent();
             llenar_Combo();
         }
@@ -68,7 +69,7 @@ namespace bonita_smile_v1
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
-            if(txtNombre.Text.Equals("") || txtApellido.Text.Equals("")|| txtAlias.Text.Equals("")|| pwbPassword.Password.Equals(""))
+            if (txtNombre.Text.Equals("") || txtApellido.Text.Equals("") || txtAlias.Text.Equals("") || pwbPassword.Password.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -83,16 +84,22 @@ namespace bonita_smile_v1
                     string alias = txtAlias.Text;
                     string password = pwbPassword.Password;
 
-                    Usuarios user = new Usuarios();
+                    Usuarios user = new Usuarios(bandera_online_offline);
                     bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+
+
                     if (inserto)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        /*-----------------------------------------------*/
+                        user = new Usuarios(!bandera_online_offline);
+                        inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
                             //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
                             admin.Main.Content = new Page4();
-
                     }
                     else
                     {
@@ -108,11 +115,8 @@ namespace bonita_smile_v1
                     }
                 }
             }
-           
-            
-
         }
-        public int obtener_id_rol(string descripcion)
+            public int obtener_id_rol(string descripcion)
         {
             int id = 0;
             query = "SELECT id_rol FROM rol where descripcion='" + descripcion + "'";

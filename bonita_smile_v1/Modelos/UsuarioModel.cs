@@ -15,6 +15,10 @@ namespace bonita_smile_v1.Modelos
         public string password { get; set; }
         public RolModel rol { get; set; }
 
+        public string clinica { get; set; }
+
         public string fecha { get; set; }
+
+        
     }
 }

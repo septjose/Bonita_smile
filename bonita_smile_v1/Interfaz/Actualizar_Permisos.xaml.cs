@@ -30,10 +30,11 @@ namespace bonita_smile_v1
         Conexion obj = new Conexion();
         string valor = "", valor2 = "";
         string permiso = "";
+        bool bandera_online_offline = false;
         public Pagina_Actualizar_Permisos(string alias,string nombre_sucursal,string id_permiso)
         {
-            this.conexionBD = obj.conexion();
-            this.conexionBD2 = obj.conexion();
+            this.conexionBD = obj.conexion(bandera_online_offline);
+            this.conexionBD2 = obj.conexion(bandera_online_offline);
             InitializeComponent();
             llenar_Combo_Clinica();
             llenar_Combo_Usuario();
@@ -120,11 +121,13 @@ namespace bonita_smile_v1
 
                 // MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
 
-                Clinicas c = new Clinicas();
+                Clinicas c = new Clinicas(bandera_online_offline);
                 bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_permiso);
                 if (inserto)
                 {
                     System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    c = new Clinicas(!bandera_online_offline);
+                    c.actualizar_Permisos(id_usuario, id_clinica, id_permiso);
                     Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                     if (admin != null)
                         admin.Main.Content = new Page5();

@@ -1,6 +1,7 @@
 ﻿using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
 using bonita_smile_v1.Modelos;
+using bonita_smile_v1.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -67,7 +68,7 @@ namespace bonita_smile_v1
 
         void llenar_list_view(string id_paciente)
         {
-            var motivos = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita().Mostrar_MotivoCita(id_paciente));
+            var motivos = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id_paciente));
 
             lvMotivo.ItemsSource = motivos;
             GMotivo = motivos;
@@ -186,16 +187,67 @@ namespace bonita_smile_v1
             //im.ShowDialog();
        
 
-            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-            Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+           
 
-            if (admin != null)
-                admin.Main.Content = new Page3(id);
+            DialogResult resultado = new DialogResult();
+            Form mensaje = new IngresarMotivo(id);
+            resultado = mensaje.ShowDialog();
+            lvMotivo.ItemsSource = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+            Motivo_citaModel motivo = (Motivo_citaModel)lvMotivo.SelectedItem;
+            if (lvMotivo.SelectedItems.Count > 0)
+            {
+               
+                Test_Internet ti = new Test_Internet();
+                if (ti.Test())
+                {
+                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + motivo.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    if (confirmation == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        Motivo_cita mot = new Motivo_cita(false);
+
+                        bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo);
+                        if (elimino)
+                        {
+                            GMotivo.Remove((Motivo_citaModel)lvMotivo.SelectedItem);
+                            System.Windows.Forms.MessageBox.Show("Se elimino el Motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                    }
+                }
+
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
             else
             {
-                clin.Main2.Content = new Page3(id);
+                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Motivo_citaModel motivo = (Motivo_citaModel)lvMotivo.SelectedItem;
+            if (lvMotivo.SelectedItems.Count > 0)
+            {
+                DialogResult resultado = new DialogResult();
+                Form mensaje = new Actualizar_Motivo(motivo);
+                resultado = mensaje.ShowDialog();
+                lvMotivo.ItemsSource = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+           
+        }
     }
 }

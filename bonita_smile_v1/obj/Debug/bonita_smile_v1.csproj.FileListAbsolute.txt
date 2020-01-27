@@ -825,7 +825,6 @@ E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interf
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Foto.g.cs
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Ingresar_Foto.g.cs
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Permisos.g.cs
-E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Agregar_Estudios.g.cs
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Clinica\Clinica_Principal.g.cs
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Correo_Marketing.g.cs
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Estudios.g.cs
@@ -861,7 +860,6 @@ E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interf
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Foto.baml
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Ingresar_Foto.baml
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Permisos.baml
-E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Agregar_Estudios.baml
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Clinica\Clinica_Principal.baml
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Correo_Marketing.baml
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Estudios.baml
@@ -988,3 +986,9 @@ E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csprojAssemblyReference.cache
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Ganancias_Clinica.g.cs
 E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Ganancias_Clinica.baml
+E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.IngresarMotivo.resources
+E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Abono.resources
+E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Motivo.resources
+E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Nombre_Carpeta.resources
+E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Nota_Evolucion.resources
+E:\PortableGit\programs_c#\bs_v1.2\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Agregar_Nota_Evolucion.resources

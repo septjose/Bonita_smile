@@ -113,7 +113,7 @@ namespace bonita_smile_v1
                     encoder.Save(stream);
             }
 
-            Servicios.Paciente paciente = new Servicios.Paciente();
+            Servicios.Paciente paciente = new Servicios.Paciente(false);
 
             bool insertarPaciente = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
 

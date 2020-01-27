@@ -26,7 +26,7 @@ namespace bonita_smile_v1
     {
         //string valor = "";
         public string id_clin = "";
-
+        bool bandera_online_offline = false;
         public Page5_Actualizar(ClinicaModel clinica)
         {
             InitializeComponent();
@@ -51,8 +51,8 @@ namespace bonita_smile_v1
             else
             {
               
-                    Clinicas cl = new Clinicas();
-                    Usuarios usu = new Usuarios();
+                    Clinicas cl = new Clinicas(bandera_online_offline);
+                    Usuarios usu = new Usuarios(bandera_online_offline);
                     string nombre_clinica = txtNombre.Text;
                     string id_clinica = id_clin;
                     int combo = cmbColor.SelectedIndex;
@@ -66,8 +66,11 @@ namespace bonita_smile_v1
                         bool actualizo = cl.actualizarClinica(id_clinica, nombre_clinica, color);
                     if (actualizo)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
 
+                        System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cl = new Clinicas(!bandera_online_offline);
+                        cl.actualizarClinica(id_clinica, nombre_clinica, color);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null) 
                         {
@@ -102,8 +105,11 @@ namespace bonita_smile_v1
                         bool actualizo = cl.actualizarClinica(id_clinica, nombre_clinica, color);
                         if (actualizo)
                         {
-                            System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        
+                        System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cl = new Clinicas(!bandera_online_offline);
+                        cl.actualizarClinica(id_clinica, nombre_clinica, color);
+                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             if (admin != null)
                             {
                             alias = usu.Buscar_Alias(id_clinica);

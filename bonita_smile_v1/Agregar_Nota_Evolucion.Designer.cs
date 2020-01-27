@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
 using SystemColors = System.Drawing.SystemColors;
+using bonita_smile_v1.Servicios;
+
 namespace bonita_smile_v1
 {
     partial class Agregar_Nota_Evolucion
@@ -19,6 +21,7 @@ namespace bonita_smile_v1
         private System.ComponentModel.IContainer components = null;
         string id_motivo = "";
         string id_paciente = "";
+        bool bandera_online_offline = false;
         public Agregar_Nota_Evolucion(string id_motivo, string id_paciente)
         {
             this.id_motivo = id_motivo;
@@ -48,7 +51,6 @@ namespace bonita_smile_v1
         private void InitializeComponent()
         {
             this.lblAbono = new System.Windows.Forms.Label();
-            
             this.txtComentario = new System.Windows.Forms.TextBox();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnCancelat = new System.Windows.Forms.Button();
@@ -57,52 +59,62 @@ namespace bonita_smile_v1
             // lblAbono
             // 
             this.lblAbono.AutoSize = true;
-            this.lblAbono.Location = new System.Drawing.Point(208, 45);
+            this.lblAbono.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbono.Location = new System.Drawing.Point(234, 56);
             this.lblAbono.Name = "lblAbono";
-            this.lblAbono.Size = new System.Drawing.Size(49, 17);
+            this.lblAbono.Size = new System.Drawing.Size(207, 29);
             this.lblAbono.TabIndex = 0;
             this.lblAbono.Text = "Nota de evolucion";
-           
+            // 
             // txtComentario
             // 
-            this.txtComentario.Location = new System.Drawing.Point(66, 107);
+            this.txtComentario.Location = new System.Drawing.Point(74, 134);
+            this.txtComentario.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtComentario.Multiline = true;
             this.txtComentario.Name = "txtComentario";
-            this.txtComentario.Size = new System.Drawing.Size(443, 205);
+            this.txtComentario.Size = new System.Drawing.Size(498, 255);
             this.txtComentario.TabIndex = 2;
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(182, 337);
+            this.btnAceptar.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnAceptar.Location = new System.Drawing.Point(94, 421);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.Size = new System.Drawing.Size(195, 72);
             this.btnAceptar.TabIndex = 3;
             this.btnAceptar.Text = "Aceptar";
-            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.UseVisualStyleBackColor = false;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnCancelat
             // 
-            this.btnCancelat.Location = new System.Drawing.Point(320, 337);
+            this.btnCancelat.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnCancelat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelat.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnCancelat.Location = new System.Drawing.Point(360, 421);
+            this.btnCancelat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancelat.Name = "btnCancelat";
-            this.btnCancelat.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelat.Size = new System.Drawing.Size(172, 72);
             this.btnCancelat.TabIndex = 4;
             this.btnCancelat.Text = "Cancelar";
-            this.btnCancelat.UseVisualStyleBackColor = true;
+            this.btnCancelat.UseVisualStyleBackColor = false;
             this.btnCancelat.Click += new System.EventHandler(this.btnCancelat_Click);
             // 
-            // MessageBoxAbono
+            // Agregar_Nota_Evolucion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(584, 423);
+            this.ClientSize = new System.Drawing.Size(657, 529);
             this.Controls.Add(this.btnCancelat);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtComentario);
-           
             this.Controls.Add(this.lblAbono);
-            this.Name = "MessageBoxAbono";
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Name = "Agregar_Nota_Evolucion";
             this.Text = "MessageBoxAbono";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -118,11 +130,13 @@ namespace bonita_smile_v1
             string comentario = txtComentario.Text;
 
             DateTime fecha = DateTime.Now;
-            
-            bool insertarAbono = new Servicios.Nota_de_digi_evolucion().insertarNota_de_digi_evolucion(id_paciente, id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
+            Nota_de_digi_evolucion nde = new Nota_de_digi_evolucion(bandera_online_offline);
+            bool insertarAbono = nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
             if (insertarAbono)
             {
                 System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                nde = new Nota_de_digi_evolucion(!bandera_online_offline);
+                nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
             }
             else
             {

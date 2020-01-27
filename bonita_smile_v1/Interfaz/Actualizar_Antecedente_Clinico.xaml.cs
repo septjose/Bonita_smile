@@ -25,6 +25,7 @@ namespace bonita_smile_v1
     public partial class Page7_Actualizar : Page
     {
         PacienteModel paciente;
+        bool bandera_online_offline = false;
         public Page7_Actualizar(PacienteModel paciente)
         {
 
@@ -58,15 +59,15 @@ namespace bonita_smile_v1
 
         private void btnOmitir_Click(object sender, RoutedEventArgs e)
         {
-            Paciente pa = new Paciente();
+            Paciente pa = new Paciente(bandera_online_offline);
             bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
             if (inserto)
             {
 
-
-
                 //vu.refrescar_listview(this.usu, usu, lv_aux);
                 System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                pa = new Paciente(!bandera_online_offline);
+                pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
             }
             else
             {

@@ -16,10 +16,11 @@ namespace bonita_smile_v1.Servicios
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
-
-        public Abonos()
+        private bool online;
+        public Abonos(bool online)
         {
-            conexionBD = obj.conexion();
+            this.conexionBD = obj.conexion(online);
+            this.online = online;
         }
 
         public List<AbonosModel> MostrarAbonos(string id_motivo, string id_paciente)
@@ -111,11 +112,7 @@ namespace bonita_smile_v1.Servicios
                 MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
-            if (!ti.Test())
-            {
-                Escribir_Archivo ea = new Escribir_Archivo();
-                ea.escribir( query + ";");
-            }
+           
             return abonado;
         }
 
@@ -151,119 +148,145 @@ namespace bonita_smile_v1.Servicios
         }
         public bool eliminarAbono(string id_abono)
         {
-            MySqlCommand cmd;
-            query = "DELETE FROM abonos where id_abono='" + id_abono+"'";
+            
+            bool internet = ti.Test();
             try
             {
-                conexionBD.Open();
-                if (!ValidarExistencia(id_abono))
+
+                MySqlCommand cmd; ;
+                if (online)
                 {
-                    MessageBox.Show("El registro que esta tratando de eliminar no existe");
-                    return false;
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
                 }
                 else
                 {
+                    query = "DELETE FROM abonos where id_abono='" + id_abono + "'";
+
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
                     conexionBD.Close();
-                    if (!ti.Test())
-                    {
-                        //Escribir_Archivo ea = new Escribir_Archivo();
-                        //ea.escribir(@"c:\offline\script_temporal.txt", query + ";");
-                    }
-                    return true;
+
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
                 }
+                return true;
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
         }
+
 
         public bool insertarAbono(string id_paciente, string id_motivo, string fecha, double monto, string comentario)
         {
-            bool internet = ti.Test();
             Seguridad seguridad = new Seguridad();
             string id_abono = "";
-            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario+DateTime.Now);
-            if (!internet)
-            {
-                
-                 
-                //string id_abono=seguridad.Encriptar()
-                query = "INSERT INTO abonos (id_abono,id_paciente,id_motivo,fecha,monto,comentario,auxiliar_identificador) VALUES('"+id_abono +"','"+ id_paciente + "','" + id_motivo + "','" + fecha + "'," + monto + ",'" + comentario + "','<!--" + id_abono + "-->')";
-            }
-            else
-            {
-                
-                query = "INSERT INTO abonos (id_abono,id_paciente,id_motivo,fecha,monto,comentario) VALUES('" + id_abono + "'," + id_paciente + "," + id_motivo + ",'" + fecha + "'," + monto + ",'" + comentario + "')";
-            }
-        
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
-                if (!internet)
-                {
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir( query + ";");
-                }
-                return true;
-
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return false;
-            }
-        }
-
-        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, double monto)
-        {
+            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario + DateTime.Now);
+            
             bool internet = ti.Test();
-            if (!internet)
-            {
-                string auxiliar_identificador = MostrarAbonos_Update(id_abono);
-                Seguridad seguridad = new Seguridad();
-                //string auxiliar_identificador = seguridad.Encriptar(id_paciente.ToString()+id_motivo+fecha+monto);
-                query = "UPDATE abonos set id_paciente =' " + id_paciente + "',id_motivo = '" + id_motivo + "',fecha = '" + fecha + "',monto = " + monto + ",auxiliar_identificador = '" + auxiliar_identificador + "'where id_abono = '" + id_abono+"'";
-            }
-            else
-            {
-                query = "UPDATE abonos set id_paciente = '" + id_paciente + "',id_motivo = '" + id_motivo + "',fecha = '" + fecha + "',monto = " + monto + "where id_abono = '" + id_abono+"'";
-            }
 
             try
             {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                cmd.ExecuteReader();
-                conexionBD.Close();
-                if (!internet)
+
+                MySqlCommand cmd; ;
+                if (online)
                 {
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
+                }
+                else
+                {
+                    query = "INSERT INTO abonos (id_abono,id_paciente,id_motivo,fecha,monto,comentario,auxiliar_identificador) VALUES('" + id_abono + "','" + id_paciente + "','" + id_motivo + "','" + fecha + "'," + monto + ",'" + comentario + "','<!--" + id_abono + "-->')";
+
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir( query + ";");
+                    ea.escribir(query + ";");
                 }
                 return true;
-
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
             }
         }
 
-        
+        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, double monto,string comentario)
+        {
+            
+            bool internet = ti.Test();
+            try
+            {
+
+                MySqlCommand cmd; ;
+                if (online)
+                {
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSEACTUALIZARRTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
+                }
+                else
+                {
+                    //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
+                    query = "UPDATE abonos set id_paciente =' " + id_paciente + "',id_motivo = '" + id_motivo + "',fecha = '" + fecha + "',monto = " + monto + ",comentario='" + comentario + "',auxiliar_identificador = '" + id_abono + "'where id_abono = '" + id_abono + "'";
+
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return false;
+            }
+        }
+
+
         private bool ValidarExistencia(string id_abono)
         {
             MySqlCommand cmd;

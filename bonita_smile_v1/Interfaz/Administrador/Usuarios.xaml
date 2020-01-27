@@ -56,7 +56,8 @@
                         <GridViewColumn Header="Alias" Width="250" DisplayMemberBinding="{Binding alias}" />
                         
                         <GridViewColumn Header="Rol" Width="250" DisplayMemberBinding="{Binding rol.descripcion}" />
-                    </GridView>
+                                <GridViewColumn Header="Clinica" Width="250" DisplayMemberBinding="{Binding clinica}" />
+                            </GridView>
                 </ListView.View>
             </ListView>
             </Grid>

@@ -26,6 +26,7 @@ namespace bonita_smile_v1
     public partial class Page5 : Page
     {
         ObservableCollection<ClinicaModel> Gclinica;
+        bool bandera_online_offline = false;
         public Page5()
         {
             InitializeComponent();
@@ -43,7 +44,7 @@ namespace bonita_smile_v1
             }*/
 
             //ObservableCollection<UsuarioModel> Gusuario;
-            var clinicas = new ObservableCollection<ClinicaModel>((new Clinicas().MostrarClinica()));
+            var clinicas = new ObservableCollection<ClinicaModel>((new Clinicas(bandera_online_offline).MostrarClinica()));
 
             lv_Clinica.ItemsSource = clinicas;
             //lv_aux = lv_Users;
@@ -79,11 +80,14 @@ namespace bonita_smile_v1
                     var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar la clinica :" + nombre_sucursal + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
-                        Clinicas clin = new Clinicas();
+                        Clinicas clin = new Clinicas(bandera_online_offline);
 
                         bool elimino = clin.eliminarClinica(id_clinica);
                         if (elimino)
                         {
+                            clin=new Clinicas(!bandera_online_offline);
+                            clin.eliminarClinica(id_clinica);
+
                             Gclinica.Remove((ClinicaModel)lv_Clinica.SelectedItem);
                             System.Windows.Forms.MessageBox.Show("Se elimino la clinica correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }

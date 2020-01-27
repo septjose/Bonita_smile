@@ -30,10 +30,11 @@ namespace bonita_smile_v1
         string id_carpeta = "";
         string id_paciente = "";
         string ruta = "";
+        bool bandera_online_offline = false;
 
         void llenar_list_view(string id_carpeta, string id_paciente)
         {
-            Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta();
+            Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta(bandera_online_offline);
             List<Fotos_estudio_carpetaModel> lista = f_estudio.MostrarFoto_estudio_carpeta(id_carpeta, id_paciente);
 
             var fotografos = new ObservableCollection<Fotos_estudio_carpetaModel>(lista);
@@ -49,8 +50,8 @@ namespace bonita_smile_v1
         }
         public Fotos_de_Estudios(Carpeta_archivosModel carpeta)
         {
-            Fotos_estudio_carpeta f_e_c = new Fotos_estudio_carpeta();
-            f_e_c.fotos(carpeta.id_carpeta, carpeta.id_paciente);
+            Fotos_estudio_carpeta f_e_c = new Fotos_estudio_carpeta(bandera_online_offline);
+            //f_e_c.fotos(carpeta.id_carpeta, carpeta.id_paciente);
 
             InitializeComponent();
 
@@ -93,10 +94,12 @@ namespace bonita_smile_v1
                 if (selectedOffer != null)
                 {
                     //MessageBox.Show(selectedOffer.foto);
-                    Imagen(@"C:\bs\" + selectedOffer.foto);
+                    //System.Windows.MessageBox.Show(selectedOffer.foto_completa);
+                    //Imagen(@"C:\bs\" + selectedOffer.foto);
                     //DialogResult resultado = new DialogResult();
-                    this.ruta = @"C:\bs\" + selectedOffer.foto;
-                   // Form mensaje = new Form1(@"C:\bs\" + selectedOffer.foto);
+                    this.ruta = @"C:\bs\" + selectedOffer.foto_completa;
+                    Imagen(ruta);
+                    // Form mensaje = new Form1(@"C:\bs\" + selectedOffer.foto);
                     //resultado = mensaje.ShowDialog();
                 }
                 //ruta = lista.SelectedItem.ToString();
@@ -159,29 +162,35 @@ namespace bonita_smile_v1
             //Recuperamos la lista de los elementos arrastrados y y los añadimos a la lista
             string[] s = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop, false);
             int i;
-            System.Windows.MessageBox.Show("valor de s es " + s.Length);
+            //System.Windows.MessageBox.Show("valor de s es " + s.Length);
             
             for (i = 0; i < s.Length; i++)
             {
-                System.Windows.MessageBox.Show("el valor de s[i] es " + s[i]);
+                //System.Windows.MessageBox.Show("el valor de s[i] es " + s[i]);
                 extension = System.IO.Path.GetExtension(s[i]);
-                if(extension.Equals(".png")||extension.Equals(".jpg"))
+                if(extension.Equals(".png")||extension.Equals(".jpg") || extension.Equals(".JPG") || extension.Equals(".PNG"))
                 {
-                    System.Windows.MessageBox.Show("Es imagen "+s[i]);
-                    f.foto = s[i];
-                    f.imagen = LoadImage(s[i]);
+                    //System.Windows.MessageBox.Show("Es imagen "+s[i]);
+                    //f.foto = s[i];
+                    //f.imagen = LoadImage(s[i]);
 
 
                     lb_imagen.Items.Add(f);
                     result = System.IO.Path.GetFileName(s[i]);
                     if(ti.Test())
                     {
-                        System.Windows.MessageBox.Show("Hay Internet");
+
+                        System.Windows.MessageBox.Show("Se subira la foto : "+s[i]);
                         inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
                         if (inserto)
                         {
+                           
+                            string destFile = System.IO.Path.Combine(@"C:\bs\", result);
+                            //MessageBox.Show("el valor de result es " + result);
+                            System.IO.File.Copy(s[i], destFile, true);
+                            renombrar(result, id_carpeta + "_" + result);
                             System.Windows.MessageBox.Show("se subio al servidor");
-                            Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta();
+                            Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta(bandera_online_offline);
                             bool verdad = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
                             if (verdad)
                             {
@@ -199,6 +208,29 @@ namespace bonita_smile_v1
                     }
                     else
                     {
+                        System.Windows.MessageBox.Show("No hay internet");
+                        System.Windows.MessageBox.Show("Se subira la foto : " + s[i]);
+                       // inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
+                       
+
+                            string destFile = System.IO.Path.Combine(@"C:\fotos_offline\", result);
+                            //MessageBox.Show("el valor de result es " + result);
+                            System.IO.File.Copy(s[i], destFile, true);
+                            renombrar_offline(result, id_carpeta + "_" + result);
+                            System.Windows.MessageBox.Show("se subio al servidor");
+                            Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta(bandera_online_offline);
+                            bool verdad = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
+                            if (verdad)
+                            {
+                                
+                                System.Windows.MessageBox.Show("se subio a la bd");
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("no se subio a la bd");
+                            }
+                        
+                       
 
                     }
                     
@@ -209,7 +241,53 @@ namespace bonita_smile_v1
                 }
 
             }
+            lb_imagen.ItemsSource = null;
+            Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta(bandera_online_offline);
+            List<Fotos_estudio_carpetaModel> lista = f_estudio.MostrarFoto_estudio_carpeta(id_carpeta, id_paciente);
 
+            var fotografos = new ObservableCollection<Fotos_estudio_carpetaModel>(lista);
+            for (int j = 0; j < lista.Count; j++)
+            {
+                //lb_imagen.Items.Add(lista[i].foto);
+                // MessageBox.Show("Lista es foto"+lista[i].foto);
+                lb_imagen.Items.Add(fotografos[j]);
+            }
+
+
+
+        }
+
+        public void renombrar_offline(string nombre_viejo, string nombre_nuevo)
+        {
+            string sourceFile = @"C:\fotos_offline\" + nombre_viejo;
+            // Create a FileInfo  
+            System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile);
+            // Check if file is there  
+            if (fi.Exists)
+            {
+                System.Windows.MessageBox.Show("Si esta");
+                // Move file with a new name. Hence renamed.  
+                fi.MoveTo(@"C:\fotos_offline\" + nombre_nuevo);
+                string destFile = System.IO.Path.Combine(@"C:\bs\", nombre_nuevo);
+                System.IO.File.Copy(@"C:\fotos_offline\" + nombre_nuevo, destFile, true);
+                System.Windows.MessageBox.Show("se pudo bitches");
+            }
+        }
+        public void renombrar(string nombre_viejo, string nombre_nuevo)
+        {
+            string sourceFile = @"C:\bs\" + nombre_viejo;
+            // Create a FileInfo  
+            System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile);
+            // Check if file is there  
+            if (fi.Exists)
+            {
+                System.Windows.MessageBox.Show("Si esta");
+                // Move file with a new name. Hence renamed.  
+                fi.MoveTo(@"C:\bs\" + nombre_nuevo);
+                //string destFile = System.IO.Path.Combine(@"C:\bs\", nombre_nuevo);
+                //System.IO.File.Copy(@"C:\fotos_offline\" + nombre_nuevo, destFile, true);
+                System.Windows.MessageBox.Show("se pudo bitches");
+            }
         }
 
         public bool SubirFicheroStockFTP(string foto, string ruta)

@@ -52,7 +52,7 @@ namespace bonita_smile_v1
         void llenar_list_view()
         {
             //var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente());
-            List<PacienteModel> pacientes=new Servicios.Paciente().MostrarPaciente();
+            List<PacienteModel> pacientes=new Servicios.Paciente(false).MostrarPaciente();
             lv_Paciente.ItemsSource = pacientes;
             //GPaciente = pacientes;
         }
@@ -114,13 +114,13 @@ namespace bonita_smile_v1
             bool verificar = ti.Test();
             if (verificar)
             {
-                System.Windows.MessageBox.Show("hi");
+                //System.Windows.MessageBox.Show("hi");
                 try
                 {
-                    System.Windows.MessageBox.Show("hii x2");
+                  //  System.Windows.MessageBox.Show("hii x2");
                     bool subir_scripts = sinc.SincronizarLocalServidor();
                     if (subir_scripts) { System.Windows.MessageBox.Show("se subieron los scripts"); }
-                    System.Windows.MessageBox.Show("hii x3");
+                    //System.Windows.MessageBox.Show("hii x3");
                     if (verificar)
                         {
                         System.Windows.MessageBox.Show("se hace el backup");

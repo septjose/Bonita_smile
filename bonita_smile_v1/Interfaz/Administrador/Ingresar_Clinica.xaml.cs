@@ -24,6 +24,7 @@ namespace bonita_smile_v1
     public partial class Page5_Ingresar : Page
     {
         string color = "";
+        bool bandera_online_offline = false;
         public Page5_Ingresar()
         {
 
@@ -50,10 +51,12 @@ namespace bonita_smile_v1
                     //MessageBox.Show(color);
                     string nombre_sucursal = txtNombre.Text;
                     //MessageBox.Show(nombre_sucursal);
-                    Clinicas c = new Clinicas();
+                    Clinicas c = new Clinicas(bandera_online_offline);
                     bool correcto = c.insertarClinica(nombre_sucursal, color);
                     if (correcto)
                     {
+                        c = new Clinicas(!bandera_online_offline);
+                        c.insertarClinica(nombre_sucursal, color);
                         System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)

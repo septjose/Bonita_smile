@@ -29,10 +29,13 @@ namespace bonita_smile_v1
     public partial class Pagina_Clinica : Page
     {
         ObservableCollection<PacienteModel> GPaciente;
+        string id_clinica = "";
         public Pagina_Clinica(string id)
         {
+
             InitializeComponent();
             llenar_list_view(id);
+            id_clinica = id;
             System.Windows.MessageBox.Show("imprimo el id de la clinica");
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -49,7 +52,7 @@ namespace bonita_smile_v1
 
         void llenar_list_view(string id)
         {
-            var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente_Clinica(id));
+            var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente(false).MostrarPaciente_Clinica(id));
 
             lv_Paciente.ItemsSource = pacientes;
             GPaciente = pacientes;
@@ -100,7 +103,7 @@ namespace bonita_smile_v1
                                 if (subio_fotos)
                                 {
                                     System.Windows.MessageBox.Show("se subieron las fotos correctamente");
-                                    bool descargar_fotos = sinc.descargar_fotos();
+                                    bool descargar_fotos = sinc.descargar_fotos_clinica(id_clinica);
                                     if (descargar_fotos)
                                     {
                                         System.Windows.MessageBox.Show("se descargaron las fotos correctamente");

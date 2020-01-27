@@ -16,28 +16,38 @@ namespace bonita_smile_v1.Servicios
         string password;
         string database;
 
-        public MySqlConnection conexion()
+        public MySqlConnection conexion(bool online)
         {
-            
-            Test_Internet ti = new Test_Internet();
-            if (ti.Test())
+            if (online)
             {
-                //MessageBox.Show("Estas Online");
-                
-                servidor = "162.241.60.126";
-                puerto = "3306";
-                usuario = "jjdevelo_dentist";
-                password = "jjpd1996";
-                database = "jjdevelo_dentist";
+                Test_Internet ti = new Test_Internet();
+                if (ti.Test())
+                {
+                    //MessageBox.Show("Estas Online");
+
+                    servidor = "162.241.60.126";
+                    puerto = "3306";
+                    usuario = "jjdevelo_dentist";
+                    password = "jjpd1996";
+                    database = "jjdevelo_dentist";
+                }
+                else
+                {
+                    //MessageBox.Show("Estas Offline");
+                    servidor = "localhost";
+                    puerto = "3306";
+                    usuario = "root";
+                    password = "";
+                    database = "dentist";
+                }
             }
             else
             {
-                //MessageBox.Show("Estas Offline");
                 servidor = "localhost";
                 puerto = "3306";
                 usuario = "root";
                 password = "";
-                database = "dentist";
+                database = "dentista";
             }
 
             string cadena = "server=" + servidor + ";port=" + puerto + "; user id=" + usuario + "; password=" + password + "; database=" + database;

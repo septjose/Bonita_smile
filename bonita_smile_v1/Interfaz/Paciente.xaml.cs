@@ -27,6 +27,7 @@ namespace bonita_smile_v1
     public partial class Page6 : Page
     {
         ObservableCollection<PacienteModel> GPaciente;
+        bool bandera_online_offline = false;
         public Page6()
         {
             InitializeComponent();
@@ -56,13 +57,16 @@ namespace bonita_smile_v1
                     var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el  paciente :" + nombre_paciente + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
-                        Paciente clin = new Paciente();
+                        Paciente clin = new Paciente(bandera_online_offline);
 
                         bool elimino = clin.eliminarPaciente(id_paciente);
                         if (elimino)
                         {
                             GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
                             System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            clin = new Paciente(bandera_online_offline);
+
+                            clin.eliminarPaciente(id_paciente);
                         }
 
                     }
@@ -96,7 +100,9 @@ namespace bonita_smile_v1
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                     admin.Main.Content = new Page6_Actualizar(paciente);
-                
+                lv_Paciente.ItemsSource = null;
+                lv_Paciente.ItemsSource = new ObservableCollection<PacienteModel>(new Servicios.Paciente(bandera_online_offline).MostrarPaciente());
+
 
             }
             else
@@ -107,7 +113,7 @@ namespace bonita_smile_v1
 
         void llenar_list_view()
         {
-            var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente().MostrarPaciente());
+            var pacientes = new ObservableCollection<PacienteModel>(new Servicios.Paciente(bandera_online_offline).MostrarPaciente());
 
             lv_Paciente.ItemsSource = pacientes;
             GPaciente = pacientes;
@@ -120,6 +126,11 @@ namespace bonita_smile_v1
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
                 admin.Main.Content = new Page6_Ingresar();
+
+            lv_Paciente.ItemsSource = null;
+           lv_Paciente.ItemsSource = new ObservableCollection<PacienteModel>(new Servicios.Paciente(bandera_online_offline).MostrarPaciente());
+
+            
         }
         private void txtNombre_TextChanged(object sender, TextChangedEventArgs e)
         {

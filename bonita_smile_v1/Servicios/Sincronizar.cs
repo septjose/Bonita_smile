@@ -184,9 +184,9 @@ namespace bonita_smile_v1.Servicios
         private List<string> lista_de_fotos_clinica(string id_clinica)
         {
             string var = "";
-            conexionBD = obj2.conexion();
+            conexionBD = obj2.conexion(false);
             List<string> lista = new List<string>();
-            query = "select paciente.foto from paciente where paciente.id_clinica='"+id_clinica+"'";
+            query = "select paciente.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica where clinica.id_clinica='"+id_clinica+"'";
             try
             {
                 conexionBD.Open();
@@ -203,7 +203,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (Exception ex) { }
             conexionBD.Close();
-            query = "SELECT foto from fotos_estudio_carpeta";
+            query = "select fotos_estudio_carpeta.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica inner join fotos_estudio_carpeta on fotos_estudio_carpeta.id_paciente=paciente.id_paciente where clinica.id_clinica='"+id_clinica+"'";
             try
             {
                 conexionBD.Open();
@@ -225,7 +225,7 @@ namespace bonita_smile_v1.Servicios
         private List<string> lista_de_fotos()
         {
             string var = "";
-            conexionBD = obj2.conexion();
+            conexionBD = obj2.conexion(false);
             List<string> lista = new List<string>();
             query = "select foto from paciente";
             try
@@ -287,7 +287,7 @@ namespace bonita_smile_v1.Servicios
         public bool SincronizarLocalServidor()
         {
             
-            conexionBD = obj2.conexion();
+            conexionBD = obj2.conexion(false);
             Escribir_Archivo ea = new Escribir_Archivo();
             bool internet = ti.Test();
             List<String> lQuery = new List<string>();
@@ -298,6 +298,7 @@ namespace bonita_smile_v1.Servicios
 
                 if (!internet)
                 {
+                    MessageBox.Show("entro al if1");
                     MessageBox.Show("Intentelo más tarde, no cuenta con acceso a internet");
                     return false;
                 }
@@ -327,6 +328,7 @@ namespace bonita_smile_v1.Servicios
 
                     }
                     catch (Exception ex) {
+                        MessageBox.Show("entro al catch :(");
                         MessageBox.Show("error intente mas tarde");
                         tr.Rollback(); 
                         return false; }
@@ -522,6 +524,48 @@ namespace bonita_smile_v1.Servicios
             return descargar;
         }
 
+        public bool insertarArchivoEnServidor(MySqlConnection conexionBD)
+        {
+            Escribir_Archivo ea = new Escribir_Archivo();
+            List<String> lQuery = new List<string>();
+            lQuery = ea.obtenerQueryArchivo();
+
+            if (lQuery != null)
+            {
+                //CREAR TRANSACCION
+                MySqlTransaction tr = null;
+                try
+                {
+                    conexionBD.Open();
+
+                    tr = conexionBD.BeginTransaction();
+                    foreach (var query in lQuery)
+                    {
+                        if (!query.Equals(""))
+                        {
+                            MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                            cmd.ExecuteReader();
+                            cmd.Dispose();
+                        }
+                    }
+                    tr.Commit();
+                    File.Delete(ruta);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex + "");
+                    tr.Rollback();
+                    return false;
+                }
+                finally
+                {
+                    conexionBD.Close();
+                }
+            }
+
+            return false;
+        }
 
 
 

@@ -42,7 +42,7 @@ namespace bonita_smile_v1
 
         void llenar_list_view(string id_paciente)
         {
-            carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+            carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
 
             lvCarpetas.ItemsSource = carpetas;
             GCarpetas = carpetas;
@@ -60,12 +60,7 @@ namespace bonita_smile_v1
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
 
-                if (admin != null)
-                    admin.Main.Content = new Pagina_Agregar_Estudios(carpeta);
-                else
-                {
-                    clin.Main2.Content = new Pagina_Agregar_Estudios(carpeta);
-                }
+                
             }
         }
 
@@ -75,7 +70,7 @@ namespace bonita_smile_v1
             Form mensaje = new Agregar_Carpetas(id_paciente);
             resultado = mensaje.ShowDialog();
 
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
 
         }
 
@@ -109,7 +104,7 @@ namespace bonita_smile_v1
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
         }
 
 
@@ -137,9 +132,9 @@ namespace bonita_smile_v1
             //{
             //    return;
             //}
-            new Carpeta_archivos().eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+            new Carpeta_archivos(false).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
             lvCarpetas.ItemsSource = null;
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
         }
 
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
@@ -149,7 +144,7 @@ namespace bonita_smile_v1
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos().MostrarCarpeta_archivos_paciente(id_paciente));
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
         }
     }
 }

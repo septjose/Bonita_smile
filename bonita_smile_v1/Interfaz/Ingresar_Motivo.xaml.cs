@@ -39,10 +39,12 @@ namespace bonita_smile_v1
             string nombre = txt_nombre.Text;
             double costo = Convert.ToDouble(txt_costo.Text);
 
-            Motivo_cita mc = new Motivo_cita();
+            Motivo_cita mc = new Motivo_cita(false);
             bool inserto = mc.insertarMotivo_cita(nombre, costo, id);
             if (inserto)
             {
+                mc = new Motivo_cita(false);
+                mc.insertarMotivo_cita(nombre, costo, id);
                 System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }

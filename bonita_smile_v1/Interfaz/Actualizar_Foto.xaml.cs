@@ -52,6 +52,7 @@ namespace bonita_smile_v1
         Conexion obj = new Conexion();
         string valor = "";
         bool valor_bandera = false;
+        bool bandera_online_offline = false;
 
         PacienteModel paciente;
         public Page8_ActualizarFoto(PacienteModel paciente)
@@ -217,21 +218,23 @@ namespace bonita_smile_v1
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     encoder.Save(stream);
-                Servicios.Paciente paciente = new Servicios.Paciente();
+                Paciente paciente = new Paciente(bandera_online_offline);
 
                 bool insertarPaciente = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
                 Test_Internet ti = new Test_Internet();
 
                 if (insertarPaciente)
                 {
+                    paciente = new Paciente(!bandera_online_offline);
 
+                    paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
                     if (ti.Test())
                     {
 
                         System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/"+foto_vieja);
+                        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + foto_vieja);
                         bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
-                        if(verdad)
+                        if (verdad)
                         {
                             bool subir = SubirFicheroStockFTP(foto, ruta2);
 
@@ -271,8 +274,8 @@ namespace bonita_smile_v1
                             {
                                 System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
-                        }    
-                        
+                        }
+
                     }
                     else
                     {

@@ -16,8 +16,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="50"
       Title="Page1">
-    <Border>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide="True" Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True" Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="True" >
+    
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide="True" Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="True" >
             <Grid HorizontalAlignment="Center" >
           
         <Grid.RowDefinitions>
@@ -112,5 +112,5 @@
                 </Border>
             </Grid>
         </ScrollViewer>
-    </Border>
+    
 </Page>

@@ -27,6 +27,7 @@ namespace bonita_smile_v1
     {
         ObservableCollection<UsuarioModel> Gusuario;
         System.Windows.Controls.ListView lv_aux;
+        bool bandera_online_offline = false;
         public Page4()
         {
             InitializeComponent();
@@ -45,13 +46,13 @@ namespace bonita_smile_v1
             }*/
 
             //ObservableCollection<UsuarioModel> Gusuario;
-            var usuarios = new ObservableCollection<UsuarioModel>((new Usuarios().MostrarUsuario()));
+            var usuarios = new ObservableCollection<UsuarioModel>((new Usuarios(bandera_online_offline).MostrarUsuario()));
 
             lv_Users.ItemsSource = usuarios;
             lv_aux = lv_Users;
             Gusuario = usuarios;
         }
-        
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -61,26 +62,20 @@ namespace bonita_smile_v1
                 string id_usuario = usuario.id_usuario;
                 string alias = usuario.alias;
                 Test_Internet ti = new Test_Internet();
-                if(ti.Test())
+                var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + alias + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (confirmation == System.Windows.Forms.DialogResult.Yes)
                 {
-                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + alias + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                    if (confirmation == System.Windows.Forms.DialogResult.Yes)
+                    Usuarios user = new Usuarios(bandera_online_offline);
+
+                    bool elimino = user.eliminarUsuario(id_usuario);
+                    if (elimino)
                     {
-                        Usuarios user = new Usuarios();
-
-                        bool elimino = user.eliminarUsuario(id_usuario);
-                        if (elimino)
-                        {
-                            Gusuario.Remove((UsuarioModel)lv_Users.SelectedItem);
-                            System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-
+                        user = new Usuarios(!bandera_online_offline);
+                        user.eliminarUsuario(id_usuario);
+                        Gusuario.Remove((UsuarioModel)lv_Users.SelectedItem);
+                        System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                }
-               
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
             }
             else

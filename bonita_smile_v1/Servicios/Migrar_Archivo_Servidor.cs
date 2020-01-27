@@ -16,10 +16,10 @@ namespace bonita_smile_v1.Servicios
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
-
+        bool bandera_online_offline = false;
         public Migrar_Archivo_Servidor()
         {
-            conexionBD = obj.conexion();
+            conexionBD = obj.conexion(bandera_online_offline);
         }
 
        /* public bool SincronizarLocalServidor()

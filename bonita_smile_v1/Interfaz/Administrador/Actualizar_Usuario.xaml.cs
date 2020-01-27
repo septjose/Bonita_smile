@@ -33,11 +33,12 @@ namespace bonita_smile_v1
         public string id_usu = "";
         UsuarioModel usu;
         System.Windows.Controls.ListView lv_aux;
+        bool bandera_online_offline = false;
 
         public Page4_Actualizar(UsuarioModel usu, System.Windows.Controls.ListView lv_aux)
         {
 
-            this.conexionBD = obj.conexion();
+            this.conexionBD = obj.conexion(bandera_online_offline);
             InitializeComponent();
             this.usu = usu;
             this.lv_aux = lv_aux;
@@ -84,6 +85,7 @@ namespace bonita_smile_v1
             }
             conexionBD.Close();
         }
+       
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
@@ -105,7 +107,7 @@ namespace bonita_smile_v1
                     string alias = txtAlias.Text;
                     string password = pwbPassword.Password;
                     //System.Windows.MessageBox.Show(id_usu.ToString() + " " + nombre + " " + apellidos + " " + alias + " " + password + "" + " " + id_rol);
-                    Usuarios user = new Usuarios();
+                    Usuarios user = new Usuarios(bandera_online_offline);
                     string pass_tabla = obtener_password(id_usu);
                     bool inserto = false;
                     if (password.Equals(pass_tabla))
@@ -113,9 +115,10 @@ namespace bonita_smile_v1
                         inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
                         if (inserto)
                         {
+                            
                             System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
+                            user = new Usuarios(!bandera_online_offline);
+                            user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
                             usu.alias = alias;
                             usu.apellidos = apellidos;
                             usu.id_usuario = id_usu;
@@ -144,6 +147,8 @@ namespace bonita_smile_v1
                         inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                         if (inserto)
                         {
+                            user = new Usuarios(!bandera_online_offline);
+                            user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                             usu.alias = alias;
                             usu.apellidos = apellidos;
                             usu.id_usuario = id_usu;
@@ -178,10 +183,11 @@ namespace bonita_smile_v1
                     }
                 }
             }
-            
-            
+
+
 
         }
+
         public int obtener_id_rol(string descripcion)
         {
             int id = 0;
