@@ -549,12 +549,14 @@ namespace bonita_smile_v1.Servicios
                         }
                     }
                     tr.Commit();
+
+                    ea.SetFileReadAccess(ruta,false);
                     File.Delete(ruta);
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    //MessageBox.Show(ex + "");
+                    MessageBox.Show(ex + "");
                     tr.Rollback();
                     return false;
                 }

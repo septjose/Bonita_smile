@@ -15,6 +15,7 @@ using bonita_smile_v1.Interfaz;
 
 
 using System.Windows.Forms;
+using System.IO;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -125,6 +126,7 @@ namespace bonita_smile_v1.Servicios
             string auxiliar_identificador = new Seguridad().SHA1(alias + nombre + apellidos + password + id_rol + DateTime.Now);
             bool internet = ti.Test();
             password = new Seguridad().Encriptar(password);
+            FileStream fs = null;
 
             try
             {
@@ -142,7 +144,7 @@ namespace bonita_smile_v1.Servicios
 
                         //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
                         Sincronizar sincronizar = new Sincronizar();
-                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                        bool exito = sincronizar.insertarArchivoEnServidor(conexionBD);
                     }
                 }
                 else

@@ -28,7 +28,6 @@ namespace bonita_smile_v1
         private string query;
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
-        string valor = "";
         bool bandera_online_offline = false;
         public Page4_Ingresar()
         {
@@ -69,7 +68,14 @@ namespace bonita_smile_v1
 
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
-            if (txtNombre.Text.Equals("") || txtApellido.Text.Equals("") || txtAlias.Text.Equals("") || pwbPassword.Password.Equals(""))
+
+            string valor = cmbRol.SelectedItem.ToString();
+            int id_rol = obtener_id_rol(valor);
+            string nombre = txtNombre.Text;
+            string apellidos = txtApellido.Text;
+            string alias = txtAlias.Text;
+            string password = pwbPassword.Password;
+            if (txtNombre.Text.Equals("") || txtApellido.Text.Equals("") || txtAlias.Text.Equals("") || pwbPassword.Password.Equals("") || valor.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -77,13 +83,6 @@ namespace bonita_smile_v1
             {
                 try
                 {
-                    valor = cmbRol.SelectedItem.ToString();
-                    int id_rol = obtener_id_rol(valor);
-                    string nombre = txtNombre.Text;
-                    string apellidos = txtApellido.Text;
-                    string alias = txtAlias.Text;
-                    string password = pwbPassword.Password;
-
                     Usuarios user = new Usuarios(bandera_online_offline);
                     bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
 
@@ -108,11 +107,7 @@ namespace bonita_smile_v1
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show("No selecciono Nada en el combobox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (txtNombre.Text.Equals("") || txtApellido.Text.Equals("") || txtAlias.Text.Equals("") || pwbPassword.Password.Equals(""))
-                    {
-                        System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    System.Windows.MessageBox.Show(ex+"");  
                 }
             }
         }
