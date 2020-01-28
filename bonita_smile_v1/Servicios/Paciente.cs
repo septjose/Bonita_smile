@@ -337,58 +337,41 @@ namespace bonita_smile_v1.Servicios
             conexionBD.Close();
             return aux_identi;
         }
+
         private BitmapImage LoadImage(string filename)
         {
-            string rutisima = "";
             BitmapImage bi;
-            bool carpeta_bs = File.Exists(ruta + filename);
-            bool carptea_bs_auxilar= File.Exists(ruta2 + filename); 
-            if (carpeta_bs && carptea_bs_auxilar )
-            {
-                try
-                {
-                    File.Delete(ruta + filename);
-                    string destFile = System.IO.Path.Combine(@"C:\bs\", filename);
-                    //MessageBox.Show("el valor de result es " + result);
-                    System.IO.File.Copy(ruta2 + filename, destFile, true);
-                    File.Delete(ruta2 + filename);
-                    rutisima = ruta + filename;
-                }
-                catch (Exception ex)
-                {
-                    //File.Delete(ruta + filename);
-                    //string destFile = System.IO.Path.Combine(@"C:\bs\", filename);
-                    //MessageBox.Show("el valor de result es " + result);
-                    //System.IO.File.Copy(ruta2 + filename, destFile, true);
-                    //File.Delete(ruta2 + filename);
-                    rutisima = ruta2 + filename;
-                }
-               
-                
-                bi = new BitmapImage(new Uri(rutisima));
 
+            if (File.Exists(@"C:\bs\" + filename))
+            {
+                MessageBox.Show("se encontro la foto en " + filename);
+                var bitmap = new BitmapImage();
+                var stream = File.OpenRead(@"C:\bs\" + filename);
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                stream.Close();
+                stream.Dispose();
+
+                return bitmap;
             }
-            else
-                if(File.Exists(ruta+filename))
-                {
-               // MessageBox.Show("ESTA EN BS"+ruta +filename);
-                bi = new BitmapImage(new Uri(ruta + filename));
-                }
-            
-            else
-            
-                if (File.Exists(ruta2 + filename))
-                {
-                    bi = new BitmapImage(new Uri(ruta2 + filename));
-                }
             else
             {
-                bi = new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
+                MessageBox.Show("no se encontro la foto en " + filename);
+                var bitmap = new BitmapImage();
+                var stream = File.OpenRead(@"C:\bs\img1.jpg");
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                stream.Close();
+                stream.Dispose();
+
+                return bitmap;
             }
-                
-                
-            
-            return bi;
         }
+
+
     }
 }

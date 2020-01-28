@@ -73,6 +73,7 @@ namespace bonita_smile_v1
             }
             else
             {
+                System.Windows.MessageBox.Show("no esta vacio"+paciente.foto);
                 rt_imagen.Fill = Imagen( paciente.foto);
 
                 
@@ -81,77 +82,26 @@ namespace bonita_smile_v1
         }
         public ImageBrush Imagen(string filename)
         {
-            string rutisima = "";
-            string ruta3 = @"C:\bs\img1.jpg";
-            if (File.Exists(ruta + filename) && File.Exists(ruta_aux + filename))
+            string ruta2 = @"C:\bs\img1.jpg";
+            if (File.Exists(ruta+filename))
             {
-                try
-                {
-                    File.Delete(ruta + filename);
-                    string destFile = System.IO.Path.Combine(@"C:\bs\", filename);
-                    //MessageBox.Show("el valor de result es " + result);
-                    System.IO.File.Copy(ruta_aux + filename, destFile, true);
-                    File.Delete(ruta_aux + filename);
-                    rutisima = ruta + filename;
-                    Image image = new Image();
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.UriSource = new System.Uri(rutisima);
-                    bi.EndInit();
-                    image.Source = bi;
-                    ImageBrush ib = new ImageBrush();
-                    ib.ImageSource = bi;
-                    return ib;
-                }
-                catch (Exception ex)
-                {
-                    rutisima = ruta_aux + filename;
-                    Image image = new Image();
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.UriSource = new System.Uri(rutisima);
-                    bi.EndInit();
-                    image.Source = bi;
-                    ImageBrush ib = new ImageBrush();
-                    ib.ImageSource = bi;
-                    return ib;
-                }
-
-
+                Image image = new Image();
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+                bi.UriSource = new System.Uri(ruta+filename);
+                bi.EndInit();
+                image.Source = bi;
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = bi;
+                return ib;
                 //rt_imagen.Fill = ib;
             }
             else
-            if (File.Exists(ruta + filename))
             {
                 Image image = new Image();
                 BitmapImage bi = new BitmapImage();
                 bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta + filename);
-                bi.EndInit();
-                image.Source = bi;
-                ImageBrush ib = new ImageBrush();
-                ib.ImageSource = bi;
-                return ib;
-            }
-            else
-            if (File.Exists(ruta_aux + filename))
-            {
-                Image image = new Image();
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta_aux + filename);
-                bi.EndInit();
-                image.Source = bi;
-                ImageBrush ib = new ImageBrush();
-                ib.ImageSource = bi;
-                return ib;
-            }
-            else
-            {
-                Image image = new Image();
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta3);
+                bi.UriSource = new System.Uri(ruta2);
                 bi.EndInit();
                 image.Source = bi;
                 ImageBrush ib = new ImageBrush();
@@ -199,31 +149,26 @@ namespace bonita_smile_v1
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     encoder.Save(stream);*/
-                System.Windows.Forms.MessageBox.Show("Error no capturo la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No apagó la cámara ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 string filePath = "";
                 Test_Internet test_i = new Test_Internet();
-                if (test_i.Test())
-                {
+           
+                
                     filePath = ruta2 + foto;
-                }
-                else
-                {
-                    filePath = ruta_offline + foto;
-                }
-
+                
                 var encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     encoder.Save(stream);
                 Paciente paciente = new Paciente(bandera_online_offline);
 
-                bool insertarPaciente = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+                bool actualizo = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
                 Test_Internet ti = new Test_Internet();
 
-                if (insertarPaciente)
+                if (actualizo)
                 {
                     paciente = new Paciente(!bandera_online_offline);
 
@@ -240,30 +185,14 @@ namespace bonita_smile_v1
 
                             if (subir)
                             {
-                                rt_imagen.Fill = null;
-                                try
-                                {
-                                    string destFile = System.IO.Path.Combine(@"C:\bs_auxiliar\", foto);
-                                    //MessageBox.Show("el valor de result es " + result);
-                                    System.IO.File.Copy(ruta2 + foto, destFile, true);
-                                    File.Delete(ruta2 + foto);
-                                }
-                                catch (Exception ex)
-                                {
-                                    string destFile = System.IO.Path.Combine(@"C:\bs\", foto);
-                                    //MessageBox.Show("el valor de result es " + result);
-                                    System.IO.File.Copy(ruta2 + foto, destFile, true);
-                                    File.Delete(ruta2 + foto);
-                                }
+                                string destfile_auxiliar= @"C:\bs_auxiliar\"+foto;
+                                System.IO.File.Copy(ruta2 + foto, destfile_auxiliar, true);
 
+                                string destfile_bs = @"C:\bs\" + foto;
+                                System.IO.File.Copy(destfile_auxiliar, destfile_bs, true);
 
-                                //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
-                                //@"C:\bs\" + foto, 10);
-
-
-
-                                //System.IO.File.Delete(ruta + foto);
-
+                                //File.Delete(@"C:\bs_auxiliar\" + foto);
+                                //File.Delete(ruta2 + foto);
 
                                 System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();

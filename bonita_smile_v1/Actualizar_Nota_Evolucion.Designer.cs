@@ -26,6 +26,7 @@ namespace bonita_smile_v1
         {
            
             this.nota = nota;
+            System.Windows.MessageBox.Show(nota.fecha);
             InitializeComponent();
         }
 
@@ -130,14 +131,18 @@ namespace bonita_smile_v1
 
             string comentario = txtComentario.Text;
 
-            DateTime fecha = DateTime.Now;
+            //DateTime fecha = DateTime.Now;
+            // DateTime parsedDate = DateTime.Parse(nota.fecha);
+            DateTime parsedDate = DateTime.Parse(nota.fecha);
+            System.Windows.MessageBox.Show(" imprimo conversion  "+parsedDate.ToString("yyyy/MM/dd"));
+            string fecha_actual = parsedDate.ToString("yyyy/MM/dd");
             Nota_de_digi_evolucion ne = new Nota_de_digi_evolucion(bandera_online_offline);
-            bool insertarAbono = ne.actualizarNota_de_digi_evolucion(nota.id_nota,nota.id_paciente,nota. id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
+            bool insertarAbono = ne.actualizarNota_de_digi_evolucion(nota.id_nota,nota.id_paciente,nota. id_motivo, comentario, fecha_actual);
             if (insertarAbono)
             {
                 System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ne = new Nota_de_digi_evolucion(!bandera_online_offline);
-                ne.actualizarNota_de_digi_evolucion(nota.id_nota, nota.id_paciente, nota.id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
+                ne.actualizarNota_de_digi_evolucion(nota.id_nota, nota.id_paciente, nota.id_motivo, comentario, fecha_actual);
             }
             else
             {

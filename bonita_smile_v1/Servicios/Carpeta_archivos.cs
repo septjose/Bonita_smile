@@ -43,6 +43,7 @@ namespace bonita_smile_v1.Servicios
                     carpeta_ArchivosModel.id_carpeta = reader[0].ToString();
                     carpeta_ArchivosModel.nombre_carpeta = reader[1].ToString();
                     carpeta_ArchivosModel.id_paciente =reader[2].ToString();
+                    carpeta_ArchivosModel.id_motivo = reader[3].ToString();
 
                     listaCarpeta_archivos.Add(carpeta_ArchivosModel);
                 }
@@ -99,7 +100,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarCarpeta_archivos(string nombre_carpeta, string id_paciente)
+        public bool insertarCarpeta_archivos(string nombre_carpeta, string id_paciente,string id_motivo)
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
@@ -128,7 +129,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre_carpeta + "','" + id_paciente + "','<!--" + auxiliar_identificador + "-->')";
+                    query = "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,id_motivo,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre_carpeta + "','" + id_paciente + "','"+id_motivo+"','<!--" + auxiliar_identificador + "-->')";
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
@@ -147,7 +148,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarCarpeta_archivos(string id_carpeta, string nombre_carpeta, string id_paciente)
+        public bool actualizarCarpeta_archivos(string id_carpeta, string nombre_carpeta, string id_paciente,string id_motivo)
         {
             
 
@@ -174,8 +175,8 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE carpeta_archivos set nombre_carpeta = '" + nombre_carpeta + "',id_paciente = '" + id_paciente + "',auxiliar_identificador = '" + id_carpeta + "' where id_carpeta = '" + id_carpeta + "'";
-
+                    query = "UPDATE carpeta_archivos set nombre_carpeta = '" + nombre_carpeta + "',id_paciente = '" + id_paciente + "',id_motivo='"+id_motivo+"',auxiliar_identificador = '" + id_carpeta + "' where id_carpeta = '" + id_carpeta + "'";
+                    Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();

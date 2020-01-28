@@ -12,6 +12,7 @@ namespace bonita_smile_v1.Modelos
         public string nombre_carpeta { get; set; }
         public string id_paciente { get; set; }
 
-        public string fecha { get; set; }
+        public string id_motivo { get; set; }
+       
     }
 }

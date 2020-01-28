@@ -79,8 +79,9 @@ namespace bonita_smile_v1
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-           
-            string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.id_paciente+".jpg";
+
+            string identificador = new Seguridad().SHA1(DateTime.Now+"");
+            string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_"+identificador + ".jpg";
             foto = foto.Replace(" ", "_");
 
             if (MiWebCam != null && MiWebCam.IsRunning)
@@ -92,20 +93,13 @@ namespace bonita_smile_v1
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     encoder.Save(stream);*/
-                System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("La camar sigue encendida no ha tomado la foto ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                string filePath = "";
-                Test_Internet ti = new Test_Internet();
-                if(ti.Test())
-                {
-                    filePath = ruta + foto;
-                }
-                else
-                {
-                    filePath = ruta + foto;
-                }
+                string filePath = filePath = ruta + foto;
+
+               
                 
                 var encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img1.Source));

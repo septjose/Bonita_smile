@@ -31,12 +31,15 @@ namespace bonita_smile_v1
         ObservableCollection<Carpeta_archivosModel> carpetas;
         Carpeta_archivosModel item_carpeta;
         string id_paciente = "";
-        public Pagina_Estudios(PacienteModel paciente)
+        string id_motivo = "";
+        bool bandera_offline_online = false;
+        public Pagina_Estudios(PacienteModel paciente,Motivo_citaModel motivo)
         {
             InitializeComponent();
             //MessageBox.Show("El valor del id_del paciente es :" + paciente.id_paciente);
             //MessageBox.Show("El nombre del paciente es " + paciente.nombre);
             id_paciente = paciente.id_paciente;
+            id_motivo = motivo.id_motivo;
             llenar_list_view(id_paciente);
         }
 
@@ -62,16 +65,6 @@ namespace bonita_smile_v1
 
                 
             }
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            DialogResult resultado = new DialogResult();
-            Form mensaje = new Agregar_Carpetas(id_paciente);
-            resultado = mensaje.ShowDialog();
-
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
-
         }
 
 
@@ -100,7 +93,7 @@ namespace bonita_smile_v1
         private void EditZoneInfoContextMenu_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Agregar_Carpetas(id_paciente);
+            Form mensaje = new Agregar_Carpetas(id_paciente,id_motivo);
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;
@@ -119,10 +112,7 @@ namespace bonita_smile_v1
             e.Handled = true;
         }
 
-        private void lvCarpetas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
+        
 
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -132,7 +122,8 @@ namespace bonita_smile_v1
             //{
             //    return;
             //}
-            new Carpeta_archivos(false).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+            new Carpeta_archivos(bandera_offline_online ).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+            new Carpeta_archivos(!bandera_offline_online).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
             lvCarpetas.ItemsSource = null;
             lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
         }
@@ -140,7 +131,7 @@ namespace bonita_smile_v1
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta);
+            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta,id_motivo);
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;

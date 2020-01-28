@@ -87,10 +87,10 @@ namespace bonita_smile_v1
             Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
 
             if (admin != null)
-                admin.Main.Content = new Pagina_Estudios(paciente);
+                admin.Main.Content = new Pagina_Estudios(paciente,motivo);
             else
             {
-                clin.Main2.Content = new Pagina_Estudios(paciente);
+                clin.Main2.Content = new Pagina_Estudios(paciente,motivo);
             }
         }
 
@@ -139,7 +139,9 @@ namespace bonita_smile_v1
                 DialogResult resultado = new DialogResult();
                 Form mensaje = new Actualizar_Nota_Evolucion(nota);
                 resultado = mensaje.ShowDialog();
+                System.Windows.MessageBox.Show(nota.fecha);
                 this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
+                System.Windows.MessageBox.Show(GNotas[0].fecha);
                 lvNotas.ItemsSource = GNotas;
             }
             else

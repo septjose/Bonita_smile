@@ -177,7 +177,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE nota_de_digi_evolucion set id_paciente ='" + id_paciente + "',id_motivo = '" + id_motivo + "',descripcion = '" + descripcion + "',fecha = " + fecha + ",auxiliar_identificador = '" + id_nota + "' where id_nota = '" + id_nota + "'";
+                    query = "UPDATE nota_de_digi_evolucion set id_paciente ='" + id_paciente + "',id_motivo = '" + id_motivo + "',descripcion = '" + descripcion + "',fecha = '" + fecha + "',auxiliar_identificador = '" + id_nota + "' where id_nota = '" + id_nota + "'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);

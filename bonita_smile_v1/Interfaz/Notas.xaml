@@ -197,7 +197,7 @@
                     <Button Content="Button" Height="100" Width="75"/>
                 </Button>
 
-                <TextBlock Grid.Column="1" Text="Notas del Motivo" HorizontalAlignment="Center" FontSize="25" Margin="0 10 0 0"></TextBlock>
+                <TextBlock Grid.Column="1" Text="Notas de Evolución" HorizontalAlignment="Center" FontSize="25" Margin="0 10 0 0"></TextBlock>
                 <ListView Grid.Column="1" x:Name="lvNotas" Margin="0,50,80,0" Width="550"   Style="{StaticResource MetroListView}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">

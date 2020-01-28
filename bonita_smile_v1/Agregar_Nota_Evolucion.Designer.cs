@@ -130,6 +130,7 @@ namespace bonita_smile_v1
             string comentario = txtComentario.Text;
 
             DateTime fecha = DateTime.Now;
+            System.Windows.MessageBox.Show("IMPRIMO LA FECHA EN INGRESAR" + fecha.ToString("yyyy/MM/dd"));
             Nota_de_digi_evolucion nde = new Nota_de_digi_evolucion(bandera_online_offline);
             bool insertarAbono = nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
             if (insertarAbono)
