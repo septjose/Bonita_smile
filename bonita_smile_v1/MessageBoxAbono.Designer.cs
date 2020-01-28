@@ -266,7 +266,7 @@ namespace bonita_smile_v1
             //printDocument1.PrinterSettings.PrinterName = "HPFEF3CF (HP Officejet Pro 6830) (Red)";
             printDocument1.PrinterSettings.PrinterName = "58 Printer";
             //printDocument1.PrinterSettings.PrinterName = "Microsoft XPS Document Writer";
-
+            //poner try catch
             if (printDocument1.PrinterSettings.IsValid)
             {
                 printDocument1.Print();

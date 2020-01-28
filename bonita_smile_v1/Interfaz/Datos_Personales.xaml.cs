@@ -33,6 +33,7 @@ namespace bonita_smile_v1
         string ruta = @"C:\bs\";
         string ruta2 = @"C:\bs_auxiliar\";
         PacienteModel paciente;
+        bool bandera_online_offline = false;
         public Page2(PacienteModel paciente)
         {
             
@@ -186,13 +187,12 @@ namespace bonita_smile_v1
             //Ingresar_Motivo im = new Ingresar_Motivo(id);
             //im.ShowDialog();
        
-
-           
-
             DialogResult resultado = new DialogResult();
             Form mensaje = new IngresarMotivo(id);
             resultado = mensaje.ShowDialog();
-            lvMotivo.ItemsSource = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
+            this.GMotivo = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
+            lvMotivo.ItemsSource = GMotivo;
+
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -201,29 +201,22 @@ namespace bonita_smile_v1
             Motivo_citaModel motivo = (Motivo_citaModel)lvMotivo.SelectedItem;
             if (lvMotivo.SelectedItems.Count > 0)
             {
-               
-                Test_Internet ti = new Test_Internet();
-                if (ti.Test())
-                {
                     var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + motivo.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
-                        Motivo_cita mot = new Motivo_cita(false);
-
-                        bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo);
+                        Motivo_cita mot = new Motivo_cita(bandera_online_offline);
+                        bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
                         if (elimino)
                         {
-                            GMotivo.Remove((Motivo_citaModel)lvMotivo.SelectedItem);
+                        mot = new Motivo_cita(!bandera_online_offline);
+                        elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
+                        GMotivo.Remove((Motivo_citaModel)lvMotivo.SelectedItem);
+
+                        //lvMotivo.ItemsSource = GMotivo;
                             System.Windows.Forms.MessageBox.Show("Se elimino el Motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
 
                     }
-                }
-
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
             else
             {
@@ -239,7 +232,8 @@ namespace bonita_smile_v1
                 DialogResult resultado = new DialogResult();
                 Form mensaje = new Actualizar_Motivo(motivo);
                 resultado = mensaje.ShowDialog();
-                lvMotivo.ItemsSource = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
+                this.GMotivo = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
+                lvMotivo.ItemsSource = GMotivo;
             }
             else
             {

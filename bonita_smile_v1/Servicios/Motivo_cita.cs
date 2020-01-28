@@ -56,7 +56,7 @@ namespace bonita_smile_v1.Servicios
             return listaMotivo_cita;
         }
 
-        public bool eliminarMotivo_cita(string id_motivo)
+        public bool eliminarMotivo_cita(string id_motivo, string id_paciente)
         {
             
             bool internet = ti.Test();
@@ -80,7 +80,9 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "DELETE FROM motivo_cita where id_motivo='" + id_motivo + "'";
+                   query =  "DELETE FROM motivo_cita WHERE id_motivo = '"+id_motivo+"' AND id_paciente ='"+id_paciente+"'";
+
+                    //query = "DELETE FROM motivo_cita where id_motivo='" + id_motivo + "'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);

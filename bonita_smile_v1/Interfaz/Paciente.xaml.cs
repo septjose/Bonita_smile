@@ -51,9 +51,7 @@ namespace bonita_smile_v1
             {
                 string id_paciente = paciente.id_paciente;
                 string nombre_paciente = paciente.nombre;
-                Test_Internet ti = new Test_Internet();
-                if (ti.Test())
-                {
+
                     var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el  paciente :" + nombre_paciente + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
@@ -64,22 +62,15 @@ namespace bonita_smile_v1
                         {
                             GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
                             System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            clin = new Paciente(bandera_online_offline);
+                            clin = new Paciente(!bandera_online_offline);
 
                             clin.eliminarPaciente(id_paciente);
                         }
-
                     }
                     else
                     {
                         System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
             }
             else
             {

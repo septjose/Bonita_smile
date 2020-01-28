@@ -74,9 +74,6 @@ namespace bonita_smile_v1
             {
                 string id_clinica = clinica.id_clinica;
                 string nombre_sucursal = clinica.nombre_sucursal;
-                Test_Internet ti = new Test_Internet();
-                if (ti.Test())
-                {
                     var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar la clinica :" + nombre_sucursal + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
@@ -97,12 +94,6 @@ namespace bonita_smile_v1
                     {
                         System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
             }
             else
             {

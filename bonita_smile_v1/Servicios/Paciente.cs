@@ -290,7 +290,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto + "',email = '" + email + "',marketing = " + marketing + ",id_clinica =' " + id_clinica + "',antecedente='" + antecedente + "',auxiliar_identificador = '"+ id_paciente +"' where id_paciente ='"+id_paciente +"'";
+                    query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto + "',email = '" + email + "',marketing = " + marketing + ",id_clinica ='" + id_clinica + "',antecedente='" + antecedente + "',auxiliar_identificador = '"+ id_paciente +"' where id_paciente ='"+id_paciente +"'";
                     Console.WriteLine(query);
 
                     conexionBD.Open();

@@ -57,7 +57,7 @@ namespace bonita_smile_v1.Servicios
             return listaNota_de_digi_evolucion;
         }
 
-        public bool eliminarMotivo_cita(string id_nota)
+        public bool eliminarNotaEvolucion(string id_nota, string id_paciente, string id_motivo)
         {
             bool internet = ti.Test();
             try
@@ -80,7 +80,9 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "DELETE FROM nota_de_digi_evolucion where id_nota='" + id_nota + "'";
+
+                   query =  "DELETE FROM nota_de_digi_evolucion WHERE id_nota = '"+id_nota+"' AND id_paciente ='"+id_paciente+"' AND id_motivo = '"+id_motivo+"'";
+                    //query = "DELETE FROM nota_de_digi_evolucion where id_nota='" + id_nota + "'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);

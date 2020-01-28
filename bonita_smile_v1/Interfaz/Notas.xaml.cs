@@ -77,8 +77,8 @@ namespace bonita_smile_v1
             DialogResult resultado = new DialogResult();
             Form mensaje = new Agregar_Nota_Evolucion(motivo.id_motivo, paciente.id_paciente);
             resultado = mensaje.ShowDialog();
-            lvNotas.ItemsSource = null;
-            lvNotas.ItemsSource = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
+            this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
+            lvNotas.ItemsSource = GNotas;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -113,31 +113,22 @@ namespace bonita_smile_v1
         {
             Nota_de_digi_evolucionModel nota = (Nota_de_digi_evolucionModel)lvNotas.SelectedItem;
 
-            Test_Internet ti = new Test_Internet();
-            if (ti.Test())
-            {
                 var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el motivo :" + nota.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (confirmation == System.Windows.Forms.DialogResult.Yes)
                 {
-                    Motivo_cita mot = new Motivo_cita(false);
+                    Nota_de_digi_evolucion mot = new Nota_de_digi_evolucion(bandera_online_offline);
 
-                    bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo);
+                    bool elimino = mot.eliminarNotaEvolucion(nota.id_nota,paciente.id_paciente,motivo.id_motivo);
                     if (elimino)
                     {
-                        mot = new Motivo_cita(false);
-
-                        mot.eliminarMotivo_cita(motivo.id_motivo);
+                       mot = new Nota_de_digi_evolucion(!bandera_online_offline);
+                       mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
+                   // mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
                         GNotas.Remove((Nota_de_digi_evolucionModel)lvNotas.SelectedItem);
                         System.Windows.Forms.MessageBox.Show("Se elimino el motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                 }
-            }
-
-            else
-            {
-                System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -148,8 +139,8 @@ namespace bonita_smile_v1
                 DialogResult resultado = new DialogResult();
                 Form mensaje = new Actualizar_Nota_Evolucion(nota);
                 resultado = mensaje.ShowDialog();
-                lvNotas.ItemsSource = null;
-                lvNotas.ItemsSource = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
+                this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
+                lvNotas.ItemsSource = GNotas;
             }
             else
             {

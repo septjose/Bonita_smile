@@ -82,10 +82,6 @@ namespace bonita_smile_v1
             AbonosModel abono = (AbonosModel)lvNotas.SelectedItem;
             if (lvNotas.SelectedItems.Count > 0)
             {
-
-                Test_Internet ti = new Test_Internet();
-                if (ti.Test())
-                {
                     var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + abono.comentario + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
@@ -94,8 +90,11 @@ namespace bonita_smile_v1
                         bool elimino = abo.eliminarAbono(abono.id_abono);
                         if (elimino)
                         {
-                        
-                            GAbono.Remove((AbonosModel)lvNotas.SelectedItem);
+
+                        abo = new Abonos(!bandera_online_offline);
+                        abo.eliminarAbono(abono.id_abono);
+
+                        GAbono.Remove((AbonosModel)lvNotas.SelectedItem);
                             System.Windows.Forms.MessageBox.Show("Se elimino el Motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             abo = new Abonos(!bandera_online_offline);
 
@@ -108,14 +107,6 @@ namespace bonita_smile_v1
 
 
                     }
-                    
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No se puede eliminar el registro hasta que tengas internet", "Error Falta de Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-
             }
             else
             {
