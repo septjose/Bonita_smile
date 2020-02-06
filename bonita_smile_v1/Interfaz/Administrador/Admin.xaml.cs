@@ -104,6 +104,23 @@ namespace bonita_smile_v1.Interfaz.Administrador
             Main.Content = new Page6();
         }
 
+        private void listViewItem5_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Main.Content = new Pagina_Permisos(2);
+        }
+
+        private void listViewItem6_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Main.Content = new Pagina_Permisos(4);
+             
+        }
+
+        private void listViewItem7_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Main.Content = new Pagina_Permisos(5);
+             
+        }
+
         private void listViewItem4_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Main.Content = new Ganancias_Clinica();

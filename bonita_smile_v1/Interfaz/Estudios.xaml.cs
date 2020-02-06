@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,7 +35,7 @@ namespace bonita_smile_v1
         string id_paciente = "";
         string id_motivo = "";
         bool bandera_offline_online = false;
-        public Pagina_Estudios(PacienteModel paciente,Motivo_citaModel motivo)
+        public Pagina_Estudios(PacienteModel paciente, Motivo_citaModel motivo)
         {
             InitializeComponent();
             //MessageBox.Show("El valor del id_del paciente es :" + paciente.id_paciente);
@@ -45,7 +47,7 @@ namespace bonita_smile_v1
 
         void llenar_list_view(string id_paciente)
         {
-            carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
+            carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
 
             lvCarpetas.ItemsSource = carpetas;
             GCarpetas = carpetas;
@@ -62,8 +64,6 @@ namespace bonita_smile_v1
                 //System.Windows.MessageBox.Show("hi");
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
-
-                
             }
         }
 
@@ -93,11 +93,11 @@ namespace bonita_smile_v1
         private void EditZoneInfoContextMenu_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Agregar_Carpetas(id_paciente,id_motivo);
+            Form mensaje = new Agregar_Carpetas(id_paciente, id_motivo);
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
         }
 
 
@@ -112,7 +112,7 @@ namespace bonita_smile_v1
             e.Handled = true;
         }
 
-        
+
 
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -122,41 +122,143 @@ namespace bonita_smile_v1
             //{
             //    return;
             //}
-            new Carpeta_archivos(bandera_offline_online ).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
-            new Carpeta_archivos(!bandera_offline_online).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
-            lvCarpetas.ItemsSource = null;
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
+
+            bool eliminarArchivo = true;
+            string rutaArchivoEliminar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+            // ELIMINARLA DE LA BS LOCAL/
+
+            // SI LA CARPETA ESTA ASOCIADA A UNA NOTA NO ELIMINARLA, DE LO CONTRARIO SI ELIMINARLA
+            System.Windows.MessageBox.Show("imprimo " +  item_carpeta.id_nota );
+            if (item_carpeta.id_nota.Equals("")|| item_carpeta.id_nota==null)
+
+            {
+                //NO ESTA ASOCIADA, ENTONCES SE PUEDE ELIMINAR
+
+                //RECUPERAR NOMBRE DE ARCHIVOS DE LA CARPETA
+                var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(this.item_carpeta.id_carpeta, id_paciente);
+
+                //ELIMINAR REGISTRO
+                bool elimino = new Carpeta_archivos(bandera_offline_online).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+                if (elimino)
+                {
+                    System.Windows.MessageBox.Show("llego aqio");
+
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    if (listaNombreArchivos.Count == 0)
+                    {
+                        ea.escribir_imagen_eliminar("", @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                    }
+                    else
+                    {
+
+                        foreach (var nombre in listaNombreArchivos)
+                        {
+                            System.Windows.MessageBox.Show("escribio en archivo");
+
+                            //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
+                            ea.escribir_imagen_eliminar(nombre.foto_completa, @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                            //ELIMINAR FOTOS
+                            System.Windows.MessageBox.Show("RUTA PARA BORRAR EN BS " + @"C:\bs\" + nombre.foto_completa);
+                            File.Delete(@"C:\bs\" + nombre.foto_completa);
+                            
+                        }
+                    }
+
+
+                    lvCarpetas.ItemsSource = null;
+                    lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
+
+                        // ELIMINAR DEL SERVIDOR/
+
+                         /****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
+                         //ELIMINAR REGISTRO
+                         elimino = new Carpeta_archivos(!bandera_offline_online).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+                    if (elimino)
+                    {
+                        //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+                        var datos = ea.leer(rutaArchivoEliminar);
+
+                        foreach (string imagen in datos)
+                        {
+                            
+                            Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                            bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+                            if (!verdad)
+                                eliminarArchivo = false;
+                        }
+                        if (eliminarArchivo)
+                        {
+                            System.Windows.MessageBox.Show("elimino Archivo");
+                            ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                            File.Delete(@"C:\backup_bs\eliminar_imagen_temporal.txt");
+                        }
+                    }
+                    else
+                    {
+                        //SI NO HAY INTERNET, NO HACER NADA
+                    }
+                    /**********************************/
+                }
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("imprimo" + item_carpeta.id_carpeta + "  " + item_carpeta.id_motivo + "  " + item_carpeta.id_nota + "  " + item_carpeta.id_paciente + "   " + item_carpeta.nombre_carpeta);
+                System.Windows.MessageBox.Show("Esta carpeta esta asociada a una nota, no se puede eliminar");
+            }
+        }
+
+        public static bool DeleteFileOnServer(Uri serverUri, string ftpUsername, string ftpPassword)
+        {
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+
+                //If you need to use network credentials
+                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+                //additionally, if you want to use the current user's network credentials, just use:
+                //System.Net.CredentialCache.DefaultNetworkCredentials
+
+
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+                Console.WriteLine("Delete status: {0}", response.StatusDescription);
+                response.Close();
+                return true;
+            }
+            catch (WebException e)
+            {
+                FtpWebResponse response = (FtpWebResponse)e.Response;
+                if (response.StatusCode ==
+                    FtpStatusCode.ActionNotTakenFileUnavailable)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public List<string> nombreArchivosDirectorio(string ruta)
+        {
+            List<string> nombreArchivos = new List<string>();
+
+            DirectoryInfo di = new DirectoryInfo(ruta);
+            foreach (var fi in di.GetFiles())
+            {
+                nombreArchivos.Add(fi.Name);
+            }
+            return nombreArchivos;
         }
 
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta,id_motivo);
+            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta, id_motivo);
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente));
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

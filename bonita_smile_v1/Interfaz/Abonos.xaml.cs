@@ -31,6 +31,7 @@ namespace bonita_smile_v1
         double abonado = 0.0;
         double total = 0.0;
         bool bandera_online_offline = false;
+        
         public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo)
         {
 
@@ -75,6 +76,9 @@ namespace bonita_smile_v1
             Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text,restante,abonado, total);
             resultado = mensaje.ShowDialog();
             lvNotas.ItemsSource = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(this.motivo.id_motivo, this.paciente.id_paciente));
+            Abonos abonos = new Abonos(bandera_online_offline);
+            txtAbonado.Text = "$" + abonos.Abonados(motivo.id_motivo).ToString();
+            txtRestante.Text = "$" + abonos.Restante(motivo.id_motivo).ToString();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -82,7 +86,7 @@ namespace bonita_smile_v1
             AbonosModel abono = (AbonosModel)lvNotas.SelectedItem;
             if (lvNotas.SelectedItems.Count > 0)
             {
-                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + abono.comentario + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el  abono :" + abono.comentario + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
                         Abonos abo = new Abonos(bandera_online_offline);
@@ -94,12 +98,14 @@ namespace bonita_smile_v1
                         abo = new Abonos(!bandera_online_offline);
                         abo.eliminarAbono(abono.id_abono);
 
+                        
+                            System.Windows.Forms.MessageBox.Show("Se elimino el abono correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            
                         GAbono.Remove((AbonosModel)lvNotas.SelectedItem);
-                            System.Windows.Forms.MessageBox.Show("Se elimino el Motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            abo = new Abonos(!bandera_online_offline);
-
-                           abo.eliminarAbono(abono.id_abono);
-                        }
+                        Abonos abonos = new Abonos(bandera_online_offline);
+                        txtAbonado.Text = "$" + abonos.Abonados(motivo.id_motivo).ToString();
+                        txtRestante.Text = "$" + abonos.Restante(motivo.id_motivo).ToString();
+                    }
                         else
                         {
                             System.Windows.Forms.MessageBox.Show("No se pudo eliminar el abono", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -123,8 +129,9 @@ namespace bonita_smile_v1
                 DialogResult resultado = new DialogResult();
                 Form mensaje = new Actualizar_Abono("","","","",0.0,0.0,0.0,abono);
                 resultado = mensaje.ShowDialog();
-               
-
+                Abonos abonos = new Abonos(bandera_online_offline);
+                txtAbonado.Text = "$" + abonos.Abonados(motivo.id_motivo).ToString();
+                txtRestante.Text = "$" + abonos.Restante(motivo.id_motivo).ToString();
                 lvNotas.ItemsSource = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
             }
             else

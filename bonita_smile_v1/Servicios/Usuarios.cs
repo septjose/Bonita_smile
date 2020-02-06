@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
+using bonita_smile_v1.Interfaz.Recepcionista;
+using bonita_smile_v1.Interfaz.Socio;
 
-using bonita_smile_v1.Interfaz.Marketing;
+
 
 using bonita_smile_v1.Interfaz;
 
@@ -38,6 +40,48 @@ namespace bonita_smile_v1.Servicios
             this.online = online;
         }
 
+        public List<UsuarioModel> MostrarUsuario_Socio(List<string>lista)
+        {
+            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
+            foreach (var id in lista)
+            {
+                query = "select * from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where clinica.id_clinica='"+id+"'";
+
+                try
+                {
+                    conexionBD.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        usuarioModel = new UsuarioModel();
+                        RolModel rolModel = new RolModel();
+
+                        usuarioModel.id_usuario = reader[0].ToString();
+                        usuarioModel.alias = reader[1].ToString();
+                        usuarioModel.nombre = reader[2].ToString();
+                        usuarioModel.apellidos = reader[3].ToString();
+                        usuarioModel.password = reader[4].ToString();
+                        rolModel.id_rol = int.Parse(reader[5].ToString());
+                        rolModel.descripcion = reader[16].ToString();
+                        usuarioModel.clinica = reader[12].ToString();
+                        usuarioModel.rol = rolModel;
+
+                        listaUsuario.Add(usuarioModel);
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    System.Windows.MessageBox.Show(ex.ToString());
+                }
+                conexionBD.Close();
+            }
+            
+           
+            return listaUsuario;
+        }
 
         public List<UsuarioModel> MostrarUsuario()
         {
@@ -299,6 +343,7 @@ namespace bonita_smile_v1.Servicios
                     //Ventana_Administrador va = new Ventana_Administrador();
                     //Ventana_Usuario vu = new Ventana_Usuario();
 
+
                     System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //System.Windows.Application.Current.Windows[0].Close();
                     new Admin().ShowDialog();
@@ -306,22 +351,54 @@ namespace bonita_smile_v1.Servicios
 
                 }
                 else
-                    if (rol.Equals("Clinica"))
+                    if (rol.Equals("Doctor"))
                 {
-                    string id = Buscar_Clinica(alias);
+                    string id = Buscar_Clinica(alias,2);
+                    if(id.Equals(""))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias + "el id de la clinica es " + id, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Application.Current.Windows[0].Close();
+                        //Application.Current.Windows[0].Close();
+                        new Clin(id).ShowDialog();
+                    }
 
-                    //System.Windows.Application.Current.Windows[0].Close();
-                    //Application.Current.Windows[0].Close();
-                    new Clin(id).ShowDialog();
+                    
                 }
                 else
-                    if (rol.Equals("Marketing"))
+                    if (rol.Equals("Recepcionista"))
                 {
-
-                    System.Windows.MessageBox.Show("Marketing");
-                    new Market().ShowDialog();
+                    string id = Buscar_Clinica(alias,4);
+                    if(id.Equals(""))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        new Recep(id).ShowDialog();
+                    }
+                    
+                    //new Market().ShowDialog();
+                    //new Market(id).ShowDialog();
+                }
+                else
+                    if(rol.Equals("Socio"))
+                {
+                    List<string> list = Buscar_clinica_socio(alias, 5);
+                    
+                    if(list.Count!=0)
+                    {
+                        new Soc(list,alias).ShowDialog();
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
         }
@@ -403,11 +480,11 @@ namespace bonita_smile_v1.Servicios
 
         }
 
-        public string Buscar_Clinica(String alias)
+        public string Buscar_Clinica(String alias,int id_rol)
         {
             string id = "";
             MySqlCommand cmd;
-            string query = "select clinica.id_clinica as id from usuario inner join permisos on permisos.id_usuario=usuario.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where usuario.alias='" + alias + "' and usuario.id_rol=2";
+            string query = "select clinica.id_clinica as id from usuario inner join permisos on permisos.id_usuario=usuario.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where usuario.alias='" + alias + "' and usuario.id_rol="+id_rol;
             try
             {
                 conexionBD.Open();
@@ -436,89 +513,36 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string Buscar_Alias(string id_clinica)
+        public List<string> Buscar_clinica_socio(String alias, int id_rol)
         {
-            string id = "";
-            MySqlCommand cmd;
-            string query = "select usuario.alias from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where clinica.id_clinica='" + id_clinica+"'";
+            List<string> lista = new List<string>();
+            string query = "select clinica.id_clinica as id from usuario inner join permisos on permisos.id_usuario=usuario.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where usuario.alias='" + alias + "' and usuario.id_rol=" + id_rol;
+
             try
             {
                 conexionBD.Open();
-                cmd = new MySqlCommand(query, conexionBD);
-                //System.Windows.MessageBox.Show(cmd.ExecuteScalar().ToString());
-                try
-                {
-                    string existe = cmd.ExecuteScalar().ToString();
-                    if (("".Equals(existe)))
-                    {
-                        conexionBD.Close();
-                        return "";
-                    }
-                    else
-                    {
-                        reader = cmd.ExecuteReader();
-                        reader.Read();
-                        id = reader[0].ToString();
-                        conexionBD.Close();
-                        return id;
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
 
-                    }
-                }
-                catch (Exception ex) {
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
                    
-                    conexionBD.Close(); return ""; }
+                    lista.Add(reader[0].ToString());
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                return  null;
                 
             }
-            catch (MySqlException ex)
-            {
-                System.Windows.MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return "";
-            }
+            conexionBD.Close();
+            return lista;
         }
 
-        public string Buscar_Permiso(string id_clinica)
-        {
-            string id = "";
-            MySqlCommand cmd;
-            string query = "select permisos.id_permiso from permisos where permisos.id_clinica='"+ id_clinica+"'";
-            try
-            {
-                conexionBD.Open();
-                cmd = new MySqlCommand(query, conexionBD);
-                //System.Windows.MessageBox.Show(cmd.ExecuteScalar().ToString());
-                try
-                {
-                    string existe = cmd.ExecuteScalar().ToString();
-                    if (("".Equals(existe)))
-                    {
-                        conexionBD.Close();
-                        return "";
-                    }
-                    else
-                    {
-                        reader = cmd.ExecuteReader();
-                        reader.Read();
-                        id = reader[0].ToString();
-                        conexionBD.Close();
-                        return id;
 
-                    }
-                }
-                catch (Exception ex)
-                {
-                  
-                    conexionBD.Close(); return "";
-                }
 
-            }
-            catch (MySqlException ex)
-            {
-                System.Windows.MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return "";
-            }
-        }
         //public bool Validar_usu(string alias,string password)
         //{
 

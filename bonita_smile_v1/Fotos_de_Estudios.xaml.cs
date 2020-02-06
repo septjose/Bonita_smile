@@ -1,4 +1,14 @@
-﻿using bonita_smile_v1.Modelos;
+﻿//verificar cuando una imagen no existe en la carpeta fisica....muestra una temporal en l aplicacion, error al seleccionarla(solucion:poderla eliminar, pero solo de la base de datos)
+//POSIBLE ERROR DENTRO DE SERVICIO  foto_estudio_carpeta metodo loadImage
+
+//modificar servicios
+
+//pasar constructor escribir
+//pasar delete ftp
+//pasar LOADimage modificado
+//pasar imagen para rellenar rectangulo
+
+using bonita_smile_v1.Modelos;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,6 +42,10 @@ namespace bonita_smile_v1
         string ruta = "";
         bool bandera_online_offline = false;
 
+        Fotos_estudio_carpetaModel item_foto_carpeta;
+        ObservableCollection<Fotos_estudio_carpetaModel> fotos;
+        ObservableCollection<Fotos_estudio_carpetaModel> GFotos;
+
         void llenar_list_view(string id_carpeta, string id_paciente)
         {
             Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta(bandera_online_offline);
@@ -44,6 +58,11 @@ namespace bonita_smile_v1
                 // MessageBox.Show("Lista es foto"+lista[i].foto);
                 lb_imagen.Items.Add(fotografos[i]);
             }
+
+            //fotos = new ObservableCollection<Fotos_estudio_carpetaModel>(new Servicios.Fotos_estudio_carpeta(bandera_online_offline).MostrarFoto_estudio_carpeta(id_carpeta, id_paciente));
+
+            //lb_imagen.ItemsSource = fotos;
+            //GFotos = fotos;
 
             //lb_imagen.ItemsSource = lista;
 
@@ -111,35 +130,11 @@ namespace bonita_smile_v1
 
         public void Imagen(string ruta)
         {
-            //string ruta2 = @"C:\bs\img1.jpg";
-            //if (File.Exists(ruta))
+            var bitmap = new Fotos_estudio_carpeta(false).LoadImage(ruta);
 
-            Image image = new Image();
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new System.Uri(ruta);
-            bi.EndInit();
-            image.Source = bi;
             ImageBrush ib = new ImageBrush();
-            ib.ImageSource = bi;
-            //return ib;
+            ib.ImageSource = bitmap;
             rt_imagen.Fill = ib;
-
-        }
-
-        private BitmapImage LoadImage(string filename)
-        {
-            BitmapImage bi;
-
-            if (File.Exists(filename))
-            {
-                bi = new BitmapImage(new Uri(filename));
-            }
-            else
-            {
-                bi = new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
-            }
-            return bi;
         }
 
         private void lb_imagen_DragEnter(object sender, System.Windows.DragEventArgs e)
@@ -155,6 +150,7 @@ namespace bonita_smile_v1
         {
             bool inserto = false;
             string result = "";
+            string destFile;
             Test_Internet ti = new Test_Internet();
 
             string extension = "";
@@ -162,103 +158,84 @@ namespace bonita_smile_v1
             //Recuperamos la lista de los elementos arrastrados y y los añadimos a la lista
             string[] s = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop, false);
             int i;
-            //System.Windows.MessageBox.Show("valor de s es " + s.Length);
-            
+
             for (i = 0; i < s.Length; i++)
             {
-                //System.Windows.MessageBox.Show("el valor de s[i] es " + s[i]);
                 extension = System.IO.Path.GetExtension(s[i]);
-                if(extension.Equals(".png")||extension.Equals(".jpg") || extension.Equals(".JPG") || extension.Equals(".PNG"))
+                if (extension.Equals(".png") || extension.Equals(".jpg") || extension.Equals(".JPG") || extension.Equals(".PNG"))
                 {
-                    //System.Windows.MessageBox.Show("Es imagen "+s[i]);
-                    //f.foto = s[i];
-                    //f.imagen = LoadImage(s[i]);
-
-
-                    lb_imagen.Items.Add(f);
                     result = System.IO.Path.GetFileName(s[i]);
-                    if(ti.Test())
-                    {
 
-                        System.Windows.MessageBox.Show("Se subira la foto : "+s[i]);
-                        inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
-                        if (inserto)
+                    // ---------ACOMODAR ESTO-------- -/
+                     //SUBIRLO TODO LOCAL
+                     //REALIZAR INSERCION DEL REGISTRO
+                     Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta(bandera_online_offline);
+                    bool insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
+                    //SI SE INSERTA PROCEDER A PASAR LA IMAGEN A CARPETA BS Y BS_OFFLINE
+                    if (insertar_foto)
+                    {
+                        try
                         {
-                           
-                            string destFile = System.IO.Path.Combine(@"C:\bs\", result);
-                            //MessageBox.Show("el valor de result es " + result);
-                            System.IO.File.Copy(s[i], destFile, true);
-                            renombrar(result, id_carpeta + "_" + result);
-                            System.Windows.MessageBox.Show("se subio al servidor");
-                            Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta(bandera_online_offline);
-                            bool verdad = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
-                            if (verdad)
+                            destFile = System.IO.Path.Combine(@"C:\fotos_offline\", result);
+                            File.Copy(s[i], destFile, true);
+                            renombrar(false, result, id_carpeta + "_" + result);
+
+                            destFile = System.IO.Path.Combine(@"C:\bs\", result);
+                            File.Copy(s[i], destFile, true);
+                            renombrar(true, result, id_carpeta + "_" + result);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Windows.MessageBox.Show(ex + "");
+                            // ----------eliminar fotos insertadas en las carpetas y eliminar el registro de la base de datos-------------/
+                            //revisar paridad entre carpetas offline y bs. si esta en offline forzosamente debe de estar en bs, de lo contrario eliminar imagen de offline =====> PROBABLEMENTE TAMBIÉN VERIFICAR ESTO AL ENTRAR A ESTE PAGE(INTERFAZ)
+                            //POSIBLE ERROR : Que no exista una de las carpetas o servicio ocupado
+                            //eliminar registro de BS Local
+                            return;
+                        }
+                        //SUBIR TODO AL SERVIDOR
+                        //REALZAR INSERCION DEL REGISTRO EN EL SERVIDOR
+                        fotos = new Fotos_estudio_carpeta(!bandera_online_offline);
+                        insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
+
+                        if (insertar_foto)
+                        {
+
+                            System.Windows.MessageBox.Show("ENTRO PARA SUBIR FOTO A SERVIDOR");
+                            //PROCEDER A MIGRAR LA IMAGEN POR FTP
+                            inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
+                            if (inserto)
                             {
-                                System.Windows.MessageBox.Show("se subio a la bd");
-                            }
-                            else
-                            {
-                                System.Windows.MessageBox.Show("no se subio a la bd");
+                                //ELIMINAR ARCHIVO QUE SE SUBIO AL SERVIDOR DE CARPETA OFFLINE
+                                File.Delete(@"C:\fotos_offline\" + id_carpeta + "_" + result);
                             }
                         }
                         else
                         {
-                            System.Windows.MessageBox.Show("No se subio");
+                            //NO HAY INTERNET, NO HACER NADA
                         }
                     }
-                    else
-                    {
-                        System.Windows.MessageBox.Show("No hay internet");
-                        System.Windows.MessageBox.Show("Se subira la foto : " + s[i]);
-                       // inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
-                       
-
-                            string destFile = System.IO.Path.Combine(@"C:\fotos_offline\", result);
-                            //MessageBox.Show("el valor de result es " + result);
-                            System.IO.File.Copy(s[i], destFile, true);
-                            renombrar_offline(result, id_carpeta + "_" + result);
-                            System.Windows.MessageBox.Show("se subio al servidor");
-                            Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta(bandera_online_offline);
-                            bool verdad = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
-                            if (verdad)
-                            {
-                                
-                                System.Windows.MessageBox.Show("se subio a la bd");
-                            }
-                            else
-                            {
-                                System.Windows.MessageBox.Show("no se subio a la bd");
-                            }
-                        
-                       
-
-                    }
-                    
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("No es imagen "+s[i]);
+                    System.Windows.MessageBox.Show("No es imagen " + s[i]);
                 }
-
             }
-            lb_imagen.ItemsSource = null;
+            lb_imagen.Items.Clear();
+
             Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta(bandera_online_offline);
             List<Fotos_estudio_carpetaModel> lista = f_estudio.MostrarFoto_estudio_carpeta(id_carpeta, id_paciente);
 
             var fotografos = new ObservableCollection<Fotos_estudio_carpetaModel>(lista);
             for (int j = 0; j < lista.Count; j++)
             {
-                //lb_imagen.Items.Add(lista[i].foto);
-                // MessageBox.Show("Lista es foto"+lista[i].foto);
                 lb_imagen.Items.Add(fotografos[j]);
             }
-
-
-
         }
 
-        public void renombrar_offline(string nombre_viejo, string nombre_nuevo)
+        public void renombrar_offline(bool online, string nombre_viejo, string nombre_nuevo)
         {
+
             string sourceFile = @"C:\fotos_offline\" + nombre_viejo;
             // Create a FileInfo  
             System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile);
@@ -273,17 +250,22 @@ namespace bonita_smile_v1
                 System.Windows.MessageBox.Show("se pudo bitches");
             }
         }
-        public void renombrar(string nombre_viejo, string nombre_nuevo)
+        public void renombrar(bool online, string nombre_viejo, string nombre_nuevo)
         {
-            string sourceFile = @"C:\bs\" + nombre_viejo;
+            string sourceFile;
+            if (!online)
+                sourceFile = @"C:\fotos_offline\";
+            else
+                sourceFile = @"C:\bs\";
+
             // Create a FileInfo  
-            System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile);
+            System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile + nombre_viejo);
             // Check if file is there  
             if (fi.Exists)
             {
                 System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
-                fi.MoveTo(@"C:\bs\" + nombre_nuevo);
+                fi.MoveTo(sourceFile + nombre_nuevo);
                 //string destFile = System.IO.Path.Combine(@"C:\bs\", nombre_nuevo);
                 //System.IO.File.Copy(@"C:\fotos_offline\" + nombre_nuevo, destFile, true);
                 System.Windows.MessageBox.Show("se pudo bitches");
@@ -333,11 +315,8 @@ namespace bonita_smile_v1
                 //logger.Error("Error " + ex.Message + " " + ex.StackTrace);
                 verdad = false;
                 System.Windows.MessageBox.Show("Error " + ex.Message + " " + ex.StackTrace);
-
-
             }
             return verdad;
-
         }
 
         private void lb_imagen_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -345,6 +324,101 @@ namespace bonita_smile_v1
             DialogResult resultado = new DialogResult();
             Form mensaje = new Visualizador_Imagenes(this.ruta);
             resultado = mensaje.ShowDialog();
+        }
+        private void OnListViewItemPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.item_foto_carpeta = ((FrameworkElement)e.OriginalSource).DataContext as Fotos_estudio_carpetaModel;
+            System.Windows.Controls.ContextMenu cm = this.FindResource("cmButton") as System.Windows.Controls.ContextMenu;
+            cm.PlacementTarget = sender as System.Windows.Controls.Button;
+            cm.IsOpen = true;
+            e.Handled = true;
+        }
+
+
+
+        private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
+        {
+            bool eliminarArchivo = true;
+            string rutaArchivoEliminar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+            // ELIMINARLA DE LA BS LOCAL/
+
+             //ELIMINAR REGISTRO
+             bool elimino = new Fotos_estudio_carpeta(bandera_online_offline).eliminarFoto_estudio_carpeta(this.item_foto_carpeta.id_foto);
+            //ELIMINAR IMAGEN
+            File.Delete(item_foto_carpeta.foto_completa);
+            if (elimino)
+            {
+                //PASAR FOTO EN UN ARCHIVO
+                Escribir_Archivo ea = new Escribir_Archivo();
+                ea.escribir_imagen_eliminar(this.item_foto_carpeta.foto_completa, @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                //ELIMINAR FOTO
+                item_foto_carpeta.imagen = null;
+                rt_imagen.Fill = null;
+                File.Delete(@"C:\bs\" + item_foto_carpeta.foto_completa);
+                lb_imagen.Items.Remove(item_foto_carpeta);
+
+                // ELIMINAR DEL SERVIDOR/
+                 //ELIMINAR REGISTRO
+
+                 /****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
+                 elimino = new Fotos_estudio_carpeta(!bandera_online_offline).eliminarFoto_estudio_carpeta(this.item_foto_carpeta.id_foto);
+                if (elimino)
+                {
+                    //ELIMINAR FOTO DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+                    var datos = ea.leer(rutaArchivoEliminar);
+
+                    foreach (string imagen in datos)
+                    {
+                        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+                        if (!verdad)
+                            eliminarArchivo = false;
+                    }
+                    if (eliminarArchivo)
+                    {
+                        System.Windows.MessageBox.Show("elimino Archivo");
+                        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                        File.Delete(@"C:\backup_bs\eliminar_imagen_temporal.txt");
+                    }
+                }
+                else
+                {
+                    //NO HAY INTERNET, NO HACER NADA
+                }
+                /**********************************/
+            }
+        }
+
+        public static bool DeleteFileOnServer(Uri serverUri, string ftpUsername, string ftpPassword)
+        {
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+
+                //If you need to use network credentials
+                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+                //additionally, if you want to use the current user's network credentials, just use:
+                //System.Net.CredentialCache.DefaultNetworkCredentials
+
+
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+                Console.WriteLine("Delete status: {0}", response.StatusDescription);
+                response.Close();
+                return true;
+            }
+            catch (WebException e)
+            {
+                FtpWebResponse response = (FtpWebResponse)e.Response;
+                if (response.StatusCode ==
+                    FtpStatusCode.ActionNotTakenFileUnavailable)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
     }
 }

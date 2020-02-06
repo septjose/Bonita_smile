@@ -71,26 +71,29 @@ namespace bonita_smile_v1
                         System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         cl = new Clinicas(!bandera_online_offline);
                         cl.actualizarClinica(id_clinica, nombre_clinica, color);
+                        //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        //if (admin != null) 
+                        //{
+                        //    alias = usu.Buscar_Alias(id_clinica);
+                        //    id_permiso = usu.Buscar_Permiso(id_clinica);
+                        //    if (alias.Equals("") || id_permiso.Equals(""))
+                        //    {
+                        //        System.Windows.Forms.MessageBox.Show("No le asignaste el usuario a la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //        if (admin != null)
+                        //            admin.Main.Content = new Pagina_Ingresar_Permisos();
+                        //    }
+                        //    else
+                        //    {
+
+
+                        //        System.Windows.MessageBox.Show("id_clinica " + id_clinica);
+
+                        //        admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica, id_permiso);
+                        //    }
+                        //}  
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                        if (admin != null) 
-                        {
-                            alias = usu.Buscar_Alias(id_clinica);
-                            id_permiso = usu.Buscar_Permiso(id_clinica);
-                            if (alias.Equals("") || id_permiso.Equals(""))
-                            {
-                                System.Windows.Forms.MessageBox.Show("No le asignaste el usuario a la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                if (admin != null)
-                                    admin.Main.Content = new Pagina_Ingresar_Permisos();
-                            }
-                            else
-                            {
-                                
-
-                                System.Windows.MessageBox.Show("id_clinica " + id_clinica);
-
-                                admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica, id_permiso);
-                            }
-                        }  
+                        if (admin != null)
+                            admin.Main.Content = new Page5();
 
                     }
                         else
@@ -109,30 +112,33 @@ namespace bonita_smile_v1
                         System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         cl = new Clinicas(!bandera_online_offline);
                         cl.actualizarClinica(id_clinica, nombre_clinica, color);
+                        //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        //    if (admin != null)
+                        //    {
+                        //    alias = usu.Buscar_Alias(id_clinica);
+                        //    id_permiso = usu.Buscar_Permiso(id_clinica);
+                        //    if (alias.Equals("") || id_permiso.Equals(""))
+                        //    {
+
+
+                        //        System.Windows.Forms.MessageBox.Show("No le asignaste el usuarioa la clinica ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //        if (admin != null)
+                        //            admin.Main.Content = new Pagina_Ingresar_Permisos();
+                        //    }
+                        //    else
+                        //    {
+
+
+                        //        System.Windows.MessageBox.Show("id_clinica " + id_clinica);
+
+                        //        admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica, id_permiso);
+                        //    }
+                        //}
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                            if (admin != null)
-                            {
-                            alias = usu.Buscar_Alias(id_clinica);
-                            id_permiso = usu.Buscar_Permiso(id_clinica);
-                            if (alias.Equals("") || id_permiso.Equals(""))
-                            {
-                               
-                               
-                                System.Windows.Forms.MessageBox.Show("No le asignaste el usuarioa la clinica ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                if (admin != null)
-                                    admin.Main.Content = new Pagina_Ingresar_Permisos();
-                            }
-                            else
-                            {
-                                
+                        if (admin != null)
+                            admin.Main.Content = new Page5();
 
-                                System.Windows.MessageBox.Show("id_clinica " + id_clinica);
-
-                                admin.Main.Content = new Pagina_Actualizar_Permisos(alias, nombre_clinica, id_permiso);
-                            }
-                        }
-
-                        }
+                    }
                         else
                         {
                             System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -1,4 +1,4 @@
-﻿using bonita_smile_v1.Modelos;
+﻿ using bonita_smile_v1.Modelos;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -31,8 +31,9 @@ namespace bonita_smile_v1.Servicios
         public List<Fotos_estudio_carpetaModel> MostrarFoto_estudio_carpeta(string id_carpeta, string id_paciente)
         {
             List<Fotos_estudio_carpetaModel> listaFoto_estudio_carpeta = new List<Fotos_estudio_carpetaModel>();
-            query = "SELECT  * FROM fotos_estudio_carpeta where id_carpeta='" + id_carpeta + "' and id_paciente='" + id_paciente+"'";
-            string foto_recortada= "";
+            query = "SELECT  * FROM fotos_estudio_carpeta where id_carpeta='" + id_carpeta + "' and id_paciente='" + id_paciente + "'";
+            MessageBox.Show(query);
+            string foto_recortada = "";
             try
             {
                 conexionBD.Open();
@@ -47,10 +48,10 @@ namespace bonita_smile_v1.Servicios
                     fotos_Estudio_CarpetaModel.id_foto = reader[0].ToString();
                     fotos_Estudio_CarpetaModel.id_carpeta = reader[1].ToString();
                     fotos_Estudio_CarpetaModel.id_paciente = reader[2].ToString();
-                    foto_recortada= reader[3].ToString();
+                    foto_recortada = reader[3].ToString();
                     foto_recortada = foto_recortada.Substring(35);
                     fotos_Estudio_CarpetaModel.foto = foto_recortada;
-                    fotos_Estudio_CarpetaModel.foto_completa= reader[3].ToString();
+                    fotos_Estudio_CarpetaModel.foto_completa = reader[3].ToString();
                     fotos_Estudio_CarpetaModel.imagen = LoadImage(@"C:\bs\" + reader[3].ToString());
 
                     listaFoto_estudio_carpeta.Add(fotos_Estudio_CarpetaModel);
@@ -67,8 +68,6 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminarFoto_estudio_carpeta(string id_foto)
         {
-            
-
             bool internet = ti.Test();
             try
             {
@@ -78,7 +77,8 @@ namespace bonita_smile_v1.Servicios
                 {
                     if (!internet)
                     {
-                        //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO
+                        return false;
                     }
                     else
                     {
@@ -86,6 +86,7 @@ namespace bonita_smile_v1.Servicios
 
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -99,8 +100,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                //return true;
             }
             catch (MySqlException ex)
             {
@@ -125,6 +127,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -133,6 +136,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -146,8 +150,8 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
             }
             catch (MySqlException ex)
             {
@@ -207,7 +211,7 @@ namespace bonita_smile_v1.Servicios
         public string MostrarFotos_Update(string id_foto)
         {
             string aux_identi = "";
-            query = "SELECT auxiliar_identificador from fotos_estudio_carpeta where id_foto='" + id_foto+"'";
+            query = "SELECT auxiliar_identificador from fotos_estudio_carpeta where id_foto='" + id_foto + "'";
 
             try
             {
@@ -230,21 +234,37 @@ namespace bonita_smile_v1.Servicios
             conexionBD.Close();
             return aux_identi;
         }
-        private BitmapImage LoadImage(string filename)
-        {
-            BitmapImage bi;
 
+
+        /**PASAR A OTRA CLASE***/
+        public BitmapImage LoadImage(string filename)
+        {
             if (File.Exists(filename))
             {
-                MessageBox.Show("si lo encontro la" + filename);
-                bi = new BitmapImage(new Uri(filename));
+                var bitmap = new BitmapImage();
+                var stream = File.OpenRead(filename);
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                stream.Close();
+                stream.Dispose();
+
+                return bitmap;
             }
             else
             {
-                MessageBox.Show("No la encontro "+filename);
-                bi = new BitmapImage(new Uri(@"C:\bs\img1.jpg"));
+                var bitmap = new BitmapImage();
+                var stream = File.OpenRead(@"C:\bs\img1.jpg");
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                stream.Close();
+                stream.Dispose();
+
+                return bitmap;
             }
-            return bi;
         }
         /*public void fotos(string id_carpeta, string id_paciente)
         {

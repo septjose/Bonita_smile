@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,10 +32,7 @@ namespace bonita_smile_v1
     /// </summary>
     public partial class Page6_Actualizar : Page
     {
-        private FilterInfoCollection MisDispositivios;
-        private VideoCaptureDevice MiWebCam;
-        private bool HayDispositivos;
-        private string ruta = @"E:\PortableGit\programs_c#\ftp_v1.0\ftp_camara\";
+
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
@@ -44,12 +42,14 @@ namespace bonita_smile_v1
         string id_pacientes = "";
         string foto = "";
         bool bandera_online_offline = false;
+        PacienteModel paciente;
         public Page6_Actualizar(PacienteModel paciente)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             InitializeComponent();
             
             llenar_Combo();
+            this.paciente = paciente;
             txtApellidos.Text = paciente.apellidos;
             txtDireccion.Text = paciente.direccion;
             txtEmail.Text = paciente.email;
@@ -103,14 +103,7 @@ namespace bonita_smile_v1
 
         }
        
-        private void CerrarWebCam()
-        {
-            if (MiWebCam != null && MiWebCam.IsRunning)
-            {
-                MiWebCam.SignalToStop();
-                MiWebCam = null;
-            }
-        }
+        
 
         
         
@@ -137,16 +130,18 @@ namespace bonita_smile_v1
                         pacienteModel.direccion = txtDireccion.Text;
                         pacienteModel.telefono = txtTelefono.Text;
                         pacienteModel.foto = foto;
+                        pacienteModel.imagen = null;
                         pacienteModel.email = txtEmail.Text;
                         pacienteModel.marketing = 0;
                         pacienteModel.antecedente = antecedentes;
                         pacienteModel.id_paciente = id_pacientes;
                         clinicaModel.id_clinica = id_clinica;
                         pacienteModel.clinica = clinicaModel;
+                        string nombres_viejo =  this.paciente.nombre + "_" + this.paciente.apellidos;
                         // new Actualizar_Antecedentes(pacienteModel).ShowDialog();
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
-                            admin.Main.Content = new Page7_Actualizar(pacienteModel); ;
+                            admin.Main.Content = new Page7_Actualizar(pacienteModel,nombres_viejo,null,""); ;
                     }
                     else
                     {
@@ -210,6 +205,9 @@ namespace bonita_smile_v1
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            bool eliminarArchivo = true;
+            string rutaArchivoEliminar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+
             if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -224,22 +222,105 @@ namespace bonita_smile_v1
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
                     if (email_correcto)
                     {
-                        bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                        if (inserto)
+                        string viejo = this.paciente.nombre + "_" + this.paciente.apellidos;
+                        string nuevo = txtNombre.Text + "_" + txtApellidos.Text;
+                        if (viejo.Equals(nuevo))
                         {
+                            if(foto.Equals(""))
+                            {
+                               bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                if (inserto)
+                                {
+                                    System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    pa = new Paciente(!bandera_online_offline);
+                                    pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                    {
+                                        admin.Main.Content = new Page6();
+                                    }
+                                     
+                                }
+                            }
+                            else 
+                            {
+                                bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                if (inserto)
+                                {
+                                    System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    pa = new Paciente(!bandera_online_offline);
+                                    pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                    {
+                                        admin.Main.Content = new Page6();
+                                    }
 
-
-
-                            //vu.refrescar_listview(this.usu, usu, lv_aux);
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            pa = new Paciente(!bandera_online_offline);
-                            pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                }
+                            }
                         }
                         else
                         {
+                            if (foto.Equals(""))
+                            {
+                                bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                if (inserto)
+                                {
+                                    System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    pa = new Paciente(!bandera_online_offline);
+                                    pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                    {
+                                        admin.Main.Content = new Page6();
+                                    }
 
-                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                string nombre_nuevo_foto = txtNombre.Text + "_" + txtApellidos.Text + "_" + id_pacientes + ".jpg";
+                                nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
+                                bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                if (inserto)
+                                {
+                                    renombrar(this.paciente.foto, nombre_nuevo_foto);
+                                    string destFile2 = System.IO.Path.Combine(@"C:\fotos_offline\", nombre_nuevo_foto);
+                                    System.IO.File.Copy(@"C:\bs\" + nombre_nuevo_foto, destFile2, true);
+                                    Escribir_Archivo ea = new Escribir_Archivo();
+                                    ea.escribir_imagen_eliminar(foto, @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                                    System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    pa = new Paciente(!bandera_online_offline);
+                                   bool actualizo= pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    if(actualizo)
+                                    {
+                                        var datos = ea.leer(rutaArchivoEliminar);
+
+                                        foreach (string imagen in datos)
+                                        {
+                                            Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                                            bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+                                            if (!verdad)
+                                                eliminarArchivo = false;
+                                        }
+
+                                        if (eliminarArchivo)
+                                        {
+                                            System.Windows.MessageBox.Show("elimino Archivo");
+                                            ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                                            File.Delete(@"C:\backup_bs\eliminar_imagen_temporal.txt");
+                                            bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"C:\bs\");
+
+                                        }
+                                    }
+
+                                   
+
+                                }
+                            }
                         }
+                         
                     }
                     else
                     {
@@ -257,6 +338,101 @@ namespace bonita_smile_v1
                     }
                 }
             }       
+        }
+
+        public void renombrar (string nombre_viejo, string nombre_nuevo)
+        {
+            string sourceFile;
+        
+                sourceFile = @"C:\bs\";
+
+            // Create a FileInfo  
+            System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile + nombre_viejo);
+            // Check if file is there  
+            if (fi.Exists)
+            {
+                System.Windows.MessageBox.Show("Si esta");
+                // Move file with a new name. Hence renamed.  
+                fi.MoveTo(sourceFile + nombre_nuevo);
+                //string destFile = System.IO.Path.Combine(@"C:\bs\", nombre_nuevo);
+                //System.IO.File.Copy(@"C:\fotos_offline\" + nombre_nuevo, destFile, true);
+                System.Windows.MessageBox.Show("se pudo bitches");
+            }
+        }
+
+        public static bool DeleteFileOnServer(Uri serverUri, string ftpUsername, string ftpPassword)
+        {
+
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+
+                //If you need to use network credentials
+                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+                //additionally, if you want to use the current user's network credentials, just use:
+                //System.Net.CredentialCache.DefaultNetworkCredentials
+
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+                Console.WriteLine("Delete status: {0}", response.StatusDescription);
+                response.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool SubirFicheroStockFTP(string foto, string ruta)
+        {
+            bool verdad;
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(
+                        "ftp://jjdeveloperswdm.com" +
+                        "/" +
+                       foto);
+
+                string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                        ruta,
+                        foto);
+
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+
+                request.Credentials = new NetworkCredential(
+                        "bonita_smile@jjdeveloperswdm.com",
+                        "bonita_smile");
+
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = false;
+
+                using (var fileStream = File.OpenRead(filePath))
+                {
+                    using (var requestStream = request.GetRequestStream())
+                    {
+                        fileStream.CopyTo(requestStream);
+                        requestStream.Close();
+                    }
+                }
+
+                var response = (FtpWebResponse)request.GetResponse();
+
+                response.Close();
+                verdad = true;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("Error " + ex.Message + " " + ex.StackTrace);
+                verdad = false;
+                //System.Windows.MessageBox.Show("Error " + ex.Message + " " + ex.StackTrace);
+
+
+            }
+            return verdad;
+
         }
     }
 }

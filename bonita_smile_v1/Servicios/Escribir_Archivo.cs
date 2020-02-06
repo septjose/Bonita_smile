@@ -13,6 +13,7 @@ namespace bonita_smile_v1.Servicios
     class Escribir_Archivo
     {
         string ruta = @"C:\backup_bs\script_temporal.txt";
+        string ruta_borrar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
         List<string> abonos = new List<string>();
         List<string> carpeta_archivos = new List<string>();
         List<string> clinica = new List<string>();
@@ -124,6 +125,44 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
+        public void escribir_imagen_eliminar(string script, string ruta)
+        {
+            //FileAttributes attributes = File.GetAttributes(ruta);
+            FileStream fs = null;
+            try
+            {
+
+                if (File.Exists(ruta))
+                {
+                    SetFileReadAccess(ruta, false);
+                    // Create the file, or overwrite if the file exists.
+                    StreamWriter sw = new StreamWriter(ruta, true);
+                    sw.WriteLine(script);
+                    sw.Close();
+                    File.SetAttributes(ruta, File.GetAttributes(ruta) | FileAttributes.Hidden);
+                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
+                    SetFileReadAccess(ruta, true);
+                }
+                else
+                {
+                    fs = new FileStream(ruta, FileMode.Create, FileAccess.Write);
+                    fs.Close();
+                    StreamWriter sw = new StreamWriter(ruta, true);
+                    sw.WriteLine(script);
+                    sw.Close();
+                    File.SetAttributes(ruta, File.GetAttributes(ruta) | FileAttributes.Hidden);
+                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
+                    SetFileReadAccess(ruta, true);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Archivo no encontrado");
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
         private  FileAttributes RemoveAttribute(FileAttributes attributes, FileAttributes attributesToRemove)
         {
             return attributes & ~attributesToRemove;
@@ -137,9 +176,18 @@ namespace bonita_smile_v1.Servicios
                 string linea = "";
                 while ((linea = sr.ReadLine()) != null)
                 {
+                    if(linea.Equals(""))
+                    {
+                        MessageBox.Show("esta vacio");
+                    }else
+                    {
+                        datosArchivo.Add(linea);
+                    }
+
+
                     //Console.WriteLine(s);
                     //MessageBox.Show(s);
-                    datosArchivo.Add(linea);
+                    
                 }
             }
             return datosArchivo;
@@ -560,8 +608,70 @@ namespace bonita_smile_v1.Servicios
                 return lista=null;
             }
            
-
            
         }
+
+        public void escribir_fotos_borrar(string nombre_foto)
+        {
+            //FileAttributes attributes = File.GetAttributes(ruta);
+            FileStream fs = null;
+            try
+            {
+
+                if (File.Exists(ruta_borrar))
+                {
+                    SetFileReadAccess(ruta_borrar, false);
+                    // Create the file, or overwrite if the file exists.
+                    StreamWriter sw = new StreamWriter(ruta_borrar, true);
+                    sw.WriteLine(nombre_foto);
+                    sw.Close();
+                    File.SetAttributes(ruta, File.GetAttributes(ruta_borrar) | FileAttributes.Hidden);
+                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
+                    SetFileReadAccess(ruta_borrar, true);
+                }
+                else
+                {
+                    fs = new FileStream(ruta_borrar, FileMode.Create, FileAccess.Write);
+                    fs.Close();
+                    StreamWriter sw = new StreamWriter(ruta_borrar, true);
+                    sw.WriteLine(nombre_foto);
+                    sw.Close();
+                    File.SetAttributes(ruta, File.GetAttributes(ruta_borrar) | FileAttributes.Hidden);
+                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
+                    SetFileReadAccess(ruta_borrar, true);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Archivo no encontrado");
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        public List<string> obtener_nombre_foto_eliminar()
+        {
+            List<string> lista = new List<string>();
+            if (File.Exists(ruta_borrar))
+            {
+                using (StreamReader sr = File.OpenText(ruta_borrar))
+                {
+
+                    string nombre_foto = "";
+                    while ((nombre_foto = sr.ReadLine()) != null)
+                    {
+                        lista.Add(nombre_foto);
+                    }
+                    return lista;
+                }
+            }
+            else
+            {
+                return lista = null;
+            }
+        }
+
+
+
     }
 }

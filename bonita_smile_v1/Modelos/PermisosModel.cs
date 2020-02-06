@@ -8,9 +8,19 @@ namespace bonita_smile_v1.Modelos
 {
     public class PermisosModel
     {
-        public ClinicaModel clinica { get; set; }
-        public UsuarioModel usuario { get; set; }
+        public string id_permiso { get; set; }
 
-        public string fecha { get; set; }
+        public string nombre_sucursal { get; set; }
+
+        public string id_clinica {get;set;}
+
+        public string nombre { get; set; }
+        public string apellidos { get; set; }
+        public string id_usuario { get; set; }
+
+        public string alias { get; set; }
+       
+
+        
     }
 }

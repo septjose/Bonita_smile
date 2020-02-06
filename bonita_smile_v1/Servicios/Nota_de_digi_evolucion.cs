@@ -102,12 +102,14 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarNota_de_digi_evolucion(string id_paciente, string id_motivo, string descripcion, string fecha)
+        public bool insertarNota_de_digi_evolucion(string id_paciente, string id_motivo, string descripcion_motivo, string descripcion, string fecha)
         {
             Seguridad seguridad = new Seguridad();
+            string auxiliar_identificador_nota = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha + DateTime.Now);
 
-            string auxiliar_identificador = "";
-            auxiliar_identificador = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha + DateTime.Now);
+            string nombre_carpeta = descripcion + "_" + DateTime.Now.ToString("dd/MM/yyyy");
+            string auxiliar_identificador_carpeta = seguridad.SHA1(nombre_carpeta + DateTime.Now);
+
             bool internet = ti.Test();
 
             try
@@ -131,12 +133,23 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','<!--" + auxiliar_identificador + "-->')";
+
+                    // -----------HACER TRANSACCION-------- -/
+                     query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador) VALUES('" + auxiliar_identificador_nota + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','<!--" + auxiliar_identificador_nota + "-->');";
+                    query = query + "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,id_motivo,auxiliar_identificador,id_nota) VALUES('" + auxiliar_identificador_carpeta + "','" + nombre_carpeta + "','" + id_paciente + "','" + id_motivo + "','<!--" + auxiliar_identificador_carpeta + "-->','" + auxiliar_identificador_nota + "');";
 
                     conexionBD.Open();
+                    //cmd = new MySqlCommand(query, conexionBD);
+                    //cmd.ExecuteReader();
+
+                    //conexionBD.Close();
+
+                    //conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
+
                     conexionBD.Close();
+                    // ---------------------------------------/
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");

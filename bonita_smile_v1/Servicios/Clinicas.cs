@@ -24,6 +24,88 @@ namespace bonita_smile_v1.Servicios
             this.online = online;
         }
 
+
+        public List<PermisosModel> Mostrar_Permisos_socio(int id_rol,List<string>lista)
+        {
+            List<PermisosModel> listaPermisos = new List<PermisosModel>();
+            foreach(var id in lista)
+            {
+                query = "select permisos.id_permiso,clinica.nombre_sucursal,clinica.id_clinica,usuario.nombre,usuario.apellidos,usuario.id_usuario,usuario.alias from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where rol.id_rol=" + id_rol+" and clinica.id_clinica='"+id+"'";
+
+                try
+                {
+                    conexionBD.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        PermisosModel permisosModel = new PermisosModel();
+
+
+                        permisosModel.id_permiso = reader[0].ToString();
+                        permisosModel.nombre_sucursal = reader[1].ToString();
+                        permisosModel.id_clinica = reader[2].ToString();
+                        permisosModel.nombre = reader[3].ToString();
+                        permisosModel.apellidos = reader[4].ToString();
+                        permisosModel.id_usuario = reader[5].ToString();
+                        permisosModel.alias = reader[6].ToString();
+
+
+                        listaPermisos.Add(permisosModel);
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                conexionBD.Close();
+            }
+            
+            return listaPermisos;
+
+        }
+
+
+        public List<PermisosModel> Mostrar_Permisos(int id_rol)
+        {
+            List<PermisosModel> listaPermisos = new List<PermisosModel>();
+            query = "select permisos.id_permiso,clinica.nombre_sucursal,clinica.id_clinica,usuario.nombre,usuario.apellidos,usuario.id_usuario,usuario.alias from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where rol.id_rol="+id_rol;
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    PermisosModel permisosModel = new PermisosModel();
+
+
+                    permisosModel.id_permiso = reader[0].ToString();
+                    permisosModel.nombre_sucursal = reader[1].ToString();
+                    permisosModel.id_clinica = reader[2].ToString();
+                    permisosModel.nombre = reader[3].ToString();
+                    permisosModel.apellidos = reader[4].ToString();
+                    permisosModel.id_usuario = reader[5].ToString();
+                    permisosModel.alias = reader[6].ToString();
+
+
+                    listaPermisos.Add(permisosModel);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return listaPermisos;
+
+        }
+
         public List<ClinicaModel> MostrarClinica()
         {
             List<ClinicaModel> listaClinica = new List<ClinicaModel>();
@@ -81,6 +163,50 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     query = "DELETE FROM clinica where id_clinica='" + id_clinica + "'";
+
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                }
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return false;
+            }
+        }
+
+        public bool eliminar_Permiso(string id_permiso)
+        {
+
+            bool internet = ti.Test();
+            try
+            {
+
+                MySqlCommand cmd; ;
+                if (online)
+                {
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                    }
+                }
+                else
+                {
+                    query = "DELETE FROM permisos where id_permiso='" + id_permiso + "'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);

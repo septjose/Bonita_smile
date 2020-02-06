@@ -93,17 +93,17 @@ namespace bonita_smile_v1.Interfaz.Clinica
 
         private void listViewItem1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main2.Content = new Page4();
+            Main2.Content = new Pagina_Clinica(this.id);
         }
 
         private void listViewItem2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main2.Content = new Page5();
+            Main2.Content = new Pagina_Clinica(this.id);
         }
 
         private void listViewItem3_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main2.Content = new Page6();
+            Main2.Content = new Pagina_Clinica(this.id);
         }
 
     }

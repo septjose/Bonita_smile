@@ -227,7 +227,7 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Frame   x:Name="Main2"  NavigationUIVisibility="Hidden" Margin="0,52,0.333,0" Grid.ColumnSpan="2"/>
+            <Frame   x:Name="Main2"  NavigationUIVisibility="Visible" Margin="0,52,0.333,0" Grid.ColumnSpan="2"/>
             <!--<ListView x:Name="lv_Paciente" HorizontalAlignment="Center" Height="283" Margin="24,224,0,0" VerticalAlignment="Top" Width="724" Foreground="Black" >
                 <ListView.View >
                     <GridView >

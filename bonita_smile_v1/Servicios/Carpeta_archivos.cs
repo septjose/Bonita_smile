@@ -42,7 +42,7 @@ namespace bonita_smile_v1.Servicios
 
                     carpeta_ArchivosModel.id_carpeta = reader[0].ToString();
                     carpeta_ArchivosModel.nombre_carpeta = reader[1].ToString();
-                    carpeta_ArchivosModel.id_paciente =reader[2].ToString();
+                    carpeta_ArchivosModel.id_paciente = reader[2].ToString();
                     carpeta_ArchivosModel.id_motivo = reader[3].ToString();
 
                     listaCarpeta_archivos.Add(carpeta_ArchivosModel);
@@ -56,9 +56,38 @@ namespace bonita_smile_v1.Servicios
             return listaCarpeta_archivos;
         }
 
+        public Carpeta_archivosModel carpetaArchivos(string id_nota)
+        {
+            Carpeta_archivosModel listaCarpeta_archivos = new Carpeta_archivosModel();
+            query = "SELECT * FROM carpeta_archivos where id_nota='" + id_nota + "'";
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Carpeta_archivosModel carpeta_ArchivosModel = new Carpeta_archivosModel();
+
+                    carpeta_ArchivosModel.id_carpeta = reader[0].ToString();
+                    carpeta_ArchivosModel.nombre_carpeta = reader[1].ToString();
+                    carpeta_ArchivosModel.id_paciente = reader[2].ToString();
+                    carpeta_ArchivosModel.id_motivo = reader[3].ToString();
+                    carpeta_ArchivosModel.id_nota = reader[4].ToString();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return listaCarpeta_archivos;
+        }
         public bool eliminarCarpeta_archivos(string id_carpeta)
         {
-            
             bool internet = ti.Test();
             try
             {
@@ -69,6 +98,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -76,6 +106,7 @@ namespace bonita_smile_v1.Servicios
 
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -89,8 +120,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+
+                    return true;
                 }
-                return true;
             }
             catch (MySqlException ex)
             {
@@ -100,12 +132,12 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarCarpeta_archivos(string nombre_carpeta, string id_paciente,string id_motivo)
+        public bool insertarCarpeta_archivos(string nombre_carpeta, string id_paciente, string id_motivo)
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
-            auxiliar_identificador = seguridad.SHA1(nombre_carpeta + id_paciente+DateTime.Now);
-            
+            auxiliar_identificador = seguridad.SHA1(nombre_carpeta + id_paciente + DateTime.Now);
+
             bool internet = ti.Test();
 
             try
@@ -129,7 +161,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,id_motivo,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre_carpeta + "','" + id_paciente + "','"+id_motivo+"','<!--" + auxiliar_identificador + "-->')";
+                    query = "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,id_motivo,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre_carpeta + "','" + id_paciente + "','" + id_motivo + "','<!--" + auxiliar_identificador + "-->')";
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
@@ -148,9 +180,9 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarCarpeta_archivos(string id_carpeta, string nombre_carpeta, string id_paciente,string id_motivo)
+        public bool actualizarCarpeta_archivos(string id_carpeta, string nombre_carpeta, string id_paciente, string id_motivo)
         {
-            
+
 
             bool internet = ti.Test();
             try
@@ -175,7 +207,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE carpeta_archivos set nombre_carpeta = '" + nombre_carpeta + "',id_paciente = '" + id_paciente + "',id_motivo='"+id_motivo+"',auxiliar_identificador = '" + id_carpeta + "' where id_carpeta = '" + id_carpeta + "'";
+                    query = "UPDATE carpeta_archivos set nombre_carpeta = '" + nombre_carpeta + "',id_paciente = '" + id_paciente + "',id_motivo='" + id_motivo + "',auxiliar_identificador = '" + id_carpeta + "' where id_carpeta = '" + id_carpeta + "'";
                     Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -198,7 +230,7 @@ namespace bonita_smile_v1.Servicios
         public string MostrarCarpeta_Archivos_Update(string id_carpeta)
         {
             string aux_identi = "";
-            query = "SELECT auxiliar_identificador from carpeta_archivos where id_carpeta='" + id_carpeta+"'";
+            query = "SELECT auxiliar_identificador from carpeta_archivos where id_carpeta='" + id_carpeta + "'";
 
             try
             {
@@ -221,10 +253,10 @@ namespace bonita_smile_v1.Servicios
             conexionBD.Close();
             return aux_identi;
         }
-        public List<Carpeta_archivosModel> MostrarCarpeta_archivos_paciente(string id_paciente)
+        public List<Carpeta_archivosModel> MostrarCarpeta_archivos_paciente(string id_paciente,string id_motivo)
         {
             List<Carpeta_archivosModel> listaCarpeta_archivos = new List<Carpeta_archivosModel>();
-            query = "SELECT * FROM carpeta_archivos where id_paciente='" + id_paciente+"'";
+            query = "SELECT * FROM carpeta_archivos where id_paciente='" + id_paciente + "' and id_motivo='"+id_motivo+"'" ;
 
             try
             {
@@ -240,7 +272,8 @@ namespace bonita_smile_v1.Servicios
                     carpeta_ArchivosModel.id_carpeta = reader[0].ToString();
                     carpeta_ArchivosModel.nombre_carpeta = reader[1].ToString();
                     carpeta_ArchivosModel.id_paciente = reader[2].ToString();
-
+                    carpeta_ArchivosModel.id_motivo = reader[3].ToString();
+                    carpeta_ArchivosModel.id_nota = reader[4].ToString();
                     listaCarpeta_archivos.Add(carpeta_ArchivosModel);
                 }
             }

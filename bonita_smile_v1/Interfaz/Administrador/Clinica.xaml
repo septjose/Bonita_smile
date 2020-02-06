@@ -13,14 +13,14 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition  Height="100" />
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="350"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="300"/>
 
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="800"/>
+                <ColumnDefinition Width="1000"/>
                 <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
@@ -28,11 +28,11 @@
                     <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Clinica" Margin="0,0,0,0" VerticalAlignment="Center"/>
                 </Grid>
             </Border>
-            
-            <Border VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Margin="0 0 0 0" >
-                <Grid  Margin=" 10"  HorizontalAlignment="Center" Height="350" VerticalAlignment="Center" Width="500">
 
-                    <ListView  x:Name="lv_Clinica" Style="{StaticResource MetroListView}" Width="510" Height="450" HorizontalAlignment="Center" BorderBrush="AntiqueWhite" BorderThickness="1 1 1 1" >
+            <Border Grid.Row="2" Grid.Column="1" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " >
+                <Grid  Margin=" 10"  HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="1000">
+
+                    <ListView  x:Name="lv_Clinica" Style="{StaticResource MetroListView}" Width="650" Height="250" HorizontalAlignment="Center" BorderBrush="AntiqueWhite" BorderThickness="1 1 1 1" >
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -51,16 +51,17 @@
                         <ListView.View >
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}" >
 
-                                <GridViewColumn Header="Nombre Sucursal" Width="250" DisplayMemberBinding="{Binding nombre_sucursal}" />
+                                <GridViewColumn Header="Nombre sucursal" Width="250" DisplayMemberBinding="{Binding nombre_sucursal}" />
+
                                 <GridViewColumn Header="Color" Width="250" DisplayMemberBinding="{Binding color}" />
-                              
+
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </Grid>
 
             </Border>
-            <Border   Grid.Row="1" Grid.Column="1" Background="White"  BorderBrush="Silver" Margin="0 50 0 0" BorderThickness="1" CornerRadius="8 8 3 3 " Height="50" VerticalAlignment="Center">
+            <Border Grid.Row="1" Grid.Column="1" Background="White"  BorderBrush="Silver" Margin="0 20 0 0" BorderThickness="1" CornerRadius="8 8 3 3 " Height="50" VerticalAlignment="Top">
                 <DockPanel>
 
                     <Button  Content="Ingresar" HorizontalAlignment="Left" Margin="250,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" Click="Button_Click_1">
@@ -90,7 +91,7 @@
                         </Button.Template>
                     </Button>
 
-                    <Button  HorizontalAlignment="Center" Height="auto" Margin="70,0,0,0" VerticalAlignment="Center" Width="auto" Click="Button_Click_2">
+                    <Button  HorizontalAlignment="Center" Height="auto" Margin="150,0,0,0" VerticalAlignment="Center" Width="auto" Click="Button_Click_2">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
@@ -118,7 +119,7 @@
                     </Button>
 
 
-                    <Button  HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" Click="Button_Click">
+                    <Button  HorizontalAlignment="Left" Margin="150,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" Click="Button_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
@@ -153,151 +154,7 @@
 
 
 
-
         </Grid>
 
     </ScrollViewer>
 </Page>
-
-<!--<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition  Height="100" />
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="100"/>
-
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="500"/>
-                <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto" VerticalAlignment="Center">
-                <Grid Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Clinica" Margin="0,0,0,0" VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-
-            <Border Grid.Row="1" Grid.Column="1" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 ">
-                <Grid Margin=" 10"  HorizontalAlignment="Center" Height="200" Width="500" VerticalAlignment="Center">
-                    <ListView  x:Name="lv_Clinica" HorizontalAlignment="Center" Height="300" Margin="0.2,0,0,0" VerticalAlignment="Top" Width="500" Style="{StaticResource MetroListView}" SelectionChanged="lv_Clinica_SelectionChanged" >
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                <Setter Property="Height" Value="30"/>
-                                <Setter Property="Background" Value="White"/>
-                                <Setter Property="Control.Background" Value="White" />
-                                <Setter Property="Control.BorderThickness" Value="0.2" />
-                                <Setter Property="Control.BorderBrush" Value="Black" />
-                                <Setter Property="FontFamily" Value="Arial"/>
-                                <Setter Property="FontSize" Value="13"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.View >
-                            <GridView  ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
-
-                                <GridViewColumn Header="Nombre de la sucursal" Width="250" DisplayMemberBinding="{Binding nombre_sucursal}" />
-                                <GridViewColumn Header="Color" Width="250" DisplayMemberBinding="{Binding color}" />
-
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </Border>
-
-        
-            <Border Grid.Row="2" Grid.Column="1" Background="White"  BorderBrush="Silver" Margin="0 20 0 0" BorderThickness="1" CornerRadius="8 8 3 3 " Height="80" VerticalAlignment="Top">
-                <DockPanel>
-
-                    <Button  Content="Ingresar" HorizontalAlignment="Left" Margin="95,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" Click="Button_Click_1">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                    <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\agregar.png">
-                                    </Image>
-                                    <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsPressed" Value="true">
-                                        <Setter Property="RenderTransform" TargetName="grid">
-                                            <Setter.Value>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                                    <SkewTransform AngleX="0" AngleY="0"/>
-                                                    <RotateTransform Angle="0"/>
-                                                    <TranslateTransform X="0" Y="0"/>
-                                                </TransformGroup>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-                    <Button  HorizontalAlignment="Center" Height="auto" Margin="70,0,0,0" VerticalAlignment="Center" Width="auto" Click="Button_Click_2">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                    <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\actualizar.png">
-                                    </Image>
-                                    <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsPressed" Value="true">
-                                        <Setter Property="RenderTransform" TargetName="grid">
-                                            <Setter.Value>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                                    <SkewTransform AngleX="0" AngleY="0"/>
-                                                    <RotateTransform Angle="0"/>
-                                                    <TranslateTransform X="0" Y="0"/>
-                                                </TransformGroup>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-
-                    <Button  HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" Click="Button_Click">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                    <Image Margin="0,0,0,0" Width="50" Height="50" OpacityMask="{x:Null}" Source="C:\bs\eliminar.png">
-                                    </Image>
-                                    <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsPressed" Value="true">
-                                        <Setter Property="RenderTransform" TargetName="grid">
-                                            <Setter.Value>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                                    <SkewTransform AngleX="0" AngleY="0"/>
-                                                    <RotateTransform Angle="0"/>
-                                                    <TranslateTransform X="0" Y="0"/>
-                                                </TransformGroup>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-
-
-                </DockPanel>
-            </Border>
-
-        </Grid>
-    </ScrollViewer>
-</Page>-->

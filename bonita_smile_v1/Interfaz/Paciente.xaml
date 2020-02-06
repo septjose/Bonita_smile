@@ -8,9 +8,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="900"
       Title="Page6">
-    <Border>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide="True" Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True" Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="True" >
-            <Grid HorizontalAlignment="Center" >
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
+        <Grid HorizontalAlignment="Center" >
 
                 <Grid.RowDefinitions>
                     <RowDefinition  Height="90" />
@@ -38,10 +38,10 @@
             
 
 
-                <Border Grid.Row="3"  Grid.Column="1" Background="GhostWhite"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 "  >
+                <Border Grid.Row="3"  Grid.Column="1" Background="GhostWhite"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 "  Width="auto">
 
                     <Grid Margin="10">
-                        <ListView   x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top"  >
+                        <ListView   x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top" Width="auto" >
 
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
@@ -90,10 +90,11 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     
-                                    <GridViewColumn Header="Telefono" Width="250" DisplayMemberBinding="{Binding telefono}" />
-                                    <GridViewColumn Header="Email" Width="250" DisplayMemberBinding="{Binding email}" />
-                                    
-                                    <!--<GridViewColumn Header="Marketing" Width="250" DisplayMemberBinding="{Binding marketing}" />-->
+                                    <GridViewColumn Header="Telefono" Width="150" DisplayMemberBinding="{Binding telefono}" />
+                                    <GridViewColumn Header="Email" Width="150" DisplayMemberBinding="{Binding email}" />
+                                <GridViewColumn Header="Membresia" Width="150" DisplayMemberBinding="{Binding membresia}" />
+
+                                <!--<GridViewColumn Header="Marketing" Width="250" DisplayMemberBinding="{Binding marketing}" />-->
 
                                 </GridView>
                             </ListView.View>
@@ -200,5 +201,5 @@
 
             </Grid>
         </ScrollViewer>
-    </Border>
+
 </Page>

@@ -1,6 +1,6 @@
 ﻿using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
-using bonita_smile_v1.Interfaz.Marketing;
+
 
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
@@ -63,7 +63,7 @@ namespace bonita_smile_v1
             CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource).Refresh();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        /*private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
             //verificar si hay internet   -listo
@@ -145,7 +145,7 @@ namespace bonita_smile_v1
                 System.Windows.Forms.MessageBox.Show("No hay conexión a internet intente más tarde.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-        }
+        }*/
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -157,23 +157,15 @@ namespace bonita_smile_v1
                 //System.Windows.MessageBox.Show("hi");
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
-                Market market = System.Windows.Application.Current.Windows.OfType<Market>().FirstOrDefault();
-
-                if (admin != null)
+                if(clin!=null)
                 {
-                    admin.Main.Content = new Page2(paciente);
+                   
+                        clin.Main2.Content = new Datos_Personales_Doctor(paciente);
+                    
                 }
 
-                else
-                if (clin != null)
-                {
-                    clin.Main2.Content = new Page2(paciente);
-                }
-                else
-                    if (market != null)
-                {
-                    market.Main3.Content = new Page2(paciente);
-                }
+               
+                
 
 
             }

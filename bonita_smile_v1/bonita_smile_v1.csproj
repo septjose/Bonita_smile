@@ -240,6 +240,12 @@
     <Compile Include="Agregar_Nota_Evolucion.Designer.cs">
       <DependentUpon>Agregar_Nota_Evolucion.cs</DependentUpon>
     </Compile>
+    <Compile Include="EliminarMembresia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EliminarMembresia.Designer.cs">
+      <DependentUpon>EliminarMembresia.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmailSender.cs" />
     <Compile Include="Agregar_Carpetas.cs">
       <SubType>Form</SubType>
@@ -257,6 +263,12 @@
     <Compile Include="IngresarMotivo.Designer.cs">
       <DependentUpon>IngresarMotivo.cs</DependentUpon>
     </Compile>
+    <Compile Include="InsertarMembresia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertarMembresia.Designer.cs">
+      <DependentUpon>InsertarMembresia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\Administrador\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
@@ -266,11 +278,71 @@
     <Compile Include="Interfaz\Administrador\Ganancias_Clinica.xaml.cs">
       <DependentUpon>Ganancias_Clinica.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\Administrador\Pagina_Permisos.xaml.cs">
+      <DependentUpon>Pagina_Permisos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\Clinica\Clin.xaml.cs">
       <DependentUpon>Clin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaz\Marketing\Market.xaml.cs">
-      <DependentUpon>Market.xaml</DependentUpon>
+    <Compile Include="Interfaz\Clinica\Datos_Personales_Doctor.xaml.cs">
+      <DependentUpon>Datos_Personales_Doctor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Clinica\Notas_Doctor.xaml.cs">
+      <DependentUpon>Notas_Doctor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Recepcionista\Actualizar_Paciente_Recepcionista.xaml.cs">
+      <DependentUpon>Actualizar_Paciente_Recepcionista.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Recepcionista\Datos_personales_recepcionista.xaml.cs">
+      <DependentUpon>Datos_personales_recepcionista.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Recepcionista\Ingresar_Paciente_Recepcionista.xaml.cs">
+      <DependentUpon>Ingresar_Paciente_Recepcionista.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Recepcionista\Pacientes_Recepcionista.xaml.cs">
+      <DependentUpon>Pacientes_Recepcionista.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Recepcionista\Recep.xaml.cs">
+      <DependentUpon>Recep.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Recepcionista\Recepcionista_Principal.xaml.cs">
+      <DependentUpon>Recepcionista_Principal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Actualizar_paciente_socio.xaml.cs">
+      <DependentUpon>Actualizar_paciente_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Actualizar_Permiso_recepcionista_socio.xaml.cs">
+      <DependentUpon>Actualizar_Permiso_recepcionista_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Actualizar_usuario_socio.xaml.cs">
+      <DependentUpon>Actualizar_usuario_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Ganancias_socio.xaml.cs">
+      <DependentUpon>Ganancias_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Ingresar_paciente_socio.xaml.cs">
+      <DependentUpon>Ingresar_paciente_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Ingresar_Permisos_Recepcionista_socio.xaml.cs">
+      <DependentUpon>Ingresar_Permisos_Recepcionista_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Ingresar_usuario_socio.xaml.cs">
+      <DependentUpon>Ingresar_usuario_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Pacientes_socio.xaml.cs">
+      <DependentUpon>Pacientes_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Pagina_Socio.xaml.cs">
+      <DependentUpon>Pagina_Socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Permisos_Recepcionista_socio.xaml.cs">
+      <DependentUpon>Permisos_Recepcionista_socio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Soc.xaml.cs">
+      <DependentUpon>Soc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\Socio\Socio_usuarios.xaml.cs">
+      <DependentUpon>Socio_usuarios.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageBoxAbono.cs">
       <SubType>Form</SubType>
@@ -348,9 +420,6 @@
     <Compile Include="Interfaz\Administrador\Ingresar_Permisos.xaml.cs">
       <DependentUpon>Ingresar_Permisos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaz\Marketing_Princpial.xaml.cs">
-      <DependentUpon>Marketing_Princpial.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interfaz\Messenger_Principal.xaml.cs">
       <DependentUpon>Messenger_Principal.xaml</DependentUpon>
     </Compile>
@@ -393,7 +462,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interfaz\Administrador\Pagina_Permisos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaz\Clinica\Clin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Clinica\Datos_Personales_Doctor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Clinica\Notas_Doctor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -409,10 +490,6 @@
       <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Interfaz\Marketing\Market.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Interfaz\Administrador\Principal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -505,11 +582,79 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interfaz\Marketing_Princpial.xaml">
+    <Page Include="Interfaz\Messenger_Principal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interfaz\Messenger_Principal.xaml">
+    <Page Include="Interfaz\Recepcionista\Actualizar_Paciente_Recepcionista.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Recepcionista\Datos_personales_recepcionista.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Recepcionista\Ingresar_Paciente_Recepcionista.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Recepcionista\Pacientes_Recepcionista.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Recepcionista\Recep.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Recepcionista\Recepcionista_Principal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Actualizar_paciente_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Actualizar_Permiso_recepcionista_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Actualizar_usuario_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Ganancias_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Ingresar_paciente_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Ingresar_Permisos_Recepcionista_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Ingresar_usuario_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Pacientes_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Pagina_Socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Permisos_Recepcionista_socio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Soc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Socio\Socio_usuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -560,8 +705,14 @@
     <EmbeddedResource Include="Agregar_Nota_Evolucion.resx">
       <DependentUpon>Agregar_Nota_Evolucion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EliminarMembresia.resx">
+      <DependentUpon>EliminarMembresia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IngresarMotivo.resx">
       <DependentUpon>IngresarMotivo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertarMembresia.resx">
+      <DependentUpon>InsertarMembresia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MessageBoxAbono.resx">
       <DependentUpon>MessageBoxAbono.cs</DependentUpon>

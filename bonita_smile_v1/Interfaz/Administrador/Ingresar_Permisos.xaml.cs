@@ -31,12 +31,14 @@ namespace bonita_smile_v1
         Conexion obj = new Conexion();
         string valor = "",valor2="";
         bool bandera_online_offline = false;
-        public Pagina_Ingresar_Permisos()
+        int id_rol = 0;
+        public Pagina_Ingresar_Permisos(int id_rol)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.conexionBD2 = obj.conexion(bandera_online_offline);
+            this.id_rol = id_rol;
             InitializeComponent();
-            llenar_Combo_Usuario();
+            llenar_Combo_Usuario(id_rol);
             llenar_Combo_Clinica();
         }
 
@@ -70,9 +72,9 @@ namespace bonita_smile_v1
             conexionBD2.Close();
         }
 
-        public void llenar_Combo_Usuario()
+        public void llenar_Combo_Usuario(int id_rol)
         {
-            query = "SELECT * FROM usuario where usuario.id_rol=2 ";
+            query = "SELECT * FROM usuario where usuario.id_rol="+id_rol;
 
             try
             {
@@ -124,7 +126,8 @@ namespace bonita_smile_v1
                     c.insertar_Permisos(id_usuario, id_clinica);
                     Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                     if (admin != null)
-                        admin.Main.Content = new Page5();
+                        admin.Main.Content = new Pagina_Permisos(this.id_rol);
+
 
                 }
                 else

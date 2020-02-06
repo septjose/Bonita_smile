@@ -60,7 +60,7 @@ namespace bonita_smile_v1
                         System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
-                            admin.Main.Content = new Pagina_Ingresar_Permisos();
+                            admin.Main.Content = new Page5();
                     }
                     else
                     {

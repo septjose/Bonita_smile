@@ -28,6 +28,7 @@ using MySql.Data.MySqlClient;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Interfaz.Administrador;
 using System.Windows.Forms;
+using bonita_smile_v1.Interfaz.Recepcionista;
 
 namespace bonita_smile_v1
 {
@@ -145,23 +146,32 @@ namespace bonita_smile_v1
                     PacienteModel pacienteModel = new PacienteModel();
                     ClinicaModel clinicaModel = new ClinicaModel();
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
-                    if(email_correcto)
+                    if (email_correcto)
                     {
                         pacienteModel.apellidos = txtApellidos.Text;
                         pacienteModel.nombre = txtNombre.Text;
                         pacienteModel.direccion = txtDireccion.Text;
                         pacienteModel.telefono = txtTelefono.Text;
-                        pacienteModel.foto = txtNombre + "" + txtApellidos.Text;
+                        pacienteModel.foto = "";
                         pacienteModel.email = txtEmail.Text;
                         pacienteModel.marketing = 0;
                         clinicaModel.id_clinica = id_clinica;
                         //pacienteModel.id_clinica = int.Parse(txtclinica.Text.ToString());
                         pacienteModel.clinica = clinicaModel;
                         // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
+                        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
-                            admin.Main.Content = new Page7_Ingresar(pacienteModel); ;
+                        {
+                            admin.Main.Content = new Page7_Ingresar(pacienteModel,null,""); 
+                        }
+                        else
+                            if(recep!=null)
+                        {
+                            recep.Main3.Content = new Page7_Ingresar(pacienteModel,null,""); 
+                        }
+                           
                     }
                     else
                     {
@@ -205,11 +215,19 @@ namespace bonita_smile_v1
                         {
                             pa = new Paciente(true);
                             pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
+                            Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             if (admin != null)
+                            {
                                 admin.Main.Content = new Page6();
-                            System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            if(recep!=null)
+                            {
+                                recep.Main3.Content = new Page6();
+                                System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
 
                         }
                         else

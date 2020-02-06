@@ -1,5 +1,7 @@
 ﻿using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
+using bonita_smile_v1.Interfaz.Recepcionista;
+using bonita_smile_v1.Interfaz.Socio;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using System;
@@ -31,14 +33,14 @@ namespace bonita_smile_v1
 
         string id = "";
         string ruta = @"C:\bs\";
-        string ruta2 = @"C:\bs_auxiliar\";
+        
         PacienteModel paciente;
         bool bandera_online_offline = false;
         public Page2(PacienteModel paciente)
         {
             
             InitializeComponent();
-            rt_imagen.Fill= Imagen( paciente.foto);
+            rt_imagen.Fill= Imagen(paciente.foto);
             string color = paciente.clinica.color;
 
             
@@ -77,80 +79,46 @@ namespace bonita_smile_v1
 
         public ImageBrush Imagen(string filename)
         {
-            string rutisima = "";
-            string ruta3 = @"C:\bs\img1.jpg";
-            if (File.Exists(ruta + filename) && File.Exists(ruta2 + filename))
-            {
-                try
-                {
-                    File.Delete(ruta + filename);
-                    string destFile = System.IO.Path.Combine(@"C:\bs\", filename);
-                    //MessageBox.Show("el valor de result es " + result);
-                    System.IO.File.Copy(ruta2 + filename, destFile, true);
-                    File.Delete(ruta2 + filename);
-                    rutisima = ruta + filename;
-                    Image image = new Image();
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.UriSource = new System.Uri(rutisima);
-                    bi.EndInit();
-                    image.Source = bi;
-                    ImageBrush ib = new ImageBrush();
-                    ib.ImageSource = bi;
-                    return ib;
-                }
-                catch (Exception ex)
-                {
-                    rutisima = ruta2 + filename;
-                    Image image = new Image();
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.UriSource = new System.Uri(rutisima);
-                    bi.EndInit();
-                    image.Source = bi;
-                    ImageBrush ib = new ImageBrush();
-                    ib.ImageSource = bi;
-                    return ib;
-                }
-
-
-                //rt_imagen.Fill = ib;
-            }
-            else
+            ImageBrush ib = new ImageBrush();
+            BitmapImage bi = new BitmapImage();
+            string ruta2 = @"C:\bs\img1.jpg";
             if (File.Exists(ruta + filename))
             {
                 Image image = new Image();
-                BitmapImage bi = new BitmapImage();
+                //MessageBox.Show("se encontro la foto en " + filename);
+
+                //MessageBox.Show("A");
+                var stream = File.OpenRead(@"C:\bs\" + filename);
+                //MessageBox.Show("B");
                 bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta+filename);
+                //MessageBox.Show("C");
+                bi.CacheOption = BitmapCacheOption.OnLoad;
+                //MessageBox.Show("D");
+                bi.StreamSource = stream;
+                //MessageBox.Show("E");
                 bi.EndInit();
+                //MessageBox.Show("F");
+                stream.Close();
+                //MessageBox.Show("G");
+                stream.Dispose();
+                //MessageBox.Show("H");
+
+
                 image.Source = bi;
-                ImageBrush ib = new ImageBrush();
+
                 ib.ImageSource = bi;
                 return ib;
-            }
-            else
-            if (File.Exists(ruta2 + filename))
-            {
-                Image image = new Image();
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta2 + filename);
-                bi.EndInit();
-                image.Source = bi;
-                ImageBrush ib = new ImageBrush();
-                ib.ImageSource = bi;
-                return ib;
+                //rt_imagen.Fill = ib;
             }
             else
             {
                 Image image = new Image();
-                BitmapImage bi = new BitmapImage();
+                
                 bi.BeginInit();
-                bi.UriSource = new System.Uri(ruta3);
+                bi.UriSource = new System.Uri(ruta2);
                 bi.EndInit();
                 image.Source = bi;
-                ImageBrush ib = new ImageBrush();
+               
                 ib.ImageSource = bi;
                 return ib;
                 //rt_imagen.Fill = ib;
@@ -162,17 +130,31 @@ namespace bonita_smile_v1
             if (lvMotivo.SelectedItems.Count > 0)
             {
                 //System.Windows.MessageBox.Show("id_paciente :" + motivo.paciente.id_paciente.ToString() + "   " + "id_motivo   " + motivo.id_motivo.ToString());
-               
+
+                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
 
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
-
+                //Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                 if (admin != null)
-                    admin.Main.Content = new Page2_notas(paciente, motivo);
-                else
                 {
+                    admin.Main.Content = new Page2_notas(paciente, motivo);
+                }
+
+                else
+                if (clin != null)
+                {
+                    
                     clin.Main2.Content = new Page2_notas(paciente, motivo);
                 }
+                else
+                if (socio != null)
+                {
+
+                    socio.Main4.Content = new Page2_notas(paciente, motivo);
+                }
+
+
             }
             else
             {

@@ -19,6 +19,7 @@ namespace bonita_smile_v1.Servicios
         Test_Internet ti = new Test_Internet();
         Conexion obj2 = new Conexion();
         string ruta = @"c:\backup_bs\script_temporal.txt";
+        string ruta_borrar= @"c:\backup_bs\eliminar_imagen_temporal.txt";
 
         public Sincronizar()
         {
@@ -125,9 +126,15 @@ namespace bonita_smile_v1.Servicios
                         {
                             MessageBox.Show("NO ESTA"+ filename);
                             bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @"C:\bs\" + filename, 10);
-
+                            if(descargo)
+                            {
+                                MessageBox.Show("si descargo");
+                            }
+                            else
+                            {
+                                MessageBox.Show("no se descargo");
+                            }
                         }
-
 
                     }
                     else
@@ -257,7 +264,7 @@ namespace bonita_smile_v1.Servicios
                     var = var + reader[0].ToString() + "\n";
                     lista.Add(reader[0].ToString());
                 }
-                MessageBox.Show(lista.Count() + "" + var);
+                MessageBox.Show(lista.Count() + "\n" + var);
             }
             catch (Exception ex) { }
             return lista;
@@ -316,6 +323,7 @@ namespace bonita_smile_v1.Servicios
 
                             if (!query.Equals(""))
                             {
+                                MessageBox.Show("entro aqui" + query);
                                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                                 cmd.ExecuteReader();
                                 cmd.Dispose();
@@ -570,6 +578,74 @@ namespace bonita_smile_v1.Servicios
         }
 
 
+        public bool eliminar_fotos()
+        {
+            Escribir_Archivo ea = new Escribir_Archivo();
+            List<String> lista = new List<string>();
+            lista  = ea.obtener_nombre_foto_eliminar();
+
+            if (lista != null)
+            {
+                //CREAR TRANSACCION
+                
+                try
+                {
+                    
+                    foreach (var filename in lista)
+                    {
+                        if (!filename.Equals(""))
+                        {
+                            if (new Test_Internet().Test())
+                            {
+                                Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + filename);
+                                bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                            }
+                        }
+                    }
+                    
+
+                    ea.SetFileReadAccess(ruta_borrar, false);
+                    File.Delete(ruta_borrar);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex + "");
+                  
+                    return false;
+                }
+                
+            }
+
+            return false;
+        }
+
+
+        
+        public static bool DeleteFileOnServer(Uri serverUri, string ftpUsername, string ftpPassword)
+        {
+
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+
+                //If you need to use network credentials
+                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+                //additionally, if you want to use the current user's network credentials, just use:
+                //System.Net.CredentialCache.DefaultNetworkCredentials
+
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+                Console.WriteLine("Delete status: {0}", response.StatusDescription);
+                response.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
 
 

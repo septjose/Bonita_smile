@@ -51,12 +51,24 @@
                 <ListView.View >
                     <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}" >
 
-                        <GridViewColumn Header="Nombre Completo" Width="250" DisplayMemberBinding="{Binding nombre}" />
-                        <GridViewColumn Header="Apellidos" Width="250" DisplayMemberBinding="{Binding apellidos}" />
-                        <GridViewColumn Header="Alias" Width="250" DisplayMemberBinding="{Binding alias}" />
+                                <GridViewColumn Width="400" Header="Nombre Completo" >
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0} {1}">
+                                                        <Binding Path="nombre" />
+                                                        <Binding Path="apellidos" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Usuario" Width="250" DisplayMemberBinding="{Binding alias}" />
                         
                         <GridViewColumn Header="Rol" Width="250" DisplayMemberBinding="{Binding rol.descripcion}" />
-                                <GridViewColumn Header="Clinica" Width="250" DisplayMemberBinding="{Binding clinica}" />
+                               
                             </GridView>
                 </ListView.View>
             </ListView>

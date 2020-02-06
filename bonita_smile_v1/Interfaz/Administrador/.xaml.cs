@@ -1,6 +1,6 @@
 ﻿using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
-using bonita_smile_v1.Interfaz.Marketing;
+
 
 using bonita_smile_v1.Modelos;
 using System;
@@ -73,7 +73,7 @@ namespace bonita_smile_v1
                 //System.Windows.MessageBox.Show("hi");
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
-                Market market = System.Windows.Application.Current.Windows.OfType<Market>().FirstOrDefault();
+               // Market market = System.Windows.Application.Current.Windows.OfType<Market>().FirstOrDefault();
 
                 if (admin != null)
                 {
@@ -85,11 +85,11 @@ namespace bonita_smile_v1
                 {
                     clin.Main2.Content = new Page2(paciente);
                 }
-                else
-                    if(market != null)
-                {
-                    market.Main3.Content = new Page2(paciente);
-                }
+                //else
+                //    if(market != null)
+                //{
+                //    market.Main3.Content = new Page2(paciente);
+                //}
                     
 
             }
@@ -102,11 +102,33 @@ namespace bonita_smile_v1
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            //PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
+            //if (lv_Paciente.SelectedItems.Count > 0)
+            //{
+            //    if (paciente.membresia.Equals(""))
+            //    {
+            //        DialogResult resultado = new DialogResult();
+            //        Form mensaje = new InsertarMembresia(paciente);
+            //        resultado = mensaje.ShowDialog();
+            //    }
+            //    else
+            //    {
+            //        DialogResult resultado = new DialogResult();
+            //        Form mensaje = new EliminarMembresia(paciente);
+            //        resultado = mensaje.ShowDialog();
+            //    }
+
+            //}
+            //else
+            //{
+            //    System.Windows.MessageBox.Show("No se seleccionó ningún registro, error");
+            //}
 
             //verificar si hay internet   -listo
             //subir los scripts del archivo -listo
             //hacer respaldo y restaurar - listo
             //subir fotos a la nube - listo
+            //borrar fotos de la  nube listo
             //descargar las fotos   
 
             Test_Internet ti = new Test_Internet();
@@ -117,58 +139,68 @@ namespace bonita_smile_v1
                 //System.Windows.MessageBox.Show("hi");
                 try
                 {
-                  //  System.Windows.MessageBox.Show("hii x2");
+                    //  System.Windows.MessageBox.Show("hii x2");
                     bool subir_scripts = sinc.SincronizarLocalServidor();
                     if (subir_scripts) { System.Windows.MessageBox.Show("se subieron los scripts"); }
                     //System.Windows.MessageBox.Show("hii x3");
                     if (verificar)
-                        {
+                    {
                         System.Windows.MessageBox.Show("se hace el backup");
-                            sinc.Backup();
+                        sinc.Backup();
                         System.Windows.MessageBox.Show("despues backup");
                         bool borrar = sinc.borrar_bd();
-                            if (borrar)
+                        if (borrar)
+                        {
+                            System.Windows.MessageBox.Show("Se borro la bd");
+                            bool si_creo = sinc.crear_bd();
+                            if (si_creo)
                             {
-                                System.Windows.MessageBox.Show("Se borro la bd");
-                                bool si_creo = sinc.crear_bd();
-                                if (si_creo)
-                                {
-                                    System.Windows.MessageBox.Show("se creo la bd");
-                                    sinc.Restore();
+                                System.Windows.MessageBox.Show("se creo la bd");
+                                sinc.Restore();
 
-                                    bool subio_fotos = sinc.subir_fotos();
-                                    if (subio_fotos)
+                                bool subio_fotos = sinc.subir_fotos();
+                                if (subio_fotos)
+                                {
+                                    System.Windows.MessageBox.Show("se subieron las fotos correctamente");
+                                    System.Windows.MessageBox.Show("toca eliminar fotos");
+                                    bool eliminar_fotos = sinc.eliminar_fotos();
+                                    if (eliminar_fotos)
                                     {
-                                        System.Windows.MessageBox.Show("se subieron las fotos correctamente");
-                                        bool descargar_fotos = sinc.descargar_fotos();
-                                        if (descargar_fotos)
-                                        {
-                                            System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
-                                        }
-                                        else
-                                        {
-                                            System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
-                                        }
+                                        System.Windows.MessageBox.Show("se eliminaron las fotos");
                                     }
+                                    System.Windows.MessageBox.Show("toca descargar");
+                                    bool descargar_fotos = sinc.descargar_fotos();
+                                    if (descargar_fotos)
+                                    {
+                                        System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
+                                    }
+
+
                                     else
                                     {
-                                        System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
+                                        System.Windows.MessageBox.Show("hubo problemas al eliminar las fotos");
                                     }
-
 
                                 }
                                 else
                                 {
-                                    System.Windows.MessageBox.Show("No se pudo crear bd ");
+                                    System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
                                 }
+
+
                             }
                             else
                             {
-                                System.Windows.MessageBox.Show("No se pudo borrar");
+                                System.Windows.MessageBox.Show("No se pudo crear bd ");
                             }
                         }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("No se pudo borrar");
+                        }
+                    }
 
-                    
+
 
                 }
                 catch (Exception ex)
@@ -184,8 +216,29 @@ namespace bonita_smile_v1
 
         }
 
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
+            if (lv_Paciente.SelectedItems.Count > 0)
+            {
+                if (paciente.membresia.Equals(""))
+                {
+                    DialogResult resultado = new DialogResult();
+                    Form mensaje = new InsertarMembresia(paciente);
+                    resultado = mensaje.ShowDialog();
+                }
+                else
+                {
+                    DialogResult resultado = new DialogResult();
+                    Form mensaje = new EliminarMembresia(paciente);
+                    resultado = mensaje.ShowDialog();
+                }
 
-
-
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("No se seleccionó ningún registro, error");
+            }
+        }
     }
 }

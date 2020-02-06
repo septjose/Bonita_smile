@@ -266,8 +266,8 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE abonos set id_paciente =' " + id_paciente + "',id_motivo = '" + id_motivo + "',fecha = '" + fecha + "',monto = " + monto + ",comentario='" + comentario + "',auxiliar_identificador = '" + id_abono + "'where id_abono = '" + id_abono + "'";
-
+                    query = "UPDATE abonos set id_paciente ='"+ id_paciente + "',id_motivo = '" + id_motivo + "',fecha = '" + fecha + "',monto = " + monto + ",comentario='" + comentario + "',auxiliar_identificador = '" + id_abono + "'where id_abono = '" + id_abono + "'";
+                    Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
@@ -343,6 +343,7 @@ namespace bonita_smile_v1.Servicios
             return lista;
         }
 
+     //   ---------------------------------------------------------------------------------
         public List<Ganancias> Mostrar_Ganancias()
         {
             List<string> lista = Mostrar_ids_clinicas();
@@ -380,6 +381,46 @@ namespace bonita_smile_v1.Servicios
             
             return lista_ganancias;
         }
+
+
+        public List<Ganancias> Mostrar_Ganancias_Socio(List<string>list)
+        {
+            List<string> lista = list;
+            List<Ganancias> lista_ganancias = new List<Ganancias>();
+            foreach (var id in lista)
+            {
+                query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "'";
+
+
+
+                try
+                {
+                    conexionBD.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Ganancias ganancia = new Ganancias();
+
+                        ganancia.clinica = reader[0].ToString();
+                        ganancia.ganancia = double.Parse(reader[1].ToString());
+                        ganancia.fecha = reader[2].ToString();
+
+                        lista_ganancias.Add(ganancia);
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                conexionBD.Close();
+            }
+
+            return lista_ganancias;
+        }
+
 
         public List<Ganancias> Ganacioas_c_clinica(string id)
         {

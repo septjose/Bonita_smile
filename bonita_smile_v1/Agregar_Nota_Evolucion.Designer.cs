@@ -21,11 +21,13 @@ namespace bonita_smile_v1
         private System.ComponentModel.IContainer components = null;
         string id_motivo = "";
         string id_paciente = "";
+        string descripcion = "";
         bool bandera_online_offline = false;
-        public Agregar_Nota_Evolucion(string id_motivo, string id_paciente)
+        public Agregar_Nota_Evolucion(string id_motivo, string descripcion, string id_paciente)
         {
             this.id_motivo = id_motivo;
             this.id_paciente = id_paciente;
+            this.descripcion = descripcion;
             InitializeComponent();
         }
 
@@ -132,12 +134,12 @@ namespace bonita_smile_v1
             DateTime fecha = DateTime.Now;
             System.Windows.MessageBox.Show("IMPRIMO LA FECHA EN INGRESAR" + fecha.ToString("yyyy/MM/dd"));
             Nota_de_digi_evolucion nde = new Nota_de_digi_evolucion(bandera_online_offline);
-            bool insertarAbono = nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
+            bool insertarAbono = nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, descripcion, comentario, fecha.ToString("yyyy/MM/dd"));
             if (insertarAbono)
             {
                 System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 nde = new Nota_de_digi_evolucion(!bandera_online_offline);
-                nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, comentario, fecha.ToString("yyyy/MM/dd"));
+                nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, descripcion, comentario, fecha.ToString("yyyy/MM/dd"));
             }
             else
             {
@@ -150,7 +152,7 @@ namespace bonita_smile_v1
         #endregion
 
         private System.Windows.Forms.Label lblAbono;
-       
+
         private System.Windows.Forms.TextBox txtComentario;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnCancelat;
