@@ -20,11 +20,13 @@
         <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="215" Margin="0,50,50,0" Stroke="Black" VerticalAlignment="Top" Width="260"/>
         <ListView  x:Name="lb_imagen"  Margin="0,50,300,65" SelectionChanged="lb_imagen_SelectionChanged" Width="1000"
             SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
-               DragEnter="lb_imagen_DragEnter" Drop="lb_imagen_Drop" AllowDrop="True" MouseDoubleClick="lb_imagen_MouseDoubleClick">
+               DragEnter="lb_imagen_DragEnter" Drop="lb_imagen_Drop" AllowDrop="True" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="PreviewMouseRightButtonDown"
                          Handler="OnListViewItemPreviewMouseRightButtonDown" />
+                    <EventSetter Event="MouseDoubleClick"
+                         Handler="lb_imagen_MouseDoubleClick" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemsPanel>
@@ -33,7 +35,8 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
 
-            <ListView.ItemTemplate>
+            <ListView.ItemTemplate >
+                
                 <DataTemplate>
                     <DockPanel>
                         <TextBlock DockPanel.Dock="Bottom" Text="{Binding foto}"/>

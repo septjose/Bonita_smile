@@ -17,8 +17,8 @@ namespace bonita_smile_v1.Servicios
         private string query;
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
-         string ruta = @"C:\bs\";
-         string ruta2= @"C:\bs_auxiliar\";
+         string ruta = @"\\DESKTOP-ED8E774\bs\";
+         string ruta2= @"\\DESKTOP-ED8E774\bs_auxiliar\";
         Test_Internet ti = new Test_Internet();
         private bool online;
 
@@ -205,7 +205,7 @@ namespace bonita_smile_v1.Servicios
 
         //            string ruta = reader[5].ToString();
 
-        //            pacienteModel.imagen = LoadImage(@"C:\bs\" + ruta);
+        //            pacienteModel.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\" + ruta);
         //            pacienteModel.email = reader[6].ToString();
         //            if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
         //            //pacienteModel.marketing = reader[6].ToString();
@@ -397,12 +397,12 @@ namespace bonita_smile_v1.Servicios
         {
             BitmapImage bi;
 
-            if (File.Exists(@"C:\bs\" + filename))
+            if (File.Exists(@"\\DESKTOP-ED8E774\bs\" + filename))
             {
                 //MessageBox.Show("se encontro la foto en " + filename);
                 var bitmap = new BitmapImage();
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(@"C:\bs\" + filename);
+                var stream = File.OpenRead(@"\\DESKTOP-ED8E774\bs\" + filename);
                 //MessageBox.Show("B");
                 bitmap.BeginInit();
                 //MessageBox.Show("C");
@@ -424,7 +424,7 @@ namespace bonita_smile_v1.Servicios
                 //MessageBox.Show("no se encontro la foto en " + filename);
                 var bitmap = new BitmapImage();
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(@"C:\bs\img1.jpg");
+                var stream = File.OpenRead(@"E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\Assets\img1.jpg");
                 //MessageBox.Show("B");
                 bitmap.BeginInit();
                 //MessageBox.Show("C");

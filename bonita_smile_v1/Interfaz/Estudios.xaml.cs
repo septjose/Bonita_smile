@@ -68,13 +68,16 @@ namespace bonita_smile_v1
         }
 
 
-
         private void lvCarpetas_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Carpeta_archivosModel carpeta = (Carpeta_archivosModel)lvCarpetas.SelectedItem;
+            
+
+
             if (lvCarpetas.SelectedItems.Count > 0)
 
             {
+                System.Windows.MessageBox.Show(lvCarpetas.SelectedItems.Count + "");
                 // System.Windows.MessageBox.Show(carpeta.id_carpeta + "");
                 // System.Windows.MessageBox.Show(carpeta.id_paciente + "");
                 //System.Windows.MessageBox.Show("hi");
@@ -124,7 +127,7 @@ namespace bonita_smile_v1
             //}
 
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
             // ELIMINARLA DE LA BS LOCAL/
 
             // SI LA CARPETA ESTA ASOCIADA A UNA NOTA NO ELIMINARLA, DE LO CONTRARIO SI ELIMINARLA
@@ -146,7 +149,7 @@ namespace bonita_smile_v1
                     Escribir_Archivo ea = new Escribir_Archivo();
                     if (listaNombreArchivos.Count == 0)
                     {
-                        ea.escribir_imagen_eliminar("", @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                        ea.escribir_imagen_eliminar("", @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                     }
                     else
                     {
@@ -156,10 +159,10 @@ namespace bonita_smile_v1
                             System.Windows.MessageBox.Show("escribio en archivo");
 
                             //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(nombre.foto_completa, @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(nombre.foto_completa, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                             //ELIMINAR FOTOS
-                            System.Windows.MessageBox.Show("RUTA PARA BORRAR EN BS " + @"C:\bs\" + nombre.foto_completa);
-                            File.Delete(@"C:\bs\" + nombre.foto_completa);
+                            System.Windows.MessageBox.Show("RUTA PARA BORRAR EN BS " + @"\\DESKTOP-ED8E774\bs\" + nombre.foto_completa);
+                            File.Delete(@"\\DESKTOP-ED8E774\bs\" + nombre.foto_completa);
                             
                         }
                     }
@@ -191,7 +194,7 @@ namespace bonita_smile_v1
                         {
                             System.Windows.MessageBox.Show("elimino Archivo");
                             ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                            File.Delete(@"C:\backup_bs\eliminar_imagen_temporal.txt");
+                            File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                         }
                     }
                     else

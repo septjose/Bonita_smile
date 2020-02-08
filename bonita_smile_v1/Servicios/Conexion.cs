@@ -34,19 +34,19 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //MessageBox.Show("Estas Offline");
-                    servidor = "localhost";
+                    servidor = "192.168.1.76";
                     puerto = "3306";
-                    usuario = "root";
-                    password = "";
-                    database = "dentist";
+                    usuario = "usuariochido";
+                    password = "12345";
+                    database = "dentista"; ;
                 }
             }
             else
             {
-                servidor = "localhost";
-                puerto = "3306";
-                usuario = "root";
-                password = "";
+                 servidor = "192.168.1.76";
+                 puerto = "3306";
+                 usuario = "usuariochido";
+                 password = "12345";
                 database = "dentista";
             }
 

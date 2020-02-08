@@ -41,8 +41,8 @@ namespace bonita_smile_v1
         private FilterInfoCollection MisDispositivios;
         private VideoCaptureDevice MiWebCam;
         private bool HayDispositivos;
-        private string ruta = @"C:\capturas\";
-        private string ruta_offline = @"C:\fotos_offline\";
+        private string ruta = @"\\DESKTOP-ED8E774\capturas\";
+        private string ruta_offline = @"\\DESKTOP-ED8E774\fotos_offline\";
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
@@ -119,7 +119,7 @@ namespace bonita_smile_v1
             if(inserto)
             {
                 string destFile = System.IO.Path.Combine(ruta_offline, foto);
-                string destFile2 = System.IO.Path.Combine(@"C:\bs\", foto);
+                string destFile2 = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", foto);
                 System.IO.File.Copy(ruta + foto, destFile, true);
                 System.IO.File.Copy(ruta + foto, destFile2, true);
 
@@ -129,7 +129,7 @@ namespace bonita_smile_v1
                 if(inserto_2)
                 {
                     System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    bool subir = SubirFicheroStockFTP(foto, @"C:\bs\");
+                    bool subir = SubirFicheroStockFTP(foto, @"\\DESKTOP-ED8E774\bs\");
                     if (subir)
                     {
                         
@@ -217,8 +217,8 @@ namespace bonita_smile_v1
             //        {
 
             //            //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", foto,
-            //            //  @"C:\bs\" + foto, 10);
-            //            string destFile = System.IO.Path.Combine(@"C:\bs\", foto);
+            //            //  @"\\DESKTOP-ED8E774\bs\" + foto, 10);
+            //            string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", foto);
             //            //MessageBox.Show("el valor de result es " + result);
             //            System.IO.File.Copy(ruta+foto, destFile, true);
             //            //File.Delete(ruta + foto);
@@ -235,7 +235,7 @@ namespace bonita_smile_v1
             //    {
             //        System.Windows.Forms.MessageBox.Show("No se pudo subir la foto por el internet ", "Error por falta de internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //        string destFile = System.IO.Path.Combine(ruta_offline, foto);
-            //        string destFile2 = System.IO.Path.Combine(@"C:\bs\", foto);
+            //        string destFile2 = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", foto);
             //        //MessageBox.Show("el valor de result es " + result);
             //        System.IO.File.Copy(ruta + foto, destFile, true);
             //        System.IO.File.Copy(ruta + foto, destFile2, true);

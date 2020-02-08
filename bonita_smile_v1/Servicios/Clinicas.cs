@@ -30,7 +30,7 @@ namespace bonita_smile_v1.Servicios
             List<PermisosModel> listaPermisos = new List<PermisosModel>();
             foreach(var id in lista)
             {
-                query = "select permisos.id_permiso,clinica.nombre_sucursal,clinica.id_clinica,usuario.nombre,usuario.apellidos,usuario.id_usuario,usuario.alias from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where rol.id_rol=" + id_rol+" and clinica.id_clinica='"+id+"'";
+                query = "select clinica.nombre_sucursal,clinica.id_clinica,usuario.nombre,usuario.apellidos,usuario.id_usuario,usuario.alias from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where rol.id_rol=" + id_rol+" and clinica.id_clinica='"+id+"'";
 
                 try
                 {
@@ -44,13 +44,13 @@ namespace bonita_smile_v1.Servicios
                         PermisosModel permisosModel = new PermisosModel();
 
 
-                        permisosModel.id_permiso = reader[0].ToString();
-                        permisosModel.nombre_sucursal = reader[1].ToString();
-                        permisosModel.id_clinica = reader[2].ToString();
-                        permisosModel.nombre = reader[3].ToString();
-                        permisosModel.apellidos = reader[4].ToString();
-                        permisosModel.id_usuario = reader[5].ToString();
-                        permisosModel.alias = reader[6].ToString();
+                       
+                        permisosModel.nombre_sucursal = reader[0].ToString();
+                        permisosModel.id_clinica = reader[1].ToString();
+                        permisosModel.nombre = reader[2].ToString();
+                        permisosModel.apellidos = reader[3].ToString();
+                        permisosModel.id_usuario = reader[4].ToString();
+                        permisosModel.alias = reader[5].ToString();
 
 
                         listaPermisos.Add(permisosModel);
@@ -71,7 +71,7 @@ namespace bonita_smile_v1.Servicios
         public List<PermisosModel> Mostrar_Permisos(int id_rol)
         {
             List<PermisosModel> listaPermisos = new List<PermisosModel>();
-            query = "select permisos.id_permiso,clinica.nombre_sucursal,clinica.id_clinica,usuario.nombre,usuario.apellidos,usuario.id_usuario,usuario.alias from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where rol.id_rol="+id_rol;
+            query = "select clinica.nombre_sucursal,clinica.id_clinica,usuario.nombre,usuario.apellidos,usuario.id_usuario,usuario.alias from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where rol.id_rol="+id_rol;
 
             try
             {
@@ -85,13 +85,13 @@ namespace bonita_smile_v1.Servicios
                     PermisosModel permisosModel = new PermisosModel();
 
 
-                    permisosModel.id_permiso = reader[0].ToString();
-                    permisosModel.nombre_sucursal = reader[1].ToString();
-                    permisosModel.id_clinica = reader[2].ToString();
-                    permisosModel.nombre = reader[3].ToString();
-                    permisosModel.apellidos = reader[4].ToString();
-                    permisosModel.id_usuario = reader[5].ToString();
-                    permisosModel.alias = reader[6].ToString();
+                  
+                    permisosModel.nombre_sucursal = reader[0].ToString();
+                    permisosModel.id_clinica = reader[1].ToString();
+                    permisosModel.nombre = reader[2].ToString();
+                    permisosModel.apellidos = reader[3].ToString();
+                    permisosModel.id_usuario = reader[4].ToString();
+                    permisosModel.alias = reader[5].ToString();
 
 
                     listaPermisos.Add(permisosModel);
@@ -182,7 +182,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool eliminar_Permiso(string id_permiso)
+        public bool eliminar_Permiso(string id_usuario)
         {
 
             bool internet = ti.Test();
@@ -206,7 +206,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "DELETE FROM permisos where id_permiso='" + id_permiso + "'";
+                    query = "DELETE FROM permisos where id_usuario='" + id_usuario + "'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -301,7 +301,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO permisos (id_permiso,id_usuario,id_clinica,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + id_usuario + "','" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
+                    query = "INSERT INTO permisos (id_usuario,id_clinica,auxiliar_identificador) VALUES('" + id_usuario + "','" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -368,7 +368,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizar_Permisos(string id_usuario, string id_clinica, string id_permiso)
+        public bool actualizar_Permisos(string id_usuario, string id_clinica)
         {
 
             bool internet = ti.Test();
@@ -394,8 +394,8 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE permisos set id_usuario = '" + id_usuario + "',id_clinica = '" + id_clinica + "',auxiliar_identificador = '" + id_permiso + "' where id_permiso = '" + id_permiso + "'";
-
+                    query = "UPDATE permisos set id_clinica = '" + id_clinica  + "',auxiliar_identificador ='" + id_usuario + "' where id_usuario ='" + id_usuario + "'";
+                    Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
@@ -441,32 +441,7 @@ namespace bonita_smile_v1.Servicios
             return aux_identi;
         }
 
-        public string MostrarPermisos_Update(string id_permiso)
-        {
-            string aux_identi = "";
-            query = "SELECT auxiliar_identificador from permisos where id_permiso='" + id_permiso+"'";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-
-                    aux_identi = reader[0].ToString();
-
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            conexionBD.Close();
-            return aux_identi;
-        }
+     
 
     }
 }

@@ -12,8 +12,8 @@ namespace bonita_smile_v1.Servicios
 {
     class Escribir_Archivo
     {
-        string ruta = @"C:\backup_bs\script_temporal.txt";
-        string ruta_borrar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+        string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";
+        string ruta_borrar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
         List<string> abonos = new List<string>();
         List<string> carpeta_archivos = new List<string>();
         List<string> clinica = new List<string>();
@@ -265,57 +265,57 @@ namespace bonita_smile_v1.Servicios
 
                 /*foreach(string query in abonos)
                 {
-                    escribir(@"c:\offline\script.txt",query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt",query);
                 }
 
                 foreach (string query in carpeta_archivos)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in clinica)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in fotos_estudio_carpeta)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in marketing)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in motivo_cita)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in nota_de_digi_evolucion)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in paciente)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in permisos)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in rol)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }
 
                 foreach (string query in usuario)
                 {
-                    escribir(@"c:\offline\script.txt", query);
+                    escribir(@"\\DESKTOP-ED8E774\offline\script.txt", query);
                 }*/
 
                 return categoria;
@@ -346,7 +346,7 @@ namespace bonita_smile_v1.Servicios
         public List<string> corregirArchivo()
         {
             Categoria categorias = new Categoria();
-            categorias = categorizar(@"c:\offline\script_temporal.txt");
+            categorias = categorizar(@"\\DESKTOP-ED8E774\offline\script_temporal.txt");
             foreach (var list in categorias.clinica)
             {
                 MessageBox.Show(list);

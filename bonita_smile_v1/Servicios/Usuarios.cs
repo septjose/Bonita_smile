@@ -40,12 +40,11 @@ namespace bonita_smile_v1.Servicios
             this.online = online;
         }
 
-        public List<UsuarioModel> MostrarUsuario_Socio(List<string>lista)
+        public List<UsuarioModel> MostrarUsuario_Socio(string alias)
         {
             List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
-            foreach (var id in lista)
-            {
-                query = "select * from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where clinica.id_clinica='"+id+"'";
+           
+                query = "select DISTINCT usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join rol on usuario.id_rol=rol.id_rol INNER join permisos on permisos.id_usuario=usuario.id_usuario where permisos.id_clinica in (select id_clinica from usuario inner join permisos on usuario.id_usuario = permisos.id_usuario where usuario.alias='"+alias+"') AND usuario.id_rol!=5";
 
                 try
                 {
@@ -65,8 +64,8 @@ namespace bonita_smile_v1.Servicios
                         usuarioModel.apellidos = reader[3].ToString();
                         usuarioModel.password = reader[4].ToString();
                         rolModel.id_rol = int.Parse(reader[5].ToString());
-                        rolModel.descripcion = reader[16].ToString();
-                        usuarioModel.clinica = reader[12].ToString();
+                        rolModel.descripcion = reader[6].ToString();
+                        //usuarioModel.clinica = reader[12].ToString();
                         usuarioModel.rol = rolModel;
 
                         listaUsuario.Add(usuarioModel);
@@ -77,7 +76,7 @@ namespace bonita_smile_v1.Servicios
                     System.Windows.MessageBox.Show(ex.ToString());
                 }
                 conexionBD.Close();
-            }
+            
             
            
             return listaUsuario;
@@ -86,7 +85,7 @@ namespace bonita_smile_v1.Servicios
         public List<UsuarioModel> MostrarUsuario()
         {
             List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
-            query = "select * from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol";
+            query = "select * from usuario  inner join rol on rol.id_rol=usuario.id_rol";
 
             try
             {
@@ -105,9 +104,9 @@ namespace bonita_smile_v1.Servicios
                     usuarioModel.nombre = reader[2].ToString();
                     usuarioModel.apellidos = reader[3].ToString();
                     usuarioModel.password = reader[4].ToString();
-                    rolModel.id_rol = int.Parse(reader[5].ToString());
-                    rolModel.descripcion = reader[16].ToString();
-                    usuarioModel.clinica = reader[12].ToString();
+                    rolModel.id_rol = int.Parse(reader[7].ToString());
+                    rolModel.descripcion = reader[8].ToString();
+                    //usuarioModel.clinica = reader[12].ToString();
                     usuarioModel.rol = rolModel;
 
                     listaUsuario.Add(usuarioModel);
@@ -193,8 +192,8 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ",'<!--" + auxiliar_identificador + "-->')";
-
+                    query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ",'<!--" + auxiliar_identificador + "-->');";
+                    query = query + "insert into permisos (id_usuario) VALUES('"+auxiliar_identificador+"');";
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();

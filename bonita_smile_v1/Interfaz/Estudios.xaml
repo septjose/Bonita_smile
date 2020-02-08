@@ -45,12 +45,14 @@
         <!--<Button Content="Agregar Estudios a la carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Margin="5,345,0,0" Click="Button_Click"/>-->
         <ListView Grid.Row="1" x:Name="lvCarpetas"  Margin="5,10,225,40"   Style="{StaticResource MetroListView}"
             SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
-               MouseDoubleClick="lvCarpetas_MouseDoubleClick" Grid.Column="1">
+                Grid.Column="1">
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="PreviewMouseRightButtonDown"
                          Handler="OnListViewItemPreviewMouseRightButtonDown" />
+                    <EventSetter Event="MouseDoubleClick"
+                         Handler="lvCarpetas_MouseDoubleClick" />
                 </Style>
             </ListView.ItemContainerStyle>
 
@@ -73,7 +75,7 @@
                 <DataTemplate>
                     <DockPanel>
                         <TextBlock DockPanel.Dock="Bottom" Text="{Binding nombre_carpeta}"/>
-                        <Image Source="C:\bs\carpeta.png"  Width="32" Height="32"/>
+                        <Image Source="/Assets/carpeta.png"  Width="32" Height="32"/>
                     </DockPanel>
                 </DataTemplate>
 

@@ -31,7 +31,7 @@ namespace bonita_smile_v1
         double abonado = 0.0;
         double total = 0.0;
         bool bandera_online_offline = false;
-        
+        ObservableCollection<AbonosModel> notas;
         public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo)
         {
 
@@ -60,11 +60,12 @@ namespace bonita_smile_v1
             restante = abono.Restante(motivo.id_motivo);
             abonado = abono.Abonados(motivo.id_motivo);
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
+            
 
         }
         void llenar_list_view(string id_motivo, string id_paciente)
         {
-            var notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(id_motivo, id_paciente));
+             this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(id_motivo, id_paciente));
 
             lvNotas.ItemsSource = notas;
             GAbono = notas;
@@ -72,11 +73,14 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult resultado = new DialogResult();
-            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text,restante,abonado, total);
-            resultado = mensaje.ShowDialog();
-            lvNotas.ItemsSource = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(this.motivo.id_motivo, this.paciente.id_paciente));
             Abonos abonos = new Abonos(bandera_online_offline);
+            DialogResult resultado = new DialogResult();
+            double restanten = abonos.Restante(motivo.id_motivo);
+            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text, restanten, abonado, total);
+            resultado = mensaje.ShowDialog();
+            this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
+            lvNotas.ItemsSource = this.notas;
+            
             txtAbonado.Text = "$" + abonos.Abonados(motivo.id_motivo).ToString();
             txtRestante.Text = "$" + abonos.Restante(motivo.id_motivo).ToString();
         }
@@ -101,7 +105,8 @@ namespace bonita_smile_v1
                         
                             System.Windows.Forms.MessageBox.Show("Se elimino el abono correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             
-                        GAbono.Remove((AbonosModel)lvNotas.SelectedItem);
+                        this.notas.Remove((AbonosModel)lvNotas.SelectedItem);
+
                         Abonos abonos = new Abonos(bandera_online_offline);
                         txtAbonado.Text = "$" + abonos.Abonados(motivo.id_motivo).ToString();
                         txtRestante.Text = "$" + abonos.Restante(motivo.id_motivo).ToString();
@@ -126,13 +131,16 @@ namespace bonita_smile_v1
             AbonosModel abono = (AbonosModel)lvNotas.SelectedItem;
             if (lvNotas.SelectedItems.Count > 0)
             {
-                DialogResult resultado = new DialogResult();
-                Form mensaje = new Actualizar_Abono("","","","",0.0,0.0,0.0,abono);
-                resultado = mensaje.ShowDialog();
                 Abonos abonos = new Abonos(bandera_online_offline);
+                double restanten = abonos.Restante(motivo.id_motivo);
+                DialogResult resultado = new DialogResult();
+                Form mensaje = new Actualizar_Abono(motivo.id_motivo, paciente.id_paciente, txtNombre.Text, txtMotivo.Text, restanten, abonado, total, abono);
+                resultado = mensaje.ShowDialog();
+                
                 txtAbonado.Text = "$" + abonos.Abonados(motivo.id_motivo).ToString();
                 txtRestante.Text = "$" + abonos.Restante(motivo.id_motivo).ToString();
-                lvNotas.ItemsSource = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
+                this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
+                lvNotas.ItemsSource = this.notas;
             }
             else
             {

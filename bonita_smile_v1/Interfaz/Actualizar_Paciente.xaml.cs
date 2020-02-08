@@ -206,7 +206,7 @@ namespace bonita_smile_v1
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
 
             if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
             {
@@ -285,10 +285,14 @@ namespace bonita_smile_v1
                                 if (inserto)
                                 {
                                     renombrar(this.paciente.foto, nombre_nuevo_foto);
-                                    string destFile2 = System.IO.Path.Combine(@"C:\fotos_offline\", nombre_nuevo_foto);
-                                    System.IO.File.Copy(@"C:\bs\" + nombre_nuevo_foto, destFile2, true);
+                                    if(File.Exists(@"\\DESKTOP-ED8E774\fotos_offline\"+this.paciente.foto))
+                                    {
+                                        File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + this.paciente.foto);
+                                    }
+                                    string destFile2 = System.IO.Path.Combine(@"\\DESKTOP -ED8E774\fotos_offline\", nombre_nuevo_foto);
+                                    System.IO.File.Copy(@"\\DESKTOP-ED8E774\bs\" + nombre_nuevo_foto, destFile2, true);
                                     Escribir_Archivo ea = new Escribir_Archivo();
-                                    ea.escribir_imagen_eliminar(foto, @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                                    ea.escribir_imagen_eliminar(foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     pa = new Paciente(!bandera_online_offline);
                                    bool actualizo= pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
@@ -309,8 +313,8 @@ namespace bonita_smile_v1
                                         {
                                             System.Windows.MessageBox.Show("elimino Archivo");
                                             ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                                            File.Delete(@"C:\backup_bs\eliminar_imagen_temporal.txt");
-                                            bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"C:\bs\");
+                                            File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                            bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"\\DESKTOP-ED8E774\bs\");
 
                                         }
                                     }
@@ -344,7 +348,7 @@ namespace bonita_smile_v1
         {
             string sourceFile;
         
-                sourceFile = @"C:\bs\";
+                sourceFile = @"\\DESKTOP-ED8E774\bs\";
 
             // Create a FileInfo  
             System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile + nombre_viejo);
@@ -354,8 +358,8 @@ namespace bonita_smile_v1
                 System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
                 fi.MoveTo(sourceFile + nombre_nuevo);
-                //string destFile = System.IO.Path.Combine(@"C:\bs\", nombre_nuevo);
-                //System.IO.File.Copy(@"C:\fotos_offline\" + nombre_nuevo, destFile, true);
+                //string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
+                //System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
                 System.Windows.MessageBox.Show("se pudo bitches");
             }
         }

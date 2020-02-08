@@ -47,10 +47,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
              lv_Paciente.ItemsSource = pacientes;
              GPaciente = pacientes;
          }*/
-        private void ButtonClose_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
+       
 
         
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)

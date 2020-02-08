@@ -194,8 +194,15 @@ namespace bonita_smile_v1
             //System.Windows.MessageBox.Show("el restante es " + restante);
             //System.Windows.MessageBox.Show("el abono es de " + abono);
             double cambio = efectivo - abono;
-            if (abono <= restante || abonado == 0.0)
+
+            if (efectivo >= abono && abono>0 )
             {
+
+                System.Windows.MessageBox.Show("abono es " + abono);
+                System.Windows.MessageBox.Show("restante es " + restante);
+                if (abono <= restante && restante>0.0)
+            {
+                 
                 Abonos ab = new Abonos(bandera_online_offline);
                 bool insertarAbono = ab.insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono, comentario);
                 if (insertarAbono)
@@ -216,12 +223,20 @@ namespace bonita_smile_v1
 
                 this.DialogResult = DialogResult.OK;
             }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("El abono excede el precio del tratamiento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    //AGREGAR SI DESEA CONTINUAR
+                }
+            }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Excedio el restante", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Abono mayor que efectivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 //AGREGAR SI DESEA CONTINUAR
             }
+
         }
 
         public void imprimir_recibo()
@@ -229,7 +244,7 @@ namespace bonita_smile_v1
             //double rest = restante - abono;
 
             // Document doc = new Document();
-            // PdfWriter.GetInstance(doc, new FileStream(@"C:\bs\prueba.pdf", FileMode.Create));
+            // PdfWriter.GetInstance(doc, new FileStream(@"\\DESKTOP-ED8E774\bs\prueba.pdf", FileMode.Create));
             // doc.Open();
 
             // Paragraph title = new Paragraph();

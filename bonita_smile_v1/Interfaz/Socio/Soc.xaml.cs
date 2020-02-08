@@ -52,10 +52,7 @@ namespace bonita_smile_v1.Interfaz.Socio
              lv_Paciente.ItemsSource = pacientes;
              GPaciente = pacientes;
          }*/
-        private void ButtonClose_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
+      
 
 
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -96,7 +93,7 @@ namespace bonita_smile_v1.Interfaz.Socio
 
         private void listViewItem1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main4.Content = new Socio_usuarios(this.lista);
+            Main4.Content = new Socio_usuarios(this.lista, alias);
         }
 
         private void listViewItem2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

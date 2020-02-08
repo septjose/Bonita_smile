@@ -29,14 +29,16 @@ namespace bonita_smile_v1.Interfaz.Socio
         System.Windows.Controls.ListView lv_aux;
         bool bandera_online_offline = false;
         List<string> lista = new List<string>();
-        public Socio_usuarios(List<string> lista)
+        string alias = "";
+        public Socio_usuarios(List<string> lista, string alias)
         {
             this.lista = lista;
+            this.alias = alias;
             InitializeComponent();
-            llenar_list_view(lista);
+            llenar_list_view(alias);
         }
 
-        void llenar_list_view(List<string> lista )
+        void llenar_list_view(string alias )
         {
             //Usuarios user = new Usuarios();
             //List<UsuarioModel> items = new List<UsuarioModel>();
@@ -48,7 +50,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }*/
 
             //ObservableCollection<UsuarioModel> Gusuario;
-            var usuarios = new ObservableCollection<UsuarioModel>((new Usuarios(bandera_online_offline).MostrarUsuario_Socio(lista)));
+            var usuarios = new ObservableCollection<UsuarioModel>((new Usuarios(bandera_online_offline).MostrarUsuario_Socio(alias)));
 
             lv_Users.ItemsSource = usuarios;
             lv_aux = lv_Users;
@@ -102,7 +104,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 if (socio != null)
                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                    socio.Main4.Content = new Actualizar_usuario_socio(usuario,this.lista);
+                    socio.Main4.Content = new Actualizar_usuario_socio(usuario,this.lista,this.alias);
             }
             else
             {
@@ -115,7 +117,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         {
             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
             if (socio != null)
-                socio.Main4.Content = new Ingresar_usuario_socio(this.lista);
+                socio.Main4.Content = new Ingresar_usuario_socio(this.lista,this.alias);
         }
     }
 }

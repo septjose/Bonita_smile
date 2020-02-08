@@ -35,13 +35,15 @@ namespace bonita_smile_v1.Interfaz.Socio
         System.Windows.Controls.ListView lv_aux;
         bool bandera_online_offline = false;
         List<string> lista = new List<string>();
-        public Actualizar_usuario_socio(UsuarioModel usu,List<string> lista)
+        string alias = "";
+        public Actualizar_usuario_socio(UsuarioModel usu,List<string> lista,string alias)
         {
 
             this.conexionBD = obj.conexion(bandera_online_offline);
             InitializeComponent();
             this.usu = usu;
             this.lista = lista;
+            this.alias = alias;
             txtAlias.Text = usu.alias;
             txtApellido.Text = usu.apellidos;
             txtNombre.Text = usu.nombre;
@@ -132,7 +134,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                             if (socio != null)
                                 //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                                socio.Main4.Content = new Socio_usuarios(this.lista);
+                                socio.Main4.Content = new Socio_usuarios(this.lista,this.alias);
                         }
                         else
                         {
@@ -164,7 +166,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                             if (socio != null)
                                 //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                                socio.Main4.Content = new Socio_usuarios(this.lista);
+                                socio.Main4.Content = new Socio_usuarios(this.lista,this.alias);
 
                         }
                         else

@@ -202,9 +202,14 @@ namespace bonita_smile_v1
             //System.Windows.MessageBox.Show("el restante es " + restante);
             //System.Windows.MessageBox.Show("el abono es de " + abono);
             double cambio = efectivo - abono;
-            if (abono <= restante || abonado == 0.0)
+            if (efectivo >= abono && abono > 0)
             {
-                Abonos ab = new Abonos(bandera_online_offline);
+
+                restante = restante +this.abono.monto;
+
+                if (abono <= restante && restante> 0.0)
+                {
+                    Abonos ab = new Abonos(bandera_online_offline);
                 bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono, comentario);
                 if (actualizar)
                 {
@@ -231,13 +236,19 @@ namespace bonita_smile_v1
                 //AGREGAR SI DESEA CONTINUAR
             }
         }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Abono mayor que efectivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
 
         public void imprimir_recibo()
         {
             //double rest = restante - abono;
 
             // Document doc = new Document();
-            // PdfWriter.GetInstance(doc, new FileStream(@"C:\bs\prueba.pdf", FileMode.Create));
+            // PdfWriter.GetInstance(doc, new FileStream(@"\\DESKTOP-ED8E774\bs\prueba.pdf", FileMode.Create));
             // doc.Open();
 
             // Paragraph title = new Paragraph();

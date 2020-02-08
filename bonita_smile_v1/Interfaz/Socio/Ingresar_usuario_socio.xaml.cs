@@ -30,11 +30,13 @@ namespace bonita_smile_v1.Interfaz.Socio
         Conexion obj = new Conexion();
         bool bandera_online_offline = false;
         List<string> lista = new List<string>();
+        string alias = "";
 
-        public Ingresar_usuario_socio(List<string> lista)
+        public Ingresar_usuario_socio(List<string> lista,string alias)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.lista = lista;
+            this.alias = alias;
             InitializeComponent();
             llenar_Combo();
         }
@@ -101,7 +103,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                         if (socio != null)
                             //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                            socio.Main4.Content = new Socio_usuarios(this.lista);
+                            socio.Main4.Content = new Socio_usuarios(this.lista,this.alias);
                     }
                     else
                     {

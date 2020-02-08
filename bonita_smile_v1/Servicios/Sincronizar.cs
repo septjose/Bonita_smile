@@ -18,8 +18,8 @@ namespace bonita_smile_v1.Servicios
         Conexion_Offline obj = new Conexion_Offline();
         Test_Internet ti = new Test_Internet();
         Conexion obj2 = new Conexion();
-        string ruta = @"c:\backup_bs\script_temporal.txt";
-        string ruta_borrar= @"c:\backup_bs\eliminar_imagen_temporal.txt";
+        string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";
+        string ruta_borrar= @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
 
         public Sincronizar()
         {
@@ -36,7 +36,7 @@ namespace bonita_smile_v1.Servicios
             */
             string constring = "server=162.241.60.126;user=jjdevelo_dentist;pwd=jjpd1996;database=jjdevelo_dentist;";
             constring += "charset=utf8;convertzerodatetime=true;";
-            string file = @"C:\backup_bs\backup.sql";
+            string file = @"\\DESKTOP-ED8E774\backup_bs\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -55,8 +55,8 @@ namespace bonita_smile_v1.Servicios
 
         public void Restore()
         {
-            string constring = "server=localhost;user=root;pwd=;database=dentista;";
-            string file = @"C:\backup_bs\backup.sql";
+            string constring = "server=192.168.1.76;user=usuariochido;pwd=12345;database=dentista;";
+            string file = @"\\DESKTOP-ED8E774\backup_bs\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -118,14 +118,14 @@ namespace bonita_smile_v1.Servicios
                 {
                     if (new Test_Internet().Test())
                     {
-                        if (File.Exists(@"C:\bs\" + filename))
+                        if (File.Exists(@"\\DESKTOP-ED8E774\bs\" + filename))
                         {
                             MessageBox.Show("SI ESTA"+filename);
                         }
                         else
                         {
                             MessageBox.Show("NO ESTA"+ filename);
-                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @"C:\bs\" + filename, 10);
+                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @"\\DESKTOP-ED8E774\bs\" + filename, 10);
                             if(descargo)
                             {
                                 MessageBox.Show("si descargo");
@@ -164,14 +164,14 @@ namespace bonita_smile_v1.Servicios
                 {
                     if (new Test_Internet().Test())
                     {
-                        if (File.Exists(@"C:\bs\" + filename))
+                        if (File.Exists(@"\\DESKTOP-ED8E774\bs\" + filename))
                         {
                             MessageBox.Show("SI ESTA" + filename);
                         }
                         else
                         {
                             MessageBox.Show("NO ESTA" + filename);
-                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @"C:\bs\" + filename, 10);
+                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @"\\DESKTOP-ED8E774\bs\" + filename, 10);
 
                         }
 
@@ -398,7 +398,7 @@ namespace bonita_smile_v1.Servicios
         private List<string> Obtener_nombres_archivos()
         {
             List<string> lista = new List<string>();
-            string ruta = @"C:\fotos_offline\";
+            string ruta = @"\\DESKTOP-ED8E774\fotos_offline\";
 
             DirectoryInfo di = new DirectoryInfo(ruta);
             
@@ -423,8 +423,8 @@ namespace bonita_smile_v1.Servicios
             {
                if(new Test_Internet().Test())
                 {
-                    SubirFicheroStockFTP(filename, @"C:\fotos_offline\");
-                    File.Delete(@"C:\fotos_offline\" + filename);
+                    SubirFicheroStockFTP(filename, @"\\DESKTOP-ED8E774\fotos_offline\");
+                    File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + filename);
                    
                 }
                 else

@@ -48,7 +48,7 @@
                     <Label Content="Color de la Clinica" HorizontalAlignment="Left"  Margin="81,114,0,0" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
                     <Label x:Name="lblColor" Content="" HorizontalAlignment="Left" Margin="234,120,0,0" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
                     <Label Content="Panel para actualizar el color de la clinica" HorizontalAlignment="Left" Margin="81,168,0,0" VerticalAlignment="Top"  Height="42" Width="200" FontSize="15" Foreground="Black"/>
-                    <Image HorizontalAlignment="Right"  VerticalAlignment="Top"  Margin="500,90,0,0" Source="C:\bs\captura.png" Height="400" Width="400"/>
+                    <Image HorizontalAlignment="Right"  VerticalAlignment="Top"  Margin="500,90,0,0" Source="Captura.PNG" Height="400" Width="400"/>
 
                 </Grid>
             </Border>

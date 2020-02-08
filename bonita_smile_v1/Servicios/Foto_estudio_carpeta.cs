@@ -14,7 +14,7 @@ namespace bonita_smile_v1.Servicios
 {
     class Fotos_estudio_carpeta
     {
-        private string ruta2 = @"C:\bs\";
+        private string ruta2 = @"\\DESKTOP-ED8E774\bs\";
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
@@ -52,7 +52,7 @@ namespace bonita_smile_v1.Servicios
                     foto_recortada = foto_recortada.Substring(35);
                     fotos_Estudio_CarpetaModel.foto = foto_recortada;
                     fotos_Estudio_CarpetaModel.foto_completa = reader[3].ToString();
-                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@"C:\bs\" + reader[3].ToString());
+                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\" + reader[3].ToString());
 
                     listaFoto_estudio_carpeta.Add(fotos_Estudio_CarpetaModel);
                 }
@@ -255,7 +255,7 @@ namespace bonita_smile_v1.Servicios
             else
             {
                 var bitmap = new BitmapImage();
-                var stream = File.OpenRead(@"C:\bs\img1.jpg");
+                var stream = File.OpenRead(@"/Assets/img1.jpg");
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.StreamSource = stream;

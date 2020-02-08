@@ -98,8 +98,7 @@ namespace bonita_smile_v1
                 try
                 {
                     //Ventana_Usuario vu = new Ventana_Usuario();
-                    UsuarioModel usu = new UsuarioModel();
-                    RolModel rolModel = new RolModel();
+                 
                     valor = cmbRol.SelectedItem.ToString();
                     int id_rol = obtener_id_rol(valor);
                     string nombre = txtNombre.Text;
@@ -119,20 +118,37 @@ namespace bonita_smile_v1
                             System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             user = new Usuarios(!bandera_online_offline);
                             user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
-                            usu.alias = alias;
-                            usu.apellidos = apellidos;
-                            usu.id_usuario = id_usu;
-                            usu.nombre = nombre;
-                            usu.password = password;
-                            rolModel.id_rol = id_rol;
-                            rolModel.descripcion = valor;
+                            if(usu.rol.id_rol == 5)
+                            {
+                                Clinicas cli = new Clinicas(bandera_online_offline);
+                                bool eliminar = cli.eliminar_Permiso(id_usu);
+                                cli = new Clinicas(!bandera_online_offline);
+                                cli.eliminar_Permiso(id_usu);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    admin.Main.Content = new Page4();
 
-                            usu.rol = rolModel;
+                            }
+                            else
+                            {
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    admin.Main.Content = new Page4();
+                            }
+                            //usu.alias = alias;
+                            //usu.apellidos = apellidos;
+                            //usu.id_usuario = id_usu;
+                            //usu.nombre = nombre;
+                            //usu.password = password;
+                            //rolModel.id_rol = id_rol;
+                            //rolModel.descripcion = valor;
 
-                            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                            if (admin != null)
-                                //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                                admin.Main.Content = new Page4();
+                            //usu.rol = rolModel;
+
+
+                            
                         }
                         else
                         {
@@ -147,24 +163,25 @@ namespace bonita_smile_v1
                         inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                         if (inserto)
                         {
-                            user = new Usuarios(!bandera_online_offline);
-                            user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
-                            usu.alias = alias;
-                            usu.apellidos = apellidos;
-                            usu.id_usuario = id_usu;
-                            usu.nombre = nombre;
-                            usu.password = password;
-                            rolModel.id_rol = id_rol;
-                            rolModel.descripcion = valor;
+                            if (usu.rol.id_rol == 5)
+                            {
+                                Clinicas cli = new Clinicas(bandera_online_offline);
+                                bool eliminar = cli.eliminar_Permiso(id_usu);
+                                cli = new Clinicas(!bandera_online_offline);
+                                cli.eliminar_Permiso(id_usu);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    admin.Main.Content = new Page4();
 
-                            usu.rol = rolModel;
-
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            //vu.refrescar_listview(this.usu, usu, lv_aux);
-                            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                            if (admin != null)
-                                //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                                admin.Main.Content = new Page4();
+                            }
+                            else
+                            {
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    admin.Main.Content = new Page4();
+                            }
 
                         }
                         else

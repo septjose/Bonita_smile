@@ -53,7 +53,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         private void Borrar(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             if (lv_Paciente.SelectedItems.Count > 0)
             {
@@ -77,9 +77,9 @@ namespace bonita_smile_v1.Interfaz.Socio
                         {
                             //PASAR FOTO EN UN ARCHIVO
                             Escribir_Archivo ea = new Escribir_Archivo();
-                            ea.escribir_imagen_eliminar(paciente.foto, @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(paciente.foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                             //ELIMINAR FOTO
-                            File.Delete(@"C:\bs\" + paciente.foto);
+                            File.Delete(@"\\DESKTOP-ED8E774\bs\" + paciente.foto);
                             GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
                             System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             bool elimino_again = new Paciente(!bandera_online_offline).eliminarPaciente(id_paciente);
@@ -99,7 +99,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                                 {
                                     System.Windows.MessageBox.Show("elimino Archivo");
                                     ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                                    File.Delete(@"C:\backup_bs\eliminar_imagen_temporal.txt");
+                                    File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                                 }
                             }
                             else
@@ -132,7 +132,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     //            bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
                     //            if(verdad)
                     //            {
-                    //                File.Delete(@"C:\bs\" + paciente.foto);
+                    //                File.Delete(@"\\DESKTOP-ED8E774\bs\" + paciente.foto);
                     //                GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
                     //                System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -143,7 +143,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     //            Escribir_Archivo ea = new Escribir_Archivo();
 
                     //            ea.escribir_fotos_borrar(paciente.foto);
-                    //            File.Delete(@"C:\bs\" + paciente.foto);
+                    //            File.Delete(@"\\DESKTOP-ED8E774\bs\" + paciente.foto);
                     //            GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
                     //            System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //        }

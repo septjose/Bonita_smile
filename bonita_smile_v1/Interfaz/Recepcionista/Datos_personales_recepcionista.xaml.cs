@@ -31,7 +31,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         ObservableCollection<Motivo_citaModel> GMotivo;
 
         string id = "";
-        string ruta = @"C:\bs\";
+        string ruta = @"\\DESKTOP-ED8E774\bs\";
 
         PacienteModel paciente;
         bool bandera_online_offline = false;
@@ -80,14 +80,14 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         {
             ImageBrush ib = new ImageBrush();
             BitmapImage bi = new BitmapImage();
-            string ruta2 = @"C:\bs\img1.jpg";
+            string ruta2 = @"/Assets/img1.jpg";
             if (File.Exists(ruta + filename))
             {
                 Image image = new Image();
                 //MessageBox.Show("se encontro la foto en " + filename);
 
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(@"C:\bs\" + filename);
+                var stream = File.OpenRead(@"\\DESKTOP-ED8E774\bs\" + filename);
                 //MessageBox.Show("B");
                 bi.BeginInit();
                 //MessageBox.Show("C");

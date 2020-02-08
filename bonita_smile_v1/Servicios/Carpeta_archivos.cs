@@ -59,7 +59,9 @@ namespace bonita_smile_v1.Servicios
         public Carpeta_archivosModel carpetaArchivos(string id_nota)
         {
             Carpeta_archivosModel listaCarpeta_archivos = new Carpeta_archivosModel();
+            Carpeta_archivosModel carpeta_ArchivosModel = new Carpeta_archivosModel();
             query = "SELECT * FROM carpeta_archivos where id_nota='" + id_nota + "'";
+            MessageBox.Show(query);
 
             try
             {
@@ -70,7 +72,7 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                    Carpeta_archivosModel carpeta_ArchivosModel = new Carpeta_archivosModel();
+                   
 
                     carpeta_ArchivosModel.id_carpeta = reader[0].ToString();
                     carpeta_ArchivosModel.nombre_carpeta = reader[1].ToString();
@@ -84,7 +86,7 @@ namespace bonita_smile_v1.Servicios
                 MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
-            return listaCarpeta_archivos;
+            return carpeta_ArchivosModel;
         }
         public bool eliminarCarpeta_archivos(string id_carpeta)
         {

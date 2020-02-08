@@ -108,12 +108,10 @@
                         </TransformGroup>
                     </Button.RenderTransform>
                     <Button.Background>
-                        <ImageBrush ImageSource="/Assets/pexels-photo-247885.jpeg" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="/Assets/logo_diente.jpeg" Stretch="UniformToFill"/>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Width="50" Height="50" Margin="10">
-                    <materialDesign:PackIcon Kind="InformationOutline" Width="40" Height="40"/>
-                </Button>
+                
             </StackPanel>
             <ListView>
                 <ListViewItem x:Name="listViewItem" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown">
@@ -294,12 +292,7 @@
         </Grid>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right" Margin="10">
-            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
-                <materialDesign:PackIcon Kind="Bell"/>
-            </Button>
-            <Button x:Name="ButtonClose" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
-                <materialDesign:PackIcon Kind="Power"/>
-            </Button>
+            
         </StackPanel>
     </Grid>
 

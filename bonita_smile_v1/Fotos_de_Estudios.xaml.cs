@@ -84,14 +84,14 @@ namespace bonita_smile_v1
          {
              List<Imagen> lista = new List<Imagen>();
              Imagen img1 = new Imagen();
-             img1.foto = @"C:\bs\Estudios_Brackets_imagen_0.jpg";
-             img1.imagen = LoadImage(@"C:\bs\Estudios_Brackets_imagen_0.jpg");
+             img1.foto = @"\\DESKTOP-ED8E774\bs\Estudios_Brackets_imagen_0.jpg";
+             img1.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\Estudios_Brackets_imagen_0.jpg");
              Imagen img2 = new Imagen();
-             img2.foto = @"C:\bs\Estudios_Brackets_imagen_1.jpg";
-             img2.imagen = LoadImage(@"C:\bs\Estudios_Brackets_imagen_1.jpg");
+             img2.foto = @"\\DESKTOP-ED8E774\bs\Estudios_Brackets_imagen_1.jpg";
+             img2.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\Estudios_Brackets_imagen_1.jpg");
              Imagen img3 = new Imagen();
-             img3.foto = @"C:\bs\Estudios_Brackets_imagen_2.jpg";
-             img3.imagen = LoadImage(@"C:\bs\Estudios_Brackets_imagen_2.jpg");
+             img3.foto = @"\\DESKTOP-ED8E774\bs\Estudios_Brackets_imagen_2.jpg";
+             img3.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\Estudios_Brackets_imagen_2.jpg");
              lista.Add(img1);
              lista.Add(img2);
              lista.Add(img3);
@@ -114,11 +114,11 @@ namespace bonita_smile_v1
                 {
                     //MessageBox.Show(selectedOffer.foto);
                     //System.Windows.MessageBox.Show(selectedOffer.foto_completa);
-                    //Imagen(@"C:\bs\" + selectedOffer.foto);
+                    //Imagen(@"\\DESKTOP-ED8E774\bs\" + selectedOffer.foto);
                     //DialogResult resultado = new DialogResult();
-                    this.ruta = @"C:\bs\" + selectedOffer.foto_completa;
+                    this.ruta = @"\\DESKTOP-ED8E774\bs\" + selectedOffer.foto_completa;
                     Imagen(ruta);
-                    // Form mensaje = new Form1(@"C:\bs\" + selectedOffer.foto);
+                    // Form mensaje = new Form1(@"\\DESKTOP-ED8E774\bs\" + selectedOffer.foto);
                     //resultado = mensaje.ShowDialog();
                 }
                 //ruta = lista.SelectedItem.ToString();
@@ -176,11 +176,11 @@ namespace bonita_smile_v1
                     {
                         try
                         {
-                            destFile = System.IO.Path.Combine(@"C:\fotos_offline\", result);
+                            destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\fotos_offline\", result);
                             File.Copy(s[i], destFile, true);
                             renombrar(false, result, id_carpeta + "_" + result);
 
-                            destFile = System.IO.Path.Combine(@"C:\bs\", result);
+                            destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", result);
                             File.Copy(s[i], destFile, true);
                             renombrar(true, result, id_carpeta + "_" + result);
                         }
@@ -207,7 +207,7 @@ namespace bonita_smile_v1
                             if (inserto)
                             {
                                 //ELIMINAR ARCHIVO QUE SE SUBIO AL SERVIDOR DE CARPETA OFFLINE
-                                File.Delete(@"C:\fotos_offline\" + id_carpeta + "_" + result);
+                                File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + id_carpeta + "_" + result);
                             }
                         }
                         else
@@ -236,7 +236,7 @@ namespace bonita_smile_v1
         public void renombrar_offline(bool online, string nombre_viejo, string nombre_nuevo)
         {
 
-            string sourceFile = @"C:\fotos_offline\" + nombre_viejo;
+            string sourceFile = @"\\DESKTOP-ED8E774\fotos_offline\" + nombre_viejo;
             // Create a FileInfo  
             System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile);
             // Check if file is there  
@@ -244,9 +244,9 @@ namespace bonita_smile_v1
             {
                 System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
-                fi.MoveTo(@"C:\fotos_offline\" + nombre_nuevo);
-                string destFile = System.IO.Path.Combine(@"C:\bs\", nombre_nuevo);
-                System.IO.File.Copy(@"C:\fotos_offline\" + nombre_nuevo, destFile, true);
+                fi.MoveTo(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo);
+                string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
+                System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
                 System.Windows.MessageBox.Show("se pudo bitches");
             }
         }
@@ -254,9 +254,9 @@ namespace bonita_smile_v1
         {
             string sourceFile;
             if (!online)
-                sourceFile = @"C:\fotos_offline\";
+                sourceFile = @"\\DESKTOP-ED8E774\fotos_offline\";
             else
-                sourceFile = @"C:\bs\";
+                sourceFile = @"\\DESKTOP-ED8E774\bs\";
 
             // Create a FileInfo  
             System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile + nombre_viejo);
@@ -266,8 +266,8 @@ namespace bonita_smile_v1
                 System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
                 fi.MoveTo(sourceFile + nombre_nuevo);
-                //string destFile = System.IO.Path.Combine(@"C:\bs\", nombre_nuevo);
-                //System.IO.File.Copy(@"C:\fotos_offline\" + nombre_nuevo, destFile, true);
+                //string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
+                //System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
                 System.Windows.MessageBox.Show("se pudo bitches");
             }
         }
@@ -339,7 +339,7 @@ namespace bonita_smile_v1
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
             // ELIMINARLA DE LA BS LOCAL/
 
              //ELIMINAR REGISTRO
@@ -350,11 +350,11 @@ namespace bonita_smile_v1
             {
                 //PASAR FOTO EN UN ARCHIVO
                 Escribir_Archivo ea = new Escribir_Archivo();
-                ea.escribir_imagen_eliminar(this.item_foto_carpeta.foto_completa, @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                ea.escribir_imagen_eliminar(this.item_foto_carpeta.foto_completa, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                 //ELIMINAR FOTO
                 item_foto_carpeta.imagen = null;
                 rt_imagen.Fill = null;
-                File.Delete(@"C:\bs\" + item_foto_carpeta.foto_completa);
+                File.Delete(@"\\DESKTOP-ED8E774\bs\" + item_foto_carpeta.foto_completa);
                 lb_imagen.Items.Remove(item_foto_carpeta);
 
                 // ELIMINAR DEL SERVIDOR/
@@ -379,7 +379,7 @@ namespace bonita_smile_v1
                     {
                         System.Windows.MessageBox.Show("elimino Archivo");
                         ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                        File.Delete(@"C:\backup_bs\eliminar_imagen_temporal.txt");
+                        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                     }
                 }
                 else

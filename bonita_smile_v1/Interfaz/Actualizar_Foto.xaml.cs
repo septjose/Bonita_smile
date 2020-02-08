@@ -43,10 +43,10 @@ namespace bonita_smile_v1
         private FilterInfoCollection MisDispositivios;
         private VideoCaptureDevice MiWebCam;
         private bool HayDispositivos;
-        private string ruta = @"C:\bs\";
-       // private string ruta_aux = @"C:\bs_auxiliar\";
-        private string ruta2 = @"C:\capturas\";
-        private string ruta_offline = @"C:\fotos_offline\";
+        private string ruta = @"\\DESKTOP-ED8E774\bs\";
+       // private string ruta_aux = @"\\DESKTOP-ED8E774\bs_auxiliar\";
+        private string ruta2 = @"\\DESKTOP-ED8E774\capturas\";
+        private string ruta_offline = @"\\DESKTOP-ED8E774\fotos_offline\";
         private MySqlDataReader reader = null;
         private string query;
         string foto_vieja = "";
@@ -76,27 +76,27 @@ namespace bonita_smile_v1
 
             if(paciente.foto.Equals(""))
             {
-                string ruta2 = @"C:\bs\img1.jpg";
+                string ruta2 = @"/Assets/img1.jpg";
                 rt_imagen.Fill = Imagen(ruta2);
             }
             else
             {
                 System.Windows.MessageBox.Show("no esta vacio"+paciente.foto);
-               // string ruta2 = @"C:\bs\img1.jpg";
+               // string ruta2 = @"/Assets/img1.jpg";
                 rt_imagen.Fill = Imagen(paciente.foto);                
             }
            
         }
         public ImageBrush Imagen(string filename)
         {
-            string ruta2 = @"C:\bs\img1.jpg";
+            string ruta2 = @"/Assets/img1.jpg";
             if (File.Exists(ruta+filename))
             {
                 Image image = new Image();
                 //MessageBox.Show("se encontro la foto en " + filename);
                
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(@"C:\bs\" + filename);
+                var stream = File.OpenRead(@"\\DESKTOP-ED8E774\bs\" + filename);
                 //MessageBox.Show("B");
                 bi.BeginInit();
                 //MessageBox.Show("C");
@@ -159,7 +159,7 @@ namespace bonita_smile_v1
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"C:\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
 
             string foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.id_paciente + ".jpg";
             foto = foto.Replace(" ", "_");
@@ -195,9 +195,9 @@ namespace bonita_smile_v1
                 {
                     if (this.foto_vieja.Equals(""))
                     {
-                        string destfile_bs = @"C:\bs\" + foto;
+                        string destfile_bs = @"\\DESKTOP-ED8E774\bs\" + foto;
                         System.IO.File.Copy(ruta2 + foto, destfile_bs, true);
-                        string destfile_fotos = @"C:\fotos_offline\" + foto;
+                        string destfile_fotos = @"\\DESKTOP-ED8E774\fotos_offline\" + foto;
                         System.IO.File.Copy(destfile_bs, destfile_fotos, true);
                         File.Delete(ruta2 + foto);
                         paciente = new Paciente(!bandera_online_offline);
@@ -205,7 +205,7 @@ namespace bonita_smile_v1
                         if (actualizo_again)
                         {
                             System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            bool subir = SubirFicheroStockFTP(foto, @"C:\bs\");
+                            bool subir = SubirFicheroStockFTP(foto, @"\\DESKTOP-ED8E774\bs\");
                             System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -250,16 +250,20 @@ namespace bonita_smile_v1
                     }
                     else
                     {
-                        File.Delete(@"C:\bs\" + foto_vieja);
-                        string destfile_bs = @"C:\bs\" + foto;
+                        if(File.Exists(@"\\DESKTOP-ED8E774\fotos_offline\"+foto_vieja))
+                        {
+                            File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + foto_vieja);
+                        }
+                        File.Delete(@"\\DESKTOP-ED8E774\bs\" + foto_vieja);
+                        string destfile_bs = @"\\DESKTOP-ED8E774\bs\" + foto;
                         System.IO.File.Copy(ruta2 + foto, destfile_bs, true);
-                        string destfile_fotos = @"C:\fotos_offline\" + foto;
+                        string destfile_fotos = @"\\DESKTOP-ED8E774\fotos_offline\" + foto;
                         System.IO.File.Copy(destfile_bs, destfile_fotos, true);
                         File.Delete(ruta2 + foto);
 
 
                         Escribir_Archivo ea = new Escribir_Archivo();
-                        ea.escribir_imagen_eliminar(this.foto_vieja, @"C:\backup_bs\eliminar_imagen_temporal.txt");
+                        ea.escribir_imagen_eliminar(this.foto_vieja, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                         paciente = new Paciente(!bandera_online_offline);
                         bool actualizo_again = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
                         if (actualizo_again)
@@ -280,8 +284,8 @@ namespace bonita_smile_v1
                             {
                                 System.Windows.MessageBox.Show("elimino Archivo");
                                 ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                                File.Delete(@"C:\backup_bs\eliminar_imagen_temporal.txt");
-                                bool subir = SubirFicheroStockFTP(foto, @"C:\bs\");
+                                File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                bool subir = SubirFicheroStockFTP(foto, @"\\DESKTOP-ED8E774\bs\");
                                 System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -349,13 +353,13 @@ namespace bonita_smile_v1
                 //            if (subir)
                 //            {
 
-                //                string destfile_auxiliar= @"C:\bs_auxiliar\"+foto;
+                //                string destfile_auxiliar= @"\\DESKTOP-ED8E774\bs_auxiliar\"+foto;
                 //                System.IO.File.Copy(ruta2 + foto, destfile_auxiliar, true);
 
-                //                string destfile_bs = @"C:\bs\" + foto;
+                //                string destfile_bs = @"\\DESKTOP-ED8E774\bs\" + foto;
                 //                System.IO.File.Copy(destfile_auxiliar, destfile_bs, true);
 
-                //                File.Delete(@"C:\bs_auxiliar\" + foto);
+                //                File.Delete(@"\\DESKTOP-ED8E774\bs_auxiliar\" + foto);
                 //                File.Delete(ruta2 + foto);
 
                 //                System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

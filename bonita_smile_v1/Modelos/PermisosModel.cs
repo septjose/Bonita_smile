@@ -8,7 +8,7 @@ namespace bonita_smile_v1.Modelos
 {
     public class PermisosModel
     {
-        public string id_permiso { get; set; }
+     
 
         public string nombre_sucursal { get; set; }
 

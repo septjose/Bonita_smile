@@ -43,7 +43,7 @@
                     </ComboBox>
                     <Label Content="Elige el color" HorizontalAlignment="Left" Margin="81,146,0,0" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
                     <Button x:Name="btnFinalizar" Content="Siguiente" HorizontalAlignment="Left" Height="42" Margin="166,253,0,0" VerticalAlignment="Top" Width="163" Click="btnFinalizar_Click"/>
-                    <Image HorizontalAlignment="Right"  VerticalAlignment="Top"  Margin="500,90,0,0" Source="C:\bs\captura.png" Height="400" Width="400"/>
+                    <Image HorizontalAlignment="Right"  VerticalAlignment="Top"  Margin="500,90,0,0" Source="Captura.PNG" Height="400" Width="400"/>
 
 
                 </Grid>

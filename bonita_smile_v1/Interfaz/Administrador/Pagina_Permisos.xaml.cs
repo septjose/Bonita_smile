@@ -32,8 +32,16 @@ namespace bonita_smile_v1.Interfaz.Administrador
         public Pagina_Permisos(int id_rol)
         {
             this.id_rol = id_rol;
+
             InitializeComponent();
             llenar_list_view(id_rol);
+            if(id_rol!=5)
+            {
+                this.btn_ingresar.IsEnabled = false;
+                this.btn_ingresar.Visibility= System.Windows.Visibility.Collapsed; 
+            }
+           
+            
         }
 
         void llenar_list_view(int id_rol)
@@ -68,11 +76,11 @@ namespace bonita_smile_v1.Interfaz.Administrador
                 {
                     Clinicas cli = new Clinicas(bandera_online_offline);
 
-                    bool elimino = cli.eliminar_Permiso(permiso.id_permiso);
+                    bool elimino = cli.eliminar_Permiso(permiso.id_usuario);
                     if (elimino)
                     {
                         cli = new Clinicas(!bandera_online_offline);
-                        cli.eliminar_Permiso(permiso.id_permiso);
+                        cli.eliminar_Permiso(permiso.id_usuario);
                         GuPermisos.Remove((PermisosModel)lv_Users.SelectedItem);
                         System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -98,7 +106,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                    admin.Main.Content = new Pagina_Actualizar_Permisos(this.id_rol, permiso.alias, permiso.nombre_sucursal, permiso.id_permiso);
+                    admin.Main.Content = new Pagina_Actualizar_Permisos(this.id_rol, permiso.alias, permiso.nombre_sucursal);
             }
             else
             {

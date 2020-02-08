@@ -759,6 +759,16 @@
     <Resource Include="Assets\pexels-photo-701337.jpeg" />
     <Resource Include="Assets\pexels-photo-701449.jpeg" />
     <Resource Include="Assets\pexels-photo-701762.jpeg" />
+    <Resource Include="Assets\diente.jpg" />
+    <Resource Include="Assets\logo_diente.jpeg" />
+    <Resource Include="Assets\logo_teeth.jpg" />
+    <Resource Include="Assets\actualizar.png" />
+    <Resource Include="Assets\agregar.png" />
+    <Resource Include="Assets\Captura.PNG" />
+    <Resource Include="Assets\carpeta.png" />
+    <Resource Include="Assets\Eliminar.png" />
+    <Resource Include="Assets\img1.jpg" />
+    <Resource Include="Assets\lupa.png" />
     <Content Include="Resources\login_icon4.svg" />
     <Resource Include="Resources\usuario_azul.png" />
   </ItemGroup>

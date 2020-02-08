@@ -64,7 +64,7 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           // File.Delete(@"C:\bs\"+paci)
+           // File.Delete(@"\\DESKTOP-ED8E774\bs\"+paci)
            
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             if (lv_Paciente.SelectedItems.Count > 0)

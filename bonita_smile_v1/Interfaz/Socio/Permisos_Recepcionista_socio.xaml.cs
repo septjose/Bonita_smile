@@ -37,6 +37,11 @@ namespace bonita_smile_v1.Interfaz.Socio
             this.lista = lista;
             this.alias = alias;
             this.id_rol = id_rol;
+            /*if (id_rol != 5)
+            {
+                this.btn_ingresar.IsEnabled = false;
+                this.btn_ingresar.Visibility = System.Windows.Visibility.Collapsed;
+            }*/
             llenar_list_view(lista);
         }
 
@@ -72,11 +77,11 @@ namespace bonita_smile_v1.Interfaz.Socio
                 {
                     Clinicas cli = new Clinicas(bandera_online_offline);
 
-                    bool elimino = cli.eliminar_Permiso(permiso.id_permiso);
+                    bool elimino = cli.eliminar_Permiso(permiso.id_usuario);
                     if (elimino)
                     {
                         cli = new Clinicas(!bandera_online_offline);
-                        cli.eliminar_Permiso(permiso.id_permiso);
+                        cli.eliminar_Permiso(permiso.id_usuario);
                         GuPermisos.Remove((PermisosModel)lv_Users.SelectedItem);
                         System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -102,7 +107,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 if (socio != null)
                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                    socio.Main4.Content = new Actualizar_Permiso_recepcionista_socio(this.id_rol,permiso.alias, permiso.nombre_sucursal, permiso.id_permiso,this.alias,this.lista);
+                    socio.Main4.Content = new Actualizar_Permiso_recepcionista_socio(this.id_rol,permiso.alias, permiso.nombre_sucursal,this.alias,this.lista);
             }
             else
             {

@@ -34,17 +34,17 @@ namespace bonita_smile_v1.Interfaz.Socio
         int id_rol = 0;
         List<String> lista = new List<string>();
         bool bandera_online_offline = false;
-        public Actualizar_Permiso_recepcionista_socio(int id_rol,string alias, string nombre_sucursal, string id_permiso,string Al,List<string>lista)
+        public Actualizar_Permiso_recepcionista_socio(int id_rol,string alias, string nombre_sucursal,string Al,List<string>lista)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.conexionBD2 = obj.conexion(bandera_online_offline);
 
             InitializeComponent();
             llenar_Combo_Clinica(Al);
-            llenar_Combo_Usuario(id_rol);
+            
             cmbClinica.SelectedItem = nombre_sucursal;
-            cmbUsuario.SelectedItem = alias;
-            this.permiso = id_permiso;
+            cmbUsuario.Text = alias;
+            
             this.Al = Al;
             this.lista = lista;
             this.id_rol = id_rol;
@@ -82,35 +82,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             conexionBD2.Close();
         }
 
-        public void llenar_Combo_Usuario(int id_rol)
-        {
-            query = "SELECT * FROM usuario where usuario.id_rol="+id_rol+"";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    // ColoresModel coloresModel = new ColoresModel();
-
-                    //coloresModel.id_color = int.Parse(reader[0].ToString());
-                    //coloresModel.descripcion = reader[1].ToString();
-
-                    string usuario = reader[1].ToString();
-                    cmbUsuario.Items.Add(usuario);
-
-                }
-            }
-            catch (MySqlException ex)
-            {
-                System.Windows.MessageBox.Show(ex.ToString());
-            }
-            conexionBD.Close();
-        }
+        
         private void cmbClinica_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -121,21 +93,21 @@ namespace bonita_smile_v1.Interfaz.Socio
 
             try
             {
-                valor = cmbUsuario.SelectedItem.ToString();
+                valor = cmbUsuario.Text;
                 valor2 = cmbClinica.SelectedItem.ToString();
                 string id_usuario = obtener_id_usuario(valor);
                 string id_clinica = obtener_id_Clinica(valor2);
-                string id_permiso = permiso;
+                
 
                 // MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
 
                 Clinicas c = new Clinicas(bandera_online_offline);
-                bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_permiso);
+                bool inserto = c.actualizar_Permisos(id_usuario, id_clinica);
                 if (inserto)
                 {
                     System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     c = new Clinicas(!bandera_online_offline);
-                    c.actualizar_Permisos(id_usuario, id_clinica, id_permiso);
+                    c.actualizar_Permisos(id_usuario, id_clinica);
                     Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                     if (socio != null)
                         socio.Main4.Content = new Permisos_Recepcionista_socio(this.lista,this.Al,this.id_rol);
