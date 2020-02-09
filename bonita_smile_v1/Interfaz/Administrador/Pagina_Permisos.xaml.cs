@@ -76,11 +76,11 @@ namespace bonita_smile_v1.Interfaz.Administrador
                 {
                     Clinicas cli = new Clinicas(bandera_online_offline);
 
-                    bool elimino = cli.eliminar_Permiso(permiso.id_usuario);
+                    bool elimino = cli.eliminar_Permiso(permiso.id_usuario,permiso.id_clinica);
                     if (elimino)
                     {
                         cli = new Clinicas(!bandera_online_offline);
-                        cli.eliminar_Permiso(permiso.id_usuario);
+                        cli.eliminar_Permiso(permiso.id_usuario,permiso.id_clinica);
                         GuPermisos.Remove((PermisosModel)lv_Users.SelectedItem);
                         System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -106,7 +106,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                    admin.Main.Content = new Pagina_Actualizar_Permisos(this.id_rol, permiso.alias, permiso.nombre_sucursal);
+                    admin.Main.Content = new Pagina_Actualizar_Permisos(this.id_rol, permiso.alias, permiso.nombre_sucursal,permiso.id_clinica);
             }
             else
             {

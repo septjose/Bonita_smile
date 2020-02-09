@@ -298,34 +298,34 @@ namespace bonita_smile_v1.Interfaz.Socio
                                     Escribir_Archivo ea = new Escribir_Archivo();
                                     ea.escribir_imagen_eliminar(foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                    bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                    if (actualizo)
-                                    {
-                                        var datos = ea.leer(rutaArchivoEliminar);
+                                    //pa = new Paciente(!bandera_online_offline);
+                                    //bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    //if (actualizo)
+                                    //{
+                                    //    var datos = ea.leer(rutaArchivoEliminar);
 
-                                        foreach (string imagen in datos)
-                                        {
-                                            Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                                            bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                                    //    foreach (string imagen in datos)
+                                    //    {
+                                    //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                                    //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
 
-                                            if (!verdad)
-                                                eliminarArchivo = false;
-                                        }
+                                    //        if (!verdad)
+                                    //            eliminarArchivo = false;
+                                    //    }
 
-                                        if (eliminarArchivo)
-                                        {
-                                            System.Windows.MessageBox.Show("elimino Archivo");
-                                            ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                                            File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                                            bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"\\DESKTOP-ED8E774\bs\");
-                                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                                            if (socio != null)
-                                            {
-                                                socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
-                                            }
-                                        }
-                                    }
+                                    //    if (eliminarArchivo)
+                                    //    {
+                                    //        System.Windows.MessageBox.Show("elimino Archivo");
+                                    //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                                    //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                    //        bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"\\DESKTOP-ED8E774\bs\");
+                                    //        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    //        if (socio != null)
+                                    //        {
+                                    //            socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                                    //        }
+                                    //    }
+                                    //}
 
 
 

@@ -264,50 +264,49 @@ namespace bonita_smile_v1
 
                         Escribir_Archivo ea = new Escribir_Archivo();
                         ea.escribir_imagen_eliminar(this.foto_vieja, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                        paciente = new Paciente(!bandera_online_offline);
-                        bool actualizo_again = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
-                        if (actualizo_again)
-                        {
-                            System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            var datos = ea.leer(rutaArchivoEliminar);
+                        //paciente = new Paciente(!bandera_online_offline);
+                        //bool actualizo_again = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+                        //if (actualizo_again)
+                        //{
+                        //    System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        //    var datos = ea.leer(rutaArchivoEliminar);
 
-                            foreach (string imagen in datos)
-                            {
-                                Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                                bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                        //    foreach (string imagen in datos)
+                        //    {
+                        //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                        //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
 
-                                if (!verdad)
-                                    eliminarArchivo = false;
-                            }
+                        //        if (!verdad)
+                        //            eliminarArchivo = false;
+                        //    }
 
-                            if (eliminarArchivo)
-                            {
-                                System.Windows.MessageBox.Show("elimino Archivo");
-                                ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                                File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                                bool subir = SubirFicheroStockFTP(foto, @"\\DESKTOP-ED8E774\bs\");
-                                System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                                if (admin != null)
-                                {
-                                    admin.Main.Content = new Page6();
-                                }
-                                else
-                                if (recep != null)
-                                {
-                                    recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
-                                }
-                                else
-                                if (socio != null)
-                                {
-                                    socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
-                                }
-                            }
-                        }
-                        else
-                        {
+                        //    if (eliminarArchivo)
+                        //    {
+                        //        System.Windows.MessageBox.Show("elimino Archivo");
+                        //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                        //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                        //        bool subir = SubirFicheroStockFTP(foto, @"\\DESKTOP-ED8E774\bs\");
+                        //        System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                        //        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        //        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                        //        if (admin != null)
+                        //        {
+                        //            admin.Main.Content = new Page6();
+                        //        }
+                        //        else
+                        //        if (recep != null)
+                        //        {
+                        //            recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                        //        }
+                        //        else
+                        //        if (socio != null)
+                        //        {
+                        //            socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                        //        }
+                        //    }
+                        //}
+                       
                             System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", " Falta de Internet ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -326,7 +325,7 @@ namespace bonita_smile_v1
                             {
                                 socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
                             }
-                        }
+                        
                     }
                 }
                 else

@@ -207,47 +207,47 @@ namespace bonita_smile_v1
                                     Escribir_Archivo ea = new Escribir_Archivo();
                                     ea.escribir_imagen_eliminar(this.paciente.foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                    bool actualizo = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
-                                if (actualizo)
-                                    {
-                                        var datos = ea.leer(rutaArchivoEliminar);
+                            //        pa = new Paciente(!bandera_online_offline);
+                            //        bool actualizo = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                            //    if (actualizo)
+                            //        {
+                            //            var datos = ea.leer(rutaArchivoEliminar);
 
-                                        foreach (string imagen in datos)
-                                        {
-                                            Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                                            bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                            //            foreach (string imagen in datos)
+                            //            {
+                            //                Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                            //                bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
 
-                                            if (!verdad)
-                                                eliminarArchivo = false;
-                                        }
+                            //                if (!verdad)
+                            //                    eliminarArchivo = false;
+                            //            }
 
-                                        if (eliminarArchivo)
-                                        {
-                                            System.Windows.MessageBox.Show("elimino Archivo");
-                                            ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                                            File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                                            bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"\\DESKTOP-ED8E774\bs\");
-                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                                    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                                    if (admin != null)
-                                    {
-                                        admin.Main.Content = new Page6();
-                                    }
-                                    else
-                                if (recep != null)
-                                    {
-                                        recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
-                                    }
-                                    else
-                                if (socio != null)
-                                    {
-                                        socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
-                                    }
+                            //            if (eliminarArchivo)
+                            //            {
+                            //                System.Windows.MessageBox.Show("elimino Archivo");
+                            //                ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                            //                File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                            //                bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"\\DESKTOP-ED8E774\bs\");
+                            //        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                            //        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                            //        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                            //        if (admin != null)
+                            //        {
+                            //            admin.Main.Content = new Page6();
+                            //        }
+                            //        else
+                            //    if (recep != null)
+                            //        {
+                            //            recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                            //        }
+                            //        else
+                            //    if (socio != null)
+                            //        {
+                            //            socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                            //        }
 
-                                }
-                            }
+                            //    }
+                            //}
 
 
 

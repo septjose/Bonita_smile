@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bonita_smile_v1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Fotos_de_Estudios">
     <Page.Resources>
         <ContextMenu x:Key="cmButton">
@@ -17,10 +17,35 @@
     </Page.Resources>
 
     <Grid>
-        <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="215" Margin="0,50,50,0" Stroke="Black" VerticalAlignment="Top" Width="260"/>
-        <ListView  x:Name="lb_imagen"  Margin="0,50,300,65" SelectionChanged="lb_imagen_SelectionChanged" Width="1000"
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="100" />
+
+            <RowDefinition Height="500"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="1000"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+            <Grid Margin="10">
+                <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Fotos de estudios" Margin="0,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        
+        <Rectangle Grid.Column="1" Grid.Row="1" x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="215" Margin="0,45,10,0" Stroke="Black" VerticalAlignment="Top" Width="260"/>
+        <ListView  Grid.Row="1" Grid.Column="1" x:Name="lb_imagen"  Margin="25,5,45,10" SelectionChanged="lb_imagen_SelectionChanged" Width="830"
             SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
-               DragEnter="lb_imagen_DragEnter" Drop="lb_imagen_Drop" AllowDrop="True" >
+               DragEnter="lb_imagen_DragEnter" Drop="lb_imagen_Drop" AllowDrop="True"  ScrollViewer.VerticalScrollBarVisibility="Auto"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Center">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="PreviewMouseRightButtonDown"
@@ -29,20 +54,25 @@
                          Handler="lb_imagen_MouseDoubleClick" />
                 </Style>
             </ListView.ItemContainerStyle>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+
 
             <ListView.ItemTemplate >
-                
+
+
                 <DataTemplate>
-                    <DockPanel>
-                        <TextBlock DockPanel.Dock="Bottom" Text="{Binding foto}"/>
-                        <!--<TextBlock Text="{Binding foto_completa}" Foreground="White"/>-->
-                        <Image Source="{Binding imagen}" Width="32" Height="32" />
-                    </DockPanel>
+                    <Grid Margin="0 25 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Foreground="Black" Grid.Row="1" Grid.Column="0" TextAlignment="Center" Width="85" FontSize="10" DockPanel.Dock="Bottom" Text="{Binding foto}" TextWrapping="Wrap"/>
+                        <Image Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Source="{Binding imagen}"  Width="70" Height="70"/>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

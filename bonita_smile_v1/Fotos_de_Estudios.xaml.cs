@@ -193,27 +193,27 @@ namespace bonita_smile_v1
                             //eliminar registro de BS Local
                             return;
                         }
-                        //SUBIR TODO AL SERVIDOR
-                        //REALZAR INSERCION DEL REGISTRO EN EL SERVIDOR
-                        fotos = new Fotos_estudio_carpeta(!bandera_online_offline);
-                        insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
+                        ////SUBIR TODO AL SERVIDOR
+                        ////REALZAR INSERCION DEL REGISTRO EN EL SERVIDOR
+                        //fotos = new Fotos_estudio_carpeta(!bandera_online_offline);
+                        //insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
 
-                        if (insertar_foto)
-                        {
+                        //if (insertar_foto)
+                        //{
 
-                            System.Windows.MessageBox.Show("ENTRO PARA SUBIR FOTO A SERVIDOR");
-                            //PROCEDER A MIGRAR LA IMAGEN POR FTP
-                            inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
-                            if (inserto)
-                            {
-                                //ELIMINAR ARCHIVO QUE SE SUBIO AL SERVIDOR DE CARPETA OFFLINE
-                                File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + id_carpeta + "_" + result);
-                            }
-                        }
-                        else
-                        {
-                            //NO HAY INTERNET, NO HACER NADA
-                        }
+                        //    System.Windows.MessageBox.Show("ENTRO PARA SUBIR FOTO A SERVIDOR");
+                        //    //PROCEDER A MIGRAR LA IMAGEN POR FTP
+                        //    inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
+                        //    if (inserto)
+                        //    {
+                        //        //ELIMINAR ARCHIVO QUE SE SUBIO AL SERVIDOR DE CARPETA OFFLINE
+                        //        File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + id_carpeta + "_" + result);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    //NO HAY INTERNET, NO HACER NADA
+                        //}
                     }
                 }
                 else

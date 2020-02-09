@@ -118,12 +118,12 @@ namespace bonita_smile_v1
                             System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             user = new Usuarios(!bandera_online_offline);
                             user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
-                            if(usu.rol.id_rol == 5)
+                            if(usu.rol.id_rol == 5 && id_rol!=5)
                             {
                                 Clinicas cli = new Clinicas(bandera_online_offline);
-                                bool eliminar = cli.eliminar_Permiso(id_usu);
+                                bool eliminar = cli.eliminar_Permisos(id_usu);
                                 cli = new Clinicas(!bandera_online_offline);
-                                cli.eliminar_Permiso(id_usu);
+                                cli.eliminar_Permisos(id_usu);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
@@ -163,12 +163,12 @@ namespace bonita_smile_v1
                         inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                         if (inserto)
                         {
-                            if (usu.rol.id_rol == 5)
+                            if (usu.rol.id_rol == 5 && id_rol != 5)
                             {
                                 Clinicas cli = new Clinicas(bandera_online_offline);
-                                bool eliminar = cli.eliminar_Permiso(id_usu);
+                                bool eliminar = cli.eliminar_Permisos(id_usu);
                                 cli = new Clinicas(!bandera_online_offline);
-                                cli.eliminar_Permiso(id_usu);
+                                cli.eliminar_Permisos(id_usu);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);

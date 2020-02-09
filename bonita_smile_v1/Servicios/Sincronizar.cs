@@ -580,48 +580,32 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminar_fotos()
         {
+            bool eliminarArchivo = true;
+            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
             Escribir_Archivo ea = new Escribir_Archivo();
-            List<String> lista = new List<string>();
-            lista  = ea.obtener_nombre_foto_eliminar();
+            var datos = ea.leer(rutaArchivoEliminar);
 
-            if (lista != null)
+            foreach (string imagen in datos)
             {
-                //CREAR TRANSACCION
-                
-                try
-                {
-                    
-                    foreach (var filename in lista)
-                    {
-                        if (!filename.Equals(""))
-                        {
-                            if (new Test_Internet().Test())
-                            {
-                                Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + filename);
-                                bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
-                            }
-                        }
-                    }
-                    
 
-                    ea.SetFileReadAccess(ruta_borrar, false);
-                    File.Delete(ruta_borrar);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex + "");
-                  
-                    return false;
-                }
-                
+                Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+                if (!verdad)
+                    eliminarArchivo = false;
+            }
+            if (eliminarArchivo)
+            {
+                System.Windows.MessageBox.Show("elimino Archivo");
+                ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
             }
 
-            return false;
+            return eliminarArchivo;
         }
 
 
-        
+
         public static bool DeleteFileOnServer(Uri serverUri, string ftpUsername, string ftpPassword)
         {
 

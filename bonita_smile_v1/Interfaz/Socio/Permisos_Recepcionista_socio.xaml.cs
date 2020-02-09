@@ -37,15 +37,14 @@ namespace bonita_smile_v1.Interfaz.Socio
             this.lista = lista;
             this.alias = alias;
             this.id_rol = id_rol;
-            /*if (id_rol != 5)
-            {
+            
                 this.btn_ingresar.IsEnabled = false;
                 this.btn_ingresar.Visibility = System.Windows.Visibility.Collapsed;
-            }*/
-            llenar_list_view(lista);
+           
+            llenar_list_view(alias);
         }
 
-        void llenar_list_view(List<string>lista)
+        void llenar_list_view(string lista)
         {
             //Usuarios user = new Usuarios();
             //List<UsuarioModel> items = new List<UsuarioModel>();
@@ -57,7 +56,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }*/
 
             //ObservableCollection<UsuarioModel> Gusuario;
-            var permisos = new ObservableCollection<PermisosModel>((new Clinicas(bandera_online_offline).Mostrar_Permisos_socio(id_rol,lista)));
+            var permisos = new ObservableCollection<PermisosModel>((new Clinicas(bandera_online_offline).Mostrar_Permisos_socio(id_rol,alias)));
 
             lv_Users.ItemsSource = permisos;
             lv_aux = lv_Users;
@@ -77,11 +76,11 @@ namespace bonita_smile_v1.Interfaz.Socio
                 {
                     Clinicas cli = new Clinicas(bandera_online_offline);
 
-                    bool elimino = cli.eliminar_Permiso(permiso.id_usuario);
+                    bool elimino = cli.eliminar_Permiso(permiso.id_usuario,permiso.id_clinica);
                     if (elimino)
                     {
                         cli = new Clinicas(!bandera_online_offline);
-                        cli.eliminar_Permiso(permiso.id_usuario);
+                        cli.eliminar_Permiso(permiso.id_usuario,permiso.id_clinica);
                         GuPermisos.Remove((PermisosModel)lv_Users.SelectedItem);
                         System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -107,7 +106,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 if (socio != null)
                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                    socio.Main4.Content = new Actualizar_Permiso_recepcionista_socio(this.id_rol,permiso.alias, permiso.nombre_sucursal,this.alias,this.lista);
+                    socio.Main4.Content = new Actualizar_Permiso_recepcionista_socio(this.id_rol,permiso.alias, permiso.nombre_sucursal,this.alias,this.lista,permiso.id_clinica);
             }
             else
             {

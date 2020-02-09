@@ -171,37 +171,37 @@ namespace bonita_smile_v1
                     lvCarpetas.ItemsSource = null;
                     lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
 
-                        // ELIMINAR DEL SERVIDOR/
+                    //    // ELIMINAR DEL SERVIDOR/
 
-                         /****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
-                         //ELIMINAR REGISTRO
-                         elimino = new Carpeta_archivos(!bandera_offline_online).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
-                    if (elimino)
-                    {
-                        //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
-                        var datos = ea.leer(rutaArchivoEliminar);
+                    //     /****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
+                    //     //ELIMINAR REGISTRO
+                    //     elimino = new Carpeta_archivos(!bandera_offline_online).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+                    //if (elimino)
+                    //{
+                    //    //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+                    //    var datos = ea.leer(rutaArchivoEliminar);
 
-                        foreach (string imagen in datos)
-                        {
+                    //    foreach (string imagen in datos)
+                    //    {
                             
-                            Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                            bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                    //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                    //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
 
-                            if (!verdad)
-                                eliminarArchivo = false;
-                        }
-                        if (eliminarArchivo)
-                        {
-                            System.Windows.MessageBox.Show("elimino Archivo");
-                            ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                            File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                        }
-                    }
-                    else
-                    {
-                        //SI NO HAY INTERNET, NO HACER NADA
-                    }
-                    /**********************************/
+                    //        if (!verdad)
+                    //            eliminarArchivo = false;
+                    //    }
+                    //    if (eliminarArchivo)
+                    //    {
+                    //        System.Windows.MessageBox.Show("elimino Archivo");
+                    //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                    //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    //SI NO HAY INTERNET, NO HACER NADA
+                    //}
+                    ///**********************************/
                 }
             }
             else

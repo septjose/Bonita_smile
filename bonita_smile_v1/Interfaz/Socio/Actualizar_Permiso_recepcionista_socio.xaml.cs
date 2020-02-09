@@ -32,9 +32,10 @@ namespace bonita_smile_v1.Interfaz.Socio
         string permiso = "";
         string Al = "";
         int id_rol = 0;
+        string id_clinica_viejo = "";
         List<String> lista = new List<string>();
         bool bandera_online_offline = false;
-        public Actualizar_Permiso_recepcionista_socio(int id_rol,string alias, string nombre_sucursal,string Al,List<string>lista)
+        public Actualizar_Permiso_recepcionista_socio(int id_rol,string alias, string nombre_sucursal,string Al,List<string>lista,string id_clinica_anterior)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.conexionBD2 = obj.conexion(bandera_online_offline);
@@ -48,6 +49,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             this.Al = Al;
             this.lista = lista;
             this.id_rol = id_rol;
+            this.id_clinica_viejo = id_clinica_anterior;
 
         }
 
@@ -102,12 +104,12 @@ namespace bonita_smile_v1.Interfaz.Socio
                 // MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
 
                 Clinicas c = new Clinicas(bandera_online_offline);
-                bool inserto = c.actualizar_Permisos(id_usuario, id_clinica);
+                bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
                 if (inserto)
                 {
                     System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     c = new Clinicas(!bandera_online_offline);
-                    c.actualizar_Permisos(id_usuario, id_clinica);
+                    c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
                     Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                     if (socio != null)
                         socio.Main4.Content = new Permisos_Recepcionista_socio(this.lista,this.Al,this.id_rol);

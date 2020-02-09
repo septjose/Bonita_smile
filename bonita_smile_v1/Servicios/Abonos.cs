@@ -11,6 +11,10 @@ namespace bonita_smile_v1.Servicios
 {
     class Abonos
     {
+        //se pudo
+        //si se puede
+        //lklklklk
+        //hola
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;

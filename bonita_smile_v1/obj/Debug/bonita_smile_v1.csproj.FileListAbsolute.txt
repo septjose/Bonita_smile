@@ -1524,7 +1524,6 @@ E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\bin\Debug\System
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\bin\Debug\System.ValueTuple.xml
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\bin\Debug\Umbraco.Core.pdb
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\bin\Debug\Umbraco.Core.xml
-E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csprojAssemblyReference.cache
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\IniciarSesionWindow.baml
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Fotos_de_Estudios.g.cs
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Admin.g.cs
@@ -1648,3 +1647,4 @@ E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj.CopyComplete
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.exe
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.pdb
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csprojAssemblyReference.cache

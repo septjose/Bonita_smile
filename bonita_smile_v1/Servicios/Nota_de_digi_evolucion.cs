@@ -17,9 +17,11 @@ namespace bonita_smile_v1.Servicios
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
         private bool online;
+        private string prueba_remota = "prueba";
 
         public Nota_de_digi_evolucion(bool online)
         {
+            MessageBox.Show(prueba_remota);
             this.conexionBD = obj.conexion(online);
             this.online = online;
         }
@@ -107,8 +109,8 @@ namespace bonita_smile_v1.Servicios
             Seguridad seguridad = new Seguridad();
             string auxiliar_identificador_nota = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha + DateTime.Now);
 
-            string nombre_carpeta = descripcion + "_" + DateTime.Now.ToString("dd/MM/yyyy");
-            string auxiliar_identificador_carpeta = seguridad.SHA1(nombre_carpeta + DateTime.Now);
+          
+           
 
             bool internet = ti.Test();
 
@@ -133,18 +135,26 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
+                    int no_carpeta = 0;
+                    query = "select count(descripcion) from  nota_de_digi_evolucion where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo + "'";
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    reader = cmd.ExecuteReader();
+                    
+                    while (reader.Read())
+                    {
+                        no_carpeta =Int32.Parse( reader[0].ToString());
+                    }
 
+                    conexionBD.Close();
+                    string nombre_carpeta = "No_Carpeta_"+no_carpeta + "_" + DateTime.Now.ToString("dd/MM/yyyy");
+                    string auxiliar_identificador_carpeta = seguridad.SHA1(nombre_carpeta + DateTime.Now);
                     // -----------HACER TRANSACCION-------- -/
-                     query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador) VALUES('" + auxiliar_identificador_nota + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','<!--" + auxiliar_identificador_nota + "-->');";
+                    query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador) VALUES('" + auxiliar_identificador_nota + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','<!--" + auxiliar_identificador_nota + "-->');";
                     query = query + "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,id_motivo,auxiliar_identificador,id_nota) VALUES('" + auxiliar_identificador_carpeta + "','" + nombre_carpeta + "','" + id_paciente + "','" + id_motivo + "','<!--" + auxiliar_identificador_carpeta + "-->','" + auxiliar_identificador_nota + "');";
 
                     conexionBD.Open();
-                    //cmd = new MySqlCommand(query, conexionBD);
-                    //cmd.ExecuteReader();
-
-                    //conexionBD.Close();
-
-                    //conexionBD.Open();
+                    
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
 

@@ -1,7 +1,5 @@
 ﻿using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
-
-
 using bonita_smile_v1.Modelos;
 using System;
 using System.Collections.Generic;

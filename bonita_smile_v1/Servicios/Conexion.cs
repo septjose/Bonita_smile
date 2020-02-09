@@ -34,7 +34,8 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //MessageBox.Show("Estas Offline");
-                    servidor = "192.168.1.76";
+                    //aqui estas
+                    servidor = "7.152.100.9";
                     puerto = "3306";
                     usuario = "usuariochido";
                     password = "12345";
@@ -43,7 +44,7 @@ namespace bonita_smile_v1.Servicios
             }
             else
             {
-                 servidor = "192.168.1.76";
+                 servidor = "7.152.100.9";
                  puerto = "3306";
                  usuario = "usuariochido";
                  password = "12345";

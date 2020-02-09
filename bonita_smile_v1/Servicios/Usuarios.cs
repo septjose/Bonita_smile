@@ -44,7 +44,7 @@ namespace bonita_smile_v1.Servicios
         {
             List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
            
-                query = "select DISTINCT usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join rol on usuario.id_rol=rol.id_rol INNER join permisos on permisos.id_usuario=usuario.id_usuario where permisos.id_clinica in (select id_clinica from usuario inner join permisos on usuario.id_usuario = permisos.id_usuario where usuario.alias='"+alias+"') AND usuario.id_rol!=5";
+                query = "(select Distinct usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join rol on usuario.id_rol=rol.id_rol where id_clinica='') union (select DISTINCT usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join rol on usuario.id_rol=rol.id_rol INNER join permisos on permisos.id_usuario=usuario.id_usuario where permisos.id_clinica in (select id_clinica from usuario inner join permisos on usuario.id_usuario = permisos.id_usuario where usuario.alias='"+alias+"') AND usuario.id_rol!=5)";
 
                 try
                 {
