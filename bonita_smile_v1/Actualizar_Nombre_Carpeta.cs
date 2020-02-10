@@ -28,21 +28,28 @@ namespace bonita_smile_v1
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            Carpeta_archivos ca = new Carpeta_archivos(bandera_online_offline);
-            bool insertarCarpeta =ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente,id_motivo);
-            if (insertarCarpeta)
+           if(!txtAbono.Text.Equals(""))
             {
-                
-                System.Windows.Forms.MessageBox.Show("Se actualizò Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ca = new Carpeta_archivos(!bandera_online_offline);
-                ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente,id_motivo);
-            }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                Carpeta_archivos ca = new Carpeta_archivos(bandera_online_offline);
+                bool insertarCarpeta = ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente, id_motivo);
+                if (insertarCarpeta)
+                {
 
-            this.DialogResult = DialogResult.OK;
+                    System.Windows.Forms.MessageBox.Show("Se actualizò Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ca = new Carpeta_archivos(!bandera_online_offline);
+                    ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente, id_motivo);
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                this.DialogResult = DialogResult.OK;
+            }
+           else
+            {
+                System.Windows.Forms.MessageBox.Show("Favor de llenar los campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void txtAbono_TextChanged(object sender, EventArgs e)

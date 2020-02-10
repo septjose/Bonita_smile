@@ -29,7 +29,7 @@ namespace bonita_smile_v1.Servicios
         public List<Nota_de_digi_evolucionModel> MostrarNota_de_digi_evolucion(string id_motivo, string id_paciente)
         {
             List<Nota_de_digi_evolucionModel> listaNota_de_digi_evolucion = new List<Nota_de_digi_evolucionModel>();
-            query = "SELECT id_nota,id_paciente,id_motivo,descripcion,date_format(fecha, '%d/%m/%Y') as fecha FROM nota_de_digi_evolucion where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo+"'";
+            query = "SELECT nota_de_digi_evolucion.id_nota,nota_de_digi_evolucion.id_paciente,nota_de_digi_evolucion.id_motivo,nota_de_digi_evolucion.descripcion,date_format(nota_de_digi_evolucion.fecha, '%d/%m/%Y') as fecha,carpeta_archivos.id_carpeta,carpeta_archivos.nombre_carpeta FROM nota_de_digi_evolucion inner join carpeta_archivos on carpeta_archivos.id_nota=nota_de_digi_evolucion.id_nota where nota_de_digi_evolucion.id_paciente='"+id_paciente+"' and nota_de_digi_evolucion.id_motivo='"+id_motivo+"' ";
 
             try
             {
@@ -41,12 +41,19 @@ namespace bonita_smile_v1.Servicios
                 while (reader.Read())
                 {
                     Nota_de_digi_evolucionModel nota_De_Digi_EvolucionModel = new Nota_de_digi_evolucionModel();
+                    Carpeta_archivosModel carpeta = new Carpeta_archivosModel();
 
                     nota_De_Digi_EvolucionModel.id_nota = reader[0].ToString();
                     nota_De_Digi_EvolucionModel.id_paciente = reader[1].ToString();
                     nota_De_Digi_EvolucionModel.id_motivo = reader[2].ToString();
                     nota_De_Digi_EvolucionModel.descripcion = reader[3].ToString();
                     nota_De_Digi_EvolucionModel.fecha = reader[4].ToString();
+                    carpeta.id_carpeta = reader[5].ToString();
+                    carpeta.nombre_carpeta = reader[6].ToString();
+                    carpeta.id_paciente = reader[1].ToString();
+                    carpeta.id_motivo = reader[2].ToString();
+                    carpeta.id_nota = reader[0].ToString();
+                    nota_De_Digi_EvolucionModel.carpeta = carpeta;
 
                     listaNota_de_digi_evolucion.Add(nota_De_Digi_EvolucionModel);
                 }

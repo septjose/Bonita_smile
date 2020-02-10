@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
+using bonita_smile_v1.Interfaz.Socio;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 
@@ -81,14 +82,23 @@ namespace bonita_smile_v1
                 // System.Windows.MessageBox.Show(carpeta.id_carpeta + "");
                 // System.Windows.MessageBox.Show(carpeta.id_paciente + "");
                 //System.Windows.MessageBox.Show("hi");
+                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
 
                 if (admin != null)
                     admin.Main.Content = new Fotos_de_Estudios(carpeta);
                 else
+                if(clin!=null)
                 {
+                   
                     clin.Main2.Content = new Fotos_de_Estudios(carpeta);
+                }
+                else
+                if (socio != null)
+                {
+
+                    socio.Main4.Content = new Fotos_de_Estudios(carpeta);
                 }
             }
         }

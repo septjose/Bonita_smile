@@ -160,23 +160,39 @@ namespace bonita_smile_v1
         private void btnAceptar_Click(object sender, EventArgs e)
         {
 
-            string nombre = txtAbono.Text;
-            double costo = Convert.ToDouble(txt_efectivo.Text);
-
-            Motivo_cita mc = new Motivo_cita(false);
-            bool inserto = mc.insertarMotivo_cita(nombre, costo, id);
-            if (inserto)
+            if(!txtAbono.Text.Equals("")&& !txt_efectivo.Text.Equals(""))
             {
-                mc = new Motivo_cita(true);
-              mc.insertarMotivo_cita(nombre, costo, id);
-                System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(new Seguridad().validar_numero(txt_efectivo.Text))
+                {
+                    string nombre = txtAbono.Text;
+                    double costo = Convert.ToDouble(txt_efectivo.Text);
 
+                    Motivo_cita mc = new Motivo_cita(false);
+                    bool inserto = mc.insertarMotivo_cita(nombre, costo, id);
+                    if (inserto)
+                    {
+                        mc = new Motivo_cita(true);
+                        mc.insertarMotivo_cita(nombre, costo, id);
+                        System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Solo ingresar valores numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Favor de llenar los campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
-            this.DialogResult = DialogResult.OK;
         }
 
         

@@ -36,9 +36,10 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(96, 284);
+            this.btnAceptar.Location = new System.Drawing.Point(108, 355);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.Size = new System.Drawing.Size(84, 29);
             this.btnAceptar.TabIndex = 0;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
@@ -46,9 +47,10 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(276, 284);
+            this.btnCancelar.Location = new System.Drawing.Point(310, 355);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(84, 29);
             this.btnCancelar.TabIndex = 1;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -57,28 +59,31 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(130, 99);
+            this.label1.Location = new System.Drawing.Point(146, 124);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 17);
+            this.label1.Size = new System.Drawing.Size(61, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Precio: ";
             // 
             // txtPrecio
             // 
-            this.txtPrecio.Location = new System.Drawing.Point(192, 96);
+            this.txtPrecio.Location = new System.Drawing.Point(216, 120);
+            this.txtPrecio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPrecio.Name = "txtPrecio";
-            this.txtPrecio.Size = new System.Drawing.Size(100, 22);
+            this.txtPrecio.Size = new System.Drawing.Size(112, 26);
             this.txtPrecio.TabIndex = 3;
+            this.txtPrecio.TextChanged += new System.EventHandler(this.txtPrecio_TextChanged);
             // 
             // InsertarMembresia
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(474, 357);
+            this.ClientSize = new System.Drawing.Size(533, 446);
             this.Controls.Add(this.txtPrecio);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "InsertarMembresia";
             this.Text = "InsertarMembresia";
             this.ResumeLayout(false);

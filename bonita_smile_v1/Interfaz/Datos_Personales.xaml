@@ -6,7 +6,7 @@
       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:local="clr-namespace:bonita_smile_v1"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="950"
+      d:DesignHeight="800" d:DesignWidth="1150"
       Title="Page2">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
         <Grid>
@@ -18,9 +18,9 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="1150"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Datos Personales" Margin="0 20 0 0"/>
@@ -120,7 +120,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <!--<Button Grid.Row="0" Content="Agregar un Motivo"  Margin="0,0,950,0" Click="Button_Click_1" Width="200" Height="30" />-->
-                <Button Grid.Row="0" Margin="60,60,1012.667,52.667" Name="btn1" Click="Button_Click_1" Height="50" Width="150" Grid.RowSpan="2" >
+                <Button Grid.Row="0" Margin="60,60,800,52.667" Name="btn1" Click="Button_Click_1" Height="50" Width="150" Grid.RowSpan="2" >
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">

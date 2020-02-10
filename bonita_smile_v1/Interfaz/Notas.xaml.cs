@@ -173,36 +173,36 @@ namespace bonita_smile_v1
                         }
                     }
 
-                    //ELIMINAR DEL SERVIDOR/
+                    ////ELIMINAR DEL SERVIDOR/
 
-                    /****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
-                    //ELIMINAR REGISTRO
-                    elimino = new Carpeta_archivos(!bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta);
-                    if (elimino)
-                    {
-                        //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
-                        var datos = ea.leer(rutaArchivoEliminar);
+                    ///****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
+                    ////ELIMINAR REGISTRO
+                    //elimino = new Carpeta_archivos(!bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta);
+                    //if (elimino)
+                    //{
+                    //    //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+                    //    var datos = ea.leer(rutaArchivoEliminar);
 
-                        foreach (string imagen in datos)
-                        {
-                            Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                            bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                    //    foreach (string imagen in datos)
+                    //    {
+                    //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                    //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
 
-                            if (!verdad)
-                                eliminarArchivo = false;
-                        }
-                        if (eliminarArchivo)
-                        {
-                            System.Windows.MessageBox.Show("elimino Archivo");
-                            ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                            File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                        }
-                    }
-                    else
-                    {
-                        //SI NO HAY INTERNET, NO HACER NADA
-                    }
-                    /**********************************/
+                    //        if (!verdad)
+                    //            eliminarArchivo = false;
+                    //    }
+                    //    if (eliminarArchivo)
+                    //    {
+                    //        System.Windows.MessageBox.Show("elimino Archivo");
+                    //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                    //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    //SI NO HAY INTERNET, NO HACER NADA
+                    //}
+                    ///**********************************/
                 }
 
                 //ELIMINAR DESPUES TODO LO REFERENTE A LA NOTA
@@ -271,5 +271,39 @@ namespace bonita_smile_v1
             }
         }
 
+        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Nota_de_digi_evolucionModel nota = (Nota_de_digi_evolucionModel)lvNotas.SelectedItem;
+            if (lvNotas.SelectedItems.Count > 0)
+            {
+                Carpeta_archivosModel carpeta = new Carpeta_archivosModel();
+                carpeta.id_carpeta = nota.carpeta.id_carpeta;
+                carpeta.nombre_carpeta = nota.carpeta.nombre_carpeta;
+                carpeta.id_paciente = nota.id_paciente;
+                carpeta.id_motivo = nota.id_motivo;
+                carpeta.id_nota = nota.id_nota;
+
+                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+
+                if (admin != null)
+                    admin.Main.Content = new Fotos_de_Estudios(carpeta);
+                else
+                if (clin != null)
+                {
+
+                    clin.Main2.Content = new Fotos_de_Estudios(carpeta);
+                }
+                else
+                if (socio != null)
+                {
+
+                    socio.Main4.Content = new Fotos_de_Estudios(carpeta);
+                }
+
+
+            }
+        }
     }
 }

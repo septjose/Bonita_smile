@@ -769,6 +769,7 @@
     <Resource Include="Assets\Eliminar.png" />
     <Resource Include="Assets\img1.jpg" />
     <Resource Include="Assets\lupa.png" />
+    <Resource Include="Assets\trofeo.jpg" />
     <Content Include="Resources\login_icon4.svg" />
     <Resource Include="Resources\usuario_azul.png" />
   </ItemGroup>

@@ -56,15 +56,24 @@ namespace bonita_smile_v1.Servicios
                     pacienteModel.email = reader[6].ToString();
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                     //pacienteModel.marketing = reader[6].ToString();
-
                     pacienteModel.antecedente = reader[9].ToString();
-                    pacienteModel.membresia = reader[11].ToString();
+                    if (reader[11].ToString().Equals(""))
+                    {
+                        pacienteModel.imagen_membresia = null;
+                    }
+                    else
+                    {
+                        pacienteModel.imagen_membresia = LoadImage_Membresia("E:/PortableGit/programs_c#/bs_v1.4/Bonita_smile/bonita_smile_v1/Assets/trofeo.jpg");
+
+                    }
+                    pacienteModel.membresia = reader[11].ToString(); 
                     clinicaModel.id_clinica = reader[12].ToString();
                     clinicaModel.nombre_sucursal = reader[13].ToString();
                     clinicaModel.color = reader[14].ToString();
                     pacienteModel.clinica = clinicaModel;
-
-
+                    /*saber si la membresi que devuelve es vacio o no 
+                    si regresa  vacio entonces no poner la imagen del trofeo
+                    de lo contrario mandar la foto en una variable para que la muestre*/
                     listaPaciente.Add(pacienteModel);
                 }
             }
@@ -443,6 +452,32 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
+        private BitmapImage LoadImage_Membresia(string filename)
+        {
+            BitmapImage bi;
+
+           
+                //MessageBox.Show("se encontro la foto en " + filename);
+                var bitmap = new BitmapImage();
+                //MessageBox.Show("A");
+                var stream = File.OpenRead( filename);
+                //MessageBox.Show("B");
+                bitmap.BeginInit();
+                //MessageBox.Show("C");
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                //MessageBox.Show("D");
+                bitmap.StreamSource = stream;
+                //MessageBox.Show("E");
+                bitmap.EndInit();
+                //MessageBox.Show("F");
+                stream.Close();
+                //MessageBox.Show("G");
+                stream.Dispose();
+                //MessageBox.Show("H");
+
+                return bitmap;
+         
+        }
         public bool eliminarMembresia(PacienteModel paciente)
         {
             bool internet = ti.Test();

@@ -62,8 +62,6 @@ namespace bonita_smile_v1
             this.btnCancelat = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txt_efectivo = new System.Windows.Forms.TextBox();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.SuspendLayout();
             // 
             // lblAbono
@@ -81,9 +79,9 @@ namespace bonita_smile_v1
             this.txtAbono.Location = new System.Drawing.Point(311, 115);
             this.txtAbono.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAbono.Name = "txtAbono";
+            this.txtAbono.Text = motivo.descripcion;
             this.txtAbono.Size = new System.Drawing.Size(214, 26);
             this.txtAbono.TabIndex = 1;
-            this.txtAbono.Text = motivo.descripcion;
             this.txtAbono.TextChanged += new System.EventHandler(this.txtAbono_TextChanged);
             // 
             // btnAceptar
@@ -134,10 +132,6 @@ namespace bonita_smile_v1
             this.txt_efectivo.Text = motivo.costo.ToString();
             this.txt_efectivo.TextChanged += new System.EventHandler(this.txt_efectivo_TextChanged);
             // 
-            // printDialog1
-            // 
-            this.printDialog1.UseEXDialog = true;
-            // 
             // Actualizar_Motivo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -163,24 +157,41 @@ namespace bonita_smile_v1
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-
-            string nombre = txtAbono.Text;
-            double costo = Convert.ToDouble(txt_efectivo.Text);
-
-            Motivo_cita mc = new Motivo_cita(bandera_online_offline);
-            //System.Windows.MessageBox.Show("imprimo el id del paciente" + motivo.paciente.id_paciente);
-            bool inserto = mc.actualizarMotivo_cita(motivo.id_motivo,nombre,costo,motivo.paciente.id_paciente);
-            if (inserto)
+            if(!txtAbono.Text.Equals("") && !txt_efectivo.Text.Equals(""))
             {
-                System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                mc = new Motivo_cita(!bandera_online_offline);
-                mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo, motivo.paciente.id_paciente);
+                if(new Seguridad().validar_numero(txt_efectivo.Text))
+                {
+                    string nombre = txtAbono.Text;
+                    double costo = Convert.ToDouble(txt_efectivo.Text);
+
+                    System.Windows.MessageBox.Show(costo + " ");
+
+                    Motivo_cita mc = new Motivo_cita(bandera_online_offline);
+                    //System.Windows.MessageBox.Show("imprimo el id del paciente" + motivo.paciente.id_paciente);
+                    bool inserto = mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo, motivo.paciente.id_paciente);
+                    if (inserto)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        mc = new Motivo_cita(!bandera_online_offline);
+                        mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo, motivo.paciente.id_paciente);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("No se Actualizo el motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Solo se aceptan valores numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No se Actualizo el motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Favor de llenar todos los campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            this.DialogResult = DialogResult.OK;
+            
         }
 
 
@@ -194,7 +205,5 @@ namespace bonita_smile_v1
         private System.Windows.Forms.Button btnCancelat;
         private Label label1;
         private TextBox txt_efectivo;
-        private System.Drawing.Printing.PrintDocument printDocument1;
-        private PrintDialog printDialog1;
     }
 }

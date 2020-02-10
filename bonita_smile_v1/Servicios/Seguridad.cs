@@ -58,5 +58,29 @@ namespace bonita_smile_v1.Servicios
                 return false;
             }
         }
+
+        public  bool ValidarTelefonos7a10Digitos(string strNumber)
+        {
+            Regex regex = new Regex("\\A[0-9]{10}\\z");
+            Match match = regex.Match(strNumber);
+
+            if (match.Success)
+                return true;
+            else
+                return false;
+        }
+
+        public bool validar_numero(string strNumber)
+        {
+            Regex regex = new Regex("^[0-9]+([.][0-9]+)?$");
+            Match match = regex.Match(strNumber);
+
+            if (match.Success)
+                return true;
+            else
+                return false;
+        }
+
+
     }
 }

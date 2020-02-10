@@ -22,6 +22,8 @@ namespace bonita_smile_v1.Modelos
         public ClinicaModel clinica { get; set; }
 
         public string membresia { get; set; }
+
+        public BitmapImage imagen_membresia {get;set;}
         public string fecha { get; set; }
     }
 }

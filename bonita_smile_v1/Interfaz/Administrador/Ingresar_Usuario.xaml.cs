@@ -69,18 +69,21 @@ namespace bonita_smile_v1
         private void btnFinalizar_Click(object sender, RoutedEventArgs e)
         {
 
-            string valor = cmbRol.SelectedItem.ToString();
-            int id_rol = obtener_id_rol(valor);
+            
             string nombre = txtNombre.Text;
             string apellidos = txtApellido.Text;
             string alias = txtAlias.Text;
             string password = pwbPassword.Password;
-            if (txtNombre.Text.Equals("") || txtApellido.Text.Equals("") || txtAlias.Text.Equals("") || pwbPassword.Password.Equals("") || valor.Equals(""))
+            if (txtNombre.Text.Equals("") || txtApellido.Text.Equals("") || txtAlias.Text.Equals("") || pwbPassword.Password.Equals("") || cmbRol.SelectedIndex.Equals(-1))
             {
                 System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
+                string valor = cmbRol.SelectedItem.ToString();
+                int id_rol = obtener_id_rol(valor);
+                
+
                 try
                 {
                     Usuarios user = new Usuarios(bandera_online_offline);

@@ -46,7 +46,7 @@
         <!--<Button Content="Agregar Estudios a la carpeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Margin="5,345,0,0" Click="Button_Click"/>-->
         <ListView Grid.Row="1" x:Name="lvCarpetas"  Margin="5,10,225,40"   Style="{StaticResource MetroListView}" ScrollViewer.VerticalScrollBarVisibility="Auto"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
-                Grid.Column="1" HorizontalAlignment="Center">
+                Grid.Column="1"  Width="1000" HorizontalAlignment="Left">
             
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

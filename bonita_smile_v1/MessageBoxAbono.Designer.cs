@@ -186,56 +186,74 @@ namespace bonita_smile_v1
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            string comentario = txtComentario.Text;
-
-            DateTime fecha = DateTime.Now;
-            double abono = double.Parse(txtAbono.Text);
-            double efectivo = double.Parse(txt_efectivo.Text);
-            //System.Windows.MessageBox.Show("el restante es " + restante);
-            //System.Windows.MessageBox.Show("el abono es de " + abono);
-            double cambio = efectivo - abono;
-
-            if (efectivo >= abono && abono>0 )
+            if(!txtAbono.Text.Equals("") && !txt_efectivo.Text.Equals(""))
             {
-
-                System.Windows.MessageBox.Show("abono es " + abono);
-                System.Windows.MessageBox.Show("restante es " + restante);
-                if (abono <= restante && restante>0.0)
-            {
-                 
-                Abonos ab = new Abonos(bandera_online_offline);
-                bool insertarAbono = ab.insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono, comentario);
-                if (insertarAbono)
+                if (new Seguridad().validar_numero(txtAbono.Text) && new Seguridad().validar_numero(txt_efectivo.Text))
                 {
-                    ab = new Abonos(!bandera_online_offline);
-                    ab.insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono, comentario);
-                    //System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //System.Windows.Forms.MessageBox.Show("El cambio es de " + cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //imprimir_recibo(fecha.ToString("yyyy/MM/dd"), nombre, abono, motivo, restante, cambio);
 
-                    imprimir_recibo();
+                    string comentario = txtComentario.Text;
+
+                    DateTime fecha = DateTime.Now;
+                    double abono = double.Parse(txtAbono.Text);
+                    double efectivo = double.Parse(txt_efectivo.Text);
+                    //System.Windows.MessageBox.Show("el restante es " + restante);
+                    //System.Windows.MessageBox.Show("el abono es de " + abono);
+                    double cambio = efectivo - abono;
+
+                    if (efectivo >= abono && abono > 0)
+                    {
+
+                        System.Windows.MessageBox.Show("abono es " + abono);
+                        System.Windows.MessageBox.Show("restante es " + restante);
+                        if (abono <= restante && restante > 0.0)
+                        {
+
+                            Abonos ab = new Abonos(bandera_online_offline);
+                            bool insertarAbono = ab.insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono, comentario);
+                            if (insertarAbono)
+                            {
+                                ab = new Abonos(!bandera_online_offline);
+                                ab.insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono, comentario);
+                                //System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //System.Windows.Forms.MessageBox.Show("El cambio es de " + cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //imprimir_recibo(fecha.ToString("yyyy/MM/dd"), nombre, abono, motivo, restante, cambio);
+
+                                imprimir_recibo();
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("No se pudo realizar el pago", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+
+                            this.DialogResult = DialogResult.OK;
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("El abono excede el precio del tratamiento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            //AGREGAR SI DESEA CONTINUAR
+                        }
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Abono mayor que efectivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        //AGREGAR SI DESEA CONTINUAR
+                    }
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo realizar el pago", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                this.DialogResult = DialogResult.OK;
-            }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("El abono excede el precio del tratamiento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    //AGREGAR SI DESEA CONTINUAR
+                    System.Windows.Forms.MessageBox.Show("Solo se aceptan valores numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Abono mayor que efectivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                //AGREGAR SI DESEA CONTINUAR
+                System.Windows.Forms.MessageBox.Show("Favor de llenar los campos de abono y efectivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+
+           
 
         }
 

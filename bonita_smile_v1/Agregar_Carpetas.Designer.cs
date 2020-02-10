@@ -128,24 +128,31 @@ namespace bonita_smile_v1
         private void btnAceptar_Click(object sender, EventArgs e)
         {
 
-            //string comentario = txtComentario.Text;
-
-            DateTime fecha = DateTime.Now;
-            //double abono = double.Parse(txtAbono.Text);
-            Carpeta_archivos ca = new Carpeta_archivos(bandera_online_offline);
-            bool insertarAbono = ca.insertarCarpeta_archivos(txtAbono.Text,id_paciente,id_motivo);
-            if (insertarAbono)
+            if(!txtAbono.Text.Equals(""))
             {
-                System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ca = new Carpeta_archivos(!bandera_online_offline);
-                 ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente,id_motivo);
+                //string comentario = txtComentario.Text;
+
+                DateTime fecha = DateTime.Now;
+                //double abono = double.Parse(txtAbono.Text);
+                Carpeta_archivos ca = new Carpeta_archivos(bandera_online_offline);
+                bool insertarAbono = ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente, id_motivo);
+                if (insertarAbono)
+                {
+                    System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ca = new Carpeta_archivos(!bandera_online_offline);
+                    ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente, id_motivo);
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                this.DialogResult = DialogResult.OK;
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Favor de llenar los campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            this.DialogResult = DialogResult.OK;
         }
 
         #endregion

@@ -24,33 +24,54 @@ namespace bonita_smile_v1
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            try
+            if(!txtPrecio.Text.Equals(""))
             {
-                //MessageBox.Show(paciente.nombre);
-                bool inserto = new Paciente(bandera_online_offline).actualizarMembresia(paciente);
-                if (inserto)
+                if (new Seguridad().validar_numero(txtPrecio.Text))
                 {
-                    System.Windows.Forms.MessageBox.Show("El paciente " + paciente.nombre + " " + paciente.apellidos + " es ahora miembro", "Se ingreso correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    try
+                    {
 
-                        // -----------------------------------------------/
-                        inserto = new Paciente(!bandera_online_offline).actualizarMembresia(paciente);
+                        //MessageBox.Show(paciente.nombre);
+                        bool inserto = new Paciente(bandera_online_offline).actualizarMembresia(paciente);
+                        if (inserto)
+                        {
+                            System.Windows.Forms.MessageBox.Show("El paciente " + paciente.nombre + " " + paciente.apellidos + " es ahora miembro", "Se ingreso correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // -----------------------------------------------/
+                            inserto = new Paciente(!bandera_online_offline).actualizarMembresia(paciente);
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("No se pudo  Eliminar la membresia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show(ex + "");
+                        this.DialogResult = DialogResult.OK;
+                    }
+                    this.DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo  Eliminar la membresia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("Cantidad no valida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                System.Windows.MessageBox.Show(ex + "");
-                this.DialogResult = DialogResult.OK;
+
             }
-            this.DialogResult = DialogResult.OK;
+           
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        private void txtPrecio_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

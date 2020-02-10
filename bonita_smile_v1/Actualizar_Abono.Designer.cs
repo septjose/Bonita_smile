@@ -191,56 +191,71 @@ namespace bonita_smile_v1
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            string comentario = txtComentario.Text;
-
-            DateTime fecha = DateTime.Now;
-            double abono = double.Parse(txtAbono.Text);
-            double efectivo = double.Parse(txt_efectivo.Text);
-            DateTime parsedDate = DateTime.Parse(this.abono.fecha);
-            //System.Windows.MessageBox.Show(" imprimo conversion  " + parsedDate.ToString("yyyy/MM/dd"));
-            string fecha_actual = parsedDate.ToString("yyyy/MM/dd");
-            //System.Windows.MessageBox.Show("el restante es " + restante);
-            //System.Windows.MessageBox.Show("el abono es de " + abono);
-            double cambio = efectivo - abono;
-            if (efectivo >= abono && abono > 0)
+           if(!txtAbono.Text.Equals("")&& !txt_efectivo.Text.Equals(""))
             {
-
-                restante = restante +this.abono.monto;
-
-                if (abono <= restante && restante> 0.0)
+                if (new Seguridad().validar_numero(txtAbono.Text) && new Seguridad().validar_numero(txt_efectivo.Text))
                 {
-                    Abonos ab = new Abonos(bandera_online_offline);
-                bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono, comentario);
-                if (actualizar)
-                {
-                    ab = new Abonos(!bandera_online_offline);
-                    ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono, comentario);
-                    //System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //System.Windows.Forms.MessageBox.Show("El cambio es de " + cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //imprimir_recibo(fecha.ToString("yyyy/MM/dd"), nombre, abono, motivo, restante, cambio);
+                    string comentario = txtComentario.Text;
 
-                    imprimir_recibo();
+                    DateTime fecha = DateTime.Now;
+                    double abono = double.Parse(txtAbono.Text);
+                    double efectivo = double.Parse(txt_efectivo.Text);
+                    DateTime parsedDate = DateTime.Parse(this.abono.fecha);
+                    //System.Windows.MessageBox.Show(" imprimo conversion  " + parsedDate.ToString("yyyy/MM/dd"));
+                    string fecha_actual = parsedDate.ToString("yyyy/MM/dd");
+                    //System.Windows.MessageBox.Show("el restante es " + restante);
+                    //System.Windows.MessageBox.Show("el abono es de " + abono);
+                    double cambio = efectivo - abono;
+                    if (efectivo >= abono && abono > 0)
+                    {
+
+                        restante = restante + this.abono.monto;
+
+                        if (abono <= restante && restante > 0.0)
+                        {
+                            Abonos ab = new Abonos(bandera_online_offline);
+                            bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono, comentario);
+                            if (actualizar)
+                            {
+                                ab = new Abonos(!bandera_online_offline);
+                                ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono, comentario);
+                                //System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //System.Windows.Forms.MessageBox.Show("El cambio es de " + cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //imprimir_recibo(fecha.ToString("yyyy/MM/dd"), nombre, abono, motivo, restante, cambio);
+
+                                imprimir_recibo();
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("No se pudo realizar el pago", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+
+                            this.DialogResult = DialogResult.OK;
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Excedio el restante", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            //AGREGAR SI DESEA CONTINUAR
+                        }
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Abono mayor que efectivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo realizar el pago", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("Solo se aceptan valores numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                this.DialogResult = DialogResult.OK;
             }
-            else
+           else
             {
-                System.Windows.Forms.MessageBox.Show("Excedio el restante", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                //AGREGAR SI DESEA CONTINUAR
+                 System.Windows.Forms.MessageBox.Show("Favor de llenar los campos abono y efectivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show("Abono mayor que efectivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
+               
         }
 
         public void imprimir_recibo()

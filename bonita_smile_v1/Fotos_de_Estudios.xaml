@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition  Height="100" />
 
-            <RowDefinition Height="500"/>
+            <RowDefinition Height="450"/>
 
         </Grid.RowDefinitions>
 
@@ -35,47 +35,63 @@
                 <TextBlock Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Fotos de estudios" Margin="0,0,0,0" VerticalAlignment="Center"/>
             </Grid>
         </Border>
-        
-        <Rectangle Grid.Column="1" Grid.Row="1" x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="215" Margin="0,45,10,0" Stroke="Black" VerticalAlignment="Top" Width="260"/>
-        <ListView  Grid.Row="1" Grid.Column="1" x:Name="lb_imagen"  Margin="25,5,45,10" SelectionChanged="lb_imagen_SelectionChanged" Width="830"
+
+        <Border Grid.Row="1" Grid.Column="1"  BorderThickness="2">
+            
+       
+        <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="700"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+                <Border  Grid.Row="0" Grid.Column="0"  BorderThickness="2">
+            <ListView  Grid.Row="0" Grid.Column="0" x:Name="lb_imagen"  SelectionChanged="lb_imagen_SelectionChanged" Margin="0,0,0,0"  
             SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
-               DragEnter="lb_imagen_DragEnter" Drop="lb_imagen_Drop" AllowDrop="True"  ScrollViewer.VerticalScrollBarVisibility="Auto"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Center">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+               DragEnter="lb_imagen_DragEnter" Drop="lb_imagen_Drop" AllowDrop="True"  ScrollViewer.VerticalScrollBarVisibility="Auto"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                        <!--<UniformGrid Columns="8"/>-->
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <EventSetter Event="PreviewMouseRightButtonDown"
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <EventSetter Event="PreviewMouseRightButtonDown"
                          Handler="OnListViewItemPreviewMouseRightButtonDown" />
-                    <EventSetter Event="MouseDoubleClick"
+                        <EventSetter Event="MouseDoubleClick"
                          Handler="lb_imagen_MouseDoubleClick" />
-                </Style>
-            </ListView.ItemContainerStyle>
+                    </Style>
+                </ListView.ItemContainerStyle>
 
 
-            <ListView.ItemTemplate >
+                <ListView.ItemTemplate >
 
 
-                <DataTemplate>
-                    <Grid Margin="0 25 0 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="70"></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                    <DataTemplate>
+                        <Grid Margin="0 25 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
 
-                        <TextBlock Foreground="Black" Grid.Row="1" Grid.Column="0" TextAlignment="Center" Width="85" FontSize="10" DockPanel.Dock="Bottom" Text="{Binding foto}" TextWrapping="Wrap"/>
-                        <Image Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Source="{Binding imagen}"  Width="70" Height="70"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                            <TextBlock Foreground="Black" Grid.Row="1" Grid.Column="0" TextAlignment="Center" Width="85" FontSize="10" DockPanel.Dock="Bottom" Text="{Binding foto}" TextWrapping="Wrap"/>
+                            <Image Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Source="{Binding imagen}"  Width="70" Height="70"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="0" BorderThickness="2">
+                <Rectangle Grid.Column="1" Grid.Row="0" x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="200" Margin="0,0,0,200" Stroke="Black" VerticalAlignment="Center" Width="200"/>
+                </Border>
+
+        </Grid>
+        </Border>
 
 
     </Grid>
