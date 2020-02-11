@@ -10,12 +10,7 @@ using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
 using bonita_smile_v1.Interfaz.Recepcionista;
 using bonita_smile_v1.Interfaz.Socio;
-
-
-
 using bonita_smile_v1.Interfaz;
-
-
 using System.Windows.Forms;
 using System.IO;
 
@@ -42,10 +37,8 @@ namespace bonita_smile_v1.Servicios
 
         public List<UsuarioModel> MostrarUsuario_Socio(string alias)
         {
-            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
-           
+            List<UsuarioModel> listaUsuario = new List<UsuarioModel>();           
                 query = "(select Distinct usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join rol on usuario.id_rol=rol.id_rol where id_clinica='') union (select DISTINCT usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join rol on usuario.id_rol=rol.id_rol INNER join permisos on permisos.id_usuario=usuario.id_usuario where permisos.id_clinica in (select id_clinica from usuario inner join permisos on usuario.id_usuario = permisos.id_usuario where usuario.alias='"+alias+"') AND usuario.id_rol!=5)";
-
                 try
                 {
                     conexionBD.Open();
@@ -76,9 +69,6 @@ namespace bonita_smile_v1.Servicios
                     System.Windows.MessageBox.Show(ex.ToString());
                 }
                 conexionBD.Close();
-            
-            
-           
             return listaUsuario;
         }
 
@@ -86,14 +76,11 @@ namespace bonita_smile_v1.Servicios
         {
             List<UsuarioModel> listaUsuario = new List<UsuarioModel>();
             query = "select * from usuario  inner join rol on rol.id_rol=usuario.id_rol";
-
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
                 reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
                     usuarioModel = new UsuarioModel();
@@ -126,13 +113,13 @@ namespace bonita_smile_v1.Servicios
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -140,6 +127,7 @@ namespace bonita_smile_v1.Servicios
 
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -153,8 +141,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -170,16 +159,15 @@ namespace bonita_smile_v1.Servicios
             bool internet = ti.Test();
             password = new Seguridad().Encriptar(password);
             FileStream fs = null;
-
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -188,6 +176,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
                         Sincronizar sincronizar = new Sincronizar();
                         bool exito = sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -201,8 +190,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -217,13 +207,13 @@ namespace bonita_smile_v1.Servicios
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -232,6 +222,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -246,8 +237,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+               
             }
             catch (MySqlException ex)
             {
@@ -256,36 +248,6 @@ namespace bonita_smile_v1.Servicios
                 return false;
             }
         }
-
-        public string MostrarUsuario_Update(string id_usuario)
-        {
-            string aux_identi = "";
-            query = "SELECT auxiliar_identificador from usuario where id_usuario='" + id_usuario+"'";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-
-                    aux_identi = reader[0].ToString();
-
-                }
-            }
-            catch (MySqlException ex)
-            {
-                System.Windows.MessageBox.Show(ex.ToString());
-            }
-            conexionBD.Close();
-            return aux_identi;
-        }
-
-
-
         //verifica el tipo de rol. Devuelve el rol del alias
 
         public string verificarRol(int id_rol)
@@ -320,8 +282,6 @@ namespace bonita_smile_v1.Servicios
                 return "";
             }
         }
-
-
 
         //Comprobara si existe el usuario en la base de datos y despues cimprobara si esta en la base de datos. Devuelve true si es correcto, de lo contario false
         public void redireccionarLogin(string alias, string password)
@@ -365,7 +325,6 @@ namespace bonita_smile_v1.Servicios
                         //Application.Current.Windows[0].Close();
                         new Clin(id).ShowDialog();
                     }
-
                     
                 }
                 else
@@ -539,55 +498,6 @@ namespace bonita_smile_v1.Servicios
             conexionBD.Close();
             return lista;
         }
-
-
-
-        //public bool Validar_usu(string alias,string password)
-        //{
-
-        //    MySqlCommand cmd;
-        //    string query = "SELECT * FROM usuario where alias='" + alias+"'";
-        //    try
-        //    {
-        //        conexionBD.Open();
-        //        cmd = new MySqlCommand(query, conexionBD);
-        //        int existe = Convert.ToInt32(cmd.ExecuteScalar());
-        //        if (existe == 0)
-        //        {
-        //            conexionBD.Close();
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            reader = cmd.ExecuteReader();
-        //            reader.Read();
-        //            usuarioModel = new UsuarioModel();
-        //            usuarioModel.id_usuario = int.Parse(reader[0].ToString());
-        //            usuarioModel.alias = reader[1].ToString();
-        //            usuarioModel.nombre = reader[2].ToString();
-        //            usuarioModel.apellidos = reader[3].ToString();
-        //            usuarioModel.password = reader[4].ToString();
-        //            usuarioModel.id_rol = int.Parse(reader[5].ToString());
-        //            Seguridad secure = new Seguridad();
-        //            if(password.Equals(secure.Desencriptar(usuarioModel.password)))
-        //            {
-        //                MessageBox.Show("Bienvenido usuario");
-        //                return true;
-        //            }
-        //            else
-        //            {
-        //                return false;
-        //            }
-
-        //        }
-        //    }
-        //    catch (MySqlException ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //        conexionBD.Close();
-        //        return false;
-        //    }
-        //}
     }
 
 }

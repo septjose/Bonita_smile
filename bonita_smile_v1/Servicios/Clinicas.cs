@@ -27,31 +27,22 @@ namespace bonita_smile_v1.Servicios
 
         public List<PermisosModel> Mostrar_Permisos_socio(int id_rol,string alias)
         {
-            List<PermisosModel> listaPermisos = new List<PermisosModel>();
-           
+            List<PermisosModel> listaPermisos = new List<PermisosModel>();           
                 query = "(select Distinct '' as nombre_sucursal,'' as id_clinica,usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join rol on usuario.id_rol=rol.id_rol where id_clinica='' and usuario.id_rol="+id_rol+") union (select  DISTINCT clinica.nombre_sucursal,clinica.id_clinica,usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join rol on usuario.id_rol=rol.id_rol INNER join permisos on permisos.id_usuario=usuario.id_usuario inner join clinica on clinica.id_clinica=permisos.id_clinica where permisos.id_clinica in (select id_clinica from usuario inner join permisos on usuario.id_usuario = permisos.id_usuario where usuario.alias='"+alias+"') AND usuario.id_rol="+id_rol+")";
-
                 try
                 {
                     conexionBD.Open();
                     MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
                     reader = cmd.ExecuteReader();
-
                     while (reader.Read())
                     {
                         PermisosModel permisosModel = new PermisosModel();
-
-
-                       
                         permisosModel.nombre_sucursal = reader[0].ToString();
                         permisosModel.id_clinica = reader[1].ToString();
                         permisosModel.id_usuario = reader[2].ToString();
                         permisosModel.alias = reader[3].ToString();
                         permisosModel.nombre = reader[4].ToString();
                         permisosModel.apellidos = reader[5].ToString();
-
-
                         listaPermisos.Add(permisosModel);
                     }
                 }
@@ -59,11 +50,8 @@ namespace bonita_smile_v1.Servicios
                 {
                     MessageBox.Show(ex.ToString());
                 }
-                conexionBD.Close();
-            
-            
+                conexionBD.Close();         
             return listaPermisos;
-
         }
 
 
@@ -71,27 +59,20 @@ namespace bonita_smile_v1.Servicios
         {
             List<PermisosModel> listaPermisos = new List<PermisosModel>();
             query = "select clinica.nombre_sucursal,clinica.id_clinica,usuario.nombre,usuario.apellidos,usuario.id_usuario,usuario.alias from usuario left join permisos on usuario.id_usuario=permisos.id_usuario left join clinica on clinica.id_clinica=permisos.id_clinica inner join rol on rol.id_rol=usuario.id_rol where rol.id_rol="+id_rol;
-
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
                 reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
-                    PermisosModel permisosModel = new PermisosModel();
-
-
-                  
+                    PermisosModel permisosModel = new PermisosModel();                
                     permisosModel.nombre_sucursal = reader[0].ToString();
                     permisosModel.id_clinica = reader[1].ToString();
                     permisosModel.nombre = reader[2].ToString();
                     permisosModel.apellidos = reader[3].ToString();
                     permisosModel.id_usuario = reader[4].ToString();
                     permisosModel.alias = reader[5].ToString();
-
 
                     listaPermisos.Add(permisosModel);
                 }
@@ -102,26 +83,20 @@ namespace bonita_smile_v1.Servicios
             }
             conexionBD.Close();
             return listaPermisos;
-
         }
 
         public List<ClinicaModel> MostrarClinica()
         {
             List<ClinicaModel> listaClinica = new List<ClinicaModel>();
             query = "SELECT * FROM clinica ";
-
             try
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
                 reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
                     ClinicaModel clinicaModel = new ClinicaModel();
-
-
                     clinicaModel.id_clinica = reader[0].ToString();
                     clinicaModel.nombre_sucursal = reader[1].ToString();
                     clinicaModel.color = reader[2].ToString();
@@ -134,29 +109,27 @@ namespace bonita_smile_v1.Servicios
             }
             conexionBD.Close();
             return listaClinica;
-
         }
 
         public bool eliminarClinica(string id_clinica)
-        {
-            
+        {        
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
-
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -170,8 +143,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+               
             }
             catch (MySqlException ex)
             {
@@ -183,17 +157,16 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminar_Permiso(string id_usuario,string id_clinica)
         {
-
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -201,6 +174,7 @@ namespace bonita_smile_v1.Servicios
 
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -225,9 +199,7 @@ namespace bonita_smile_v1.Servicios
                     {
                         query = "DELETE FROM permisos where id_usuario='" + id_usuario + "' and id_clinica='" + id_clinica + "';";
                         query = query + "insert into permisos (id_usuario) VALUES('" + id_usuario + "')";
-                    }
-                   
-
+                    }                   
                     conexionBD.Open();
 
                     cmd = new MySqlCommand(query, conexionBD);
@@ -236,8 +208,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+               
             }
             catch (MySqlException ex)
             {
@@ -249,7 +222,6 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminar_Permisos(string id_usuario)
         {
-
             bool internet = ti.Test();
             try
             {
@@ -260,6 +232,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -267,6 +240,7 @@ namespace bonita_smile_v1.Servicios
 
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -282,8 +256,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+               
             }
             catch (MySqlException ex)
             {
@@ -301,13 +276,13 @@ namespace bonita_smile_v1.Servicios
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -316,6 +291,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -329,8 +305,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+               
             }
             catch (MySqlException ex)
             {
@@ -346,16 +323,15 @@ namespace bonita_smile_v1.Servicios
             Seguridad seguridad = new Seguridad();
             auxiliar_identificador = seguridad.SHA1(id_usuario + id_clinica + DateTime.Now);
             bool internet = ti.Test();
-
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -364,6 +340,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -377,8 +354,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -390,18 +368,16 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarClinica(string id_clinica, string nombre_sucursal, string color)
         {
-            
-
             bool internet = ti.Test();
             try
             {
-
-                MySqlCommand cmd; ;
+               MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -410,6 +386,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -424,8 +401,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -437,17 +415,16 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizar_Permisos(string id_usuario, string id_clinica,string id_clinica_anterior)
         {
-
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -456,6 +433,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -471,8 +449,8 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
-                }
-                return true;
+                    return true;
+                }               
             }
             catch (MySqlException ex)
             {
@@ -482,32 +460,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string MostrarClinica_Update(string id_clinica)
-        {
-            string aux_identi = "";
-            query = "SELECT auxiliar_identificador from clinica where id_clinica='" + id_clinica+"'";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-
-                    aux_identi = reader[0].ToString();
-
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            conexionBD.Close();
-            return aux_identi;
-        }
+       
 
      
 

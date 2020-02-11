@@ -17,6 +17,7 @@ using SystemColors = System.Drawing.SystemColors;
 using System.Drawing.Printing;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Modelos;
+using System.Globalization;
 
 namespace bonita_smile_v1
 {
@@ -29,6 +30,7 @@ namespace bonita_smile_v1
         string id = "";
         Motivo_citaModel motivo;
         bool bandera_online_offline = false;
+        CultureInfo culture = new CultureInfo("en-US");
         public Actualizar_Motivo(Motivo_citaModel motivo)
         {
             this.motivo = motivo;
@@ -129,7 +131,7 @@ namespace bonita_smile_v1
             this.txt_efectivo.Name = "txt_efectivo";
             this.txt_efectivo.Size = new System.Drawing.Size(214, 26);
             this.txt_efectivo.TabIndex = 6;
-            this.txt_efectivo.Text = motivo.costo.ToString();
+            this.txt_efectivo.Text = motivo.costo.ToString(culture);
             this.txt_efectivo.TextChanged += new System.EventHandler(this.txt_efectivo_TextChanged);
             // 
             // Actualizar_Motivo
@@ -157,23 +159,24 @@ namespace bonita_smile_v1
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if(!txtAbono.Text.Equals("") && !txt_efectivo.Text.Equals(""))
+            
+            if (!txtAbono.Text.Equals("") && !txt_efectivo.Text.Equals(""))
             {
                 if(new Seguridad().validar_numero(txt_efectivo.Text))
                 {
                     string nombre = txtAbono.Text;
-                    double costo = Convert.ToDouble(txt_efectivo.Text);
+                    double costo = Convert.ToDouble(txt_efectivo.Text, culture);
 
                     System.Windows.MessageBox.Show(costo + " ");
 
                     Motivo_cita mc = new Motivo_cita(bandera_online_offline);
                     //System.Windows.MessageBox.Show("imprimo el id del paciente" + motivo.paciente.id_paciente);
-                    bool inserto = mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo, motivo.paciente.id_paciente);
+                    bool inserto = mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo.ToString(culture), motivo.paciente.id_paciente);
                     if (inserto)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         mc = new Motivo_cita(!bandera_online_offline);
-                        mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo, motivo.paciente.id_paciente);
+                        mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo.ToString(culture), motivo.paciente.id_paciente);
                     }
                     else
                     {

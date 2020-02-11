@@ -13,6 +13,7 @@ namespace bonita_smile_v1.Modelos
         public string id_motivo { get; set; }
         public string fecha { get; set; }
         public double monto { get; set; }
+        public string costito { get; set; }
         public string comentario { get; set; }
     }
 }

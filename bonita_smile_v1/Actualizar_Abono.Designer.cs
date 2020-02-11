@@ -17,6 +17,7 @@ using SystemColors = System.Drawing.SystemColors;
 using System.Drawing.Printing;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Modelos;
+using System.Globalization;
 
 namespace bonita_smile_v1
 {
@@ -35,18 +36,19 @@ namespace bonita_smile_v1
         double total = 0.0;
         bool bandera_online_offline = false;
         AbonosModel abono;
-
+        CultureInfo culture = new CultureInfo("en-US");
         public Actualizar_Abono(string id_motivo, string id_paciente, string nombre, string motivo, double restante, double abonado, double total,AbonosModel abono)
         {
             this.id_motivo = id_motivo;
             this.id_paciente = id_paciente;
             this.nombre = nombre;
             this.motivo = motivo;
-            this.restante = restante;
-            this.abonado = abonado;
-            this.total = total;
+            this.restante = Convert.ToDouble(restante.ToString(culture), culture);
+            this.abonado = Convert.ToDouble(abonado.ToString(culture), culture);
+            this.total = Convert.ToDouble(total.ToString(culture), culture);
             this.abono = abono;
             InitializeComponent();
+            
         }
 
         /// <summary>
@@ -98,7 +100,7 @@ namespace bonita_smile_v1
             this.txtAbono.Name = "txtAbono";
             this.txtAbono.Size = new System.Drawing.Size(235, 26);
             this.txtAbono.TabIndex = 1;
-            this.txtAbono.Text = abono.monto.ToString();
+            this.txtAbono.Text = abono.monto.ToString(culture);
             // 
             // txtComentario
             // 
@@ -198,8 +200,9 @@ namespace bonita_smile_v1
                     string comentario = txtComentario.Text;
 
                     DateTime fecha = DateTime.Now;
-                    double abono = double.Parse(txtAbono.Text);
-                    double efectivo = double.Parse(txt_efectivo.Text);
+                    // Convert.ToDouble(txt_efectivo.Text, culture);
+                    double abono = Convert.ToDouble(txtAbono.Text,culture);
+                    double efectivo = Convert.ToDouble(txt_efectivo.Text,culture);
                     DateTime parsedDate = DateTime.Parse(this.abono.fecha);
                     //System.Windows.MessageBox.Show(" imprimo conversion  " + parsedDate.ToString("yyyy/MM/dd"));
                     string fecha_actual = parsedDate.ToString("yyyy/MM/dd");
@@ -214,11 +217,11 @@ namespace bonita_smile_v1
                         if (abono <= restante && restante > 0.0)
                         {
                             Abonos ab = new Abonos(bandera_online_offline);
-                            bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono, comentario);
+                            bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario);
                             if (actualizar)
                             {
                                 ab = new Abonos(!bandera_online_offline);
-                                ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono, comentario);
+                                ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario);
                                 //System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 //System.Windows.Forms.MessageBox.Show("El cambio es de " + cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 //System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -346,8 +349,8 @@ namespace bonita_smile_v1
             string fecha = DateTime.Now.ToString("d/M/yyyy");
             string hora = DateTime.Now.ToString("HH:mm:ss") + " hrs";
             Abonos a = new Abonos(bandera_online_offline);
-            double restante_pagado = a.Restante(id_motivo);
-            double abonado_pagado = a.Abonados(id_motivo);
+            double restante_pagado = Convert.ToDouble(a.Restante(id_motivo).ToString(), culture);
+            double abonado_pagado = Convert.ToDouble(a.Abonados(id_motivo).ToString(), culture);
 
 
             System.Drawing.RectangleF rect = new System.Drawing.RectangleF(margen_izquierdo, margen_superior, centimetroAPixel(4), 50);//tamanio_hoja_horizontal en vez de 4
@@ -390,10 +393,10 @@ namespace bonita_smile_v1
             e.Graphics.DrawString("TOTAL: $" + this.total, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
             rect.Y = (cuerpo.GetHeight(e.Graphics) * 13) + margen_superior;
-            e.Graphics.DrawString("ABONO: $" + txtAbono.Text, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            e.Graphics.DrawString("ABONO: $" + txtAbono.Text.ToString(culture), cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
             rect.Y = (cuerpo.GetHeight(e.Graphics) * 14) + margen_superior;
-            e.Graphics.DrawString("RECIBIDO: $" + txt_efectivo.Text, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            e.Graphics.DrawString("RECIBIDO: $" + txt_efectivo.Text.ToString(culture), cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
             rect.Y = (cuerpo.GetHeight(e.Graphics) * 15) + margen_superior;
             e.Graphics.DrawString("CAMBIO: $" + cambio, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);

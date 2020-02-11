@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace bonita_smile_v1.Servicios
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
         private bool online;
+        CultureInfo culture = new CultureInfo("en-US");
+        NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
         public Abonos(bool online)
         {
             this.conexionBD = obj.conexion(online);
@@ -48,6 +51,8 @@ namespace bonita_smile_v1.Servicios
                     abonosModel.id_motivo = reader[2].ToString();
                     abonosModel.fecha = reader[3].ToString();
                     abonosModel.monto = double.Parse(reader[4].ToString());
+                    double attemp4 = Convert.ToDouble(abonosModel.monto, culture);
+                    abonosModel.costito = "$" + attemp4.ToString("n", nfi);
                     abonosModel.comentario = reader[5].ToString();
 
                     listaAbonos.Add(abonosModel);
@@ -59,33 +64,6 @@ namespace bonita_smile_v1.Servicios
             }
             conexionBD.Close();
             return listaAbonos;
-        }
-
-        public string MostrarAbonos_Update(string id_abono)
-        {
-            string aux_identi = "";
-            query = "SELECT auxiliar_identificador from abonos where id_abono='" + id_abono+"'";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-
-                    aux_identi = reader[0].ToString();
-
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            conexionBD.Close();
-            return aux_identi;
         }
 
         public double Abonados(string id_motivo)
@@ -103,12 +81,7 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-
-
                     abonado = double.Parse(reader[0].ToString());
-
-
-
                 }
             }
             catch (MySqlException ex)
@@ -123,9 +96,7 @@ namespace bonita_smile_v1.Servicios
         public double Restante(string id_motivo)
         {
             double restante = 0.0;
-
             query = "select IFNULL(((select costo from motivo_cita where id_motivo='" + id_motivo + "')-(select sum(monto) from abonos where id_motivo ='" + id_motivo + "')),(select costo from motivo_cita where id_motivo='" + id_motivo + "')) as restante;";
-
             try
             {
                 conexionBD.Open();
@@ -135,12 +106,7 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-
-
                     restante = double.Parse(reader[0].ToString());
-
-
-
                 }
             }
             catch (MySqlException ex)
@@ -150,19 +116,19 @@ namespace bonita_smile_v1.Servicios
             conexionBD.Close();
             return restante;
         }
+
         public bool eliminarAbono(string id_abono)
         {
-            
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -170,6 +136,7 @@ namespace bonita_smile_v1.Servicios
 
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -183,8 +150,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+               
             }
             catch (MySqlException ex)
             {
@@ -195,23 +163,21 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        public bool insertarAbono(string id_paciente, string id_motivo, string fecha, double monto, string comentario)
+        public bool insertarAbono(string id_paciente, string id_motivo, string fecha, string monto, string comentario)
         {
             Seguridad seguridad = new Seguridad();
             string id_abono = "";
-            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario + DateTime.Now);
-            
+            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario + DateTime.Now);           
             bool internet = ti.Test();
-
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -220,6 +186,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -233,8 +200,8 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
             }
             catch (MySqlException ex)
             {
@@ -244,19 +211,18 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, double monto,string comentario)
-        {
-            
+        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, string monto,string comentario)
+        {          
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
-                        //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO
+                        return false;
                     }
                     else
                     {
@@ -265,6 +231,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -276,11 +243,10 @@ namespace bonita_smile_v1.Servicios
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
                     conexionBD.Close();
-
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
-                }
-                return true;
+                    return true;
+                } 
             }
             catch (MySqlException ex)
             {
@@ -290,39 +256,10 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-
-        private bool ValidarExistencia(string id_abono)
-        {
-            MySqlCommand cmd;
-            string query = "SELECT * FROM rol where id_abono='" + id_abono+"'";
-            try
-            {
-                cmd = new MySqlCommand(query, conexionBD);
-                int existe = Convert.ToInt32(cmd.ExecuteScalar());
-                if (existe == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-                conexionBD.Close();
-                return false;
-            }
-        }
-
-
         private List<string> Mostrar_ids_clinicas()
         {
             List<string> lista = new List<string>();
-           
             query = "select id_clinica from clinica";
-
             try
             {
                 conexionBD.Open();
@@ -332,11 +269,7 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                   
-
-                  lista.Add( reader[0].ToString());
-                   
-                    
+                  lista.Add( reader[0].ToString());   
                 }
             }
             catch (MySqlException ex)
@@ -347,7 +280,7 @@ namespace bonita_smile_v1.Servicios
             return lista;
         }
 
-     //   ---------------------------------------------------------------------------------
+
         public List<Ganancias> Mostrar_Ganancias()
         {
             List<string> lista = Mostrar_ids_clinicas();
@@ -355,9 +288,6 @@ namespace bonita_smile_v1.Servicios
             foreach(var id in lista)
             {
                 query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '"+id+"'";
-
-
-
                 try
                 {
                     conexionBD.Open();
@@ -394,9 +324,6 @@ namespace bonita_smile_v1.Servicios
             foreach (var id in lista)
             {
                 query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "'";
-
-
-
                 try
                 {
                     conexionBD.Open();
@@ -428,50 +355,36 @@ namespace bonita_smile_v1.Servicios
 
         public List<Ganancias> Ganacioas_c_clinica(string id)
         {
-           
             List<Ganancias> lista_ganancias = new List<Ganancias>();
-           
-                query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "'";
-
-
-
-                try
+            query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "'";
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    conexionBD.Open();
-                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                    Ganancias ganancia = new Ganancias();
 
-                    reader = cmd.ExecuteReader();
+                    ganancia.clinica = reader[0].ToString();
+                    ganancia.ganancia = double.Parse(reader[1].ToString());
+                    ganancia.fecha = reader[2].ToString();
 
-                    while (reader.Read())
-                    {
-                        Ganancias ganancia = new Ganancias();
-
-                        ganancia.clinica = reader[0].ToString();
-                        ganancia.ganancia = double.Parse(reader[1].ToString());
-                        ganancia.fecha = reader[2].ToString();
-
-                        lista_ganancias.Add(ganancia);
-                    }
+                    lista_ganancias.Add(ganancia);
                 }
-                catch (MySqlException ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                conexionBD.Close();
-            
-
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
             return lista_ganancias;
         }
 
         public List<Ganancias> Ganacioas_c_clinica_fecha(string id,string fecha)
         {
-
             List<Ganancias> lista_ganancias = new List<Ganancias>();
-
             query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'),'"+fecha+"') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "' and a.fecha='"+fecha+"'";
-
-
-
             try
             {
                 conexionBD.Open();
@@ -495,19 +408,13 @@ namespace bonita_smile_v1.Servicios
                 MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
-
-
             return lista_ganancias;
         }
 
         public List<Ganancias> Ganacioas_c_clinica_fecha2(string id, string fecha,string fecha2)
         {
-
             List<Ganancias> lista_ganancias = new List<Ganancias>();
-
             query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'),'" + fecha + "'' - ''"+fecha2+"') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '"+id+"' and (a.fecha BETWEEN '"+fecha+"' AND '"+fecha2+"')";
-
-
             try
             {
                 conexionBD.Open();
@@ -531,11 +438,8 @@ namespace bonita_smile_v1.Servicios
                 MessageBox.Show(ex.ToString());
             }
             conexionBD.Close();
-
-
             return lista_ganancias;
         }
-
 
     }
 }

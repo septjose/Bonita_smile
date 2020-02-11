@@ -1537,7 +1537,6 @@ E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interf
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Datos_Personales.g.cs
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Abonos.g.cs
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Notas.g.cs
-E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Ingresar_Motivo.g.cs
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Usuarios.g.cs
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Actualizar_Usuario.g.cs
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Ingresar_Usuario.g.cs
@@ -1592,7 +1591,6 @@ E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interf
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Datos_Personales.baml
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Abonos.baml
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Notas.baml
-E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Ingresar_Motivo.baml
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Usuarios.baml
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Actualizar_Usuario.baml
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Ingresar_Usuario.baml

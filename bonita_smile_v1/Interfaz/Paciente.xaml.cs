@@ -51,6 +51,8 @@ namespace bonita_smile_v1
             bool eliminarArchivo = true;
             string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
+            Escribir_Archivo ea = new Escribir_Archivo();
+
             if (lv_Paciente.SelectedItems.Count > 0)
             {
                 string id_paciente = paciente.id_paciente;
@@ -59,104 +61,83 @@ namespace bonita_smile_v1
                 var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el  paciente :" + nombre_paciente + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (confirmation == System.Windows.Forms.DialogResult.Yes)
                 {
-                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente);
+                    //se elimina todo lo relacionado con el pacinete incluyento sus registros de carpetas,fotos,etc. osea que no se puede recuperar nada
+                    var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_Paciente(id_paciente);
+                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente);                  
                     if (elimino)
                     {
-                        if(paciente.foto.Equals(""))
+                        //obtener todas sus imagenes y guardarlas dentro del archivo
+                        /*----------------------------------------------------------*/
+
+                        if (listaNombreArchivos.Count == 0)
                         {
-                             new Paciente(!bandera_online_offline).eliminarPaciente(id_paciente);
-                           
-                                System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
+                            ea.escribir_imagen_eliminar("", @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                        }
+                        else
+                        {
+                            foreach (var nombre in listaNombreArchivos)
+                            {
+                                System.Windows.MessageBox.Show("escribio en archivo");
+
+                                //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
+                                ea.escribir_imagen_eliminar(nombre.foto_completa, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                //ELIMINAR FOTOS
+                                File.Delete(@"\\DESKTOP-ED8E774\bs\" + nombre.foto_completa);
+                            }
+                        }
+                        /*----------------------------------------------------------*/
+
+
+                        if (paciente.foto.Equals(""))
+                        {
+                            //NO ESCRIBA NADA EN EL ARCHIVO
                         }
                         else
                         {
                             //PASAR FOTO EN UN ARCHIVO
-                            Escribir_Archivo ea = new Escribir_Archivo();
                             ea.escribir_imagen_eliminar(paciente.foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                             //ELIMINAR FOTO
-                            File.Delete(@"\\DESKTOP-ED8E774\bs\" +paciente.foto);
-                            GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
-                            System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            bool elimino_again = new Paciente(!bandera_online_offline).eliminarPaciente(id_paciente);
-                            if(elimino_again)
-                            {
-                                var datos = ea.leer(rutaArchivoEliminar);
-
-                                foreach (string imagen in datos)
-                                {
-                                    Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                                    bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
-
-                                    if (!verdad)
-                                        eliminarArchivo = false;
-                                }
-                                if (eliminarArchivo)
-                                {
-                                    System.Windows.MessageBox.Show("elimino Archivo");
-                                    ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                                    File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                                }
-                            }
-                            else
-                            {
-                                //NO HAY INTERNET, NO HACER NADA
-                            }            
-
+                            File.Delete(@"\\DESKTOP-ED8E774\bs\" + paciente.foto);
                         }
+                        System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
 
+                        //TODA LA PARTE ONLINE
+
+                        //ELIMINA REGISTRO DEL SERVIDOR ONLINE 
+                        elimino = new Paciente(!bandera_online_offline).eliminarPaciente(id_paciente);
+                           
+                            //ELIMINA TODOS LOS ARCHIVOS DEL SERVIDOR QUE SE ENCUENTRAN EN EL ARCHIVO
+                            //if(elimino)
+                            //{
+                            //    var datos = ea.leer(rutaArchivoEliminar);
+
+                            //    foreach (string imagen in datos)
+                            //    {
+                            //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                            //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+                            //        if (!verdad)
+                            //            eliminarArchivo = false;
+                            //    }
+                            //    if (eliminarArchivo)
+                            //    {
+                            //        System.Windows.MessageBox.Show("elimino Archivo");
+                            //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                            //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    //NO HAY INTERNET, NO HACER NADA
+                            //}            
                     }
                     else
                     {
                         System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     }
-                    //bool elimino = clin.eliminarPaciente(id_paciente);
-                    //if (elimino)
-                    //{
-
-
-
-                    //    clin = new Paciente(!bandera_online_offline);
-
-                    //    clin.eliminarPaciente(id_paciente);
-                    //    if (!paciente.foto.Equals(""))
-                    //    {
-                    //        if (ti.Test())
-                    //        {
-                    //            Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + paciente.foto);
-                    //            bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
-                    //            if(verdad)
-                    //            {
-                    //                File.Delete(@"\\DESKTOP-ED8E774\bs\" + paciente.foto);
-                    //                GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
-                    //                System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            Escribir_Archivo ea = new Escribir_Archivo();
-
-                    //            ea.escribir_fotos_borrar(paciente.foto);
-                    //            File.Delete(@"\\DESKTOP-ED8E774\bs\" + paciente.foto);
-                    //            GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
-                    //            System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
-                    //        System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //}
                 }
-
             }
             else
             {

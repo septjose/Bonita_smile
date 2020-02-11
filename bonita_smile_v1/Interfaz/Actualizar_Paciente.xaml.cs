@@ -127,7 +127,7 @@ namespace bonita_smile_v1
                     {
                         if(new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
-                            string tel = String.Format("{0:(###) ###-####}", Int32.Parse(txtTelefono.Text));
+                            string tel = txtTelefono.Text;
                             pacienteModel.apellidos = txtApellidos.Text;
                             pacienteModel.nombre = txtNombre.Text;
                             pacienteModel.direccion = txtDireccion.Text;
@@ -234,7 +234,7 @@ namespace bonita_smile_v1
                     {
                         if(new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
-                            string tel = String.Format("{0:(###) ###-####}", Int32.Parse(txtTelefono.Text));
+                            string tel = txtTelefono.Text;
                             string viejo = this.paciente.nombre + "_" + this.paciente.apellidos;
                             string nuevo = txtNombre.Text + "_" + txtApellidos.Text;
                             if (viejo.Equals(nuevo))
@@ -307,6 +307,7 @@ namespace bonita_smile_v1
                                         Escribir_Archivo ea = new Escribir_Archivo();
                                         ea.escribir_imagen_eliminar(foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                                         // pa = new Paciente(!bandera_online_offline);
                                         //bool actualizo= pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         // if(actualizo)

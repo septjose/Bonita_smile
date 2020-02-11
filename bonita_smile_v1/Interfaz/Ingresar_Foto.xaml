@@ -34,9 +34,10 @@
                 <Grid Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="40" Margin="189,47,0,0" VerticalAlignment="Top" Width="250"  Style="{StaticResource MetroComboBox}"/>
                     <Label Content="Seleccionar Dispositivo" HorizontalAlignment="Left"  Margin="10,52,0,0" VerticalAlignment="Top"  Height="42" Width="173" FontSize="15" Foreground="Black"/>
-                    <Button Content="Encender Camara" Height="40" Margin="144,114,510,0" VerticalAlignment="Top" Click="Button_Click" RenderTransformOrigin="0.501,0.5" Width="150"/>
-                    <Button Content="Capturar" HorizontalAlignment="Left" Height="40" Margin="592,105,0,0" VerticalAlignment="Top" Width="93" Click="Button_Click_2"/>
-                    <Button x:Name="btnSiguiente" Content="Finalizar" HorizontalAlignment="Left" Height="40" Margin="575,355,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
+                    <Button x:Name="btn_encender" Content="Encender Camara" Height="40" Margin="144,114,510,0" VerticalAlignment="Top" Click="Button_Click" RenderTransformOrigin="0.501,0.5" Width="150"/>
+                    <Button x:Name="btn_capturar" Content="Capturar" HorizontalAlignment="Left" Height="40" Margin="592,105,0,0" VerticalAlignment="Top" Width="93" Click="Button_Click_2"/>
+                    <Button x:Name="btnSiguiente" Content="Finalizar(Con foto)" HorizontalAlignment="Left" Height="40" Margin="575,355,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click_1"/>
+                    <Button x:Name="btn_Omitir" Content="Finalizar(Omitir Foto)" HorizontalAlignment="Left" Height="40" Margin="750,355,0,0" VerticalAlignment="Top" Width="170" Click="btn_Omitir_Click"/> 
                     <Image x:Name="img1" HorizontalAlignment="Left" Height="250" Margin="45,200,0,0" VerticalAlignment="Top" Width="418"/> 
                 </Grid>
             </Border>

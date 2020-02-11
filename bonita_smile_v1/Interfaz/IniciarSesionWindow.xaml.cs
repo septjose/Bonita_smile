@@ -18,6 +18,7 @@ using bonita_smile_v1.Servicios;
 using System.Security.Cryptography;
 using System.Net;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace bonita_smile_v1
 {
@@ -35,9 +36,10 @@ namespace bonita_smile_v1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // MessageBox.Show("txtx  :" +txtUsuario.Text+"    "+ "pass :"+pbPassword.Password);
+
             Usuarios user = new Usuarios(false);
             Seguridad secure = new Seguridad();
-            if(txtUsuario.Text.Equals("")||pbPassword.Password.Equals(""))
+            if (txtUsuario.Text.Equals("") || pbPassword.Password.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -46,7 +48,30 @@ namespace bonita_smile_v1
                 user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
             }
 
-            
+            //CultureInfo culture = new CultureInfo("en-US");
+
+            //string  num= "5536";
+            ////System.Windows.MessageBox.Show(num.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("es-ES")));
+            ////double v = Convert.ToDouble(num.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("es-ES")));
+            //string num2 = "4536.33";
+            //double d = Convert.ToDouble(num, culture);
+            //double d2 = Convert.ToDouble(num2, culture);
+
+            //double r = d + d2;
+            //System.Windows.MessageBox.Show(r.ToString(culture));
+
+            ////double v2 = Convert.ToDouble(num2.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("es-ES")));
+            //// string numero=  num.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+            //if (new Seguridad().validar_numero(num))
+            //{
+            //    System.Windows.Forms.MessageBox.Show("si es numero ->");
+
+
+            //}
+            //else
+            //{
+            //    System.Windows.Forms.MessageBox.Show("no es numero ->" + num);
+            //}
 
             //new Sincronizar().SincronizarLocalServidor() ;
 

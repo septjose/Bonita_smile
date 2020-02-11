@@ -277,7 +277,7 @@
                             <DockPanel>
                                 <TextBlock DockPanel.Dock="Top" Text="{Binding fecha}"/>
                                 <TextBlock Text="{Binding descripcion}"/>
-                                <Image Source="/Assets/carpeta.png"  Width="32" Height="32"/>
+                                <Image Source="/Assets//carpeta.png"  Width="32" Height="32"/>
                     </DockPanel>
                     </DataTemplate>
                     </ListView.ItemTemplate>

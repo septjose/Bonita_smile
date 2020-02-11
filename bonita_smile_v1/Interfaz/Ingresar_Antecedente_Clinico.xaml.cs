@@ -47,16 +47,19 @@ namespace bonita_smile_v1
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
             {
+                admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
                 admin.Main.Content = new Page8_IngresarFoto(paciente, this.lista, this.alias);
             }
             else 
                 if(recep!=null)
             {
+                recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
                 recep.Main3.Content = new Page8_IngresarFoto(paciente, this.lista, this.alias);
             }
             else
                 if (socio != null)
             {
+                socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
                 socio.Main4.Content = new Page8_IngresarFoto(paciente,this.lista,this.alias);
             }
 

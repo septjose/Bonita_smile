@@ -363,9 +363,6 @@
     <Compile Include="Interfaz\Notas.xaml.cs">
       <DependentUpon>Notas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaz\Ingresar_Motivo.xaml.cs">
-      <DependentUpon>Ingresar_Motivo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interfaz\Administrador\Usuarios.xaml.cs">
       <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
@@ -503,10 +500,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaz\Notas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Interfaz\Ingresar_Motivo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

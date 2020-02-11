@@ -21,7 +21,7 @@ namespace bonita_smile_v1.Servicios
          string ruta2= @"\\DESKTOP-ED8E774\bs_auxiliar\";
         Test_Internet ti = new Test_Internet();
         private bool online;
-
+        //
         public Paciente(bool online)
         {
             this.conexionBD = obj.conexion(online);
@@ -38,9 +38,7 @@ namespace bonita_smile_v1.Servicios
             {
                 conexionBD.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
                 reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
                     PacienteModel pacienteModel = new PacienteModel();
@@ -63,7 +61,7 @@ namespace bonita_smile_v1.Servicios
                     }
                     else
                     {
-                        pacienteModel.imagen_membresia = LoadImage_Membresia("E:/PortableGit/programs_c#/bs_v1.4/Bonita_smile/bonita_smile_v1/Assets/trofeo.jpg");
+                        pacienteModel.imagen_membresia = LoadImage_Membresia("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\trofeo.jpg");
 
                     }
                     pacienteModel.membresia = reader[11].ToString(); 
@@ -98,14 +96,11 @@ namespace bonita_smile_v1.Servicios
                 {
                     conexionBD.Open();
                     MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
                     reader = cmd.ExecuteReader();
-
                     while (reader.Read())
                     {
                         PacienteModel pacienteModel = new PacienteModel();
                         ClinicaModel clinicaModel = new ClinicaModel();
-
                         pacienteModel.id_paciente = reader[0].ToString();
                         pacienteModel.nombre = reader[1].ToString();
                         pacienteModel.apellidos = reader[2].ToString();
@@ -116,7 +111,6 @@ namespace bonita_smile_v1.Servicios
                         pacienteModel.email = reader[6].ToString();
                         if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                         //pacienteModel.marketing = reader[6].ToString();
-
                         pacienteModel.antecedente = reader[9].ToString();
                         pacienteModel.membresia = reader[11].ToString();
                         clinicaModel.id_clinica = reader[12].ToString();
@@ -249,6 +243,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -256,6 +251,7 @@ namespace bonita_smile_v1.Servicios
 
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -269,8 +265,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -286,7 +283,6 @@ namespace bonita_smile_v1.Servicios
             Seguridad seguridad = new Seguridad();
             bool internet = ti.Test();
             auxiliar_identificador = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto + antecedente + email + marketing + id_clinica+DateTime.Now);
-
             try
             {
 
@@ -296,6 +292,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -304,6 +301,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -317,8 +315,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -330,17 +329,16 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarPaciente(string id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica)
         {
-
             bool internet = ti.Test();
             try
             {
-
                 MySqlCommand cmd; ;
                 if (online)
                 {
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -349,6 +347,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -364,8 +363,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+               
             }
             catch (MySqlException ex)
             {
@@ -373,33 +373,6 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 return false;
             }
-        }
-
-        public string MostrarPaciente_Update(string id_paciente)
-        {
-            string aux_identi = "";
-            query = "SELECT auxiliar_identificador from paciente where id_paciente='" + id_paciente+"'";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-
-                    aux_identi = reader[0].ToString();
-
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            conexionBD.Close();
-            return aux_identi;
         }
 
         private BitmapImage LoadImage(string filename)
@@ -433,7 +406,7 @@ namespace bonita_smile_v1.Servicios
                 //MessageBox.Show("no se encontro la foto en " + filename);
                 var bitmap = new BitmapImage();
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(@"E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\Assets\img1.jpg");
+                var stream = File.OpenRead("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\img1.jpg");
                 //MessageBox.Show("B");
                 bitmap.BeginInit();
                 //MessageBox.Show("C");

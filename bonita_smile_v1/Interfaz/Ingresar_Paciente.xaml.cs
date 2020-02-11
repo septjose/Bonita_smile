@@ -141,6 +141,7 @@ namespace bonita_smile_v1
             }
             else
             {
+                System.Windows.MessageBox.Show("si avanzo");
                 valor = cmbClinica.SelectedItem.ToString();
                 string id_clinica = obtener_id_clinica(valor);
                 PacienteModel pacienteModel = new PacienteModel();
@@ -164,12 +165,13 @@ namespace bonita_smile_v1
                     {
                         if(new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
- string tel = String.Format("{0:(###) ###-####}", Int32.Parse(txtTelefono.Text));                            // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
+                            string tel = txtTelefono.Text;                            // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             if (admin != null)
                             {
+                                System.Windows.MessageBox.Show("SI AVANZO A ADMIN");
                                 admin.Main.Content = new Page7_Ingresar(pacienteModel, null, "");
                             }
                             else
@@ -217,11 +219,10 @@ namespace bonita_smile_v1
 
                         if(new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
-                           string tel = String.Format("{0:(###) ###-####}", Int32.Parse(txtTelefono.Text));
+                           string tel = txtTelefono.Text;
                             System.Windows.MessageBox.Show(tel);
                             bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, "", "", txtEmail.Text, 0, id_clinica);
                             if (inserto)
-
                             {
                                 pa = new Paciente(true);
                                 pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, "", "", txtEmail.Text, 0, id_clinica);

@@ -565,7 +565,15 @@ namespace bonita_smile_v1.Servicios
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex + "");
-                    tr.Rollback();
+                    if(tr==null)
+                    {
+                        MessageBox.Show("No se pudo conectar a la conexion , Intentelo mas tarde!! :(");
+                    }
+                    else
+                    {
+                        tr.Rollback();
+                    }
+                   
                     return false;
                 }
                 finally

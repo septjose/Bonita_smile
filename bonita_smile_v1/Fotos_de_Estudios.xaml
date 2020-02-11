@@ -45,7 +45,7 @@
                 <ColumnDefinition Width="300"></ColumnDefinition>
             </Grid.ColumnDefinitions>
                 <Border  Grid.Row="0" Grid.Column="0"  BorderThickness="2">
-            <ListView  Grid.Row="0" Grid.Column="0" x:Name="lb_imagen"  SelectionChanged="lb_imagen_SelectionChanged" Margin="0,0,0,0"  
+            <ListView  Grid.Row="0" Grid.Column="0" x:Name="lb_imagen"  SelectionChanged="lb_imagen_SelectionChanged" Margin="0,0,0,0" Width="830" 
             SelectedItem="{Binding SelectedComputer, RelativeSource={RelativeSource AncestorType=Window}}"
                DragEnter="lb_imagen_DragEnter" Drop="lb_imagen_Drop" AllowDrop="True"  ScrollViewer.VerticalScrollBarVisibility="Auto"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left">
                 <ListView.ItemsPanel>

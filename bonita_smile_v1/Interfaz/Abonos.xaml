@@ -206,7 +206,7 @@
                         <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
 
                             <GridViewColumn Header="Fecha" Width="250" DisplayMemberBinding="{Binding fecha}" />
-                            <GridViewColumn Header="Abono" Width="250" DisplayMemberBinding="{Binding monto}" />
+                            <GridViewColumn Header="Abono" Width="250" DisplayMemberBinding="{Binding costito}" />
                             <GridViewColumn Header="Observacion" Width="250" DisplayMemberBinding="{Binding comentario}" />
 
 

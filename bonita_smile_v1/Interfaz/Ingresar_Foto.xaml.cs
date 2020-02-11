@@ -49,6 +49,8 @@ namespace bonita_smile_v1
         Conexion obj = new Conexion();
         string valor = "";
         bool bandera_offline_online = false;
+        int i;
+        string NombreVideo;
         
         PacienteModel paciente;
         List<string> lista = new List<string>();
@@ -57,7 +59,15 @@ namespace bonita_smile_v1
         {
             //MessageBox.Show(paciente.apellidos + "  "+paciente.nombre+"  "+paciente.clinica.id_clinica.ToString()+"   "+paciente.antecedente);
             InitializeComponent();
+           
             CargaDispositivos();
+
+            //MiWebCam.SignalToStop();
+            //MiWebCam = null;
+
+            this.btn_capturar.IsEnabled = false;
+            this.btnSiguiente.IsEnabled = false;
+            
             this.paciente = paciente;
             this.lista = lista;
             this.alias = alias;
@@ -78,7 +88,7 @@ namespace bonita_smile_v1
         }
         private void CerrarWebCam()
         {
-            if (MiWebCam != null && MiWebCam.IsRunning)
+            if (!(MiWebCam == null) && MiWebCam.IsRunning)
             {
                 MiWebCam.SignalToStop();
                 MiWebCam = null;
@@ -139,16 +149,19 @@ namespace bonita_smile_v1
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
                         {
+                            admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                             admin.Main.Content = new Page6();
                         }
                         else
                         if (recep != null)
                         {
+                            recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                             recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
                         }
                         else
                         if (socio != null)
                         {
+                            socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                             socio.Main4.Content = new Pacientes_socio(this.lista,this.alias);
                         }
 
@@ -161,16 +174,19 @@ namespace bonita_smile_v1
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
                         {
+                            admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                             admin.Main.Content = new Page6();
                         }
                         else
                         if (recep != null)
                         {
+                            recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                             recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
                         }
                         else
                         if (socio != null)
                         {
+                            socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                             socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
                         }
                     }
@@ -182,16 +198,19 @@ namespace bonita_smile_v1
                     Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                     if (admin != null)
                     {
+                        admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                         admin.Main.Content = new Page6();
                     }
                     else
                     if (recep != null)
                     {
+                        recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                         recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
                     }
                     else
                     if (socio != null)
                     {
+                        socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                         socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
                     }
 
@@ -255,7 +274,6 @@ namespace bonita_smile_v1
             //    }
             //}
             //
-
 
         }
         public bool SubirFicheroStockFTP(string foto,string ruta)
@@ -354,11 +372,14 @@ namespace bonita_smile_v1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CerrarWebCam();
-            int i = comboBox1.SelectedIndex;
-            string NombreVideo = MisDispositivios[i].MonikerString;
+            this.i = comboBox1.SelectedIndex;
+            this.NombreVideo = MisDispositivios[i].MonikerString;
             MiWebCam = new VideoCaptureDevice(NombreVideo);
             MiWebCam.NewFrame += new NewFrameEventHandler(Capturando);
             MiWebCam.Start();
+            btn_encender.IsEnabled = false;
+            btn_capturar.IsEnabled = true;
+            btnSiguiente.IsEnabled = false;
 
         }
         private void Capturando(object sender, NewFrameEventArgs eventArgs)
@@ -389,10 +410,50 @@ namespace bonita_smile_v1
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             CerrarWebCam();
+            this.btn_capturar.IsEnabled = false;
+            this.btnSiguiente.IsEnabled = true;
+            this.btn_encender.IsEnabled = true;
         }
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
 
+        private void btn_Omitir_Click(object sender, RoutedEventArgs e)
+        {
+            if (MiWebCam != null && MiWebCam.IsRunning)
+            {
+
+                CerrarWebCam();
+            }
+            Servicios.Paciente paciente = new Servicios.Paciente(bandera_offline_online);
+            bool inserto = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, "", this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+            if(inserto)
+            {
+                paciente = new Servicios.Paciente(!bandera_offline_online);
+                bool inserto_2 = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, "", this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+
+                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                if (admin != null)
+                {
+                    admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                    admin.Main.Content = new Page6();
+                }
+                else
+                if (recep != null)
+                {
+                    recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                    recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                }
+                else
+                if (socio != null)
+                {
+                    socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                    socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                }
+            }
+
+        }
     }
 }

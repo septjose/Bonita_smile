@@ -112,6 +112,43 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
+       public List<Fotos_estudio_carpetaModel>  MostrarFoto_Paciente(string id_paciente)
+        {
+            List<Fotos_estudio_carpetaModel> listaFoto_estudio_carpeta = new List<Fotos_estudio_carpetaModel>();
+            query = "SELECT  * FROM fotos_estudio_carpeta where id_paciente='" + id_paciente + "'";
+            MessageBox.Show(query);
+            string foto_recortada = "";
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Fotos_estudio_carpetaModel fotos_Estudio_CarpetaModel = new Fotos_estudio_carpetaModel();
+
+                    fotos_Estudio_CarpetaModel.id_foto = reader[0].ToString();
+                    fotos_Estudio_CarpetaModel.id_carpeta = reader[1].ToString();
+                    fotos_Estudio_CarpetaModel.id_paciente = reader[2].ToString();
+                    foto_recortada = reader[3].ToString();
+                    foto_recortada = foto_recortada.Substring(35);
+                    fotos_Estudio_CarpetaModel.foto = foto_recortada;
+                    fotos_Estudio_CarpetaModel.foto_completa = reader[3].ToString();
+                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\" + reader[3].ToString());
+
+                    listaFoto_estudio_carpeta.Add(fotos_Estudio_CarpetaModel);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return listaFoto_estudio_carpeta;
+        }
+
         public bool insertarFoto_estudio_carpeta(string id_carpeta, string id_paciente, string foto)
         {
             string auxiliar_identificador = "";
@@ -175,6 +212,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -183,6 +221,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -197,8 +236,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -255,7 +295,7 @@ namespace bonita_smile_v1.Servicios
             else
             {
                 var bitmap = new BitmapImage();
-                var stream = File.OpenRead(@"/Assets/img1.jpg");
+                var stream = File.OpenRead("/Assets//img1.jpgimg1.jpg");
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.StreamSource = stream;
@@ -312,48 +352,6 @@ namespace bonita_smile_v1.Servicios
 
         }*/
 
-        public bool downloadFile(string servidor, string usuario, string password, string archivoOrigen, string carpetaDestino, int bufferdes)
-        {
-            bool descargar;
-            try
-            {
-                FtpWebRequest reqFTP;
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(servidor + archivoOrigen);
-                reqFTP.Credentials = new NetworkCredential(usuario, password);
-                reqFTP.KeepAlive = false;
-                reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
-                reqFTP.UseBinary = true;
-                reqFTP.Proxy = null;
-                reqFTP.UsePassive = true;
-                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
-                Stream responseStream = response.GetResponseStream();
-                FileStream writeStream = new FileStream(@carpetaDestino, FileMode.Create);
-                int Length = bufferdes;
-                Byte[] buffer = new Byte[Length];
-                int bytesRead = responseStream.Read(buffer, 0, Length);
-                while (bytesRead > 0)
-                {
-                    writeStream.Write(buffer, 0, bytesRead);
-                    bytesRead = responseStream.Read(buffer, 0, Length);
-                }
-                writeStream.Close();
-                response.Close();
-                descargar = true;
-            }
-            catch (WebException wEx)
-            {
-                descargar = false;
-                throw wEx;
-
-            }
-            catch (Exception ex)
-            {
-                descargar = false;
-                throw ex;
-
-
-            }
-            return descargar;
-        }
+       
     }
 }

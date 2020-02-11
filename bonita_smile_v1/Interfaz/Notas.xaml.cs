@@ -6,6 +6,7 @@ using bonita_smile_v1.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -35,10 +36,11 @@ namespace bonita_smile_v1
         string id_motivo = "";
         string id_paciente = "";
         bool bandera_online_offline = false;
+        CultureInfo culture = new CultureInfo("en-US");
+        NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
         public Page2_notas(PacienteModel paciente,Motivo_citaModel motivo)
         {
-
-            
+         
             InitializeComponent();
            rt_imagen.Fill =new Page2().Imagen(paciente.foto);
 
@@ -55,9 +57,10 @@ namespace bonita_smile_v1
             //lblmotivo.Content = motivo.descripcion;
             //lblTotal.Content = motivo.costo.ToString();
             Abonos abono = new Abonos(bandera_online_offline);
-            txtTotal.Text= "$"+motivo.costo.ToString();
-            txtAbonado.Text= "$" + abono.Abonados(motivo.id_motivo).ToString();
-            txtRestante.Text="$" + abono.Restante(motivo.id_motivo).ToString();
+
+            txtTotal.Text= "$"+ Convert.ToDouble(motivo.costo,culture).ToString("n", nfi);
+            txtAbonado.Text= "$" + Convert.ToDouble(abono.Abonados(motivo.id_motivo),culture).ToString("n", nfi);
+            txtRestante.Text="$" +Convert.ToDouble( abono.Restante(motivo.id_motivo),culture).ToString("n", nfi);
             //lblAbonado.Content = abono.Abonados(motivo.id_motivo).ToString();
             //lblRestante.Content = 
             //System.Windows.MessageBox.Show(motivo.id_motivo.ToString() + "  " + paciente.id_paciente.ToString());

@@ -61,7 +61,7 @@ namespace bonita_smile_v1.Servicios
 
         public  bool ValidarTelefonos7a10Digitos(string strNumber)
         {
-            Regex regex = new Regex("\\A[0-9]{10}\\z");
+            Regex regex = new Regex("\\A[0-9]{10,12}\\z");
             Match match = regex.Match(strNumber);
 
             if (match.Success)
@@ -72,7 +72,13 @@ namespace bonita_smile_v1.Servicios
 
         public bool validar_numero(string strNumber)
         {
+            /*
+La expresión regular que he usado para que admitiria estos casos,   4 o 4.1 o 4.15 o 0.15 o 44444444.15   es:
+
+"^[0-9]+(\\,[0-9]{1,2})?$"
+             */
             Regex regex = new Regex("^[0-9]+([.][0-9]+)?$");
+            //Regex regex = new Regex(" ^[0 - 9] + (\\,[0-9]{1,2})?$");
             Match match = regex.Match(strNumber);
 
             if (match.Success)

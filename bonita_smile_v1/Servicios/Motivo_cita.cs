@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace bonita_smile_v1.Servicios
 
         public List<Motivo_citaModel> Mostrar_MotivoCita(string id_paciente)
         {
+            CultureInfo culture = new CultureInfo("en-US");
+            NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
             List<Motivo_citaModel> listaMotivo_cita = new List<Motivo_citaModel>();
             query = "select * from motivo_cita inner join paciente on paciente.id_paciente=motivo_cita.id_paciente where paciente.id_paciente='" + id_paciente+"'";
 
@@ -43,6 +46,8 @@ namespace bonita_smile_v1.Servicios
                     motivo_CitaModel.id_motivo = reader[0].ToString();
                     motivo_CitaModel.descripcion = reader[1].ToString();
                     motivo_CitaModel.costo = double.Parse(reader[2].ToString());
+                    double attemp4 = Convert.ToDouble(motivo_CitaModel.costo, culture);
+                    motivo_CitaModel.costito = "$"+attemp4.ToString("n", nfi);
                     pacienteModel.id_paciente = reader[5].ToString();
                     motivo_CitaModel.paciente = pacienteModel;
                     listaMotivo_cita.Add(motivo_CitaModel);
@@ -69,6 +74,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -76,6 +82,7 @@ namespace bonita_smile_v1.Servicios
 
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -91,8 +98,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -102,7 +110,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarMotivo_cita(string descripcion, double costo, string id_paciente)
+        public bool insertarMotivo_cita(string descripcion, string costo, string id_paciente)
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
@@ -117,6 +125,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -125,6 +134,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ")";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -138,8 +148,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+                
             }
             catch (MySqlException ex)
             {
@@ -149,9 +160,8 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarMotivo_cita(string id_motivo, string descripcion, double costo, string id_paciente)
-        {
-            
+        public bool actualizarMotivo_cita(string id_motivo, string descripcion, string costo, string id_paciente)
+        {          
             bool internet = ti.Test();
             try
             {
@@ -162,6 +172,7 @@ namespace bonita_smile_v1.Servicios
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
                     }
                     else
                     {
@@ -170,6 +181,7 @@ namespace bonita_smile_v1.Servicios
                         //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
                         Sincronizar sincronizar = new Sincronizar();
                         sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
                     }
                 }
                 else
@@ -184,8 +196,9 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir(query + ";");
+                    return true;
                 }
-                return true;
+               
             }
             catch (MySqlException ex)
             {
@@ -193,33 +206,6 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 return false;
             }
-        }
-
-        public string MostrarMotivo_Cita_Update(string id_motivo)
-        {
-            string aux_identi = "";
-            query = "SELECT auxiliar_identificador from motivo_cita where id_motivo='" + id_motivo+"'";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-
-                    aux_identi = reader[0].ToString();
-
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            conexionBD.Close();
-            return aux_identi;
         }
     }
 }
