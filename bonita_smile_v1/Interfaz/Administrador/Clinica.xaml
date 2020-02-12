@@ -68,7 +68,7 @@
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets//agregar.png">
+                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/agregar.png">
                                     </Image>
                                     <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                     </Border>
@@ -95,7 +95,7 @@
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets//actualizar.png">
+                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/actualizar.png">
                                     </Image>
                                     <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                     </Border>
@@ -123,7 +123,7 @@
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets//eliminar.png">
+                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/eliminar.png">
                                     </Image>
                                     <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                     </Border>

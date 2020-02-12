@@ -112,6 +112,15 @@ namespace bonita_smile_v1.Servicios
                         if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                         //pacienteModel.marketing = reader[6].ToString();
                         pacienteModel.antecedente = reader[9].ToString();
+                        if (reader[11].ToString().Equals(""))
+                        {
+                            pacienteModel.imagen_membresia = null;
+                        }
+                        else
+                        {
+                            pacienteModel.imagen_membresia = LoadImage_Membresia("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\trofeo.jpg");
+
+                        }
                         pacienteModel.membresia = reader[11].ToString();
                         clinicaModel.id_clinica = reader[12].ToString();
                         clinicaModel.nombre_sucursal = reader[13].ToString();
@@ -161,8 +170,16 @@ namespace bonita_smile_v1.Servicios
                     pacienteModel.email = reader[6].ToString();
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                     //pacienteModel.marketing = reader[6].ToString();
-
                     pacienteModel.antecedente = reader[9].ToString();
+                    if (reader[11].ToString().Equals(""))
+                    {
+                        pacienteModel.imagen_membresia = null;
+                    }
+                    else
+                    {
+                        pacienteModel.imagen_membresia = LoadImage_Membresia("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\trofeo.jpg");
+
+                    }
                     pacienteModel.membresia = reader[11].ToString();
                     clinicaModel.id_clinica = reader[12].ToString();
                     clinicaModel.nombre_sucursal = reader[13].ToString();

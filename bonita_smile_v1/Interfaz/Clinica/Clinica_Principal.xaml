@@ -73,11 +73,16 @@
                                 <GridViewColumn Header="Foto" Width="250">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel >
-                                                <Border BorderBrush="{Binding clinica.color}" BorderThickness="2" Height="80" Width="80">
-                                                    <Image Source="{Binding imagen}" VerticalAlignment="Center" Height="80" Width="80"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                                    <ColumnDefinition Width="80"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="{Binding imagen_membresia}" HorizontalAlignment="Left" Height="50" Width="50"/>
+                                                <Border HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" BorderBrush="{Binding clinica.color}" BorderThickness="2" Height="80" Width="80">
+                                                    <Image Source="{Binding imagen}"  Height="80" Width="80"/>
                                                 </Border>
-                                            </StackPanel>
+                                            </Grid>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

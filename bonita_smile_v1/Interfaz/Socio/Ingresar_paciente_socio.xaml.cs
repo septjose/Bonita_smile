@@ -136,7 +136,7 @@ namespace bonita_smile_v1.Interfaz.Socio
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
+            if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals("") || cmbClinica.SelectedIndex.Equals(-1))
             {
                 System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -151,26 +151,34 @@ namespace bonita_smile_v1.Interfaz.Socio
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
                     if (email_correcto)
                     {
-                        pacienteModel.apellidos = txtApellidos.Text;
-                        pacienteModel.nombre = txtNombre.Text;
-                        pacienteModel.direccion = txtDireccion.Text;
-                        pacienteModel.telefono = txtTelefono.Text;
-                        pacienteModel.foto = "";
-                        pacienteModel.email = txtEmail.Text;
-                        pacienteModel.marketing = 0;
-                        clinicaModel.id_clinica = id_clinica;
-                        //pacienteModel.id_clinica = int.Parse(txtclinica.Text.ToString());
-                        pacienteModel.clinica = clinicaModel;
-                        // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
-                        //Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-
-                        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                       
-                            if (socio != null)
+                        if (new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
-                            socio.Main4.Content = new Page7_Ingresar(pacienteModel,this.lista,this.alias);
-                        }
+                            pacienteModel.apellidos = txtApellidos.Text;
+                            pacienteModel.nombre = txtNombre.Text;
+                            pacienteModel.direccion = txtDireccion.Text;
+                            pacienteModel.telefono = txtTelefono.Text;
+                            pacienteModel.foto = "";
+                            pacienteModel.email = txtEmail.Text;
+                            pacienteModel.marketing = 0;
+                            clinicaModel.id_clinica = id_clinica;
+                            //pacienteModel.id_clinica = int.Parse(txtclinica.Text.ToString());
+                            pacienteModel.clinica = clinicaModel;
+                            // new Ingresar_Antecedentes_Clinicos(pacienteModel).ShowDialog();
+                            //Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
+                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+
+                            if (socio != null)
+                            {
+                                socio.Main4.Content = new Page7_Ingresar(pacienteModel, this.lista, this.alias);
+                            }
+
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        }
                     }
                     else
                     {
@@ -180,7 +188,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show("No selecciono el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   
                     if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
                     {
                         System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -208,25 +216,33 @@ namespace bonita_smile_v1.Interfaz.Socio
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
                     if (email_correcto)
                     {
-                        bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
-                        if (inserto)
-
+                        if (new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
-                            pa = new Paciente(true);
-                            pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
-                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                            //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                            
-                            if (socio != null)
-                            {
-                                socio.Main4.Content = new Pacientes_socio(this.lista,this.alias);
-                                System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
+                            bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
+                            if (inserto)
 
+                            {
+                                pa = new Paciente(true);
+                                pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
+                                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+
+                                if (socio != null)
+                                {
+                                    socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                                    System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                         }
                     }
                     else

@@ -125,23 +125,31 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
                     if (email_correcto)
                     {
-                        pacienteModel.apellidos = txtApellidos.Text;
-                        pacienteModel.nombre = txtNombre.Text;
-                        pacienteModel.direccion = txtDireccion.Text;
-                        pacienteModel.telefono = txtTelefono.Text;
-                        pacienteModel.foto = foto;
-                        pacienteModel.imagen = null;
-                        pacienteModel.email = txtEmail.Text;
-                        pacienteModel.marketing = 0;
-                        pacienteModel.antecedente = antecedentes;
-                        pacienteModel.id_paciente = id_pacientes;
-                        clinicaModel.id_clinica = id_clinica;
-                        pacienteModel.clinica = clinicaModel;
-                        string nombres_viejo = this.paciente.nombre + "_" + this.paciente.apellidos;
-                        // new Actualizar_Antecedentes(pacienteModel).ShowDialog();
-                        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-                        if (recep != null)
-                            recep.Main3.Content = new Page7_Actualizar(pacienteModel, nombres_viejo,null,""); ;
+                        if (new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
+                        {
+                            pacienteModel.apellidos = txtApellidos.Text;
+                            pacienteModel.nombre = txtNombre.Text;
+                            pacienteModel.direccion = txtDireccion.Text;
+                            pacienteModel.telefono = txtTelefono.Text;
+                            pacienteModel.foto = foto;
+                            pacienteModel.imagen = null;
+                            pacienteModel.email = txtEmail.Text;
+                            pacienteModel.marketing = 0;
+                            pacienteModel.antecedente = antecedentes;
+                            pacienteModel.id_paciente = id_pacientes;
+                            clinicaModel.id_clinica = id_clinica;
+                            pacienteModel.clinica = clinicaModel;
+                            string nombres_viejo = this.paciente.nombre + "_" + this.paciente.apellidos;
+                            // new Actualizar_Antecedentes(pacienteModel).ShowDialog();
+                            Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                            if (recep != null)
+                                recep.Main3.Content = new Page7_Actualizar(pacienteModel, nombres_viejo, null, ""); ;
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        }
                     }
                     else
                     {
@@ -222,120 +230,129 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
                     if (email_correcto)
                     {
-                        string viejo = this.paciente.nombre + "_" + this.paciente.apellidos;
-                        string nuevo = txtNombre.Text + "_" + txtApellidos.Text;
-                        if (viejo.Equals(nuevo))
+                        if (new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
-                            if (foto.Equals(""))
+                            string viejo = this.paciente.nombre + "_" + this.paciente.apellidos;
+                            string nuevo = txtNombre.Text + "_" + txtApellidos.Text;
+                            if (viejo.Equals(nuevo))
                             {
-                                bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                if (inserto)
+                                if (foto.Equals(""))
                                 {
-                                    System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                    pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-
-
-                                    if (recep != null)
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    if (inserto)
                                     {
-                                        recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
-                                    }
+                                        System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        pa = new Paciente(!bandera_online_offline);
+                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
+
+                                        if (recep != null)
+                                        {
+                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    if (inserto)
+                                    {
+                                        System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        pa = new Paciente(!bandera_online_offline);
+                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+
+
+                                        if (recep != null)
+                                        {
+                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
+                                        }
+
+                                    }
                                 }
                             }
                             else
                             {
-                                bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                if (inserto)
+                                if (foto.Equals(""))
                                 {
-                                    System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                    pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-
-
-                                    if (recep != null)
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    if (inserto)
                                     {
-                                        recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
-                                    }
+                                        System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        pa = new Paciente(!bandera_online_offline);
+                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
+
+                                        if (recep != null)
+                                        {
+                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    string nombre_nuevo_foto = txtNombre.Text + "_" + txtApellidos.Text + "_" + id_pacientes + ".jpg";
+                                    nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    if (inserto)
+                                    {
+                                        renombrar(this.paciente.foto, nombre_nuevo_foto);
+                                        if (File.Exists(@"\\DESKTOP-ED8E774\fotos_offline\" + this.paciente.foto))
+                                        {
+                                            File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + this.paciente.foto);
+                                        }
+                                        string destFile2 = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\fotos_offline\", nombre_nuevo_foto);
+                                        System.IO.File.Copy(@"\\DESKTOP-ED8E774\bs\" + nombre_nuevo_foto, destFile2, true);
+                                        Escribir_Archivo ea = new Escribir_Archivo();
+                                        ea.escribir_imagen_eliminar(foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                        System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        //pa = new Paciente(!bandera_online_offline);
+                                        //bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        //if (actualizo)
+                                        //{
+                                        //    var datos = ea.leer(rutaArchivoEliminar);
+
+                                        //    foreach (string imagen in datos)
+                                        //    {
+                                        //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                                        //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+                                        //        if (!verdad)
+                                        //            eliminarArchivo = false;
+                                        //    }
+
+                                        //    if (eliminarArchivo)
+                                        //    {
+                                        //        System.Windows.MessageBox.Show("elimino Archivo");
+                                        //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                                        //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                        //        bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"\\DESKTOP-ED8E774\bs\");
+                                        //        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+
+
+                                        //        if (recep != null)
+                                        //        {
+                                        //            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
+                                        //        }
+
+                                        //    }
+                                        //}
+
+
+
+                                    }
                                 }
                             }
+
                         }
                         else
                         {
-                            if (foto.Equals(""))
-                            {
-                                bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                if (inserto)
-                                {
-                                    System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                    pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-
-                                    if (recep != null)
-                                    {
-                                        recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                string nombre_nuevo_foto = txtNombre.Text + "_" + txtApellidos.Text + "_" + id_pacientes + ".jpg";
-                                nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
-                                bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                if (inserto)
-                                {
-                                    renombrar(this.paciente.foto, nombre_nuevo_foto);
-                                    if (File.Exists(@"\\DESKTOP-ED8E774\fotos_offline\" + this.paciente.foto))
-                                    {
-                                        File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + this.paciente.foto);
-                                    }
-                                    string destFile2 = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\fotos_offline\", nombre_nuevo_foto);
-                                    System.IO.File.Copy(@"\\DESKTOP-ED8E774\bs\" + nombre_nuevo_foto, destFile2, true);
-                                    Escribir_Archivo ea = new Escribir_Archivo();
-                                    ea.escribir_imagen_eliminar(foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                                    System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    //pa = new Paciente(!bandera_online_offline);
-                                    //bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
-                                    //if (actualizo)
-                                    //{
-                                    //    var datos = ea.leer(rutaArchivoEliminar);
-
-                                    //    foreach (string imagen in datos)
-                                    //    {
-                                    //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                                    //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
-
-                                    //        if (!verdad)
-                                    //            eliminarArchivo = false;
-                                    //    }
-
-                                    //    if (eliminarArchivo)
-                                    //    {
-                                    //        System.Windows.MessageBox.Show("elimino Archivo");
-                                    //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                                    //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                                    //        bool subir = SubirFicheroStockFTP(nombre_nuevo_foto, @"\\DESKTOP-ED8E774\bs\");
-                                    //        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-
-
-                                    //        if (recep != null)
-                                    //        {
-                                    //            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
-                                    //        }
-
-                                    //    }
-                                    //}
-
-
-
-                                }
-                            }
                         }
 
                     }

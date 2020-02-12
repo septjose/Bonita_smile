@@ -68,21 +68,31 @@ namespace bonita_smile_v1.Interfaz.Administrador
         {
             PermisosModel permiso = (PermisosModel)lv_Users.SelectedItem;
             if (lv_Users.SelectedItems.Count > 0)
-            {
-               
-                Test_Internet ti = new Test_Internet();
+            {    
                 var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el  permiso :" + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (confirmation == System.Windows.Forms.DialogResult.Yes)
                 {
-                    Clinicas cli = new Clinicas(bandera_online_offline);
-
-                    bool elimino = cli.eliminar_Permiso(permiso.id_usuario,permiso.id_clinica);
-                    if (elimino)
+                    Clinicas c = new Clinicas(bandera_online_offline);
+                    bool existe = c.Verificar_Tabla_Permisos(permiso.id_usuario);
+                   if(!existe)
                     {
-                        cli = new Clinicas(!bandera_online_offline);
-                        cli.eliminar_Permiso(permiso.id_usuario,permiso.id_clinica);
-                        GuPermisos.Remove((PermisosModel)lv_Users.SelectedItem);
-                        System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        System.Windows.Forms.MessageBox.Show("Este usuario no tiene permisos, si lo desea eliminar vaya al apartado de usuarios ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                   else
+                    {
+                        Clinicas cli = new Clinicas(bandera_online_offline);
+
+                        bool elimino = cli.eliminar_Permiso(permiso.id_usuario, permiso.id_clinica);
+                        if (elimino)
+                        {
+                            cli = new Clinicas(!bandera_online_offline);
+                            cli.eliminar_Permiso(permiso.id_usuario, permiso.id_clinica);
+                            permiso.nombre_sucursal = "";
+                            System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            GuPermisos.Remove((PermisosModel)lv_Users.SelectedItem);
+                            GuPermisos.Add(permiso);
+
+                        }
                     }
 
                 }

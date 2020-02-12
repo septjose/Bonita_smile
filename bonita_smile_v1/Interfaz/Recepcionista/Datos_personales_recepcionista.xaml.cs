@@ -43,10 +43,6 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             string color = paciente.clinica.color;
 
 
-
-
-
-
             txtNombre.Text = paciente.nombre + " " + paciente.apellidos;
             txtNombre.IsEnabled = false;
             txtDireccion.IsEnabled = false;
@@ -80,7 +76,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         {
             ImageBrush ib = new ImageBrush();
             BitmapImage bi = new BitmapImage();
-            string ruta2 = "/Assets//img1.jpgimg1.jpg";
+            string ruta2 = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\img1.jpg";
             if (File.Exists(ruta + filename))
             {
                 Image image = new Image();

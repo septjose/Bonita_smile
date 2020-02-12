@@ -178,28 +178,8 @@ namespace bonita_smile_v1.Servicios
                     }
                 }
                 else
-                {
-                    int no_permisos = 0;
-                    query = "select IF((select count(permisos.id_usuario) from permisos where permisos.id_usuario='" + id_usuario + "')>1,1,0)";
-                    conexionBD.Open();
-                    cmd = new MySqlCommand(query, conexionBD);
-                    reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        no_permisos = Int32.Parse(reader[0].ToString());
-                    }
-                    conexionBD.Close();
-                    if (no_permisos==1)
-                    {
-                        query = "DELETE FROM permisos where id_usuario='" + id_usuario + "' and id_clinica='" + id_clinica + "'";
-                        
-                    }
-                    else
-                    {
-                        query = "DELETE FROM permisos where id_usuario='" + id_usuario + "' and id_clinica='" + id_clinica + "';";
-                        query = query + "insert into permisos (id_usuario) VALUES('" + id_usuario + "')";
-                    }                   
+                {                   
+                   query = "DELETE FROM permisos where id_usuario='" + id_usuario + "' and id_clinica='" + id_clinica + "';";               
                     conexionBD.Open();
 
                     cmd = new MySqlCommand(query, conexionBD);
@@ -247,7 +227,6 @@ namespace bonita_smile_v1.Servicios
                 {
 
                     query = "DELETE FROM permisos where id_usuario='" + id_usuario+"';";
-                    query = query + "insert into permisos (id_usuario) VALUES('" + id_usuario + "');";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -364,6 +343,43 @@ namespace bonita_smile_v1.Servicios
                 conexionBD.Close();
                 return false;
             }
+        }
+
+        public  bool Verificar_Tabla_Permisos(string id_usuario)
+        {
+            int cantidad=0;
+            bool verifico ;
+            query = "select count(id_usuario) from permisos where id_usuario='"+id_usuario+"'";
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                     cantidad = Int32.Parse(reader[0].ToString());
+                   
+                }
+                if(cantidad>0)
+                {
+                    verifico = true;
+                }
+                else
+                {
+                    verifico = false;
+                }
+                conexionBD.Close();
+                return verifico;
+               
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return false;
+                
+            }
+           
         }
 
         public bool actualizarClinica(string id_clinica, string nombre_sucursal, string color)

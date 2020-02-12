@@ -79,7 +79,7 @@ namespace bonita_smile_v1
 
             if(paciente.foto.Equals(""))
             {
-                string ruta2 = "/Assets//img1.jpgimg1.jpg";
+                string ruta2 = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\img1.jpg";
                 rt_imagen.Fill = Imagen(ruta2);
             }
             else
@@ -92,7 +92,7 @@ namespace bonita_smile_v1
         }
         public ImageBrush Imagen(string filename)
         {
-            string ruta2 = "/Assets//img1.jpgimg1.jpg";
+            string ruta2 = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\img1.jpg";
             if (File.Exists(ruta+filename))
             {
                 Image image = new Image();

@@ -112,7 +112,39 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-       public List<Fotos_estudio_carpetaModel>  MostrarFoto_Paciente(string id_paciente)
+        public List<string> MostrarFoto_Clinica(string id_clinica)
+        {
+            List<string> lista_foto_clinica = new List<string>();
+            query = "(select foto from fotos_estudio_carpeta where id_paciente in (select paciente.id_paciente from paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where clinica.id_clinica='"+id_clinica+"'))union (select paciente.foto from paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where clinica.id_clinica='"+id_clinica+"')";
+            MessageBox.Show(query);
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if(reader[0].ToString().Equals(""))
+                    {
+                    }
+                    else
+                    {
+                        lista_foto_clinica.Add(reader[0].ToString());
+                    }
+                    
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conexionBD.Close();
+            return lista_foto_clinica;
+        }
+
+        public List<Fotos_estudio_carpetaModel>  MostrarFoto_Paciente(string id_paciente)
         {
             List<Fotos_estudio_carpetaModel> listaFoto_estudio_carpeta = new List<Fotos_estudio_carpetaModel>();
             query = "SELECT  * FROM fotos_estudio_carpeta where id_paciente='" + id_paciente + "'";

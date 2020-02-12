@@ -186,34 +186,35 @@ namespace bonita_smile_v1
                         }
                         catch (Exception ex)
                         {
-                            System.Windows.MessageBox.Show(ex + "");
+                           // System.Windows.MessageBox.Show(ex + "");
                             // ----------eliminar fotos insertadas en las carpetas y eliminar el registro de la base de datos-------------/
                             //revisar paridad entre carpetas offline y bs. si esta en offline forzosamente debe de estar en bs, de lo contrario eliminar imagen de offline =====> PROBABLEMENTE TAMBIÉN VERIFICAR ESTO AL ENTRAR A ESTE PAGE(INTERFAZ)
                             //POSIBLE ERROR : Que no exista una de las carpetas o servicio ocupado
                             //eliminar registro de BS Local
+                            System.Windows.MessageBox.Show( "La imagen ya existe");
                             return;
                         }
-                        ////SUBIR TODO AL SERVIDOR
-                        ////REALZAR INSERCION DEL REGISTRO EN EL SERVIDOR
-                        //fotos = new Fotos_estudio_carpeta(!bandera_online_offline);
-                        //insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
+                        //SUBIR TODO AL SERVIDOR
+                        //REALZAR INSERCION DEL REGISTRO EN EL SERVIDOR
+                        fotos = new Fotos_estudio_carpeta(!bandera_online_offline);
+                        insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
 
-                        //if (insertar_foto)
-                        //{
+                        if (insertar_foto)
+                        {
 
-                        //    System.Windows.MessageBox.Show("ENTRO PARA SUBIR FOTO A SERVIDOR");
-                        //    //PROCEDER A MIGRAR LA IMAGEN POR FTP
-                        //    inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
-                        //    if (inserto)
-                        //    {
-                        //        //ELIMINAR ARCHIVO QUE SE SUBIO AL SERVIDOR DE CARPETA OFFLINE
-                        //        File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + id_carpeta + "_" + result);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    //NO HAY INTERNET, NO HACER NADA
-                        //}
+                            System.Windows.MessageBox.Show("ENTRO PARA SUBIR FOTO A SERVIDOR");
+                            //PROCEDER A MIGRAR LA IMAGEN POR FTP
+                            inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
+                            if (inserto)
+                            {
+                                //ELIMINAR FOTO QUE SE SUBIO AL SERVIDOR DE CARPETA OFFLINE
+                                File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + id_carpeta + "_" + result);
+                            }
+                        }
+                        else
+                        {
+                            //NO HAY INTERNET, NO HACER NADA
+                        }
                     }
                 }
                 else
@@ -361,32 +362,32 @@ namespace bonita_smile_v1
                  //ELIMINAR REGISTRO
 
                  /****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
-                 elimino = new Fotos_estudio_carpeta(!bandera_online_offline).eliminarFoto_estudio_carpeta(this.item_foto_carpeta.id_foto);
-                if (elimino)
-                {
-                    //ELIMINAR FOTO DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
-                    var datos = ea.leer(rutaArchivoEliminar);
+                // elimino = new Fotos_estudio_carpeta(!bandera_online_offline).eliminarFoto_estudio_carpeta(this.item_foto_carpeta.id_foto);
+                //if (elimino)
+                //{
+                //    //ELIMINAR FOTO DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+                //    var datos = ea.leer(rutaArchivoEliminar);
 
-                    foreach (string imagen in datos)
-                    {
-                        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                //    foreach (string imagen in datos)
+                //    {
+                //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
 
-                        if (!verdad)
-                            eliminarArchivo = false;
-                    }
-                    if (eliminarArchivo)
-                    {
-                        System.Windows.MessageBox.Show("elimino Archivo");
-                        ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                    }
-                }
-                else
-                {
-                    //NO HAY INTERNET, NO HACER NADA
-                }
-                /**********************************/
+                //        if (!verdad)
+                //            eliminarArchivo = false;
+                //    }
+                //    if (eliminarArchivo)
+                //    {
+                //        System.Windows.MessageBox.Show("elimino Archivo");
+                //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                //    }
+                //}
+                //else
+                //{
+                //    //NO HAY INTERNET, NO HACER NADA
+                //}
+                ///**********************************/
             }
         }
 

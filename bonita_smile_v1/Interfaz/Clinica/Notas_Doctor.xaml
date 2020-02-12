@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bonita_smile_v1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="900"
+      d:DesignHeight="450" d:DesignWidth="1150"
       Title="Page2_notas">
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
@@ -18,9 +18,9 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="1150"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Notas de Evolucion" Margin="0 20 0 0"/>
 
@@ -107,7 +107,7 @@
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="\\DESKTOP-ED8E774\\bs\agregar.png">
+                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/agregar.png">
                                 </Image>
                                 <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                     <TextBlock Width="Auto" Height="Auto" Text="mi boton 1" TextWrapping="Wrap" x:Name="btn1" TextAlignment="Center" Background="{x:Null}" FontSize="14" Margin="5,5,5,5" Foreground="#FFFFFFFF" FontWeight="Normal" VerticalAlignment="Center" FontFamily="Segoe" IsEnabled="False" Cursor="None"/>
@@ -136,7 +136,7 @@
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="\\DESKTOP-ED8E774\\bs\actualizar.png">
+                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/actualizar.png">
                                 </Image>
                                 <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                     <TextBlock Width="Auto" Height="Auto" Text="mi boton 1" TextWrapping="Wrap" x:Name="btn1" TextAlignment="Center" Background="{x:Null}" FontSize="14" Margin="5,5,5,5" Foreground="#FFFFFFFF" FontWeight="Normal" VerticalAlignment="Center" FontFamily="Segoe" IsEnabled="False" Cursor="None"/>
@@ -166,7 +166,7 @@
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
-                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="\\DESKTOP-ED8E774\\bs\eliminar.png">
+                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/eliminar.png">
                                 </Image>
                                 <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
                                     <TextBlock Width="Auto" Height="Auto" Text="mi boton 1" TextWrapping="Wrap" x:Name="btn1" TextAlignment="Center" Background="{x:Null}" FontSize="14" Margin="5,5,5,5" Foreground="#FFFFFFFF" FontWeight="Normal" VerticalAlignment="Center" FontFamily="Segoe" IsEnabled="False" Cursor="None"/>
@@ -204,7 +204,8 @@
                             <Setter Property="Control.BorderBrush" Value="Black" />
                             <Setter Property="FontFamily" Value="Arial"/>
                             <Setter Property="FontSize" Value="13"/>
-
+                            <EventSetter Event="MouseDoubleClick"
+                         Handler="ListViewItem_MouseDoubleClick" />
 
                         </Style>
                     </ListView.ItemContainerStyle>
@@ -212,46 +213,36 @@
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <!--<DockPanel>
-                                <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Left" Text="{Binding fecha}"/>
-                                <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Text="{Binding descripcion}"/>
-
-
-                            </DockPanel>-->
-                            <!-- <StackPanel Orientation="Vertical">
-                                <TextBlock  HorizontalAlignment="Left" Text="{Binding fecha}"/>
-                                <TextBlock  HorizontalAlignment="Center" Text=""/>
-                                <TextBlock  HorizontalAlignment="Center" Text=""/>
-                                <TextBlock  HorizontalAlignment="Center" Text=""/>
-                                <TextBlock  HorizontalAlignment="Center" Text=""/>
-                                <TextBlock  HorizontalAlignment="Center" Text=""/>
-                                <TextBlock  HorizontalAlignment="Center" Text="{Binding descripcion}"/>
-                            </StackPanel>-->
-
                             <Grid>
-
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="20"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Text="{Binding fecha}"/>
-                                <Grid Grid.Row="0" Grid.Column="1">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="1" Grid.Column="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="60"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="10"/>
+                                        <RowDefinition Height="50"></RowDefinition>
+                                        <RowDefinition Height="50"></RowDefinition>
                                     </Grid.RowDefinitions>
-
-                                    <TextBlock  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding descripcion}" TextWrapping="Wrap" Width="300"/>
-                                    <TextBlock  Grid.Row="2" Grid.Column="1" Text=""/>
+                                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Text="{Binding fecha}"/>
+                                    <Image Grid.Row="1" Grid.Column="0"  VerticalAlignment="Center" HorizontalAlignment="Left" Source="/Assets/carpeta.png"  Width="60" Height="60" Margin="0 0 0 0"/>
                                 </Grid>
-
-
-
+                                <!--<Grid Grid.Row="1" Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                </Grid>-->
+                                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding descripcion}" TextWrapping="Wrap" Width="300"/>
                             </Grid>
-
-
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
