@@ -351,6 +351,7 @@
       <DependentUpon>MessageBoxAbono.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\Categoria.cs" />
+    <Compile Include="Modelos\Configuracion_Model.cs" />
     <Compile Include="Modelos\Ganancias.cs" />
     <Compile Include="Modelos\Imagen.cs" />
     <Compile Include="Modelos\PermisosModel.cs" />
@@ -423,6 +424,8 @@
     <Compile Include="Interfaz\Whatsap_Marketing.xaml.cs">
       <DependentUpon>Whatsap_Marketing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\RutasCarpetasModelo.cs" />
+    <Compile Include="Modelos\ServidorModelo.cs" />
     <Compile Include="Servicios\Abonos.cs" />
     <Compile Include="Servicios\Archivo_Binario.cs" />
     <Compile Include="Servicios\Carpeta_archivos.cs" />

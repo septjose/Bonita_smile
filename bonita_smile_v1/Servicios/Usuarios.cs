@@ -38,7 +38,7 @@ namespace bonita_smile_v1.Servicios
         public List<UsuarioModel> MostrarUsuario_Socio(string alias)
         {
             List<UsuarioModel> listaUsuario = new List<UsuarioModel>();           
-                query = "(select Distinct usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join permisos on usuario.id_usuario=permisos.id_usuario inner join rol on usuario.id_rol=rol.id_rol where id_clinica='') union (select DISTINCT usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join rol on usuario.id_rol=rol.id_rol INNER join permisos on permisos.id_usuario=usuario.id_usuario where permisos.id_clinica in (select id_clinica from usuario inner join permisos on usuario.id_usuario = permisos.id_usuario where usuario.alias='"+alias+"') AND usuario.id_rol!=5)";
+                query = "(select DISTINCT usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario LEFT join permisos on usuario.id_usuario=permisos.id_usuario inner join rol on rol.id_rol=usuario.id_rol where permisos.id_usuario is null and usuario.id_rol!=5 and usuario.id_rol!=1) union (select DISTINCT usuario.id_usuario,usuario.alias,usuario.nombre,usuario.apellidos,usuario.password,usuario.id_rol,rol.descripcion from usuario inner join rol on usuario.id_rol=rol.id_rol INNER join permisos on permisos.id_usuario=usuario.id_usuario where permisos.id_clinica in (select id_clinica from usuario inner join permisos on usuario.id_usuario = permisos.id_usuario where usuario.alias='"+alias+"') AND usuario.id_rol!=5 )";
                 try
                 {
                     conexionBD.Open();
@@ -107,6 +107,54 @@ namespace bonita_smile_v1.Servicios
             return listaUsuario;
         }
 
+        public bool actualizarUsuarioSocio(string id_usu, string alias, string nombre, string apellidos, string password, int id_rol)
+        {
+            bool internet = ti.Test();
+            try
+            {
+                MySqlCommand cmd; ;
+                if (online)
+                {
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSEACTUALIZARRTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
+                    }
+                }
+                else
+                {
+                    //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
+                    query =  "DELETE FROM permisos where id_usuario='" + id_usu + "';";
+                    query = query + "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + ",auxiliar_identificador = '" + id_usu + "' where id_usuario = '" + id_usu + "'; ";
+                   
+                    Console.WriteLine(query);
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir(query + ";");
+                    return true;
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return false;
+            }
+        }
 
         public bool eliminarUsuario(string id_usuario)
         {
@@ -182,7 +230,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ",'<!--" + auxiliar_identificador + "-->');";
-                    query = query + "insert into permisos (id_usuario) VALUES('"+auxiliar_identificador+"');";
+                    //query = query + "insert into permisos (id_usuario) VALUES('"+auxiliar_identificador+"');";
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();

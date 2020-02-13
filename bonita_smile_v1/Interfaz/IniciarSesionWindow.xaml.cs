@@ -35,7 +35,7 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // MessageBox.Show("txtx  :" +txtUsuario.Text+"    "+ "pass :"+pbPassword.Password);
+           
 
             Usuarios user = new Usuarios(false);
             Seguridad secure = new Seguridad();
@@ -47,6 +47,76 @@ namespace bonita_smile_v1
             {
                 user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
             }
+
+            //Configuracion_Model configuracion;
+            //ServidorModelo servidor_intern = new ServidorModelo()
+            //{
+            //    servidor_local = "192.168.02",
+            //    puerto_local = "3306",
+            //    usuario_local = "usuariochido",
+            //    password_local = "12345",
+            //    database_local = "dentista",
+            //    database_local_aux = "bs",
+            //};
+
+            //ServidorModelo servidor_extern = new ServidorModelo()
+            //{
+            //    puerto_local = "3306",
+            //    usuario_local = "jjdevelo_dentista",
+            //    password_local = "jjpd1996",
+            //    database_local = "jjdevelo_dentist",
+            //};
+            //RutasCarpetasModelo carpeta = new RutasCarpetasModelo()
+            //{
+            //    ruta_fotografias_carpeta = "fotografias",
+            //    ruta_imagenes_carpeta = "imagenes",
+            //    ruta_subir_servidor_carpeta = "subir servidor",
+            //    ruta_temporal_carpeta = "temporal",
+            //};
+
+
+
+            //configuracion = new Configuracion_Model()
+            //{
+            //    carpetas=carpeta,
+            //    servidor_externo=servidor_extern,
+            //    servidor_interno=servidor_intern
+                
+            //};
+
+            ////leer 
+            ////actualizar las variables valores antiguos y valores nuevos
+            ////guardar los nuevos valores nuevos 
+            ////
+
+
+            //Actualizo_servidor_interno(configuracion);
+
+
+            //string ruta = @"\\DESKTOP-ED8E774\backup_bs\configuracion.cfg";
+
+
+            //Archivo_Binario ab = new Archivo_Binario();
+            //ab.Guardar(configuracion, ruta);
+            //Configuracion_Model conf= ab.Cargar(ruta);
+
+            //System.Windows.MessageBox.Show(conf.servidor_interno.servidor_local);
+            //System.Windows.MessageBox.Show(conf.carpetas.ruta_fotografias_carpeta + "\n " + conf.carpetas.ruta_imagenes_carpeta + "\n " +
+            //conf.carpetas.ruta_subir_servidor_carpeta + "\n " +
+            //conf.carpetas.ruta_temporal_carpeta + "\n " +
+            //conf.servidor_interno.database_local + "\n " +
+            //conf.servidor_interno.puerto_local + "\n " +
+            //conf.servidor_interno.usuario_local + "\n " +
+            //conf.servidor_interno.password_local + "\n " +
+            //conf.servidor_interno.database_local + "\n " +
+            //conf.servidor_interno.database_local_aux + "\n " +
+            //conf.servidor_externo.database_local + "\n " +
+            //conf.servidor_externo.puerto_local + "\n " +
+            //conf.servidor_externo.usuario_local + "\n " +
+            //conf.servidor_externo.password_local + "\n " +
+            //conf.servidor_externo.database_local + "\n ");
+
+
 
             //CultureInfo culture = new CultureInfo("en-US");
 
@@ -124,10 +194,66 @@ namespace bonita_smile_v1
 
 
         }
-        
-            
-            
+
+        /*
+           actualizar carpetas-----4 atributos (elemento grafico) va a recibir todo un objeto de tipo Configuracion_Model===> del obketo unicamente se obtiene lo que se requiera    txtelemento.text=modelo_configuracion.atributo;
+           act inter---6 atributos (elemento grafico)  va a recibir todo un objeto de tipo Configuracion_Model
+           act ext-----6 atributos (elemento grafico)  va a recibir todo un objeto de tipo Configuracion_Model
+             
+         */
+
+        public void Actualizo_servidor_interno(Configuracion_Model configuracion)
+        {
+            string servidor_local = "";  //txtservidor_local.Text=configuracion_vieja.servidor_interno.servidor_local;
+            string puerto_local = "";
+            string usuario_local = "";
+            string password_local = "";
+            string database_local = "";
+            string database_aux_local = "";
+
+            servidor_local = configuracion.servidor_interno.servidor_local;
+            puerto_local = configuracion.servidor_interno.puerto_local;
+            usuario_local = configuracion.servidor_interno.usuario_local;
+            password_local = configuracion.servidor_interno.password_local;
+            database_local = configuracion.servidor_interno.database_local;
+            database_aux_local = configuracion.servidor_interno.database_local_aux;
+
+
+            servidor_local = "A";  //txtservidor_local.Text=configuracion_vieja.servidor_interno.servidor_local;
+            puerto_local = "B";
+            usuario_local = "C";
+            password_local = "D";
+            database_local = "E";
+            database_aux_local = "F";
+
+            configuracion.servidor_interno.servidor_local = servidor_local;
+            configuracion.servidor_interno.puerto_local = puerto_local;
+            configuracion.servidor_interno.usuario_local = usuario_local;
+            configuracion.servidor_interno.password_local = password_local;
+            configuracion.servidor_interno.database_local = database_local;
+            configuracion.servidor_interno.database_local_aux = database_aux_local;
+
+
+            string ruta = @"\\DESKTOP-ED8E774\backup_bs\configuracion.cfg";
+
+
+            Archivo_Binario ab = new Archivo_Binario();
+            ab.Guardar(configuracion, ruta);
+           // Configuracion_Model conf = ab.Cargar(ruta);
+           // System.Windows.MessageBox.Show(
+           // conf.servidor_interno.puerto_local + "\n " +
+           // conf.servidor_interno.usuario_local + "\n " +
+           // conf.servidor_interno.password_local + "\n " +
+           // conf.servidor_interno.database_local + "\n " +
+           // conf.servidor_interno.database_local_aux + "\n "+
+           // conf.servidor_interno.servidor_local + "\n "
+           //);
+
         }
+
+
+
+    }
 
 
 

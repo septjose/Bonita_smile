@@ -99,26 +99,45 @@ namespace bonita_smile_v1.Interfaz.Socio
                 valor2 = cmbClinica.SelectedItem.ToString();
                 string id_usuario = obtener_id_usuario(valor);
                 string id_clinica = obtener_id_Clinica(valor2);
-                
-
-                // MessageBox.Show(id_usuario + "     " + id_clinica+" id_permiso=   "+ id_permiso);
-
                 Clinicas c = new Clinicas(bandera_online_offline);
-                bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
-                if (inserto)
+                System.Windows.MessageBox.Show(id_usuario + "     " + id_clinica);
+                bool existe = new Clinicas(bandera_online_offline).Verificar_Tabla_Permisos(id_usuario);
+                if (!existe)
                 {
-                    System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    c = new Clinicas(!bandera_online_offline);
-                    c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
-                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                    if (socio != null)
-                        socio.Main4.Content = new Permisos_Recepcionista_socio(this.lista,this.Al,this.id_rol);
-
+                    bool insertar = c.insertar_Permisos(id_usuario, id_clinica);
+                    if (insertar)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        c = new Clinicas(!bandera_online_offline);
+                        c.insertar_Permisos(id_usuario, id_clinica);
+                        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                        if (socio != null)
+                            socio.Main4.Content = new Permisos_Recepcionista_socio(this.lista, this.Al, this.id_rol);
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
+                    if (inserto)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        c = new Clinicas(!bandera_online_offline);
+                        c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
+                        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                        if (socio != null)
+                            socio.Main4.Content = new Permisos_Recepcionista_socio(this.lista, this.Al, this.id_rol);
+
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
+                  
             }
             catch (Exception ex)
             {

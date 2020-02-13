@@ -108,87 +108,89 @@ namespace bonita_smile_v1
                     //System.Windows.MessageBox.Show(id_usu.ToString() + " " + nombre + " " + apellidos + " " + alias + " " + password + "" + " " + id_rol);
                     Usuarios user = new Usuarios(bandera_online_offline);
                     string pass_tabla = obtener_password(id_usu);
-                    bool inserto = false;
+                    bool actualizo = false;
+                    Clinicas cli = new Clinicas(bandera_online_offline);
                     if (password.Equals(pass_tabla))
                     {
-                        inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
-                        if (inserto)
+                        //primero verifico que es ese usuario y a que quiere cambiar
+                        //1.-si es socio y cambia a otro rol diferente de socio 
+                        //1.1-se actualiza el usuario
+                        //1.2-se borran los permisos
+                        //si no solo se actualiza y listo
+                        if (usu.rol.id_rol == 5 && id_rol != 5)
                         {
-                            
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            user = new Usuarios(!bandera_online_offline);
-                            user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
-                            if(usu.rol.id_rol == 5 && id_rol!=5)
+                            actualizo = user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, password, id_rol);
+                            if(actualizo)
                             {
-                                Clinicas cli = new Clinicas(bandera_online_offline);
-                                bool eliminar = cli.eliminar_Permisos(id_usu);
-                                cli = new Clinicas(!bandera_online_offline);
-                                cli.eliminar_Permisos(id_usu);
+                                user = new Usuarios(!bandera_online_offline);
+                                user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, password, id_rol);
+                                System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
-                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    
                                     admin.Main.Content = new Page4();
-
                             }
                             else
                             {
+                                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
-                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
                                     admin.Main.Content = new Page4();
                             }
-                            //usu.alias = alias;
-                            //usu.apellidos = apellidos;
-                            //usu.id_usuario = id_usu;
-                            //usu.nombre = nombre;
-                            //usu.password = password;
-                            //rolModel.id_rol = id_rol;
-                            //rolModel.descripcion = valor;
-
-                            //usu.rol = rolModel;
-
-
-                            
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            actualizo= user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                            if(actualizo)
+                            {
+                                user = new Usuarios(!bandera_online_offline);
+                                user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                                System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page4();
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page4();
+                            }
                         }
-
+                        
                     }
                     else
                     {
                         Seguridad secure = new Seguridad();
                         string new_pass = secure.Encriptar(password);
-                        inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
-                        if (inserto)
+                        if (usu.rol.id_rol == 5 && id_rol != 5)
                         {
-                            if (usu.rol.id_rol == 5 && id_rol != 5)
+                            actualizo = user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                            if (actualizo)
                             {
-                                Clinicas cli = new Clinicas(bandera_online_offline);
-                                bool eliminar = cli.eliminar_Permisos(id_usu);
-                                cli = new Clinicas(!bandera_online_offline);
-                                cli.eliminar_Permisos(id_usu);
-                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                                if (admin != null)
-                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                                    admin.Main.Content = new Page4();
+                                user = new Usuarios(!bandera_online_offline);
+                                user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, new_pass, id_rol);
 
                             }
                             else
                             {
-                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                                if (admin != null)
-                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                                    admin.Main.Content = new Page4();
+                                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
-
                         }
                         else
                         {
-
-                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                            if (actualizo)
+                            {
+                                user = new Usuarios(!bandera_online_offline);
+                                user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }                      
                     }
                 }
                 catch (Exception ex)

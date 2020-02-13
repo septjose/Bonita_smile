@@ -1,7 +1,9 @@
-﻿using System;
+﻿using bonita_smile_v1.Modelos;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +11,7 @@ namespace bonita_smile_v1.Servicios
 {
     class Archivo_Binario
     {
-        public void EscribirArchivo(string ruta, string cadena)
+        public void CrearArchivo(string ruta)
         {
             FileStream fs = null;
             BinaryWriter bw = null;
@@ -17,7 +19,7 @@ namespace bonita_smile_v1.Servicios
             {
                 fs = new FileStream(ruta, FileMode.Create, FileAccess.Write);
                 bw = new BinaryWriter(fs);
-                bw.Write(cadena);
+                //bw.Write(cadena);
             }
             catch (IOException ex)
             {
@@ -32,7 +34,7 @@ namespace bonita_smile_v1.Servicios
                 }
             }
         }
-        public void Agregar_a_Archivo(string ruta, string cadena)
+        public void Agregar_a_Archivo(string ruta, Configuracion_Model configuracion)
         {
             FileStream fs = null;
             BinaryWriter bw = null;
@@ -40,9 +42,7 @@ namespace bonita_smile_v1.Servicios
             {
                 fs = new FileStream(ruta, FileMode.Append, FileAccess.Write);
                 bw = new BinaryWriter(fs);
-                bw.Write(cadena);
-
-
+                bw.Write(7);
             }
             catch (IOException ex)
             {
@@ -91,6 +91,30 @@ namespace bonita_smile_v1.Servicios
                     //fs.close();
                     br.Close();
                 }
+            }
+        }
+
+        public void Guardar(Configuracion_Model configuracion,string ruta)
+        {       
+            BinaryFormatter BF = new BinaryFormatter();
+            FileStream Archivo = File.OpenWrite(ruta);
+            BF.Serialize(Archivo, configuracion);
+            Archivo.Close();
+        }
+
+        public Configuracion_Model Cargar(string ruta)
+        {
+            if (!File.Exists(ruta))
+            {
+                return null;
+            }
+            else
+            {
+                BinaryFormatter BF = new BinaryFormatter();
+                FileStream Archivo = File.Open(ruta, FileMode.Open);
+                Configuracion_Model DatosCargados = (Configuracion_Model)BF.Deserialize(Archivo);
+                Archivo.Close();
+                return DatosCargados;
             }
         }
     }

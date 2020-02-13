@@ -127,5 +127,10 @@ namespace bonita_smile_v1.Interfaz.Administrador
         {
 
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Mandar ventana para mostrar las configuraciones");
+        }
     }
 }
