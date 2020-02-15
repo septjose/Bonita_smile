@@ -28,8 +28,11 @@ namespace bonita_smile_v1
     {
         ObservableCollection<ClinicaModel> Gclinica;
         bool bandera_online_offline = false;
+
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
         public Page5()
         {
+
             InitializeComponent();
             llenar_list_view();
         }
@@ -70,6 +73,9 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
             ClinicaModel clinica = (ClinicaModel)lv_Clinica.SelectedItem;
             Escribir_Archivo ea = new Escribir_Archivo();
             if (lv_Clinica.SelectedItems.Count > 0)
@@ -88,7 +94,7 @@ namespace bonita_smile_v1
                         /*-----------ELIMINAR FOTOS DE LOCAL--------------------------------------*/
                         if (listaNombreArchivos.Count == 0)
                         {
-                            ea.escribir_imagen_eliminar("", @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta+"\\eliminar_imagen_temporal.txt");
                         }
                         else
                         {
@@ -97,11 +103,11 @@ namespace bonita_smile_v1
                                 System.Windows.MessageBox.Show("escribio en archivo");
 
                                 //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                                ea.escribir_imagen_eliminar(nombre, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                ea.escribir_imagen_eliminar(nombre, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                                 //ELIMINAR FOTOS
-                                if(File.Exists(@"\\DESKTOP-ED8E774\bs\" + nombre))
+                                if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta+"\\" + nombre))
                                 {
-                                    File.Delete(@"\\DESKTOP-ED8E774\bs\" + nombre);
+                                    File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre);
                                 }
                                 else
                                 {

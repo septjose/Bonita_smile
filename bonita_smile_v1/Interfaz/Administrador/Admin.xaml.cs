@@ -1,4 +1,5 @@
 ﻿using bonita_smile_v1.Modelos;
+using bonita_smile_v1.Servicios;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
 namespace bonita_smile_v1.Interfaz.Administrador
 {
     /// <summary>
@@ -67,12 +70,12 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         }
 
-        private void txtNombre_KeyUp_1(object sender, KeyEventArgs e)
+        private void txtNombre_KeyUp_1(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             
         }
 
-        private void txtNombre_KeyUp(object sender, KeyEventArgs e)
+        private void txtNombre_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
          
             
@@ -130,7 +133,15 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Mandar ventana para mostrar las configuraciones");
+            //MessageBox.Show("Mandar ventana para mostrar las configuraciones");
+            Archivo_Binario ab = new Archivo_Binario();
+            string ruta = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+
+            //string ruta = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\Configuracion.cfg";
+            Configuracion_Model configuracion = ab.Cargar(ruta);
+            DialogResult resultado = new DialogResult();
+            Form mensaje = new Configuracion(configuracion,ruta);
+            resultado = mensaje.ShowDialog();
         }
     }
 }

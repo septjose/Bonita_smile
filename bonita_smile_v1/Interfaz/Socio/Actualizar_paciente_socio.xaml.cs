@@ -45,8 +45,13 @@ namespace bonita_smile_v1.Interfaz.Socio
         PacienteModel paciente;
         List<string> lista = new List<string>();
         string alias = "";
+        Configuracion_Model configuracion;
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
         public Actualizar_paciente_socio(PacienteModel paciente,List<string> lista,string alias)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+            this.configuracion = configuracion;
             this.conexionBD = obj.conexion(bandera_online_offline);
             InitializeComponent();
 
@@ -219,7 +224,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
 
             if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
             {
@@ -301,14 +306,14 @@ namespace bonita_smile_v1.Interfaz.Socio
                                     if (inserto)
                                     {
                                         renombrar(this.paciente.foto, nombre_nuevo_foto);
-                                        if (File.Exists(@"\\DESKTOP-ED8E774\fotos_offline\" + this.paciente.foto))
+                                        if (File.Exists(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + this.paciente.foto))
                                         {
-                                            File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + this.paciente.foto);
+                                            File.Delete(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + this.paciente.foto);
                                         }
-                                        string destFile2 = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\fotos_offline\", nombre_nuevo_foto);
-                                        System.IO.File.Copy(@"\\DESKTOP-ED8E774\bs\" + nombre_nuevo_foto, destFile2, true);
+                                        string destFile2 = System.IO.Path.Combine(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" , nombre_nuevo_foto);
+                                        System.IO.File.Copy(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre_nuevo_foto, destFile2, true);
                                         Escribir_Archivo ea = new Escribir_Archivo();
-                                        ea.escribir_imagen_eliminar(foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                        ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         //pa = new Paciente(!bandera_online_offline);
                                         //bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
@@ -374,7 +379,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         {
             string sourceFile;
 
-            sourceFile = @"\\DESKTOP-ED8E774\bs\";
+            sourceFile = @configuracion.carpetas.ruta_imagenes_carpeta + "\\";
 
             // Create a FileInfo  
             System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile + nombre_viejo);
@@ -386,7 +391,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 fi.MoveTo(sourceFile + nombre_nuevo);
                 //string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
                 //System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
-                System.Windows.MessageBox.Show("se pudo bitches");
+                System.Windows.MessageBox.Show("se pudo si");
             }
         }
 

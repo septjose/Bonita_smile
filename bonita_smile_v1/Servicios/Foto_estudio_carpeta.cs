@@ -14,16 +14,22 @@ namespace bonita_smile_v1.Servicios
 {
     class Fotos_estudio_carpeta
     {
-        private string ruta2 = @"\\DESKTOP-ED8E774\bs\";
+        //private string ruta2 = @"\\DESKTOP-ED8E774\bs\";
+        string ruta2;
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
         private bool online;
-
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+        Configuracion_Model configuracion;
         public Fotos_estudio_carpeta(bool online)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+            this.ruta2 = @configuracion.carpetas.ruta_imagenes_carpeta + "\\";
+            this.configuracion = configuracion;
             this.conexionBD = obj.conexion(online);
             this.online = online;
         }
@@ -52,8 +58,8 @@ namespace bonita_smile_v1.Servicios
                     foto_recortada = foto_recortada.Substring(35);
                     fotos_Estudio_CarpetaModel.foto = foto_recortada;
                     fotos_Estudio_CarpetaModel.foto_completa = reader[3].ToString();
-                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\" + reader[3].ToString());
-
+                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@configuracion.carpetas.ruta_imagenes_carpeta +"\\" + reader[3].ToString());
+                    MessageBox.Show(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + reader[3].ToString());
                     listaFoto_estudio_carpeta.Add(fotos_Estudio_CarpetaModel);
                 }
             }
@@ -168,7 +174,7 @@ namespace bonita_smile_v1.Servicios
                     foto_recortada = foto_recortada.Substring(35);
                     fotos_Estudio_CarpetaModel.foto = foto_recortada;
                     fotos_Estudio_CarpetaModel.foto_completa = reader[3].ToString();
-                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\" + reader[3].ToString());
+                    fotos_Estudio_CarpetaModel.imagen = LoadImage(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + reader[3].ToString());
 
                     listaFoto_estudio_carpeta.Add(fotos_Estudio_CarpetaModel);
                 }
@@ -313,6 +319,7 @@ namespace bonita_smile_v1.Servicios
         {
             if (File.Exists(filename))
             {
+                MessageBox.Show("Existe la foto");
                 var bitmap = new BitmapImage();
                 var stream = File.OpenRead(filename);
                 bitmap.BeginInit();
@@ -326,8 +333,9 @@ namespace bonita_smile_v1.Servicios
             }
             else
             {
+                MessageBox.Show(" No Existe la foto");
                 var bitmap = new BitmapImage();
-                var stream = File.OpenRead("/Assets//img1.jpgimg1.jpg");
+                var stream = File.OpenRead(@"E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\Assets\img1.jpg");
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.StreamSource = stream;

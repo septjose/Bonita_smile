@@ -186,12 +186,16 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                     DialogResult resultado = new DialogResult();
                     Form mensaje = new InsertarMembresia(paciente);
                     resultado = mensaje.ShowDialog();
+                    List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                    lv_Paciente.ItemsSource = pacientes;
                 }
                 else
                 {
                     DialogResult resultado = new DialogResult();
                     Form mensaje = new EliminarMembresia(paciente);
                     resultado = mensaje.ShowDialog();
+                    List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                    lv_Paciente.ItemsSource = pacientes;
                 }
 
             }

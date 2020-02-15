@@ -32,21 +32,21 @@ namespace bonita_smile_v1
         ObservableCollection<Motivo_citaModel> GMotivo;
 
         string id = "";
-        string ruta = @"\\DESKTOP-ED8E774\bs\";
-        
+        //string ruta = @"\\DESKTOP-ED8E774\bs\";
+        string ruta;
         PacienteModel paciente;
         bool bandera_online_offline = false;
+        Configuracion_Model configuracion;
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
         public Page2(PacienteModel paciente)
         {
-            
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
             InitializeComponent();
-            rt_imagen.Fill= Imagen(paciente.foto);
+            this.configuracion = configuracion;
+            this.ruta = @configuracion.carpetas.ruta_imagenes_carpeta + "\\";
+            rt_imagen.Fill= Imagen(this.ruta+paciente.foto);
             string color = paciente.clinica.color;
-
-            
-           
-            
-
 
             txtNombre.Text = paciente.nombre+" "+paciente.apellidos;
             txtNombre.IsEnabled = false;
@@ -81,14 +81,14 @@ namespace bonita_smile_v1
         {
             ImageBrush ib = new ImageBrush();
             BitmapImage bi = new BitmapImage();
-            string ruta2 = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\img1.jpg";
-            if (File.Exists(ruta + filename))
+            string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg");;
+            if (File.Exists( filename))
             {
                 Image image = new Image();
                 //MessageBox.Show("se encontro la foto en " + filename);
 
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(@"\\DESKTOP-ED8E774\bs\" + filename);
+                var stream = File.OpenRead(filename);
                 //MessageBox.Show("B");
                 bi.BeginInit();
                 //MessageBox.Show("C");

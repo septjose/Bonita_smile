@@ -1,6 +1,8 @@
-﻿using MySql.Data.MySqlClient;
+﻿using bonita_smile_v1.Modelos;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +20,10 @@ namespace bonita_smile_v1.Servicios
 
         public MySqlConnection conexion(bool online)
         {
+            //string ruta = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\Configuracion.cfg";
+            string ruta = Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion= ab.Cargar(ruta);
             if (online)
             {
                 Test_Internet ti = new Test_Internet();
@@ -25,30 +31,30 @@ namespace bonita_smile_v1.Servicios
                 {
                     //MessageBox.Show("Estas Online");
 
-                    servidor = "162.241.60.126";
-                    puerto = "3306";
-                    usuario = "jjdevelo_dentist";
-                    password = "jjpd1996";
-                    database = "jjdevelo_dentist";
+                    servidor = configuracion.servidor_externo.servidor_local;
+                    puerto = configuracion.servidor_externo.puerto_local;
+                    usuario = configuracion.servidor_externo.usuario_local;
+                    password = configuracion.servidor_externo.password_local;
+                    database = configuracion.servidor_externo.database_local;
                 }
                 else
                 {
                     //MessageBox.Show("Estas Offline");
                     //aqui estas
-                    servidor = "7.152.100.9";
-                    puerto = "3306";
-                    usuario = "usuariochido";
-                    password = "12345";
-                    database = "dentista"; ;
+                    servidor = configuracion.servidor_interno.servidor_local;
+                    puerto = configuracion.servidor_interno.puerto_local;
+                    usuario = configuracion.servidor_interno.usuario_local;
+                    password = configuracion.servidor_interno.password_local;
+                    database = configuracion.servidor_interno.database_local; 
                 }
             }
             else
             {
-                 servidor = "7.152.100.9";
-                 puerto = "3306";
-                 usuario = "usuariochido";
-                 password = "12345";
-                database = "dentista";
+                servidor = configuracion.servidor_interno.servidor_local;
+                puerto = configuracion.servidor_interno.puerto_local;
+                usuario = configuracion.servidor_interno.usuario_local;
+                password = configuracion.servidor_interno.password_local;
+                database = configuracion.servidor_interno.database_local;
             }
 
             string cadena = "server=" + servidor + ";port=" + puerto + "; user id=" + usuario + "; password=" + password + "; database=" + database;

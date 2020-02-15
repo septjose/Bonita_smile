@@ -38,12 +38,16 @@ namespace bonita_smile_v1
         bool bandera_online_offline = false;
         CultureInfo culture = new CultureInfo("en-US");
         NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+        Configuracion_Model configuracion;
         public Page2_notas(PacienteModel paciente,Motivo_citaModel motivo)
         {
-         
-            InitializeComponent();
-           rt_imagen.Fill =new Page2().Imagen(paciente.foto);
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
+            InitializeComponent();
+           rt_imagen.Fill =new Page2().Imagen(@configuracion.carpetas.ruta_imagenes_carpeta+"\\"+paciente.foto);
+            this.configuracion = configuracion;
            
             this.paciente = paciente;
             this.motivo = motivo;
@@ -138,7 +142,7 @@ namespace bonita_smile_v1
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
             Nota_de_digi_evolucionModel nota = (Nota_de_digi_evolucionModel)lvNotas.SelectedItem;
 
             var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el motivo :" + nota.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
@@ -161,7 +165,7 @@ namespace bonita_smile_v1
                     Escribir_Archivo ea = new Escribir_Archivo();
                     if (listaNombreArchivos.Count == 0)
                     {
-                        ea.escribir_imagen_eliminar("", @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                        ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                     }
                     else
                     {
@@ -170,9 +174,13 @@ namespace bonita_smile_v1
                             System.Windows.MessageBox.Show("escribio en archivo");
 
                             //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(nombre.foto_completa, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                             //ELIMINAR FOTOS
-                            File.Delete(@"\\DESKTOP-ED8E774\bs\" + nombre.foto_completa);
+                            if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa))
+                            {
+                                File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
+                            }
+                            
                         }
                     }
 

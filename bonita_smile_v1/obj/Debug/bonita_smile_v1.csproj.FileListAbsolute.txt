@@ -1646,3 +1646,7 @@ E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.exe
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.pdb
 E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csprojAssemblyReference.cache
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Configuracion.resources
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Configurar_Carpetas.resources
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Servidor_Externo.resources
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Servidor_Interno.resources

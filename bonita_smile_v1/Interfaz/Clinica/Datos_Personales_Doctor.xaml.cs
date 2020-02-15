@@ -31,19 +31,24 @@ namespace bonita_smile_v1.Interfaz.Clinica
         ObservableCollection<Motivo_citaModel> GMotivo;
 
         string id = "";
-        string ruta = @"\\DESKTOP-ED8E774\bs\";
-
+        //string ruta = @"\\DESKTOP-ED8E774\bs\";
+        string ruta;
         PacienteModel paciente;
         bool bandera_online_offline = false;
+        Configuracion_Model configuracion;
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
         public Datos_Personales_Doctor(PacienteModel paciente)
         {
-
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
             InitializeComponent();
-            rt_imagen.Fill = Imagen(paciente.foto);
+           
             string color = paciente.clinica.color;
+            this.configuracion = configuracion;
+            this.ruta = @configuracion.carpetas.ruta_imagenes_carpeta + "\\";
+            rt_imagen.Fill = Imagen(this.ruta+paciente.foto);
 
-
-
+         
 
 
 
@@ -62,6 +67,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
             llenar_list_view(paciente.id_paciente);
             id = paciente.id_paciente;
             this.paciente = paciente;
+
         }
 
         public Datos_Personales_Doctor()
@@ -80,14 +86,15 @@ namespace bonita_smile_v1.Interfaz.Clinica
         {
             ImageBrush ib = new ImageBrush();
             BitmapImage bi = new BitmapImage();
-            string ruta2 = "/Assets//img1.jpgimg1.jpg";
-            if (File.Exists(ruta + filename))
+            string ruta2 = @"E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\Assets\img1.jpg";
+            if (File.Exists( filename))
             {
+      
                 Image image = new Image();
                 //MessageBox.Show("se encontro la foto en " + filename);
 
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(@"\\DESKTOP-ED8E774\bs\" + filename);
+                var stream = File.OpenRead( filename);
                 //MessageBox.Show("B");
                 bi.BeginInit();
                 //MessageBox.Show("C");
@@ -111,6 +118,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
             }
             else
             {
+                
                 Image image = new Image();
 
                 bi.BeginInit();

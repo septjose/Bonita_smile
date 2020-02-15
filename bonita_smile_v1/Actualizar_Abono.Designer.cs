@@ -18,6 +18,7 @@ using System.Drawing.Printing;
 using bonita_smile_v1.Servicios;
 using bonita_smile_v1.Modelos;
 using System.Globalization;
+using MySql.Data.MySqlClient;
 
 namespace bonita_smile_v1
 {
@@ -37,7 +38,12 @@ namespace bonita_smile_v1
         bool bandera_online_offline = false;
         AbonosModel abono;
         CultureInfo culture = new CultureInfo("en-US");
-        public Actualizar_Abono(string id_motivo, string id_paciente, string nombre, string motivo, double restante, double abonado, double total,AbonosModel abono)
+        PacienteModel paciente;
+        private MySqlDataReader reader = null, reader2 = null;
+        private string query, query2;
+        private MySqlConnection conexionBD, conexionBD2;
+        Conexion obj = new Conexion();
+        public Actualizar_Abono(string id_motivo, string id_paciente, string nombre, string motivo, double restante, double abonado, double total,AbonosModel abono,PacienteModel paciente)
         {
             this.id_motivo = id_motivo;
             this.id_paciente = id_paciente;
@@ -47,6 +53,8 @@ namespace bonita_smile_v1
             this.abonado = Convert.ToDouble(abonado.ToString(culture), culture);
             this.total = Convert.ToDouble(total.ToString(culture), culture);
             this.abono = abono;
+            this.paciente = paciente;
+            this.conexionBD = obj.conexion(bandera_online_offline);
             InitializeComponent();
             
         }
@@ -81,13 +89,16 @@ namespace bonita_smile_v1
             this.txt_efectivo = new System.Windows.Forms.TextBox();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txt_Aportacion = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblAbono
             // 
             this.lblAbono.AutoSize = true;
             this.lblAbono.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAbono.Location = new System.Drawing.Point(69, 57);
+            this.lblAbono.Location = new System.Drawing.Point(60, 20);
             this.lblAbono.Name = "lblAbono";
             this.lblAbono.Size = new System.Drawing.Size(83, 29);
             this.lblAbono.TabIndex = 0;
@@ -95,22 +106,20 @@ namespace bonita_smile_v1
             // 
             // txtAbono
             // 
-            this.txtAbono.Location = new System.Drawing.Point(183, 57);
+            this.txtAbono.Location = new System.Drawing.Point(174, 20);
             this.txtAbono.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAbono.Name = "txtAbono";
             this.txtAbono.Size = new System.Drawing.Size(235, 26);
             this.txtAbono.TabIndex = 1;
-            this.txtAbono.Text = abono.monto.ToString(culture);
             // 
             // txtComentario
             // 
-            this.txtComentario.Location = new System.Drawing.Point(74, 112);
+            this.txtComentario.Location = new System.Drawing.Point(65, 75);
             this.txtComentario.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtComentario.Multiline = true;
             this.txtComentario.Name = "txtComentario";
             this.txtComentario.Size = new System.Drawing.Size(500, 183);
             this.txtComentario.TabIndex = 2;
-            this.txtComentario.Text = abono.comentario;
             // 
             // btnAceptar
             // 
@@ -144,7 +153,7 @@ namespace bonita_smile_v1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(69, 346);
+            this.label1.Location = new System.Drawing.Point(60, 292);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 29);
             this.label1.TabIndex = 5;
@@ -152,7 +161,7 @@ namespace bonita_smile_v1
             // 
             // txt_efectivo
             // 
-            this.txt_efectivo.Location = new System.Drawing.Point(183, 346);
+            this.txt_efectivo.Location = new System.Drawing.Point(174, 292);
             this.txt_efectivo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_efectivo.Name = "txt_efectivo";
             this.txt_efectivo.Size = new System.Drawing.Size(235, 26);
@@ -167,12 +176,41 @@ namespace bonita_smile_v1
             // 
             this.printDialog1.UseEXDialog = true;
             // 
-            // MessageBoxAbono
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 20);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "label2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(30, 347);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(128, 29);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Aportacion";
+            // 
+            // txt_Aportacion
+            // 
+            this.txt_Aportacion.Location = new System.Drawing.Point(178, 343);
+            this.txt_Aportacion.Name = "txt_Aportacion";
+            this.txt_Aportacion.Size = new System.Drawing.Size(230, 26);
+            this.txt_Aportacion.TabIndex = 9;
+            // 
+            // Actualizar_Abono
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(657, 529);
+            this.Controls.Add(this.txt_Aportacion);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.txt_efectivo);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancelat);
@@ -181,7 +219,7 @@ namespace bonita_smile_v1
             this.Controls.Add(this.txtAbono);
             this.Controls.Add(this.lblAbono);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "MessageBoxAbono";
+            this.Name = "Actualizar_Abono";
             this.Text = "MessageBoxAbono";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -334,86 +372,135 @@ namespace bonita_smile_v1
 
             System.Drawing.Font font = new System.Drawing.Font("Courier New", 12, System.Drawing.FontStyle.Bold);
             System.Drawing.Font titulo = new System.Drawing.Font("Courier New", 12, System.Drawing.FontStyle.Bold);
-            System.Drawing.Font cuerpo = new System.Drawing.Font("Courier New", 10);
+            System.Drawing.Font cuerpo = new System.Drawing.Font("Courier New", 9);
+            System.Drawing.Font final = new System.Drawing.Font("Courier New", 6);
 
-            /*MODIFICADORES DE FORMATO DE HOJA*/
+            // MODIFICADORES DE FORMATO DE HOJA/
             float margen_izquierdo = 0;
-            float margen_superior = e.MarginBounds.Top;
-            double margen_cuerpo = 0; //DESPUES DEL TITULO
-            double tamanio_hoja_horizontal = 5.8;
-            /*----------------------------------*/
+            float margen_superior = 10;
+            double margen_cuerpo = 0.42; //DESPUES DEL TITULO
+            double tamanio_hoja_horizontal = 3.8;
+            // ----------------------------------/
 
             double cambio = (Int32.Parse(this.txt_efectivo.Text)) - (Int32.Parse(this.txtAbono.Text));
             //double restante = this.restante - (Int32.Parse(this.txtAbono.Text));
 
-            string fecha = DateTime.Now.ToString("d/M/yyyy");
+            string fecha_inicio = DateTime.Now.ToString("d/M/yyyy");
+            string fecha_finalizacion = DateTime.Now.AddYears(1).ToString("d/M/yyyy");
             string hora = DateTime.Now.ToString("HH:mm:ss") + " hrs";
             Abonos a = new Abonos(bandera_online_offline);
-            double restante_pagado = Convert.ToDouble(a.Restante(id_motivo).ToString(), culture);
-            double abonado_pagado = Convert.ToDouble(a.Abonados(id_motivo).ToString(), culture);
+            double restante_pagado = a.Restante(id_motivo);
+            double abonado_pagado = a.Abonados(id_motivo);
+            string sucursal = obtener_nombre_sucursal(paciente.clinica.id_clinica);
 
+            System.Drawing.Image imagen = System.Drawing.Image.FromFile("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\bs_ticket_imagen.bmp");
+            System.Drawing.RectangleF rect = new System.Drawing.RectangleF(margen_izquierdo, margen_superior, centimetroAPixel(3.8), 30);//tamanio_hoja_horizontal en vez de 4
+            RectangleF rImage = new RectangleF(38, margen_superior, 110, 110);
 
-            System.Drawing.RectangleF rect = new System.Drawing.RectangleF(margen_izquierdo, margen_superior, centimetroAPixel(4), 50);//tamanio_hoja_horizontal en vez de 4
-
+            e.Graphics.DrawImage(imagen, rImage);
 
             //e.Graphics.FillRectangle(Brushes.Red, rect); usarlo para cada recyangulo
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 7) + margen_superior;
             e.Graphics.DrawString("BONITA SMILE", titulo, new SolidBrush(Color.Black), rect, stringFormat);
 
-            rect.X = margen_izquierdo + Convert.ToSingle(centimetroAPixel(margen_cuerpo));
+            rect.X = Convert.ToSingle(centimetroAPixel(margen_cuerpo));
             rect.Width = centimetroAPixel(tamanio_hoja_horizontal); //nuevo
 
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 3) + margen_superior;
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 9) + margen_superior;
             stringFormat.Alignment = StringAlignment.Near;
-            e.Graphics.DrawString("FECHA: " + fecha, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            e.Graphics.DrawString("SUCURSAL: " + sucursal, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 4) + margen_superior;
-            e.Graphics.DrawString("HORA: " + hora, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 10) + margen_superior;
+            e.Graphics.DrawString("CLIENTE: " + paciente.nombre + " " + paciente.apellidos, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 5) + margen_superior;
-            e.Graphics.DrawString("MOTIVO: ", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 6) + margen_superior;
-            e.Graphics.DrawString(this.motivo, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 7) + margen_superior;
-            e.Graphics.DrawString("PRECIO: $" + this.total, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 8) + margen_superior + 10;
-            e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-            rect.Y = ((cuerpo.GetHeight(e.Graphics) * 8) + margen_superior + 10) + 5;
-            e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 10) + margen_superior - 5;
-            e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-
-            rect.Y = ((cuerpo.GetHeight(e.Graphics) * 10) + margen_superior - 5) + 5;
-            e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-
-            rect.Y = ((cuerpo.GetHeight(e.Graphics) * 12) + margen_superior);
-            e.Graphics.DrawString("TOTAL: $" + this.total, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 12) + margen_superior;
+            e.Graphics.DrawString("FECHA: " + fecha_inicio, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
             rect.Y = (cuerpo.GetHeight(e.Graphics) * 13) + margen_superior;
-            e.Graphics.DrawString("ABONO: $" + txtAbono.Text.ToString(culture), cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 14) + margen_superior;
-            e.Graphics.DrawString("RECIBIDO: $" + txt_efectivo.Text.ToString(culture), cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            e.Graphics.DrawString("HORA: " + hora, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
             rect.Y = (cuerpo.GetHeight(e.Graphics) * 15) + margen_superior;
+            e.Graphics.DrawString("MOTIVO: ", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 17) + margen_superior;
+            e.Graphics.DrawString(this.motivo, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 18) + margen_superior;
+            e.Graphics.DrawString("PRECIO: $" + this.total, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 19) + margen_superior + 10;
+            e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            rect.Y = ((cuerpo.GetHeight(e.Graphics) * 19) + margen_superior + 10) + 5;
+            e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 21) + margen_superior - 5;
+            e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = ((cuerpo.GetHeight(e.Graphics) * 21) + margen_superior - 5) + 5;
+            e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = ((cuerpo.GetHeight(e.Graphics) * 23) + margen_superior);
+            e.Graphics.DrawString("TOTAL: $" + this.total, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 24) + margen_superior;
+            e.Graphics.DrawString("ABONO: $" + txtAbono.Text, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 25) + margen_superior;
+            e.Graphics.DrawString("RECIBIDO: $" + txt_efectivo.Text, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 26) + margen_superior;
             e.Graphics.DrawString("CAMBIO: $" + cambio, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 17) + margen_superior - 5;
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 28) + margen_superior - 5;
             e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
-            rect.Y = ((cuerpo.GetHeight(e.Graphics) * 17) + margen_superior - 5) + 5;
+            rect.Y = ((cuerpo.GetHeight(e.Graphics) * 28) + margen_superior - 5) + 5;
             e.Graphics.DrawString("-------------------", cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 19) + margen_superior;
-            e.Graphics.DrawString("ABONADO: $" + abonado_pagado, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 30) + margen_superior;
+            e.Graphics.DrawString("ABONADO: " + abonado_pagado, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
 
-            rect.Y = (cuerpo.GetHeight(e.Graphics) * 20) + margen_superior;
-            e.Graphics.DrawString("RESTANTE: $" + restante_pagado, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 31) + margen_superior;
+            e.Graphics.DrawString("RESTANTE: " + restante_pagado, cuerpo, new SolidBrush(Color.Black), rect, stringFormat);
+
+            rect.X = Convert.ToSingle(centimetroAPixel(0.27));
+            rect.Y = (cuerpo.GetHeight(e.Graphics) * 33) + margen_superior;
+            e.Graphics.DrawString("La fundación Doi Esperanza brinda una aportación del " + txt_Aportacion.Text + "% del total", final, new SolidBrush(Color.Black), rect, stringFormat);
 
             e.HasMorePages = false;
         }
+
+        public string obtener_nombre_sucursal(string descripcion)
+        {
+            string id = "";
+            query = "SELECT nombre_sucursal FROM clinica where id_clinica='" + descripcion + "'";
+
+            try
+            {
+                conexionBD.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    // ColoresModel coloresModel = new ColoresModel();
+
+                    //coloresModel.id_color = int.Parse(reader[0].ToString());
+                    //coloresModel.descripcion = reader[1].ToString();
+
+                    id = reader[0].ToString();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                return "";
+            }
+            conexionBD.Close();
+
+            return id;
+        }
+
         #endregion
 
         private System.Windows.Forms.Label lblAbono;
@@ -425,5 +512,8 @@ namespace bonita_smile_v1
         private TextBox txt_efectivo;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintDialog printDialog1;
+        private Label label2;
+        private Label label3;
+        private TextBox txt_Aportacion;
     }
 }

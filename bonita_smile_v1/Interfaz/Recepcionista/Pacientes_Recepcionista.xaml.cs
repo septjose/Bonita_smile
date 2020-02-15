@@ -31,11 +31,17 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         ObservableCollection<PacienteModel> GPaciente;
         bool bandera_online_offline = false;
         String id = "";
+        Configuracion_Model configuracion;
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
         public Pacientes_Recepcionista(string id)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
             InitializeComponent();
             llenar_list_view(id);
             this.id = id;
+            this.configuracion = configuracion;
+
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
             view.Filter = UserFilter;
         }
@@ -51,7 +57,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         private void Borrar(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             Escribir_Archivo ea = new Escribir_Archivo();
 
@@ -73,7 +79,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                         if (listaNombreArchivos.Count == 0)
                         {
-                            ea.escribir_imagen_eliminar("", @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                         }
                         else
                         {
@@ -82,9 +88,13 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                 System.Windows.MessageBox.Show("escribio en archivo");
 
                                 //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                                ea.escribir_imagen_eliminar(nombre.foto_completa, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                                ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                                 //ELIMINAR FOTOS
-                                File.Delete(@"\\DESKTOP-ED8E774\bs\" + nombre.foto_completa);
+                                if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa))
+                                {
+                                    File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
+
+                                }
                             }
                         }
                         /*----------------------------------------------------------*/
@@ -97,9 +107,13 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                         else
                         {
                             //PASAR FOTO EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(paciente.foto, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(paciente.foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                             //ELIMINAR FOTO
-                            File.Delete(@"\\DESKTOP-ED8E774\bs\" + paciente.foto);
+                            if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + paciente.foto))
+                            {
+                                File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + paciente.foto);
+
+                            }
                         }
                         System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);

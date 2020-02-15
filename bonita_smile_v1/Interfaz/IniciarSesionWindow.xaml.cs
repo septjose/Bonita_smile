@@ -35,8 +35,6 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
-
             Usuarios user = new Usuarios(false);
             Seguridad secure = new Seguridad();
             if (txtUsuario.Text.Equals("") || pbPassword.Password.Equals(""))
@@ -47,6 +45,13 @@ namespace bonita_smile_v1
             {
                 user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
             }
+
+
+            //System.IO.Directory.CreateDirectory(pathString);
+            //string strRutaArchivo = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            //string pathString ="bs";
+            //string ruta_completa = System.IO.Path.Combine(strRutaArchivo, pathString);
+            //System.IO.Directory.CreateDirectory(ruta_completa);
 
             //Configuracion_Model configuracion;
             //ServidorModelo servidor_intern = new ServidorModelo()
@@ -81,7 +86,7 @@ namespace bonita_smile_v1
             //    carpetas=carpeta,
             //    servidor_externo=servidor_extern,
             //    servidor_interno=servidor_intern
-                
+
             //};
 
             ////leer 
@@ -202,54 +207,7 @@ namespace bonita_smile_v1
              
          */
 
-        public void Actualizo_servidor_interno(Configuracion_Model configuracion)
-        {
-            string servidor_local = "";  //txtservidor_local.Text=configuracion_vieja.servidor_interno.servidor_local;
-            string puerto_local = "";
-            string usuario_local = "";
-            string password_local = "";
-            string database_local = "";
-            string database_aux_local = "";
-
-            servidor_local = configuracion.servidor_interno.servidor_local;
-            puerto_local = configuracion.servidor_interno.puerto_local;
-            usuario_local = configuracion.servidor_interno.usuario_local;
-            password_local = configuracion.servidor_interno.password_local;
-            database_local = configuracion.servidor_interno.database_local;
-            database_aux_local = configuracion.servidor_interno.database_local_aux;
-
-
-            servidor_local = "A";  //txtservidor_local.Text=configuracion_vieja.servidor_interno.servidor_local;
-            puerto_local = "B";
-            usuario_local = "C";
-            password_local = "D";
-            database_local = "E";
-            database_aux_local = "F";
-
-            configuracion.servidor_interno.servidor_local = servidor_local;
-            configuracion.servidor_interno.puerto_local = puerto_local;
-            configuracion.servidor_interno.usuario_local = usuario_local;
-            configuracion.servidor_interno.password_local = password_local;
-            configuracion.servidor_interno.database_local = database_local;
-            configuracion.servidor_interno.database_local_aux = database_aux_local;
-
-
-            string ruta = @"\\DESKTOP-ED8E774\backup_bs\configuracion.cfg";
-
-
-            Archivo_Binario ab = new Archivo_Binario();
-            ab.Guardar(configuracion, ruta);
-           // Configuracion_Model conf = ab.Cargar(ruta);
-           // System.Windows.MessageBox.Show(
-           // conf.servidor_interno.puerto_local + "\n " +
-           // conf.servidor_interno.usuario_local + "\n " +
-           // conf.servidor_interno.password_local + "\n " +
-           // conf.servidor_interno.database_local + "\n " +
-           // conf.servidor_interno.database_local_aux + "\n "+
-           // conf.servidor_interno.servidor_local + "\n "
-           //);
-
-        }
+        
 
 
 

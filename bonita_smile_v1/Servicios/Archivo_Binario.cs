@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace bonita_smile_v1.Servicios
 {
-    class Archivo_Binario
+    public class Archivo_Binario
     {
         public void CrearArchivo(string ruta)
         {
@@ -96,10 +96,14 @@ namespace bonita_smile_v1.Servicios
 
         public void Guardar(Configuracion_Model configuracion,string ruta)
         {       
-            BinaryFormatter BF = new BinaryFormatter();
-            FileStream Archivo = File.OpenWrite(ruta);
-            BF.Serialize(Archivo, configuracion);
-            Archivo.Close();
+            if(File.Exists(ruta))
+            {
+                BinaryFormatter BF = new BinaryFormatter();
+                FileStream Archivo = File.OpenWrite(ruta);
+                BF.Serialize(Archivo, configuracion);
+                Archivo.Close();
+            }
+            
         }
 
         public Configuracion_Model Cargar(string ruta)

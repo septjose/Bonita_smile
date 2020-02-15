@@ -17,15 +17,24 @@ namespace bonita_smile_v1.Servicios
         private string query;
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
-         string ruta = @"\\DESKTOP-ED8E774\bs\";
-         string ruta2= @"\\DESKTOP-ED8E774\bs_auxiliar\";
+        // string ruta = @"\\DESKTOP-ED8E774\bs\";
+        string ruta;
+        //string ruta2= @"\\DESKTOP-ED8E774\bs_auxiliar\";
+        string ruta2;
         Test_Internet ti = new Test_Internet();
         private bool online;
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+        Configuracion_Model configuracion;
         //
         public Paciente(bool online)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
             this.conexionBD = obj.conexion(online);
             this.online = online;
+            this.ruta = @configuracion.carpetas.ruta_imagenes_carpeta + "\\";
+            MessageBox.Show("jdjdjd" + ruta);
+            this.configuracion = configuracion;
         }
 
         public List<PacienteModel> MostrarPaciente()
@@ -396,12 +405,12 @@ namespace bonita_smile_v1.Servicios
         {
             BitmapImage bi;
 
-            if (File.Exists(@"\\DESKTOP-ED8E774\bs\" + filename))
+            if (File.Exists(this.ruta + filename))
             {
                 //MessageBox.Show("se encontro la foto en " + filename);
                 var bitmap = new BitmapImage();
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(@"\\DESKTOP-ED8E774\bs\" + filename);
+                var stream = File.OpenRead(this.ruta+ filename);
                 //MessageBox.Show("B");
                 bitmap.BeginInit();
                 //MessageBox.Show("C");
@@ -423,7 +432,7 @@ namespace bonita_smile_v1.Servicios
                 //MessageBox.Show("no se encontro la foto en " + filename);
                 var bitmap = new BitmapImage();
                 //MessageBox.Show("A");
-                var stream = File.OpenRead("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\img1.jpg");
+                var stream = File.OpenRead( System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg"));
                 //MessageBox.Show("B");
                 bitmap.BeginInit();
                 //MessageBox.Show("C");

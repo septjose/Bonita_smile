@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using bonita_smile_v1.Modelos;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,11 +19,22 @@ namespace bonita_smile_v1.Servicios
         Conexion_Offline obj = new Conexion_Offline();
         Test_Internet ti = new Test_Internet();
         Conexion obj2 = new Conexion();
-        string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";
-        string ruta_borrar= @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+
+        string ruta;
+        string ruta_borrar ;
+        //string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";
+        //string ruta_borrar= @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+        
 
         public Sincronizar()
         {
+
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+            this.ruta = @configuracion.carpetas.ruta_temporal_carpeta+ "\\script_temporal.txt";
+            this.ruta_borrar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            
             this.conexionBD = obj.conexion_offline();
             this.conexionBD2 = obj.conexion_offline();
         }
@@ -34,9 +46,13 @@ namespace bonita_smile_v1.Servicios
             password = "jjpd1996";
             database = "jjdevelo_dentist";
             */
-            string constring = "server=162.241.60.126;user=jjdevelo_dentist;pwd=jjpd1996;database=jjdevelo_dentist;";
+           
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
+            string constring = "server="+configuracion.servidor_externo.servidor_local+";user="+configuracion.servidor_externo.usuario_local+";pwd="+configuracion.servidor_externo.password_local+";database="+configuracion.servidor_externo.database_local+";";
             constring += "charset=utf8;convertzerodatetime=true;";
-            string file = @"\\DESKTOP-ED8E774\backup_bs\backup.sql";
+            string file = @configuracion.carpetas.ruta_temporal_carpeta+"\\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -55,8 +71,11 @@ namespace bonita_smile_v1.Servicios
 
         public void Restore()
         {
-            string constring = "server=192.168.1.76;user=usuariochido;pwd=12345;database=dentista;";
-            string file = @"\\DESKTOP-ED8E774\backup_bs\backup.sql";
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
+            string constring = "server="+configuracion.servidor_interno.servidor_local+";user="+configuracion.servidor_interno.usuario_local+";pwd="+configuracion.servidor_interno.password_local+";database="+configuracion.servidor_interno.database_local+";";
+            string file = @configuracion.carpetas.ruta_temporal_carpeta + "\\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -106,6 +125,9 @@ namespace bonita_smile_v1.Servicios
 
         public bool descargar_fotos()
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
             var lista = lista_de_fotos();
             bool bandera = true;
             foreach (var filename in lista)
@@ -118,14 +140,14 @@ namespace bonita_smile_v1.Servicios
                 {
                     if (new Test_Internet().Test())
                     {
-                        if (File.Exists(@"\\DESKTOP-ED8E774\bs\" + filename))
+                        if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta+"\\" + filename))
                         {
                             MessageBox.Show("SI ESTA"+filename);
                         }
                         else
                         {
                             MessageBox.Show("NO ESTA"+ filename);
-                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @"\\DESKTOP-ED8E774\bs\" + filename, 10);
+                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
                             if(descargo)
                             {
                                 MessageBox.Show("si descargo");
@@ -152,6 +174,9 @@ namespace bonita_smile_v1.Servicios
 
         public bool descargar_fotos_clinica(string id_clinica)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
             var lista = lista_de_fotos_clinica(id_clinica);
             bool bandera = true;
             foreach (var filename in lista)
@@ -164,14 +189,14 @@ namespace bonita_smile_v1.Servicios
                 {
                     if (new Test_Internet().Test())
                     {
-                        if (File.Exists(@"\\DESKTOP-ED8E774\bs\" + filename))
+                        if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename))
                         {
                             MessageBox.Show("SI ESTA" + filename);
                         }
                         else
                         {
                             MessageBox.Show("NO ESTA" + filename);
-                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @"\\DESKTOP-ED8E774\bs\" + filename, 10);
+                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
 
                         }
 
@@ -397,8 +422,12 @@ namespace bonita_smile_v1.Servicios
 
         private List<string> Obtener_nombres_archivos()
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
             List<string> lista = new List<string>();
-            string ruta = @"\\DESKTOP-ED8E774\fotos_offline\";
+            string ruta = @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\";
+               
 
             DirectoryInfo di = new DirectoryInfo(ruta);
             
@@ -417,14 +446,26 @@ namespace bonita_smile_v1.Servicios
 
         public bool subir_fotos()
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
             var lista = Obtener_nombres_archivos();
             bool bandera = true;
             foreach (var filename in lista)
             {
                if(new Test_Internet().Test())
                 {
-                    SubirFicheroStockFTP(filename, @"\\DESKTOP-ED8E774\fotos_offline\");
-                    File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + filename);
+                    SubirFicheroStockFTP(filename, @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\");
+                    if(File.Exists(@configuracion.carpetas.ruta_subir_servidor_carpeta+"\\"+filename))
+                    {
+                        File.Delete(@configuracion.carpetas.ruta_subir_servidor_carpeta +"\\" + filename);
+
+                    }
+                    else
+                    {
+
+                    }
+                   // File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + filename);
                    
                 }
                 else
@@ -588,35 +629,54 @@ namespace bonita_smile_v1.Servicios
 
         public bool eliminar_fotos()
         {
-            bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
             Escribir_Archivo ea = new Escribir_Archivo();
-            var datos = ea.leer(rutaArchivoEliminar);
+            List<String> lista = new List<string>();
+            lista = ea.obtener_nombre_foto_eliminar();
+            bool eliminarArchivo = true;
 
-            foreach (string imagen in datos)
+            if (lista != null)
             {
+                //CREAR TRANSACCION
 
-                Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                try
+                {
+                    //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+                    var datos = ea.leer(ruta_borrar);
 
-                if (!verdad)
-                    eliminarArchivo = false;
+                    foreach (string imagen in datos)
+                    {
+
+                        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+                        if (!verdad)
+                            eliminarArchivo = false;
+                    }
+                    if (eliminarArchivo)
+                    {
+                        System.Windows.MessageBox.Show("elimino Archivo");
+                        ea.SetFileReadAccess(ruta_borrar, false);
+
+                        File.Delete(@configuracion.carpetas.ruta_temporal_carpeta+"\\eliminar_imagen_temporal.txt");
+                    }
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex + "");
+
+                    return false;
+                }
             }
-            if (eliminarArchivo)
-            {
-                System.Windows.MessageBox.Show("elimino Archivo");
-                ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-            }
-
-            return eliminarArchivo;
+            else
+                return false;
         }
-
-
 
         public static bool DeleteFileOnServer(Uri serverUri, string ftpUsername, string ftpPassword)
         {
-
             try
             {
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
@@ -626,6 +686,7 @@ namespace bonita_smile_v1.Servicios
                 //additionally, if you want to use the current user's network credentials, just use:
                 //System.Net.CredentialCache.DefaultNetworkCredentials
 
+
                 request.Method = WebRequestMethods.Ftp.DeleteFile;
                 FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
@@ -633,13 +694,17 @@ namespace bonita_smile_v1.Servicios
                 response.Close();
                 return true;
             }
-            catch (Exception e)
+            catch (WebException e)
             {
+                FtpWebResponse response = (FtpWebResponse)e.Response;
+                if (response.StatusCode ==
+                    FtpStatusCode.ActionNotTakenFileUnavailable)
+                {
+                    return true;
+                }
                 return false;
             }
         }
-
-
 
     }
 }

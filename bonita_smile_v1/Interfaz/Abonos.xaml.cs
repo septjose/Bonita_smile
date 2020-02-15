@@ -35,11 +35,14 @@ namespace bonita_smile_v1
         ObservableCollection<AbonosModel> notas;
         CultureInfo culture = new CultureInfo("en-US");
         NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
         public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
             InitializeComponent();
-            rt_imagen.Fill = new Page2().Imagen( paciente.foto);
+            rt_imagen.Fill = new Page2().Imagen(@configuracion.carpetas.ruta_imagenes_carpeta + "\\"+paciente.foto);
             this.paciente = paciente;
             this.motivo = motivo;
             //lblNombre.Content = paciente.nombre + " " + paciente.apellidos;
@@ -79,7 +82,7 @@ namespace bonita_smile_v1
             Abonos abonos = new Abonos(bandera_online_offline);
             DialogResult resultado = new DialogResult();
             double restanten = Convert.ToDouble(abonos.Restante(motivo.id_motivo).ToString(),culture);
-            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text, restanten, abonado, total);
+            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text, restanten, abonado, total,paciente);
             resultado = mensaje.ShowDialog();
             this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
             lvNotas.ItemsSource = this.notas;
@@ -137,7 +140,7 @@ namespace bonita_smile_v1
                 Abonos abonos = new Abonos(bandera_online_offline);
                 double restanten = Convert.ToDouble(abonos.Restante(motivo.id_motivo).ToString(), culture);
                 DialogResult resultado = new DialogResult();
-                Form mensaje = new Actualizar_Abono(motivo.id_motivo, paciente.id_paciente, txtNombre.Text, txtMotivo.Text, restanten, abonado, total, abono);
+                Form mensaje = new Actualizar_Abono(motivo.id_motivo, paciente.id_paciente, txtNombre.Text, txtMotivo.Text, restanten, abonado, total, abono,paciente);
                 resultado = mensaje.ShowDialog();
 
                 txtAbonado.Text = "$" + Convert.ToDouble(abonos.Abonados(motivo.id_motivo), culture).ToString("n", nfi);

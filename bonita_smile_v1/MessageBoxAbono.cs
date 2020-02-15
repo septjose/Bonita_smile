@@ -26,5 +26,10 @@ namespace bonita_smile_v1
         {
 
         }
+
+        private void MessageBoxAbono_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

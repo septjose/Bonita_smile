@@ -36,11 +36,16 @@ namespace bonita_smile_v1
         string id_paciente = "";
         string id_motivo = "";
         bool bandera_offline_online = false;
+        Configuracion_Model configuracion;
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
         public Pagina_Estudios(PacienteModel paciente, Motivo_citaModel motivo)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
             InitializeComponent();
             //MessageBox.Show("El valor del id_del paciente es :" + paciente.id_paciente);
             //MessageBox.Show("El nombre del paciente es " + paciente.nombre);
+            this.configuracion = configuracion;
             id_paciente = paciente.id_paciente;
             id_motivo = motivo.id_motivo;
             llenar_list_view(id_paciente);
@@ -137,7 +142,7 @@ namespace bonita_smile_v1
             //}
 
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
             // ELIMINARLA DE LA BS LOCAL/
 
             // SI LA CARPETA ESTA ASOCIADA A UNA NOTA NO ELIMINARLA, DE LO CONTRARIO SI ELIMINARLA
@@ -159,7 +164,7 @@ namespace bonita_smile_v1
                     Escribir_Archivo ea = new Escribir_Archivo();
                     if (listaNombreArchivos.Count == 0)
                     {
-                        ea.escribir_imagen_eliminar("", @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                        ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                     }
                     else
                     {
@@ -169,10 +174,10 @@ namespace bonita_smile_v1
                             System.Windows.MessageBox.Show("escribio en archivo");
 
                             //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(nombre.foto_completa, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                             //ELIMINAR FOTOS
-                            System.Windows.MessageBox.Show("RUTA PARA BORRAR EN BS " + @"\\DESKTOP-ED8E774\bs\" + nombre.foto_completa);
-                            File.Delete(@"\\DESKTOP-ED8E774\bs\" + nombre.foto_completa);
+                            System.Windows.MessageBox.Show("RUTA PARA BORRAR EN BS " + @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
+                            File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
                             
                         }
                     }

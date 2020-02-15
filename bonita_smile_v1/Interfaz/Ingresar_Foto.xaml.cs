@@ -41,8 +41,11 @@ namespace bonita_smile_v1
         private FilterInfoCollection MisDispositivios;
         private VideoCaptureDevice MiWebCam;
         private bool HayDispositivos;
-        private string ruta = @"\\DESKTOP-ED8E774\capturas\";
-        private string ruta_offline = @"\\DESKTOP-ED8E774\fotos_offline\";
+        //private string ruta = @"\\DESKTOP-ED8E774\capturas\";
+        string ruta;
+
+        //private string ruta_offline = @"\\DESKTOP-ED8E774\fotos_offline\";
+        string ruta_offline;
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
@@ -51,12 +54,15 @@ namespace bonita_smile_v1
         bool bandera_offline_online = false;
         int i;
         string NombreVideo;
-        
+          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+        Configuracion_Model configuracion;
         PacienteModel paciente;
         List<string> lista = new List<string>();
         string alias = "";
         public Page8_IngresarFoto(PacienteModel paciente,List<string> lista,string alias)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
             //MessageBox.Show(paciente.apellidos + "  "+paciente.nombre+"  "+paciente.clinica.id_clinica.ToString()+"   "+paciente.antecedente);
             InitializeComponent();
            
@@ -64,10 +70,12 @@ namespace bonita_smile_v1
 
             //MiWebCam.SignalToStop();
             //MiWebCam = null;
-
+            this.configuracion = configuracion;
+            this.ruta = @configuracion.carpetas.ruta_fotografias_carpeta + "\\";
+            System.Windows.MessageBox.Show("ghhhxhhhd"+ruta);
+            this.ruta_offline = @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\";
             this.btn_capturar.IsEnabled = false;
-            this.btnSiguiente.IsEnabled = false;
-            
+            this.btnSiguiente.IsEnabled = false;            
             this.paciente = paciente;
             this.lista = lista;
             this.alias = alias;
@@ -129,17 +137,20 @@ namespace bonita_smile_v1
             if(inserto)
             {
                 string destFile = System.IO.Path.Combine(ruta_offline, foto);
-                string destFile2 = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", foto);
+                string destFile2 = System.IO.Path.Combine(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" , foto);
                 System.IO.File.Copy(ruta + foto, destFile, true);
                 System.IO.File.Copy(ruta + foto, destFile2, true);
-
-                 File.Delete(ruta + foto);
+                if(File.Exists(ruta+foto))
+                {
+                    File.Delete(ruta + foto);
+                }
+                 
                 paciente = new Servicios.Paciente(!bandera_offline_online);
                 bool inserto_2 = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
                 if(inserto_2)
                 {
                     System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    bool subir = SubirFicheroStockFTP(foto, @"\\DESKTOP-ED8E774\bs\");
+                    bool subir = SubirFicheroStockFTP(foto, @configuracion.carpetas.ruta_imagenes_carpeta + "\\");
                     if (subir)
                     {
                         

@@ -33,7 +33,7 @@ namespace bonita_smile_v1
 {
     /// <summary>
     /// Lógica de interacción para Fotos_de_Estudios.xaml
-    /// </summary>
+    /// </summary>string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
     public partial class Fotos_de_Estudios : Page
     {
         //ObservableCollection<Imagen> GPaciente;
@@ -42,10 +42,12 @@ namespace bonita_smile_v1
         string ruta = "";
         bool bandera_online_offline = false;
 
+          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+
         Fotos_estudio_carpetaModel item_foto_carpeta;
         ObservableCollection<Fotos_estudio_carpetaModel> fotos;
         ObservableCollection<Fotos_estudio_carpetaModel> GFotos;
-
+        Configuracion_Model configuracion;
         void llenar_list_view(string id_carpeta, string id_paciente)
         {
             Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta(bandera_online_offline);
@@ -69,11 +71,14 @@ namespace bonita_smile_v1
         }
         public Fotos_de_Estudios(Carpeta_archivosModel carpeta)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
             Fotos_estudio_carpeta f_e_c = new Fotos_estudio_carpeta(bandera_online_offline);
             //f_e_c.fotos(carpeta.id_carpeta, carpeta.id_paciente);
 
             InitializeComponent();
-
+            this.configuracion = configuracion;
             llenar_list_view(carpeta.id_carpeta, carpeta.id_paciente);
             id_carpeta = carpeta.id_carpeta;
             id_paciente = carpeta.id_paciente;
@@ -116,7 +121,7 @@ namespace bonita_smile_v1
                     //System.Windows.MessageBox.Show(selectedOffer.foto_completa);
                     //Imagen(@"\\DESKTOP-ED8E774\bs\" + selectedOffer.foto);
                     //DialogResult resultado = new DialogResult();
-                    this.ruta = @"\\DESKTOP-ED8E774\bs\" + selectedOffer.foto_completa;
+                    this.ruta = @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + selectedOffer.foto_completa;
                     Imagen(ruta);
                     // Form mensaje = new Form1(@"\\DESKTOP-ED8E774\bs\" + selectedOffer.foto);
                     //resultado = mensaje.ShowDialog();
@@ -176,11 +181,11 @@ namespace bonita_smile_v1
                     {
                         try
                         {
-                            destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\fotos_offline\", result);
+                            destFile = System.IO.Path.Combine(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\", result);
                             File.Copy(s[i], destFile, true);
                             renombrar(false, result, id_carpeta + "_" + result);
 
-                            destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", result);
+                            destFile = System.IO.Path.Combine(@configuracion.carpetas.ruta_imagenes_carpeta + "\\", result);
                             File.Copy(s[i], destFile, true);
                             renombrar(true, result, id_carpeta + "_" + result);
                         }
@@ -208,7 +213,11 @@ namespace bonita_smile_v1
                             if (inserto)
                             {
                                 //ELIMINAR FOTO QUE SE SUBIO AL SERVIDOR DE CARPETA OFFLINE
-                                File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + id_carpeta + "_" + result);
+                                if(File.Exists(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\"+ id_carpeta + "_" + result))
+                                {
+                                    File.Delete(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + id_carpeta + "_" + result);
+                                }
+                                
                             }
                         }
                         else
@@ -237,7 +246,7 @@ namespace bonita_smile_v1
         public void renombrar_offline(bool online, string nombre_viejo, string nombre_nuevo)
         {
 
-            string sourceFile = @"\\DESKTOP-ED8E774\fotos_offline\" + nombre_viejo;
+            string sourceFile = @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + nombre_viejo;
             // Create a FileInfo  
             System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile);
             // Check if file is there  
@@ -245,19 +254,19 @@ namespace bonita_smile_v1
             {
                 System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
-                fi.MoveTo(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo);
-                string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
-                System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
-                System.Windows.MessageBox.Show("se pudo bitches");
+                fi.MoveTo(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + nombre_nuevo);
+                string destFile = System.IO.Path.Combine(@configuracion.carpetas.ruta_imagenes_carpeta + "\\", nombre_nuevo);
+                System.IO.File.Copy(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + nombre_nuevo, destFile, true);
+                System.Windows.MessageBox.Show("se pudo si");
             }
         }
         public void renombrar(bool online, string nombre_viejo, string nombre_nuevo)
         {
             string sourceFile;
             if (!online)
-                sourceFile = @"\\DESKTOP-ED8E774\fotos_offline\";
+                sourceFile = @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\";
             else
-                sourceFile = @"\\DESKTOP-ED8E774\bs\";
+                sourceFile = @configuracion.carpetas.ruta_imagenes_carpeta + "\\";
 
             // Create a FileInfo  
             System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile + nombre_viejo);
@@ -269,7 +278,7 @@ namespace bonita_smile_v1
                 fi.MoveTo(sourceFile + nombre_nuevo);
                 //string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
                 //System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
-                System.Windows.MessageBox.Show("se pudo bitches");
+                System.Windows.MessageBox.Show("se pudo si");
             }
         }
 
@@ -340,7 +349,7 @@ namespace bonita_smile_v1
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
             // ELIMINARLA DE LA BS LOCAL/
 
              //ELIMINAR REGISTRO
@@ -351,11 +360,15 @@ namespace bonita_smile_v1
             {
                 //PASAR FOTO EN UN ARCHIVO
                 Escribir_Archivo ea = new Escribir_Archivo();
-                ea.escribir_imagen_eliminar(this.item_foto_carpeta.foto_completa, @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                ea.escribir_imagen_eliminar(this.item_foto_carpeta.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                 //ELIMINAR FOTO
                 item_foto_carpeta.imagen = null;
                 rt_imagen.Fill = null;
-                File.Delete(@"\\DESKTOP-ED8E774\bs\" + item_foto_carpeta.foto_completa);
+                if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + item_foto_carpeta.foto_completa))
+                {
+                    File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + item_foto_carpeta.foto_completa);
+                }
+                
                 lb_imagen.Items.Remove(item_foto_carpeta);
 
                 // ELIMINAR DEL SERVIDOR/

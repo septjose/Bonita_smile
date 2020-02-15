@@ -467,7 +467,7 @@ namespace bonita_smile_v1.Servicios
                     }
                     else
                     {
-                        System.Windows.MessageBox.Show("contraseña esta incorrecta");
+                        System.Windows.Forms.MessageBox.Show("Contraseña incorrecta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         conexionBD.Close();
                         verdad = false;
                     }

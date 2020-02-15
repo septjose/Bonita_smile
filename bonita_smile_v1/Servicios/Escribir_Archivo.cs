@@ -12,8 +12,11 @@ namespace bonita_smile_v1.Servicios
 {
     class Escribir_Archivo
     {
-        string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";
-        string ruta_borrar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+        string ruta = "";
+        string ruta_borrar = "";
+        //string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";
+        //string ruta_borrar = @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
         List<string> abonos = new List<string>();
         List<string> carpeta_archivos = new List<string>();
         List<string> clinica = new List<string>();
@@ -27,6 +30,10 @@ namespace bonita_smile_v1.Servicios
 
         public Escribir_Archivo()
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+            this.ruta_borrar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            this.ruta= @configuracion.carpetas.ruta_temporal_carpeta + "\\script_temporal.txt";
             abonos.Add("id_paciente");
             abonos.Add("id_motivo");
             abonos.Add("fecha");
