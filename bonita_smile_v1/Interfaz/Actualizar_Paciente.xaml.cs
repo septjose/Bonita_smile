@@ -43,7 +43,7 @@ namespace bonita_smile_v1
         string foto = "";
         bool bandera_online_offline = false;
         PacienteModel paciente;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         public Page6_Actualizar(PacienteModel paciente)
         {

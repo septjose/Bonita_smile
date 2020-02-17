@@ -35,7 +35,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
         string id_motivo = "";
         string id_paciente = "";
         bool bandera_online_offline = false;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         public Notas_recepcionista(PacienteModel paciente, Motivo_citaModel motivo)
         {

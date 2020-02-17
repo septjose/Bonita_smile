@@ -37,7 +37,7 @@ namespace bonita_smile_v1
         string id_motivo = "";
         bool bandera_offline_online = false;
         Configuracion_Model configuracion;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         public Pagina_Estudios(PacienteModel paciente, Motivo_citaModel motivo)
         {
             Archivo_Binario ab = new Archivo_Binario();

@@ -1,0 +1,11 @@
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\Configuraciones_BS.csprojAssemblyReference.cache
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Configurar_Carpetas.resources
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Servidor_Externo.resources
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Servidor_Interno.resources
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\Configuraciones_BS.csproj.GenerateResource.cache
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb

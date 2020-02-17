@@ -33,7 +33,7 @@ namespace bonita_smile_v1
 {
     /// <summary>
     /// Lógica de interacción para Fotos_de_Estudios.xaml
-    /// </summary>string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+    /// </summary>string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
     public partial class Fotos_de_Estudios : Page
     {
         //ObservableCollection<Imagen> GPaciente;
@@ -42,7 +42,7 @@ namespace bonita_smile_v1
         string ruta = "";
         bool bandera_online_offline = false;
 
-          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
 
         Fotos_estudio_carpetaModel item_foto_carpeta;
         ObservableCollection<Fotos_estudio_carpetaModel> fotos;

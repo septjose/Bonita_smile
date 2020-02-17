@@ -57,6 +57,7 @@
             this.btn_subir_servidor.TabIndex = 25;
             this.btn_subir_servidor.Text = "Elegir carpeta subir servidor";
             this.btn_subir_servidor.UseVisualStyleBackColor = false;
+            this.btn_subir_servidor.Click += new System.EventHandler(this.btn_subir_servidor_Click_1);
             // 
             // btn_fotografias
             // 
@@ -68,6 +69,7 @@
             this.btn_fotografias.TabIndex = 24;
             this.btn_fotografias.Text = "Elegir carpeta fotografias";
             this.btn_fotografias.UseVisualStyleBackColor = false;
+            this.btn_fotografias.Click += new System.EventHandler(this.btn_fotografias_Click_1);
             // 
             // btn_temporal
             // 
@@ -79,6 +81,7 @@
             this.btn_temporal.TabIndex = 23;
             this.btn_temporal.Text = "Elegir carpeta Temporal";
             this.btn_temporal.UseVisualStyleBackColor = false;
+            this.btn_temporal.Click += new System.EventHandler(this.btn_temporal_Click_1);
             // 
             // btn_imagenes
             // 
@@ -90,6 +93,7 @@
             this.btn_imagenes.TabIndex = 22;
             this.btn_imagenes.Text = "Elegir Carpeta imagenes";
             this.btn_imagenes.UseVisualStyleBackColor = false;
+            this.btn_imagenes.Click += new System.EventHandler(this.btn_imagenes_Click_1);
             // 
             // button1
             // 

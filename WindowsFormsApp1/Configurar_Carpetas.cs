@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApp1.Models;
-using WindowsFormsApp1.Servicios;
+using WindowsFormsApp1.Service;
 
 namespace WindowsFormsApp1
 {
@@ -33,7 +33,6 @@ namespace WindowsFormsApp1
 
         public void Actualizo_rutas_carpetas(Configuracion_Model configuracion)
         {
-
             configuracion.carpetas.ruta_imagenes_carpeta = txt_imagen.Text;
             configuracion.carpetas.ruta_subir_servidor_carpeta = txt_subir_servidor.Text;
             configuracion.carpetas.ruta_fotografias_carpeta = txt_fotografias.Text;
@@ -46,7 +45,7 @@ namespace WindowsFormsApp1
         }
 
 
-        private void btn_imagenes_Click(object sender, EventArgs e)
+        private void btn_imagenes_Click_1(object sender, EventArgs e)
         {
             string tempPath = "";
 
@@ -57,11 +56,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
-        {
-        }
-
-        private void btn_temporal_Click(object sender, EventArgs e)
+        private void btn_temporal_Click_1(object sender, EventArgs e)
         {
             string tempPath = "";
 
@@ -72,7 +67,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void btn_fotografias_Click(object sender, EventArgs e)
+        private void btn_fotografias_Click_1(object sender, EventArgs e)
         {
             string tempPath = "";
 
@@ -83,7 +78,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void btn_subir_servidor_Click(object sender, EventArgs e)
+        private void btn_subir_servidor_Click_1(object sender, EventArgs e)
         {
             string tempPath = "";
 

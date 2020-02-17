@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApp1.Models;
-using WindowsFormsApp1.Servicios;
+using WindowsFormsApp1.Service;
 
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
         //string ruta = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
-        string ruta = @"\\DESKTOP-ED8E774\dentista2\setup\conf\configuracion.cfg";
+        string ruta = @"C:\Users\juani\AppData\Roaming\dentista\setup\conf\configuracion.cfg";
         Configuracion_Model configuracion;
         public Form1()
         {

@@ -32,7 +32,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         bool bandera_online_offline = false;
         List<string> lista = new List<string>();
         string alias = "";
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         public Pacientes_socio(List<string>lista,string alias)
         {

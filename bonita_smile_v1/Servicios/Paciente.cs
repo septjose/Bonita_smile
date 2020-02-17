@@ -23,7 +23,7 @@ namespace bonita_smile_v1.Servicios
         string ruta2;
         Test_Internet ti = new Test_Internet();
         private bool online;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         //
         public Paciente(bool online)
@@ -305,10 +305,20 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarPaciente(string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica)
         {
+            Seguridad s = new Seguridad();
+            string foto_paciente ="";
             string auxiliar_identificador="";
             Seguridad seguridad = new Seguridad();
             bool internet = ti.Test();
-            auxiliar_identificador = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto + antecedente + email + marketing + id_clinica+DateTime.Now);
+            if(foto.Equals(""))
+            {
+                foto_paciente = foto; 
+            }
+            else
+            {
+                foto_paciente = s.quitar_acentos(foto);
+            }
+            auxiliar_identificador = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto_paciente + antecedente + email + marketing + id_clinica+DateTime.Now);
             try
             {
 
@@ -332,7 +342,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO paciente (id_paciente,nombre,apellidos,direccion,telefono,foto,antecedente,email,marketing,id_clinica,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre + "','" + apellidos + "','" + direccion + "','" + telefono + "','" + foto + "','" + antecedente + "','" + email + "'," + marketing + ",'" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
+                    query = "INSERT INTO paciente (id_paciente,nombre,apellidos,direccion,telefono,foto,antecedente,email,marketing,id_clinica,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre + "','" + apellidos + "','" + direccion + "','" + telefono + "','" + foto_paciente + "','" + antecedente + "','" + email + "'," + marketing + ",'" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -355,6 +365,17 @@ namespace bonita_smile_v1.Servicios
 
         public bool actualizarPaciente(string id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica)
         {
+            Seguridad s = new Seguridad();
+            string foto_paciente = "";
+            if (foto.Equals(""))
+            {
+                foto_paciente = foto;
+            }
+            else
+            {
+                foto_paciente = s.quitar_acentos(foto);
+            }
+
             bool internet = ti.Test();
             try
             {
@@ -379,7 +400,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto + "',email = '" + email + "',marketing = " + marketing + ",id_clinica ='" + id_clinica + "',antecedente='" + antecedente + "',auxiliar_identificador = '"+ id_paciente +"' where id_paciente ='"+id_paciente +"'";
+                    query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto_paciente + "',email = '" + email + "',marketing = " + marketing + ",id_clinica ='" + id_clinica + "',antecedente='" + antecedente + "',auxiliar_identificador = '"+ id_paciente +"' where id_paciente ='"+id_paciente +"'";
                     Console.WriteLine(query);
 
                     conexionBD.Open();

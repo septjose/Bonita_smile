@@ -38,7 +38,7 @@ namespace bonita_smile_v1
         bool bandera_online_offline = false;
         CultureInfo culture = new CultureInfo("en-US");
         NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         public Page2_notas(PacienteModel paciente,Motivo_citaModel motivo)
         {

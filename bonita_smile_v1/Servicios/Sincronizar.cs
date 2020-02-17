@@ -19,7 +19,7 @@ namespace bonita_smile_v1.Servicios
         Conexion_Offline obj = new Conexion_Offline();
         Test_Internet ti = new Test_Internet();
         Conexion obj2 = new Conexion();
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
 
         string ruta;
         string ruta_borrar ;
@@ -50,8 +50,10 @@ namespace bonita_smile_v1.Servicios
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
+            // string constring = "server=162.241.60.126;user=jjdevelo_dentist;pwd=jjpd1996;database=jjdevelo_dentist;";
             string constring = "server="+configuracion.servidor_externo.servidor_local+";user="+configuracion.servidor_externo.usuario_local+";pwd="+configuracion.servidor_externo.password_local+";database="+configuracion.servidor_externo.database_local+";";
             constring += "charset=utf8;convertzerodatetime=true;";
+            MessageBox.Show(constring);
             string file = @configuracion.carpetas.ruta_temporal_carpeta+"\\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
@@ -168,8 +170,47 @@ namespace bonita_smile_v1.Servicios
 
             }
             return bandera;
+        }
+
+        public bool descargar_fotos_socio(List<string> list_clinicas)
+        {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
+            var lista = lista_de_fotos_socio(list_clinicas);
+            bool bandera = true;
+            foreach (var filename in lista)
+            {
+                if (filename.Equals(""))
+                {
+
+                }
+                else
+                {
+                    if (new Test_Internet().Test())
+                    {
+                        if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename))
+                        {
+                            MessageBox.Show("SI ESTA" + filename);
+                        }
+                        else
+                        {
+                            MessageBox.Show("NO ESTA" + filename);
+                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
+
+                        }
 
 
+                    }
+                    else
+                    {
+                        bandera = false;
+                    }
+
+                }
+
+            }
+            return bandera;
         }
 
         public bool descargar_fotos_clinica(string id_clinica)
@@ -213,6 +254,64 @@ namespace bonita_smile_v1.Servicios
             return bandera;
         }
 
+        private List<string> lista_de_fotos_socio(List<string> list_clinicas)
+        {
+            string var = "";
+            conexionBD = obj2.conexion(false);
+            List<string> lista = new List<string>();
+            foreach(var id_clinica in list_clinicas)
+            {
+                query = "select paciente.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica where clinica.id_clinica='" + id_clinica + "'";
+                try
+                {
+                    conexionBD.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                       if(reader[0].ToString().Equals(""))
+                        {
+
+                        }
+                       else
+                        {
+                            lista.Add(reader[0].ToString());
+                        }
+                        
+                    }
+                    MessageBox.Show(lista.Count() + "" + var);
+                }
+                catch (Exception ex) { }
+                conexionBD.Close();
+                query = "select fotos_estudio_carpeta.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica inner join fotos_estudio_carpeta on fotos_estudio_carpeta.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id_clinica + "'";
+                try
+                {
+                    conexionBD.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        if (reader[0].ToString().Equals(""))
+                        {
+
+                        }
+                        else
+                        {
+                            lista.Add(reader[0].ToString());
+                        }
+                    }
+                    MessageBox.Show(lista.Count() + "" + var);
+                }
+                catch (Exception ex) { }
+            }
+            
+            return lista;
+        }
+
         private List<string> lista_de_fotos_clinica(string id_clinica)
         {
             string var = "";
@@ -228,8 +327,14 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                    var = var + reader[0].ToString() + "\n";
-                    lista.Add(reader[0].ToString());
+                    if (reader[0].ToString().Equals(""))
+                    {
+
+                    }
+                    else
+                    {
+                        lista.Add(reader[0].ToString());
+                    }
                 }
                 MessageBox.Show(lista.Count() + "" + var);
             }
@@ -245,8 +350,14 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                    var = var + reader[0].ToString() + "\n";
-                    lista.Add(reader[0].ToString());
+                    if (reader[0].ToString().Equals(""))
+                    {
+
+                    }
+                    else
+                    {
+                        lista.Add(reader[0].ToString());
+                    }
                 }
                 MessageBox.Show(lista.Count() + "" + var);
             }
@@ -269,8 +380,14 @@ namespace bonita_smile_v1.Servicios
                 
                 while (reader.Read())
                 {
-                    var = var + reader[0].ToString()+"\n";
-                    lista.Add(reader[0].ToString());
+                    if (reader[0].ToString().Equals(""))
+                    {
+
+                    }
+                    else
+                    {
+                        lista.Add(reader[0].ToString());
+                    }
                 }
                 MessageBox.Show( lista.Count()+""+var);
             }
@@ -286,8 +403,14 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                    var = var + reader[0].ToString() + "\n";
-                    lista.Add(reader[0].ToString());
+                    if (reader[0].ToString().Equals(""))
+                    {
+
+                    }
+                    else
+                    {
+                        lista.Add(reader[0].ToString());
+                    }
                 }
                 MessageBox.Show(lista.Count() + "\n" + var);
             }

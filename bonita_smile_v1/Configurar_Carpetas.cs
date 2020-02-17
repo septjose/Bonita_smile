@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,13 +35,15 @@ namespace bonita_smile_v1
 
         public void Actualizo_rutas_carpetas(Configuracion_Model configuracion)
         {
+            Archivo_Binario ab = new Archivo_Binario();
 
             configuracion.carpetas.ruta_imagenes_carpeta = txt_imagen.Text;
             configuracion.carpetas.ruta_subir_servidor_carpeta = txt_subir_servidor.Text;
             configuracion.carpetas.ruta_fotografias_carpeta = txt_fotografias.Text;
             configuracion.carpetas.ruta_temporal_carpeta = txt_temporal.Text;
+            ab.SetFileReadAccess(ruta, false);
+            File.Delete(ruta);
 
-            Archivo_Binario ab = new Archivo_Binario();
             ab.Guardar(configuracion, this.ruta);
             System.Windows.Forms.MessageBox.Show("Se actualizo Correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Hide();

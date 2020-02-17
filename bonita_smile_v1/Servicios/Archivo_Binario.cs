@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -95,31 +96,134 @@ namespace bonita_smile_v1.Servicios
         }
 
         public void Guardar(Configuracion_Model configuracion,string ruta)
-        {       
-            if(File.Exists(ruta))
+        {
+            //FileAttributes attributes = File.GetAttributes(ruta);
+            FileStream fs = null;
+            List<string> datos = new List<string>();
+            datos.Add(configuracion.servidor_interno.servidor_local);
+            datos.Add(configuracion.servidor_interno.puerto_local);
+            datos.Add(configuracion.servidor_interno.usuario_local);
+            datos.Add(configuracion.servidor_interno.password_local);
+            datos.Add(configuracion.servidor_interno.database_local);
+            datos.Add(configuracion.servidor_interno.database_local_aux);
+
+            datos.Add(configuracion.servidor_externo.servidor_local);
+            datos.Add(configuracion.servidor_externo.puerto_local);
+            datos.Add(configuracion.servidor_externo.usuario_local);
+            datos.Add(configuracion.servidor_externo.password_local);
+            datos.Add(configuracion.servidor_externo.database_local);
+
+            datos.Add(configuracion.carpetas.ruta_fotografias_carpeta);
+            datos.Add(configuracion.carpetas.ruta_imagenes_carpeta);
+            datos.Add(configuracion.carpetas.ruta_subir_servidor_carpeta);
+            datos.Add(configuracion.carpetas.ruta_temporal_carpeta);
+           
+
+            foreach (var script in datos)
             {
-                BinaryFormatter BF = new BinaryFormatter();
-                FileStream Archivo = File.OpenWrite(ruta);
-                BF.Serialize(Archivo, configuracion);
-                Archivo.Close();
+                try
+                {
+                    if (File.Exists(ruta))
+                    {
+                        SetFileReadAccess(ruta, false);
+                        // Create the file, or overwrite if the file exists.
+                        StreamWriter sw = new StreamWriter(ruta, true);
+                        sw.WriteLine(new Seguridad().Encriptar(script));
+                        sw.Close();
+                        File.SetAttributes(ruta, File.GetAttributes(ruta) | FileAttributes.Hidden);
+                        //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
+                        SetFileReadAccess(ruta, true);
+                    }
+                    else
+                    {
+                        fs = new FileStream(ruta, FileMode.Create, FileAccess.Write);
+                        fs.Close();
+                        StreamWriter sw = new StreamWriter(ruta, true);
+                        sw.WriteLine(new Seguridad().Encriptar(script));
+                        sw.Close();
+                        File.SetAttributes(ruta, File.GetAttributes(ruta) | FileAttributes.Hidden);
+                        //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
+                        SetFileReadAccess(ruta, true);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Esta entrando en el cath");
+                    MessageBox.Show("Archivo no encontrado");
+                    Console.WriteLine(ex.ToString());
+                }
             }
-            
         }
 
         public Configuracion_Model Cargar(string ruta)
         {
-            if (!File.Exists(ruta))
+           
+            List<string> lista = new List<string>();
+            if (File.Exists(ruta))
             {
-                return null;
+                using (StreamReader sr = File.OpenText(ruta))
+                {
+
+                    string query = "";
+                    while ((query = sr.ReadLine()) != null)
+                    {
+                        lista.Add(query);
+                    }
+
+                    Configuracion_Model configuracion;
+                    ServidorModelo servidor_intern = new ServidorModelo()
+                    {
+                        servidor_local = new Seguridad().Desencriptar(lista[0]),
+                        puerto_local = new Seguridad().Desencriptar(lista[1]),
+                        usuario_local = new Seguridad().Desencriptar(lista[2]),
+                        password_local = new Seguridad().Desencriptar(lista[3]),
+                        database_local = new Seguridad().Desencriptar(lista[4]),
+                        database_local_aux = new Seguridad().Desencriptar(lista[5]),
+                    };
+
+                    ServidorModelo servidor_extern = new ServidorModelo()
+                    {
+                        servidor_local = new Seguridad().Desencriptar(lista[6]),
+                        puerto_local = new Seguridad().Desencriptar(lista[7]),
+                        usuario_local = new Seguridad().Desencriptar(lista[8]),
+                        password_local = new Seguridad().Desencriptar(lista[9]),
+                        database_local = new Seguridad().Desencriptar(lista[10]),
+                    };
+                    RutasCarpetasModelo carpeta = new RutasCarpetasModelo()
+                    {
+                        ruta_fotografias_carpeta = new Seguridad().Desencriptar(lista[11]),
+                        ruta_imagenes_carpeta = new Seguridad().Desencriptar(lista[12]),
+                        ruta_subir_servidor_carpeta = new Seguridad().Desencriptar(lista[13]),
+                        ruta_temporal_carpeta = new Seguridad().Desencriptar(lista[14]),
+                    };
+
+
+
+                    configuracion = new Configuracion_Model()
+                    {
+                        carpetas = carpeta,
+                        servidor_externo = servidor_extern,
+                        servidor_interno = servidor_intern
+
+                    };
+                   
+                    return configuracion;
+                }
             }
             else
             {
-                BinaryFormatter BF = new BinaryFormatter();
-                FileStream Archivo = File.Open(ruta, FileMode.Open);
-                Configuracion_Model DatosCargados = (Configuracion_Model)BF.Deserialize(Archivo);
-                Archivo.Close();
-                return DatosCargados;
+                return null;
             }
+        }
+
+        public void SetFileReadAccess(string FileName, bool SetReadOnly)
+        {
+            // Create a new FileInfo object.
+            FileInfo fInfo = new FileInfo(FileName);
+
+            // Set the IsReadOnly property.
+            fInfo.IsReadOnly = SetReadOnly;
         }
     }
 }

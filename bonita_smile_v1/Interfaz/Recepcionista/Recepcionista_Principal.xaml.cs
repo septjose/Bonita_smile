@@ -65,25 +65,23 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
             //verificar si hay internet   -listo
             //subir los scripts del archivo -listo
             //hacer respaldo y restaurar - listo
             //subir fotos a la nube - listo
             //descargar las fotos   
-
             Test_Internet ti = new Test_Internet();
             Sincronizar sinc = new Sincronizar();
             bool verificar = ti.Test();
             if (verificar)
             {
-                System.Windows.MessageBox.Show("hi");
+                //System.Windows.MessageBox.Show("hi");
                 try
                 {
-                    System.Windows.MessageBox.Show("hii x2");
+                    //  System.Windows.MessageBox.Show("hii x2");
                     bool subir_scripts = sinc.SincronizarLocalServidor();
                     if (subir_scripts) { System.Windows.MessageBox.Show("se subieron los scripts"); }
-                    System.Windows.MessageBox.Show("hii x3");
+                    //System.Windows.MessageBox.Show("hii x3");
                     if (verificar)
                     {
                         System.Windows.MessageBox.Show("se hace el backup");
@@ -103,15 +101,25 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                 if (subio_fotos)
                                 {
                                     System.Windows.MessageBox.Show("se subieron las fotos correctamente");
+                                    System.Windows.MessageBox.Show("toca eliminar fotos");
+                                    bool eliminar_fotos = sinc.eliminar_fotos();
+                                    if (eliminar_fotos)
+                                    {
+                                        System.Windows.MessageBox.Show("se eliminaron las fotos");
+                                    }
+                                    System.Windows.MessageBox.Show("toca descargar");
                                     bool descargar_fotos = sinc.descargar_fotos_clinica(id_clinica);
                                     if (descargar_fotos)
                                     {
                                         System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
                                     }
+
+
                                     else
                                     {
-                                        System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
+                                        System.Windows.MessageBox.Show("hubo problemas al eliminar las fotos");
                                     }
+
                                 }
                                 else
                                 {
@@ -131,14 +139,13 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                         }
                     }
 
-
-
                 }
                 catch (Exception ex)
                 {
 
                 }
-
+                List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                lv_Paciente.ItemsSource = pacientes;
             }
             else
             {
@@ -146,6 +153,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             }
 
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

@@ -35,7 +35,7 @@ namespace bonita_smile_v1
         ObservableCollection<AbonosModel> notas;
         CultureInfo culture = new CultureInfo("en-US");
         NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo)
         {
             Archivo_Binario ab = new Archivo_Binario();

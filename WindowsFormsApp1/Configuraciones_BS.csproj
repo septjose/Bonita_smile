@@ -61,7 +61,7 @@
     <Compile Include="Models\ServidorModelo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Servicios\Archivo_Binario.cs" />
+    <Compile Include="Service\Archivo_Binario.cs" />
     <Compile Include="Servidor_Externo.cs">
       <SubType>Form</SubType>
     </Compile>

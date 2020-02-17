@@ -135,9 +135,9 @@ namespace bonita_smile_v1.Interfaz.Administrador
         {
             //MessageBox.Show("Mandar ventana para mostrar las configuraciones");
             Archivo_Binario ab = new Archivo_Binario();
-            string ruta = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+            string ruta = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
 
-            //string ruta = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\Configuracion.cfg";
+            //string ruta = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\configuracion.txt";
             Configuracion_Model configuracion = ab.Cargar(ruta);
             DialogResult resultado = new DialogResult();
             Form mensaje = new Configuracion(configuracion,ruta);

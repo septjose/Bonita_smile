@@ -12,7 +12,7 @@ namespace bonita_smile_v1.Servicios
 {
     class Escribir_Archivo
     {
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         string ruta = "";
         string ruta_borrar = "";
         //string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";

@@ -87,6 +87,20 @@ La expresión regular que he usado para que admitiria estos casos,   4 o 4.1 o 4
                 return false;
         }
 
-
+        public string quitar_acentos(string cadena)
+        {
+          
+            var normalizedString = cadena.Normalize(NormalizationForm.FormD);
+            var sb = new StringBuilder();
+            for (int i = 0; i < normalizedString.Length; i++)
+            {
+                var uc = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(normalizedString[i]);
+                if (uc != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(normalizedString[i]);
+                }
+            }
+            return (sb.ToString().Normalize(NormalizationForm.FormC));
+        }
     }
 }

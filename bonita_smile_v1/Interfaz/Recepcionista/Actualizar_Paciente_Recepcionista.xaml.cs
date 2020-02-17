@@ -44,7 +44,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         bool bandera_online_offline = false;
         PacienteModel paciente;
         Configuracion_Model configuracion;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         public Actualizar_Paciente_Recepcionista(PacienteModel paciente,string id)
         {
             Archivo_Binario ab = new Archivo_Binario();

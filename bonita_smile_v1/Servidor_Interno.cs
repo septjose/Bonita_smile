@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace bonita_smile_v1
         public void Actualizo_servidor_interno(Configuracion_Model configuracion)
         {
 
+            Archivo_Binario ab = new Archivo_Binario();
+
             configuracion.servidor_interno.servidor_local = txt_ip.Text;
             configuracion.servidor_interno.puerto_local = txt_puerto.Text;
             configuracion.servidor_interno.usuario_local = txt_nombre.Text;
@@ -44,7 +47,8 @@ namespace bonita_smile_v1
             configuracion.servidor_interno.database_local = txt_bd.Text;
             configuracion.servidor_interno.database_local_aux = txt_bd_aux.Text;
 
-            Archivo_Binario ab = new Archivo_Binario();
+            ab.SetFileReadAccess(ruta, false);
+            File.Delete(ruta);
             ab.Guardar(configuracion, this.ruta);
             System.Windows.Forms.MessageBox.Show("Se actualizo Correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Hide();

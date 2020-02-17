@@ -30,10 +30,13 @@ namespace bonita_smile_v1.Interfaz.Socio
     public partial class Pagina_Socio : Page
     {
         // ObservableCollection<PacienteModel> GPaciente;
+        List<string> lista = new List<string>();
         public Pagina_Socio(List<string> lista)
         {
+            
             InitializeComponent();
             llenar_list_view(lista);
+            this.lista = lista;
             Conexion con = new Conexion();
 
 
@@ -154,7 +157,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                                         System.Windows.MessageBox.Show("se eliminaron las fotos");
                                     }
                                     System.Windows.MessageBox.Show("toca descargar");
-                                    bool descargar_fotos = sinc.descargar_fotos();
+                                    bool descargar_fotos = sinc.descargar_fotos_socio(lista);
                                     if (descargar_fotos)
                                     {
                                         System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
@@ -185,14 +188,13 @@ namespace bonita_smile_v1.Interfaz.Socio
                         }
                     }
 
-
-
                 }
                 catch (Exception ex)
                 {
 
                 }
-
+                List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                lv_Paciente.ItemsSource = pacientes;
             }
             else
             {

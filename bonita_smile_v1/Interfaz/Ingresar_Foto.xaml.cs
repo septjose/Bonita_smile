@@ -54,7 +54,7 @@ namespace bonita_smile_v1
         bool bandera_offline_online = false;
         int i;
         string NombreVideo;
-          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         PacienteModel paciente;
         List<string> lista = new List<string>();

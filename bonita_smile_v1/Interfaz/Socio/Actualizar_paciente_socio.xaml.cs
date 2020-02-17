@@ -46,7 +46,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         List<string> lista = new List<string>();
         string alias = "";
         Configuracion_Model configuracion;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         public Actualizar_paciente_socio(PacienteModel paciente,List<string> lista,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();

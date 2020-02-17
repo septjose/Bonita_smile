@@ -22,7 +22,7 @@ namespace bonita_smile_v1.Servicios
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
         private bool online;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.cfg");
+         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         public Fotos_estudio_carpeta(bool online)
         {

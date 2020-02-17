@@ -19,6 +19,7 @@ using System.Security.Cryptography;
 using System.Net;
 using System.Windows.Forms;
 using System.Globalization;
+using bonita_smile_v1.Servicios;
 
 namespace bonita_smile_v1
 {
@@ -35,16 +36,54 @@ namespace bonita_smile_v1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Usuarios user = new Usuarios(false);
-            Seguridad secure = new Seguridad();
             if (txtUsuario.Text.Equals("") || pbPassword.Password.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
+                if(txtUsuario.Text.Equals("configuracion") && pbPassword.Password.Equals("12345"))
             {
+                Archivo_Binario ab = new Archivo_Binario();
+                //string ruta = @"C:\Users\juani\AppData\Roaming\dentista\setup\conf\configuracion.txt";
+                string ruta = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+                System.Windows.MessageBox.Show("entre a configuracion");
+                Configuracion_Model configuracion = ab.Cargar(ruta);
+                DialogResult resultado = new DialogResult();
+                Form mensaje = new Configuracion(configuracion, ruta);
+                resultado = mensaje.ShowDialog();
+            }
+            else
+            {
+                Usuarios user = new Usuarios(false);
                 user.redireccionarLogin(txtUsuario.Text, pbPassword.Password);
             }
+            //
+            //Seguridad secure = new Seguridad();
+            //
+            //else
+            //if()
+            //{
+            //    
+            //   
+
+
+            //    
+
+            //    //string ruta = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+
+            //    //string ruta = "E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\configuracion.txt";
+            //    
+            //}
+            //else
+            //{
+
+            //    
+            //}
+
+
+            //var inputString = "Juan Jesús Padrón Díaz";
+            //Seguridad s = new Seguridad();
+            //System.Windows.MessageBox.Show(s.quitar_acentos(inputString));
 
 
             //System.IO.Directory.CreateDirectory(pathString);
@@ -53,41 +92,7 @@ namespace bonita_smile_v1
             //string ruta_completa = System.IO.Path.Combine(strRutaArchivo, pathString);
             //System.IO.Directory.CreateDirectory(ruta_completa);
 
-            //Configuracion_Model configuracion;
-            //ServidorModelo servidor_intern = new ServidorModelo()
-            //{
-            //    servidor_local = "192.168.02",
-            //    puerto_local = "3306",
-            //    usuario_local = "usuariochido",
-            //    password_local = "12345",
-            //    database_local = "dentista",
-            //    database_local_aux = "bs",
-            //};
 
-            //ServidorModelo servidor_extern = new ServidorModelo()
-            //{
-            //    puerto_local = "3306",
-            //    usuario_local = "jjdevelo_dentista",
-            //    password_local = "jjpd1996",
-            //    database_local = "jjdevelo_dentist",
-            //};
-            //RutasCarpetasModelo carpeta = new RutasCarpetasModelo()
-            //{
-            //    ruta_fotografias_carpeta = "fotografias",
-            //    ruta_imagenes_carpeta = "imagenes",
-            //    ruta_subir_servidor_carpeta = "subir servidor",
-            //    ruta_temporal_carpeta = "temporal",
-            //};
-
-
-
-            //configuracion = new Configuracion_Model()
-            //{
-            //    carpetas=carpeta,
-            //    servidor_externo=servidor_extern,
-            //    servidor_interno=servidor_intern
-
-            //};
 
             ////leer 
             ////actualizar las variables valores antiguos y valores nuevos
@@ -98,7 +103,7 @@ namespace bonita_smile_v1
             //Actualizo_servidor_interno(configuracion);
 
 
-            //string ruta = @"\\DESKTOP-ED8E774\backup_bs\configuracion.cfg";
+            //string ruta = @"\\DESKTOP-ED8E774\backup_bs\configuracion.txt";
 
 
             //Archivo_Binario ab = new Archivo_Binario();
@@ -207,7 +212,7 @@ namespace bonita_smile_v1
              
          */
 
-        
+
 
 
 
