@@ -51,7 +51,7 @@ namespace bonita_smile_v1
                                 System.Windows.Forms.MessageBox.Show("El paciente " + paciente.nombre + " " + paciente.apellidos + " es ahora miembro", "Se ingreso correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                 // -----------------------------------------------/
-                                inserto = new Paciente(!bandera_online_offline).actualizarMembresia(paciente);
+                                //inserto = new Paciente(!bandera_online_offline).actualizarMembresia(paciente);
 
                                 imprimir_recibo();
                             }

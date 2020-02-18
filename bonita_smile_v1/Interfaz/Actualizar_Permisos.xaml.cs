@@ -103,8 +103,8 @@ namespace bonita_smile_v1
                     if (insertar)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        c = new Clinicas(!bandera_online_offline);
-                        c.insertar_Permisos(id_usuario, id_clinica);
+                        //c = new Clinicas(!bandera_online_offline);
+                        //c.insertar_Permisos(id_usuario, id_clinica);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
                             admin.Main.Content = new Pagina_Permisos(this.id_rol);
@@ -121,8 +121,8 @@ namespace bonita_smile_v1
                     if (actualizo)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        c = new Clinicas(!bandera_online_offline);
-                        c.actualizar_Permisos(id_usuario, id_clinica, clinica_anterior);
+                        //c = new Clinicas(!bandera_online_offline);
+                        //c.actualizar_Permisos(id_usuario, id_clinica, clinica_anterior);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
                             admin.Main.Content = new Pagina_Permisos(this.id_rol);

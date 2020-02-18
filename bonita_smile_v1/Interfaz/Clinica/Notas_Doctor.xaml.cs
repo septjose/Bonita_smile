@@ -213,8 +213,8 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 elimino = mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
                 if (elimino)
                 {
-                    mot = new Nota_de_digi_evolucion(!bandera_online_offline);
-                    mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
+                    //mot = new Nota_de_digi_evolucion(!bandera_online_offline);
+                    //mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
                     // mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
                     GNotas.Remove((Nota_de_digi_evolucionModel)lvNotas.SelectedItem);
                     System.Windows.Forms.MessageBox.Show("Se elimino el motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -258,8 +258,8 @@ namespace bonita_smile_v1
                             bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario);
                             if (actualizar)
                             {
-                                ab = new Abonos(!bandera_online_offline);
-                                ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario);
+                                //ab = new Abonos(!bandera_online_offline);
+                                //ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario);
                                 //System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 //System.Windows.Forms.MessageBox.Show("El cambio es de " + cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 //System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

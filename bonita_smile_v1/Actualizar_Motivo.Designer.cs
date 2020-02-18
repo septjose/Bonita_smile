@@ -175,8 +175,8 @@ namespace bonita_smile_v1
                     if (inserto)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        mc = new Motivo_cita(!bandera_online_offline);
-                        mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo.ToString(culture), motivo.paciente.id_paciente);
+                        //mc = new Motivo_cita(!bandera_online_offline);
+                        //mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo.ToString(culture), motivo.paciente.id_paciente);
                     }
                     else
                     {

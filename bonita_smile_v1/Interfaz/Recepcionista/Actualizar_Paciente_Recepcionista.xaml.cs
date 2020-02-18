@@ -246,8 +246,8 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        pa = new Paciente(!bandera_online_offline);
-                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        //pa = new Paciente(!bandera_online_offline);
+                                        //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
 
@@ -264,8 +264,8 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        pa = new Paciente(!bandera_online_offline);
-                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        //pa = new Paciente(!bandera_online_offline);
+                                        //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
 
@@ -285,8 +285,8 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        pa = new Paciente(!bandera_online_offline);
-                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        //pa = new Paciente(!bandera_online_offline);
+                                        //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
 
@@ -314,8 +314,8 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                         Escribir_Archivo ea = new Escribir_Archivo();
                                         ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        pa = new Paciente(!bandera_online_offline);
-                                        bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        //pa = new Paciente(!bandera_online_offline);
+                                        //bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         //if (actualizo)
                                         //{
                                         //    var datos = ea.leer(rutaArchivoEliminar);

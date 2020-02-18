@@ -140,8 +140,8 @@ namespace bonita_smile_v1
                 if (insertarAbono)
                 {
                     System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    nde = new Nota_de_digi_evolucion(!bandera_online_offline);
-                    nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, descripcion, comentario, fecha.ToString("yyyy/MM/dd"));
+                    //nde = new Nota_de_digi_evolucion(!bandera_online_offline);
+                    //nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, descripcion, comentario, fecha.ToString("yyyy/MM/dd"));
                 }
                 else
                 {

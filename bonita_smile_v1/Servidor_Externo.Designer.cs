@@ -30,7 +30,6 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.txt_bd = new System.Windows.Forms.TextBox();
-            this.txt_password = new System.Windows.Forms.TextBox();
             this.txt_nombre = new System.Windows.Forms.TextBox();
             this.txt_puerto = new System.Windows.Forms.TextBox();
             this.txt_ip = new System.Windows.Forms.TextBox();
@@ -39,6 +38,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.txt_password = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -60,13 +60,6 @@
             this.txt_bd.Name = "txt_bd";
             this.txt_bd.Size = new System.Drawing.Size(322, 26);
             this.txt_bd.TabIndex = 35;
-            // 
-            // txt_password
-            // 
-            this.txt_password.Location = new System.Drawing.Point(448, 223);
-            this.txt_password.Name = "txt_password";
-            this.txt_password.Size = new System.Drawing.Size(322, 26);
-            this.txt_password.TabIndex = 34;
             // 
             // txt_nombre
             // 
@@ -139,6 +132,14 @@
             this.label1.TabIndex = 26;
             this.label1.Text = "Ip del servidor externo :";
             // 
+            // txt_password
+            // 
+            this.txt_password.Location = new System.Drawing.Point(448, 223);
+            this.txt_password.Name = "txt_password";
+            this.txt_password.PasswordChar = '*';
+            this.txt_password.Size = new System.Drawing.Size(322, 26);
+            this.txt_password.TabIndex = 34;
+            // 
             // Servidor_Externo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -166,7 +167,6 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txt_bd;
-        private System.Windows.Forms.TextBox txt_password;
         private System.Windows.Forms.TextBox txt_nombre;
         private System.Windows.Forms.TextBox txt_puerto;
         private System.Windows.Forms.TextBox txt_ip;
@@ -175,5 +175,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txt_password;
     }
 }

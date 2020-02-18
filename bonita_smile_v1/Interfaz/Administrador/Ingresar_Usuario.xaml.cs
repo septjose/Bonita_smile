@@ -95,8 +95,8 @@ namespace bonita_smile_v1
                         System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         /*-----------------------------------------------*/
-                        user = new Usuarios(!bandera_online_offline);
-                        inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+                        //user = new Usuarios(!bandera_online_offline);
+                        //inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
 
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)

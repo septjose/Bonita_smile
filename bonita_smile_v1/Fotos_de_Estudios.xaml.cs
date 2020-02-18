@@ -201,8 +201,8 @@ namespace bonita_smile_v1
                         }
                         //SUBIR TODO AL SERVIDOR
                         //REALZAR INSERCION DEL REGISTRO EN EL SERVIDOR
-                        fotos = new Fotos_estudio_carpeta(!bandera_online_offline);
-                        insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
+                        //fotos = new Fotos_estudio_carpeta(!bandera_online_offline);
+                        //insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
 
                         if (insertar_foto)
                         {

@@ -211,38 +211,38 @@ namespace bonita_smile_v1
                         string destfile_fotos = @configuracion.carpetas.ruta_subir_servidor_carpeta+"\\" + foto;
                         System.IO.File.Copy(destfile_bs, destfile_fotos, true);
                         File.Delete(ruta2 + foto);
-                        paciente = new Paciente(!bandera_online_offline);
-                        bool actualizo_again = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
-                        if (actualizo_again)
-                        {
-                            System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            bool subir = SubirFicheroStockFTP(foto, @configuracion.carpetas.ruta_imagenes_carpeta+"\\");
-                            System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-                            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                            if (admin != null)
-                            {
-                                admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                                admin.Main.Content = new Page6();
-                            }
-                            else
-                            if (recep != null)
-                            {
-                                recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                                recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
-                            }
-                            else
-                            if (socio != null)
-                            {
-                                socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                                socio.Main4.Content = new Pacientes_socio(this.lista,this.alias);
-                            }
+                        //paciente = new Paciente(!bandera_online_offline);
+                        //bool actualizo_again = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+                        //if (actualizo_again)
+                        //{
+                        //    System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        //    bool subir = SubirFicheroStockFTP(foto, @configuracion.carpetas.ruta_imagenes_carpeta+"\\");
+                        //    System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                        //    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                        //    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                        //    if (admin != null)
+                        //    {
+                        //        admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                        //        admin.Main.Content = new Page6();
+                        //    }
+                        //    else
+                        //    if (recep != null)
+                        //    {
+                        //        recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                        //        recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                        //    }
+                        //    else
+                        //    if (socio != null)
+                        //    {
+                        //        socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                        //        socio.Main4.Content = new Pacientes_socio(this.lista,this.alias);
+                        //    }
 
-                        }
-                        else
-                        {
-                            System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", " Falta de Internet ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //}
+                        //else
+                        //{
+                            System.Windows.Forms.MessageBox.Show("Offline", "Offline", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -263,7 +263,7 @@ namespace bonita_smile_v1
                                 socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
                                 socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
                             }
-                        }
+                        
                     }
                     else
                     {
@@ -289,8 +289,8 @@ namespace bonita_smile_v1
 
                         Escribir_Archivo ea = new Escribir_Archivo();
                         ea.escribir_imagen_eliminar(this.foto_vieja, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
-                        paciente = new Paciente(!bandera_online_offline);
-                        bool actualizo_again = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+                        //paciente = new Paciente(!bandera_online_offline);
+                        //bool actualizo_again = paciente.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
                         //if (actualizo_again)
                         //{
                         //    System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -332,7 +332,7 @@ namespace bonita_smile_v1
                         //    }
                         //}
 
-                        System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", " Falta de Internet ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show("Offline", "Offline", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -514,8 +514,8 @@ namespace bonita_smile_v1
                         if (inserto)
                         {
                             System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            pa = new Paciente(!bandera_online_offline);
-                            pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                            //pa = new Paciente(!bandera_online_offline);
+                            //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -545,8 +545,8 @@ namespace bonita_smile_v1
                         if (inserto)
                         {
                             System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            pa = new Paciente(!bandera_online_offline);
-                            pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                            //pa = new Paciente(!bandera_online_offline);
+                            //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -578,8 +578,8 @@ namespace bonita_smile_v1
                         bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                         {
                             System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            pa = new Paciente(!bandera_online_offline);
-                            pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                            //pa = new Paciente(!bandera_online_offline);
+                            //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();

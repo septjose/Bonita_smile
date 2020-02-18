@@ -119,8 +119,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                         {
 
                             System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            user = new Usuarios(!bandera_online_offline);
-                            user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                            //user = new Usuarios(!bandera_online_offline);
+                            //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
                             usu.alias = alias;
                             usu.apellidos = apellidos;
                             usu.id_usuario = id_usu;
@@ -149,8 +149,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                         inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                         if (inserto)
                         {
-                            user = new Usuarios(!bandera_online_offline);
-                            user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                            //user = new Usuarios(!bandera_online_offline);
+                            //user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                             usu.alias = alias;
                             usu.apellidos = apellidos;
                             usu.id_usuario = id_usu;

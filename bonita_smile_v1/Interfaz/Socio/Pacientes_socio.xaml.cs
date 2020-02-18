@@ -122,7 +122,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                         //TODA LA PARTE ONLINE
 
                         //ELIMINA REGISTRO DEL SERVIDOR ONLINE 
-                        elimino = new Paciente(!bandera_online_offline).eliminarPaciente(id_paciente);
+                        //elimino = new Paciente(!bandera_online_offline).eliminarPaciente(id_paciente);
 
                         //ELIMINA TODOS LOS ARCHIVOS DEL SERVIDOR QUE SE ENCUENTRAN EN EL ARCHIVO
                         //if(elimino)

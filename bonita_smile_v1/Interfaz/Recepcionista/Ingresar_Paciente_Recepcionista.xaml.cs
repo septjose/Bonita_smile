@@ -40,7 +40,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         private FilterInfoCollection MisDispositivios;
         private VideoCaptureDevice MiWebCam;
         private bool HayDispositivos;
-        private string ruta = @"E:\PortableGit\programs_c#\ftp_v1.0\ftp_camara\";
+        //private string ruta = @"E:\PortableGit\programs_c#\ftp_v1.0\ftp_camara\";
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD;
@@ -219,8 +219,8 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                             if (inserto)
 
                             {
-                                pa = new Paciente(true);
-                                pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
+                                //pa = new Paciente(true);
+                                //pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
                                 Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
                                 if (recep != null)

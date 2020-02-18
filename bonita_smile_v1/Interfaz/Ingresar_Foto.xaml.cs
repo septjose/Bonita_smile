@@ -145,87 +145,87 @@ namespace bonita_smile_v1
                     File.Delete(ruta + foto);
                 }
                  
-                paciente = new Servicios.Paciente(!bandera_offline_online);
-                bool inserto_2 = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
-                if(inserto_2)
-                {
-                    System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    bool subir = SubirFicheroStockFTP(foto, @configuracion.carpetas.ruta_imagenes_carpeta + "\\");
-                    if (subir)
-                    {
+                //paciente = new Servicios.Paciente(!bandera_offline_online);
+                //bool inserto_2 = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+                //if(inserto_2)
+                //{
+                //    System.Windows.Forms.MessageBox.Show("Tardaran unos minutos al subir la foto", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                //    bool subir = SubirFicheroStockFTP(foto, @configuracion.carpetas.ruta_imagenes_carpeta + "\\");
+                //    if (subir)
+                //    {
                         
-                        System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                        if (admin != null)
-                        {
-                            admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                            admin.Main.Content = new Page6();
-                        }
-                        else
-                        if (recep != null)
-                        {
-                            recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                            recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
-                        }
-                        else
-                        if (socio != null)
-                        {
-                            socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                            socio.Main4.Content = new Pacientes_socio(this.lista,this.alias);
-                        }
+                //        System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                //        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                //        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                //        if (admin != null)
+                //        {
+                //            admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //            admin.Main.Content = new Page6();
+                //        }
+                //        else
+                //        if (recep != null)
+                //        {
+                //            recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //            recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                //        }
+                //        else
+                //        if (socio != null)
+                //        {
+                //            socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //            socio.Main4.Content = new Pacientes_socio(this.lista,this.alias);
+                //        }
 
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                        if (admin != null)
-                        {
-                            admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                            admin.Main.Content = new Page6();
-                        }
-                        else
-                        if (recep != null)
-                        {
-                            recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                            recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
-                        }
-                        else
-                        if (socio != null)
-                        {
-                            socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                            socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
-                        }
-                    }
-                }
-                else
-                {
-                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
-                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                    if (admin != null)
-                    {
-                        admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                        admin.Main.Content = new Page6();
-                    }
-                    else
-                    if (recep != null)
-                    {
-                        recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                        recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
-                    }
-                    else
-                    if (socio != null)
-                    {
-                        socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                        socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
-                    }
+                //    }
+                //    else
+                //    {
+                //        System.Windows.Forms.MessageBox.Show("No se pudo subir la foto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                //        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                //        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                //        if (admin != null)
+                //        {
+                //            admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //            admin.Main.Content = new Page6();
+                //        }
+                //        else
+                //        if (recep != null)
+                //        {
+                //            recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //            recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                //        }
+                //        else
+                //        if (socio != null)
+                //        {
+                //            socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //            socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                //    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                //    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                //    if (admin != null)
+                //    {
+                //        admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //        admin.Main.Content = new Page6();
+                //    }
+                //    else
+                //    if (recep != null)
+                //    {
+                //        recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //        recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                //    }
+                //    else
+                //    if (socio != null)
+                //    {
+                //        socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                //        socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                //    }
 
-                }
+                
             }
             else
             {
@@ -440,8 +440,8 @@ namespace bonita_smile_v1
             bool inserto = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, "", this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
             if(inserto)
             {
-                paciente = new Servicios.Paciente(!bandera_offline_online);
-                bool inserto_2 = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, "", this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+                //paciente = new Servicios.Paciente(!bandera_offline_online);
+                //bool inserto_2 = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, "", this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
 
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();

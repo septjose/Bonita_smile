@@ -190,8 +190,8 @@ namespace bonita_smile_v1
                         bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
                         if (elimino)
                         {
-                        mot = new Motivo_cita(!bandera_online_offline);
-                        elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
+                        //mot = new Motivo_cita(!bandera_online_offline);
+                        //elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
                         GMotivo.Remove((Motivo_citaModel)lvMotivo.SelectedItem);
 
                         //lvMotivo.ItemsSource = GMotivo;

@@ -36,8 +36,8 @@ namespace bonita_smile_v1
                 {
 
                     System.Windows.Forms.MessageBox.Show("Se actualizò Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ca = new Carpeta_archivos(!bandera_online_offline);
-                    ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente, id_motivo);
+                    //ca = new Carpeta_archivos(!bandera_online_offline);
+                    //ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente, id_motivo);
                 }
                 else
                 {

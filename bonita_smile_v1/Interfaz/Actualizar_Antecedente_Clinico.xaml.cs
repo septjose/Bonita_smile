@@ -118,8 +118,8 @@ namespace bonita_smile_v1
                                 if (inserto)
                                 {
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                                //    pa = new Paciente(!bandera_online_offline);
+                                //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -146,8 +146,8 @@ namespace bonita_smile_v1
                             if (inserto)
                                 {
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                                //    pa = new Paciente(!bandera_online_offline);
+                                //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -176,8 +176,8 @@ namespace bonita_smile_v1
                                 bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                             {
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                                //    pa = new Paciente(!bandera_online_offline);
+                                //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -215,8 +215,8 @@ namespace bonita_smile_v1
                                     Escribir_Archivo ea = new Escribir_Archivo();
                                     ea.escribir_imagen_eliminar(this.paciente.foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt" );
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    pa = new Paciente(!bandera_online_offline);
-                                    bool actualizo = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                                    //pa = new Paciente(!bandera_online_offline);
+                                    //bool actualizo = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                             //    if (actualizo)
                             //        {
                             //            var datos = ea.leer(rutaArchivoEliminar);

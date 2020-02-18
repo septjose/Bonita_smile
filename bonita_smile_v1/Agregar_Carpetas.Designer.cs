@@ -139,8 +139,8 @@ namespace bonita_smile_v1
                 if (insertarAbono)
                 {
                     System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ca = new Carpeta_archivos(!bandera_online_offline);
-                    ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente, id_motivo);
+                    //ca = new Carpeta_archivos(!bandera_online_offline);
+                    //ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente, id_motivo);
                 }
                 else
                 {

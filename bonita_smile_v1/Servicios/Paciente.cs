@@ -70,7 +70,7 @@ namespace bonita_smile_v1.Servicios
                     }
                     else
                     {
-                        pacienteModel.imagen_membresia = LoadImage_Membresia("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\trofeo.jpg");
+                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                     }
                     pacienteModel.membresia = reader[11].ToString(); 
@@ -127,7 +127,7 @@ namespace bonita_smile_v1.Servicios
                         }
                         else
                         {
-                            pacienteModel.imagen_membresia = LoadImage_Membresia("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\trofeo.jpg");
+                            pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                         }
                         pacienteModel.membresia = reader[11].ToString();
@@ -186,7 +186,8 @@ namespace bonita_smile_v1.Servicios
                     }
                     else
                     {
-                        pacienteModel.imagen_membresia = LoadImage_Membresia("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\trofeo.jpg");
+                        
+                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                     }
                     pacienteModel.membresia = reader[11].ToString();

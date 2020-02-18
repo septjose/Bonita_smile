@@ -97,8 +97,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                         System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         /*-----------------------------------------------*/
-                        user = new Usuarios(!bandera_online_offline);
-                        inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+                        //user = new Usuarios(!bandera_online_offline);
+                        //inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
 
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                         if (socio != null)

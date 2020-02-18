@@ -71,8 +71,8 @@ namespace bonita_smile_v1
             bool inserto = pa.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
             if (inserto)
             {
-                pa = new Paciente(!bandera_offline_online);
-                 pa.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                //pa = new Paciente(!bandera_offline_online);
+                // pa.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                 Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();

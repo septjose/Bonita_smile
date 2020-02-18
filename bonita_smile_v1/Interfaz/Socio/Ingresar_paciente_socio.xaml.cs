@@ -222,8 +222,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                             if (inserto)
 
                             {
-                                pa = new Paciente(true);
-                                pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
+                                //pa = new Paciente(true);
+                                //pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
                                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                                 //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
 

@@ -105,8 +105,8 @@ namespace bonita_smile_v1
                         if (elimino)
                         {
 
-                        abo = new Abonos(!bandera_online_offline);
-                        abo.eliminarAbono(abono.id_abono);
+                        //abo = new Abonos(!bandera_online_offline);
+                        //abo.eliminarAbono(abono.id_abono);
 
                         
                             System.Windows.Forms.MessageBox.Show("Se elimino el abono correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

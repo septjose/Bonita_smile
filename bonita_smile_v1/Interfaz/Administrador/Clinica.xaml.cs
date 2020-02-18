@@ -121,8 +121,8 @@ namespace bonita_smile_v1
                         /*-------------------------------------------------------------------------*/
 
                         /*PARTE ONLINE*/
-                        clin = new Clinicas(!bandera_online_offline);
-                        clin.eliminarClinica(id_clinica);
+                        //clin = new Clinicas(!bandera_online_offline);
+                        //clin.eliminarClinica(id_clinica);
 
                         //ELIMINA TODOS LOS ARCHIVOS DEL SERVIDOR QUE SE ENCUENTRAN EN EL ARCHIVO
                         //if(elimino)

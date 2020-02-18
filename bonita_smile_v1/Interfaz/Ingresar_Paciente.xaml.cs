@@ -224,8 +224,8 @@ namespace bonita_smile_v1
                             bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, "", "", txtEmail.Text, 0, id_clinica);
                             if (inserto)
                             {
-                                pa = new Paciente(true);
-                                pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, "", "", txtEmail.Text, 0, id_clinica);
+                                //pa = new Paciente(true);
+                                //pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, "", "", txtEmail.Text, 0, id_clinica);
                                 Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)

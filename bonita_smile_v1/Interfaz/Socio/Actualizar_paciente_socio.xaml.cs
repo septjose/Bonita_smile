@@ -253,8 +253,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        pa = new Paciente(!bandera_online_offline);
-                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        //pa = new Paciente(!bandera_online_offline);
+                                        //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                                         if (socio != null)
                                         {
@@ -269,8 +269,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        pa = new Paciente(!bandera_online_offline);
-                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        //pa = new Paciente(!bandera_online_offline);
+                                        //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                                         if (socio != null)
                                         {
@@ -288,8 +288,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        pa = new Paciente(!bandera_online_offline);
-                                        pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                        //pa = new Paciente(!bandera_online_offline);
+                                        //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                                         if (socio != null)
                                         {

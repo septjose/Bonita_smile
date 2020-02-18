@@ -122,8 +122,8 @@ namespace bonita_smile_v1
                 if (inserto)
                 {
                     System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    c = new Clinicas(!bandera_online_offline);
-                    c.insertar_Permisos(id_usuario, id_clinica);
+                    //c = new Clinicas(!bandera_online_offline);
+                    //c.insertar_Permisos(id_usuario, id_clinica);
                     Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                     if (admin != null)
                         admin.Main.Content = new Pagina_Permisos(this.id_rol);

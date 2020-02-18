@@ -35,7 +35,7 @@ namespace bonita_smile_v1
         Motivo_citaModel motivo;
         string id_motivo = "";
         string id_paciente = "";
-        bool bandera_online_offline = false;
+        bool bandera_offline_online = false;
         CultureInfo culture = new CultureInfo("en-US");
         NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
@@ -60,7 +60,7 @@ namespace bonita_smile_v1
             txtRestante.IsEnabled = false;
             //lblmotivo.Content = motivo.descripcion;
             //lblTotal.Content = motivo.costo.ToString();
-            Abonos abono = new Abonos(bandera_online_offline);
+            Abonos abono = new Abonos(bandera_offline_online);
 
             txtTotal.Text= "$"+ Convert.ToDouble(motivo.costo,culture).ToString("n", nfi);
             txtAbonado.Text= "$" + Convert.ToDouble(abono.Abonados(motivo.id_motivo),culture).ToString("n", nfi);
@@ -157,7 +157,7 @@ namespace bonita_smile_v1
                 var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(carpeta.id_carpeta, id_paciente);
                 System.Windows.MessageBox.Show(carpeta.id_carpeta);
                 //ELIMINAR REGISTRO
-                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta);
+                bool elimino = new Carpeta_archivos(bandera_offline_online).eliminarCarpeta_archivos(carpeta.id_carpeta);
                 if (elimino)
                 {
                     System.Windows.MessageBox.Show("llego aqio");
@@ -217,13 +217,13 @@ namespace bonita_smile_v1
                 }
 
                 //ELIMINAR DESPUES TODO LO REFERENTE A LA NOTA
-                Nota_de_digi_evolucion mot = new Nota_de_digi_evolucion(bandera_online_offline);
+                Nota_de_digi_evolucion mot = new Nota_de_digi_evolucion(bandera_offline_online);
 
                 elimino = mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
                 if (elimino)
                 {
-                    mot = new Nota_de_digi_evolucion(!bandera_online_offline);
-                    mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
+                    //mot = new Nota_de_digi_evolucion(!bandera_offline_online);
+                    //mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
                     // mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
                     GNotas.Remove((Nota_de_digi_evolucionModel)lvNotas.SelectedItem);
                     System.Windows.Forms.MessageBox.Show("Se elimino el motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -70,8 +70,8 @@ namespace bonita_smile_v1
                     bool elimino = user.eliminarUsuario(id_usuario);
                     if (elimino)
                     {
-                        user = new Usuarios(!bandera_online_offline);
-                        user.eliminarUsuario(id_usuario);
+                        //user = new Usuarios(!bandera_online_offline);
+                        //user.eliminarUsuario(id_usuario);
                         Gusuario.Remove((UsuarioModel)lv_Users.SelectedItem);
                         System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }

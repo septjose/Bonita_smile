@@ -122,8 +122,8 @@ namespace bonita_smile_v1
                             actualizo = user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, password, id_rol);
                             if(actualizo)
                             {
-                                user = new Usuarios(!bandera_online_offline);
-                                user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, password, id_rol);
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, password, id_rol);
                                 System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
@@ -143,8 +143,8 @@ namespace bonita_smile_v1
                             actualizo= user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
                             if(actualizo)
                             {
-                                user = new Usuarios(!bandera_online_offline);
-                                user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
                                 System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
@@ -169,8 +169,8 @@ namespace bonita_smile_v1
                             actualizo = user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                             if (actualizo)
                             {
-                                user = new Usuarios(!bandera_online_offline);
-                                user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, new_pass, id_rol);
 
                             }
                             else
@@ -183,8 +183,8 @@ namespace bonita_smile_v1
                             actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                             if (actualizo)
                             {
-                                user = new Usuarios(!bandera_online_offline);
-                                user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
                             }
                             else
                             {

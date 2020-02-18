@@ -37,7 +37,7 @@ namespace bonita_smile_v1
                         System.Windows.Forms.MessageBox.Show("Se Eliminó la membresia", "Se Eliminó", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         // -----------------------------------------------/
-                        elimino = new Paciente(!bandera_online_offline).eliminarMembresia(paciente);
+                        //elimino = new Paciente(!bandera_online_offline).eliminarMembresia(paciente);
                     }
                     else
                     {

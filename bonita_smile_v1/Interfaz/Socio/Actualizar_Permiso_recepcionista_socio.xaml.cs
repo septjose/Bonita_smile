@@ -108,8 +108,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                     if (insertar)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        c = new Clinicas(!bandera_online_offline);
-                        c.insertar_Permisos(id_usuario, id_clinica);
+                        //c = new Clinicas(!bandera_online_offline);
+                        //c.insertar_Permisos(id_usuario, id_clinica);
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                         if (socio != null)
                             socio.Main4.Content = new Permisos_Recepcionista_socio(this.lista, this.Al, this.id_rol);
@@ -125,8 +125,8 @@ namespace bonita_smile_v1.Interfaz.Socio
                     if (inserto)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        c = new Clinicas(!bandera_online_offline);
-                        c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
+                        //c = new Clinicas(!bandera_online_offline);
+                        //c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                         if (socio != null)
                             socio.Main4.Content = new Permisos_Recepcionista_socio(this.lista, this.Al, this.id_rol);

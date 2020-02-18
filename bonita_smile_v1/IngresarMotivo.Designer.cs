@@ -173,8 +173,8 @@ namespace bonita_smile_v1
                     bool inserto = mc.insertarMotivo_cita(nombre, costo.ToString(culture), id);
                     if (inserto)
                     {
-                        mc = new Motivo_cita(true);
-                        mc.insertarMotivo_cita(nombre, costo.ToString(culture), id);
+                        //mc = new Motivo_cita(true);
+                        //mc.insertarMotivo_cita(nombre, costo.ToString(culture), id);
                         System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }

@@ -55,8 +55,8 @@ namespace bonita_smile_v1
                     bool correcto = c.insertarClinica(nombre_sucursal, color);
                     if (correcto)
                     {
-                        c = new Clinicas(!bandera_online_offline);
-                        c.insertarClinica(nombre_sucursal, color);
+                        //c = new Clinicas(!bandera_online_offline);
+                        //c.insertarClinica(nombre_sucursal, color);
                         System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)

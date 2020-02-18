@@ -257,8 +257,8 @@ namespace bonita_smile_v1
                             bool insertarAbono = ab.insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono.ToString(culture), comentario);
                             if (insertarAbono)
                             {
-                                ab = new Abonos(!bandera_online_offline);
-                                ab.insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono.ToString(culture), comentario);
+                                //ab = new Abonos(!bandera_online_offline);
+                                //ab.insertarAbono(id_paciente, id_motivo, fecha.ToString("yyyy/MM/dd"), abono.ToString(culture), comentario);
                                 //System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 //System.Windows.Forms.MessageBox.Show("El cambio es de " + cambio, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 //System.Windows.Forms.MessageBox.Show("Se esta imprimiendo el recibo", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

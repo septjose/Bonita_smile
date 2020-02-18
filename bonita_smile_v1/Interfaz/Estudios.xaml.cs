@@ -35,7 +35,7 @@ namespace bonita_smile_v1
         Carpeta_archivosModel item_carpeta;
         string id_paciente = "";
         string id_motivo = "";
-        bool bandera_offline_online = false;
+        bool bandera_online_offline = false;
         Configuracion_Model configuracion;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         public Pagina_Estudios(PacienteModel paciente, Motivo_citaModel motivo)
@@ -156,7 +156,7 @@ namespace bonita_smile_v1
                 var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(this.item_carpeta.id_carpeta, id_paciente);
 
                 //ELIMINAR REGISTRO
-                bool elimino = new Carpeta_archivos(bandera_offline_online).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
                 if (elimino)
                 {
                     System.Windows.MessageBox.Show("llego aqio");

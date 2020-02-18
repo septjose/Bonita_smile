@@ -69,8 +69,8 @@ namespace bonita_smile_v1
                         
 
                         System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        cl = new Clinicas(!bandera_online_offline);
-                        cl.actualizarClinica(id_clinica, nombre_clinica, color);
+                        //cl = new Clinicas(!bandera_online_offline);
+                        //cl.actualizarClinica(id_clinica, nombre_clinica, color);
                         //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         //if (admin != null) 
                         //{
@@ -110,8 +110,8 @@ namespace bonita_smile_v1
                         {
                         
                         System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        cl = new Clinicas(!bandera_online_offline);
-                        cl.actualizarClinica(id_clinica, nombre_clinica, color);
+                        //cl = new Clinicas(!bandera_online_offline);
+                        //cl.actualizarClinica(id_clinica, nombre_clinica, color);
                         //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         //    if (admin != null)
                         //    {
