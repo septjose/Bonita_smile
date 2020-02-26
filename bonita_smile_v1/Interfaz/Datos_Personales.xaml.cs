@@ -37,8 +37,10 @@ namespace bonita_smile_v1
         PacienteModel paciente;
         bool bandera_online_offline = false;
         Configuracion_Model configuracion;
+        string alias = "";
+        string nombre_doctor;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-        public Page2(PacienteModel paciente)
+        public Page2(PacienteModel paciente,string nombre_doctor,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -63,6 +65,8 @@ namespace bonita_smile_v1
             llenar_list_view(paciente.id_paciente);
             id = paciente.id_paciente;
             this.paciente = paciente;
+            this.alias = alias;
+            this.nombre_doctor=nombre_doctor;
         }
 
         public Page2()
@@ -138,20 +142,20 @@ namespace bonita_smile_v1
                 //Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                 if (admin != null)
                 {
-                    admin.Main.Content = new Page2_notas(paciente, motivo);
+                    admin.Main.Content = new Page2_notas(paciente, motivo, nombre_doctor, alias);
                 }
 
                 else
                 if (clin != null)
                 {
                     
-                    clin.Main2.Content = new Page2_notas(paciente, motivo);
+                    clin.Main2.Content = new Page2_notas(paciente, motivo, nombre_doctor, alias);
                 }
                 else
                 if (socio != null)
                 {
 
-                    socio.Main4.Content = new Page2_notas(paciente, motivo);
+                    socio.Main4.Content = new Page2_notas(paciente, motivo,nombre_doctor,alias);
                 }
 
 
@@ -170,7 +174,7 @@ namespace bonita_smile_v1
             //im.ShowDialog();
        
             DialogResult resultado = new DialogResult();
-            Form mensaje = new IngresarMotivo(id);
+            Form mensaje = new IngresarMotivo(id,alias);
             resultado = mensaje.ShowDialog();
             this.GMotivo = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
             lvMotivo.ItemsSource = GMotivo;
@@ -183,11 +187,11 @@ namespace bonita_smile_v1
             Motivo_citaModel motivo = (Motivo_citaModel)lvMotivo.SelectedItem;
             if (lvMotivo.SelectedItems.Count > 0)
             {
-                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + motivo.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el motivo :" + motivo.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
                         Motivo_cita mot = new Motivo_cita(bandera_online_offline);
-                        bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
+                        bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente,alias);
                         if (elimino)
                         {
                         //mot = new Motivo_cita(!bandera_online_offline);
@@ -212,7 +216,7 @@ namespace bonita_smile_v1
             if (lvMotivo.SelectedItems.Count > 0)
             {
                 DialogResult resultado = new DialogResult();
-                Form mensaje = new Actualizar_Motivo(motivo);
+                Form mensaje = new Actualizar_Motivo(motivo,alias);
                 resultado = mensaje.ShowDialog();
                 this.GMotivo = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
                 lvMotivo.ItemsSource = GMotivo;

@@ -28,13 +28,14 @@ namespace bonita_smile_v1
     {
         ObservableCollection<ClinicaModel> Gclinica;
         bool bandera_online_offline = false;
-
+        string alias;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-        public Page5()
+        public Page5(string alias)
         {
 
             InitializeComponent();
             llenar_list_view();
+            this.alias = alias;
         }
         void llenar_list_view()
         {
@@ -63,7 +64,7 @@ namespace bonita_smile_v1
                 string id_clinica = clinica.id_clinica;
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
-                    admin.Main.Content = new Page5_Actualizar(clinica); 
+                    admin.Main.Content = new Page5_Actualizar(clinica,alias); 
             }
             else
             {
@@ -88,13 +89,13 @@ namespace bonita_smile_v1
                     Clinicas clin = new Clinicas(bandera_online_offline);
                     //OBTENER IMAGENES DE LA CLINICA CORRESPONDIENTE, INCLUYENDO SUS FOTOGRAFIAS DE PACIENTES, INCLUYENDO SU FOTOGRAFIS
                     var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_Clinica(id_clinica);
-                    bool elimino = clin.eliminarClinica(id_clinica);
+                    bool elimino = clin.eliminarClinica(id_clinica,alias);
                     if (elimino)
                     {
                         /*-----------ELIMINAR FOTOS DE LOCAL--------------------------------------*/
                         if (listaNombreArchivos.Count == 0)
                         {
-                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta+"\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                         }
                         else
                         {
@@ -103,7 +104,7 @@ namespace bonita_smile_v1
                                 System.Windows.MessageBox.Show("escribio en archivo");
 
                                 //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                                ea.escribir_imagen_eliminar(nombre, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                                ea.escribir_imagen_eliminar(nombre, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                                 //ELIMINAR FOTOS
                                 if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta+"\\" + nombre))
                                 {
@@ -166,7 +167,7 @@ namespace bonita_smile_v1
         {
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
-                admin.Main.Content = new Page5_Ingresar(); ;
+                admin.Main.Content = new Page5_Ingresar(alias); ;
         }
     }
 }

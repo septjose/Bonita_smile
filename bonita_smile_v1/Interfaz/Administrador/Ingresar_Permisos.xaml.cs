@@ -32,14 +32,17 @@ namespace bonita_smile_v1
         string valor = "",valor2="";
         bool bandera_online_offline = false;
         int id_rol = 0;
-        public Pagina_Ingresar_Permisos(int id_rol)
+        string alias;
+        public Pagina_Ingresar_Permisos(int id_rol,string alias)
         {
+            System.Windows.MessageBox.Show(alias+"el constructor de ingresar");
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.conexionBD2 = obj.conexion(bandera_online_offline);
             this.id_rol = id_rol;
             InitializeComponent();
             llenar_Combo_Usuario(id_rol);
             llenar_Combo_Clinica();
+            this.alias = alias;
         }
 
         public void llenar_Combo_Clinica()
@@ -118,7 +121,7 @@ namespace bonita_smile_v1
                 string id_clinica = obtener_id_Clinica(valor2);
 
                 Clinicas c = new Clinicas(bandera_online_offline);
-                bool inserto = c.insertar_Permisos(id_usuario, id_clinica);
+                bool inserto = c.insertar_Permisos(id_usuario, id_clinica,alias);
                 if (inserto)
                 {
                     System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -126,7 +129,7 @@ namespace bonita_smile_v1
                     //c.insertar_Permisos(id_usuario, id_clinica);
                     Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                     if (admin != null)
-                        admin.Main.Content = new Pagina_Permisos(this.id_rol);
+                        admin.Main.Content = new Pagina_Permisos(this.id_rol,alias);
 
 
                 }

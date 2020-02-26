@@ -113,7 +113,7 @@ namespace bonita_smile_v1
             //System.Windows.MessageBox.Show(conf.servidor_interno.servidor_local);
             //System.Windows.MessageBox.Show(conf.carpetas.ruta_fotografias_carpeta + "\n " + conf.carpetas.ruta_imagenes_carpeta + "\n " +
             //conf.carpetas.ruta_subir_servidor_carpeta + "\n " +
-            //conf.carpetas.ruta_temporal_carpeta + "\n " +
+            //conf.carpetas.ruta_respaldo_carpeta + "\n " +
             //conf.servidor_interno.database_local + "\n " +
             //conf.servidor_interno.puerto_local + "\n " +
             //conf.servidor_interno.usuario_local + "\n " +

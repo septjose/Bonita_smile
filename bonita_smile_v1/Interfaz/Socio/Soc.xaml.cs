@@ -25,12 +25,14 @@ namespace bonita_smile_v1.Interfaz.Socio
         ObservableCollection<PacienteModel> GPaciente;
         string alias = "";
         List<string> lista = new List<string>();
-        public Soc(List<string> lista,string alias)
+        string nombre_doctor;
+        public Soc(List<string> lista,string nombre_doctor,string alias)
         {
             InitializeComponent();
-            Main4.Content = new Pagina_Socio(lista);
+            Main4.Content = new Pagina_Socio(lista,nombre_doctor,alias);
             this.lista = lista;
             this.alias = alias;
+            this.nombre_doctor = nombre_doctor;
             //llenar_list_view();
 
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -88,7 +90,7 @@ namespace bonita_smile_v1.Interfaz.Socio
 
         private void listViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main4.Content = new  Pagina_Socio(this.lista); 
+            Main4.Content = new  Pagina_Socio(this.lista,nombre_doctor,alias); 
         }
 
         private void listViewItem1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -120,6 +122,12 @@ namespace bonita_smile_v1.Interfaz.Socio
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Paleta_Colores p_c = new Paleta_Colores();
+            p_c.ShowDialog();
         }
     }
 }

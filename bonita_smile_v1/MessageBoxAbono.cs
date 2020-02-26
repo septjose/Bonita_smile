@@ -31,5 +31,35 @@ namespace bonita_smile_v1
         {
 
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtComentario_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_aportacion_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtAbono_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblAbono_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

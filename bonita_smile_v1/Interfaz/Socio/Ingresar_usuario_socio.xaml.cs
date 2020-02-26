@@ -31,12 +31,14 @@ namespace bonita_smile_v1.Interfaz.Socio
         bool bandera_online_offline = false;
         List<string> lista = new List<string>();
         string alias = "";
+        string alias_user;
 
         public Ingresar_usuario_socio(List<string> lista,string alias)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.lista = lista;
             this.alias = alias;
+            this.alias_user = alias;
             InitializeComponent();
             llenar_Combo();
         }
@@ -90,7 +92,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 try
                 {
                     Usuarios user = new Usuarios(bandera_online_offline);
-                    bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+                    bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol, alias_user);
 
                     if (inserto)
                     {

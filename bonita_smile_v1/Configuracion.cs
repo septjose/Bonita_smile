@@ -47,5 +47,11 @@ namespace bonita_smile_v1
         {
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Configuracion_FTP c_f = new Configuracion_FTP(this.configuracion, this.ruta);
+            c_f.Show();
+        }
     }
 }

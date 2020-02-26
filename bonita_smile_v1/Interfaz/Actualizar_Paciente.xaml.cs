@@ -45,7 +45,8 @@ namespace bonita_smile_v1
         PacienteModel paciente;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
-        public Page6_Actualizar(PacienteModel paciente)
+        string alias;
+        public Page6_Actualizar(PacienteModel paciente , string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -63,6 +64,7 @@ namespace bonita_smile_v1
             antecedentes = paciente.antecedente;
             id_pacientes = paciente.id_paciente;
             foto = paciente.foto;
+            this.alias = alias;
 
         }
 
@@ -148,7 +150,7 @@ namespace bonita_smile_v1
                             // new Actualizar_Antecedentes(pacienteModel).ShowDialog();
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             if (admin != null)
-                                admin.Main.Content = new Page7_Actualizar(pacienteModel, nombres_viejo, null, ""); ;
+                                admin.Main.Content = new Page7_Actualizar(pacienteModel, nombres_viejo, null, alias); ;
                         }
                         else
                         {
@@ -220,7 +222,7 @@ namespace bonita_smile_v1
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
 
             if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
             {
@@ -245,7 +247,7 @@ namespace bonita_smile_v1
                             {
                                 if (foto.Equals(""))
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, foto, antecedentes, txtEmail.Text, 0, id_clinica,alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -254,14 +256,14 @@ namespace bonita_smile_v1
                                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                         if (admin != null)
                                         {
-                                            admin.Main.Content = new Page6();
+                                            admin.Main.Content = new Page6(alias);
                                         }
 
                                     }
                                 }
                                 else
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, foto, antecedentes, txtEmail.Text, 0, id_clinica , alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -270,7 +272,7 @@ namespace bonita_smile_v1
                                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                         if (admin != null)
                                         {
-                                            admin.Main.Content = new Page6();
+                                            admin.Main.Content = new Page6(alias);
                                         }
 
                                     }
@@ -280,7 +282,7 @@ namespace bonita_smile_v1
                             {
                                 if (foto.Equals(""))
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, foto, antecedentes, txtEmail.Text, 0, id_clinica , alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -289,7 +291,7 @@ namespace bonita_smile_v1
                                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                         if (admin != null)
                                         {
-                                            admin.Main.Content = new Page6();
+                                            admin.Main.Content = new Page6(alias);
                                         }
 
                                     }
@@ -298,7 +300,7 @@ namespace bonita_smile_v1
                                 {
                                     string nombre_nuevo_foto = txtNombre.Text + "_" + txtApellidos.Text + "_" + id_pacientes + ".jpg";
                                     nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica , alias);
                                     if (inserto)
                                     {
                                         renombrar(this.paciente.foto, nombre_nuevo_foto);
@@ -309,9 +311,13 @@ namespace bonita_smile_v1
                                         string destFile2 = System.IO.Path.Combine(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\", nombre_nuevo_foto);
                                         System.IO.File.Copy(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre_nuevo_foto, destFile2, true);
                                         Escribir_Archivo ea = new Escribir_Archivo();
-                                        ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                                        ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                        if (admin != null)
+                                        {
+                                            admin.Main.Content = new Page6(alias);
+                                        }
                                         // pa = new Paciente(!bandera_online_offline);
                                         //bool actualizo= pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         // if(actualizo)

@@ -29,18 +29,21 @@ namespace bonita_smile_v1.Interfaz.Administrador
         System.Windows.Controls.ListView lv_aux;
         bool bandera_online_offline = false;
         int id_rol = 0;
-        public Pagina_Permisos(int id_rol)
+        string alias;
+        public Pagina_Permisos(int id_rol,string alias)
         {
+            System.Windows.MessageBox.Show(alias+"constructor permisos");
             this.id_rol = id_rol;
-
+            this.alias = alias;
             InitializeComponent();
             llenar_list_view(id_rol);
             if(id_rol!=5)
             {
                 this.btn_ingresar.IsEnabled = false;
-                this.btn_ingresar.Visibility= System.Windows.Visibility.Collapsed; 
+                this.btn_ingresar.Visibility= System.Windows.Visibility.Collapsed;
+               
             }
-           
+
             
         }
 
@@ -66,6 +69,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.MessageBox.Show(this.alias + "presiono el boton de eliminar");
             PermisosModel permiso = (PermisosModel)lv_Users.SelectedItem;
             if (lv_Users.SelectedItems.Count > 0)
             {    
@@ -82,7 +86,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
                     {
                         Clinicas cli = new Clinicas(bandera_online_offline);
 
-                        bool elimino = cli.eliminar_Permiso(permiso.id_usuario, permiso.id_clinica);
+                        bool elimino = cli.eliminar_Permiso(permiso.id_usuario, permiso.id_clinica,alias);
                         if (elimino)
                         {
                             //cli = new Clinicas(!bandera_online_offline);
@@ -108,7 +112,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
+            System.Windows.MessageBox.Show(this.alias + "presiono el boton actualizar");
             PermisosModel permiso = (PermisosModel)lv_Users.SelectedItem;
             if (lv_Users.SelectedItems.Count > 0)
             {
@@ -116,7 +120,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                    admin.Main.Content = new Pagina_Actualizar_Permisos(this.id_rol, permiso.alias, permiso.nombre_sucursal,permiso.id_clinica);
+                    admin.Main.Content = new Pagina_Actualizar_Permisos(this.id_rol, permiso.alias, permiso.nombre_sucursal,permiso.id_clinica,alias,permiso.id_usuario);
             }
             else
             {
@@ -127,9 +131,10 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            System.Windows.MessageBox.Show(this.alias+"presiono el boton ingresar");
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
-                admin.Main.Content = new Pagina_Ingresar_Permisos(this.id_rol);
+                admin.Main.Content = new Pagina_Ingresar_Permisos(this.id_rol, this.alias);
         }
     }
 }

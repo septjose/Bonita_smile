@@ -116,8 +116,19 @@ namespace bonita_smile_v1.Servicios
             datos.Add(configuracion.carpetas.ruta_fotografias_carpeta);
             datos.Add(configuracion.carpetas.ruta_imagenes_carpeta);
             datos.Add(configuracion.carpetas.ruta_subir_servidor_carpeta);
-            datos.Add(configuracion.carpetas.ruta_temporal_carpeta);
-           
+            datos.Add(configuracion.carpetas.ruta_respaldo_carpeta);
+            datos.Add(configuracion.carpetas.ruta_script_carpeta);
+            datos.Add(configuracion.carpetas.ruta_eliminar_carpeta);
+
+            datos.Add(configuracion.ftp.ftp_server);
+            datos.Add(configuracion.ftp.ftp_password);
+            datos.Add(configuracion.ftp.ftp_path);
+            datos.Add(configuracion.ftp.ftp_user);
+            datos.Add(configuracion.ftp.nombre_impresora);
+            
+
+
+
 
             foreach (var script in datos)
             {
@@ -195,16 +206,28 @@ namespace bonita_smile_v1.Servicios
                         ruta_fotografias_carpeta = new Seguridad().Desencriptar(lista[11]),
                         ruta_imagenes_carpeta = new Seguridad().Desencriptar(lista[12]),
                         ruta_subir_servidor_carpeta = new Seguridad().Desencriptar(lista[13]),
-                        ruta_temporal_carpeta = new Seguridad().Desencriptar(lista[14]),
+                        ruta_respaldo_carpeta = new Seguridad().Desencriptar(lista[14]),
+                        ruta_script_carpeta = new Seguridad().Desencriptar(lista[15]),
+                        ruta_eliminar_carpeta = new Seguridad().Desencriptar(lista[16]),
                     };
 
+                    ConfiguracionFTPModel ftps = new ConfiguracionFTPModel()
+                    {
+                        ftp_server = new Seguridad().Desencriptar(lista[17]),
+                        ftp_password = new Seguridad().Desencriptar(lista[18]),
+                        ftp_path = new Seguridad().Desencriptar(lista[19]),
+                        ftp_user = new Seguridad().Desencriptar(lista[20]),
+                        nombre_impresora = new Seguridad().Desencriptar(lista[21]),
+                        
+                    };
 
 
                     configuracion = new Configuracion_Model()
                     {
                         carpetas = carpeta,
                         servidor_externo = servidor_extern,
-                        servidor_interno = servidor_intern
+                        servidor_interno = servidor_intern,
+                        ftp=ftps,
 
                     };
                    

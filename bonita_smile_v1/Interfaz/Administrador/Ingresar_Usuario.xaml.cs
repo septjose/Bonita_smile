@@ -29,11 +29,13 @@ namespace bonita_smile_v1
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         bool bandera_online_offline = false;
-        public Page4_Ingresar()
+        string alias_user;
+        public Page4_Ingresar(string alias_user)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             InitializeComponent();
             llenar_Combo();
+            this.alias_user = alias_user;
         }
 
         public void llenar_Combo()
@@ -87,7 +89,7 @@ namespace bonita_smile_v1
                 try
                 {
                     Usuarios user = new Usuarios(bandera_online_offline);
-                    bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+                    bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol , alias_user);
 
 
                     if (inserto)
@@ -101,7 +103,7 @@ namespace bonita_smile_v1
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
                             //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                            admin.Main.Content = new Page4();
+                            admin.Main.Content = new Page4(alias_user);
                     }
                     else
                     {

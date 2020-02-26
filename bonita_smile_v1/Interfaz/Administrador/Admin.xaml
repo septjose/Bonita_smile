@@ -84,8 +84,8 @@
             <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
     </Controls:MetroWindow.Triggers>
-    <Grid Background="#FF3580BF">
-        <StackPanel x:Name="StackPanelMenu" Width="250" HorizontalAlignment="Left" Margin="-250 0 0 0" RenderTransformOrigin="0.5,0.5">
+    <Grid x:Name="paleta_colores" Background="#FF3580BF">
+        <StackPanel x:Name="StackPanelMenu"  Width="250" HorizontalAlignment="Left" Margin="-250 0 0 0" RenderTransformOrigin="0.5,0.5">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -98,7 +98,7 @@
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Width="50" Height="50" Margin="10" Click="Button_Click_1">
                     <materialDesign:PackIcon Kind="Settings" Width="40" Height="40"  />
                 </Button>
-                <Button x:Name="button" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" BorderBrush="{x:Null}" Padding="0" Width="80" Height="80" Margin="10" RenderTransformOrigin="0.5,0.5">
+                <Button x:Name="button" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" BorderBrush="{x:Null}" Padding="0" Width="80" Height="80" Margin="10" RenderTransformOrigin="0.5,0.5" Click="button_Click_2">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -287,7 +287,7 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Frame   x:Name="Main"  NavigationUIVisibility="Visible" Margin="0,52,0.333,0" Grid.ColumnSpan="2"/>
+            <Frame   x:Name="Main"  NavigationUIVisibility="Visible" Margin="0,30,0.333,0" Grid.ColumnSpan="2"/>
             <!--<ListView x:Name="lv_Paciente" HorizontalAlignment="Center" Height="283" Margin="24,224,0,0" VerticalAlignment="Top" Width="724" Foreground="Black" >
                 <ListView.View >
                     <GridView >

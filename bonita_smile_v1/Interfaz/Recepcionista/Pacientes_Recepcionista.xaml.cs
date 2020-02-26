@@ -33,7 +33,8 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         String id = "";
         Configuracion_Model configuracion;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-        public Pacientes_Recepcionista(string id)
+        string alias;
+        public Pacientes_Recepcionista(string id,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -41,6 +42,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             llenar_list_view(id);
             this.id = id;
             this.configuracion = configuracion;
+            this.alias = alias;
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
             view.Filter = UserFilter;
@@ -57,7 +59,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         private void Borrar(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             Escribir_Archivo ea = new Escribir_Archivo();
 
@@ -71,7 +73,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                 {
                     //se elimina todo lo relacionado con el pacinete incluyento sus registros de carpetas,fotos,etc. osea que no se puede recuperar nada
                     var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_Paciente(id_paciente);
-                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente);
+                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente,alias);
                     if (elimino)
                     {
                         //obtener todas sus imagenes y guardarlas dentro del archivo
@@ -79,7 +81,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                         if (listaNombreArchivos.Count == 0)
                         {
-                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                         }
                         else
                         {
@@ -88,7 +90,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                 System.Windows.MessageBox.Show("escribio en archivo");
 
                                 //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                                ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                                ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                                 //ELIMINAR FOTOS
                                 if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa))
                                 {
@@ -107,7 +109,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                         else
                         {
                             //PASAR FOTO EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(paciente.foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(paciente.foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                             //ELIMINAR FOTO
                             if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + paciente.foto))
                             {
@@ -251,7 +253,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                
                 if (recep != null)
                 {
-                    recep.Main3.Content = new Actualizar_Paciente_Recepcionista(paciente, this.id);
+                    recep.Main3.Content = new Actualizar_Paciente_Recepcionista(paciente, this.id,alias);
                 }
 
 
@@ -284,7 +286,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                 if (recep != null)
             {
-                recep.Main3.Content = new Ingresar_Paciente_Recepcionista(this.id);
+                recep.Main3.Content = new Ingresar_Paciente_Recepcionista(this.id,alias);
             }
 
 

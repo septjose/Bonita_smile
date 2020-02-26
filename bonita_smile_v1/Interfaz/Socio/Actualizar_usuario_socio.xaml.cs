@@ -36,6 +36,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         bool bandera_online_offline = false;
         List<string> lista = new List<string>();
         string alias = "";
+        string alias_user;
         public Actualizar_usuario_socio(UsuarioModel usu,List<string> lista,string alias)
         {
 
@@ -44,6 +45,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             this.usu = usu;
             this.lista = lista;
             this.alias = alias;
+            this.alias_user = alias;
             txtAlias.Text = usu.alias;
             txtApellido.Text = usu.apellidos;
             txtNombre.Text = usu.nombre;
@@ -114,7 +116,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     bool inserto = false;
                     if (password.Equals(pass_tabla))
                     {
-                        inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                        inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol, alias_user);
                         if (inserto)
                         {
 
@@ -146,7 +148,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     {
                         Seguridad secure = new Seguridad();
                         string new_pass = secure.Encriptar(password);
-                        inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                        inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user);
                         if (inserto)
                         {
                             //user = new Usuarios(!bandera_online_offline);

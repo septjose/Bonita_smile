@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,16 @@ namespace bonita_smile_v1.Servicios
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
         private bool online;
+        Configuracion_Model configuracion;
+
         public Motivo_cita(bool online)
         {
             this.conexionBD = obj.conexion(online);
             this.online = online;
+            string ruta = Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta);
+            this.configuracion = configuracion;
         }
 
         public List<Motivo_citaModel> Mostrar_MotivoCita(string id_paciente)
@@ -61,7 +68,7 @@ namespace bonita_smile_v1.Servicios
             return listaMotivo_cita;
         }
 
-        public bool eliminarMotivo_cita(string id_motivo, string id_paciente)
+        public bool eliminarMotivo_cita(string id_motivo, string id_paciente,string alias)
         {
             
             bool internet = ti.Test();
@@ -97,7 +104,7 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_"+alias+".txt");
                     return true;
                 }
                 
@@ -110,7 +117,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarMotivo_cita(string descripcion, string costo, string id_paciente)
+        public bool insertarMotivo_cita(string descripcion, string costo, string id_paciente,string alias)
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
@@ -147,7 +154,7 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
                     return true;
                 }
                 
@@ -160,7 +167,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarMotivo_cita(string id_motivo, string descripcion, string costo, string id_paciente)
+        public bool actualizarMotivo_cita(string id_motivo, string descripcion, string costo, string id_paciente,string alias)
         {          
             bool internet = ti.Test();
             try
@@ -195,7 +202,7 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
                     return true;
                 }
                

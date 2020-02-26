@@ -132,8 +132,10 @@ namespace bonita_smile_v1.Interfaz.Socio
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string id_clinica = "";
             try
             {
+                
                 valor = cmbClinica.SelectedItem.ToString();
                 fecha = calendario.SelectedDate.ToString();
                 fecha2 = calendario2.SelectedDate.ToString();
@@ -141,7 +143,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 if (fecha2.Equals("") && fecha.Equals("") && !valor.Equals(""))
                 {
 
-                    string id_clinica = obtener_id_clinica(valor);
+                    id_clinica = obtener_id_clinica(valor);
                     var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos(false).Ganacioas_c_clinica(id_clinica));
 
                     lv_Gannacias.ItemsSource = ganancias;
@@ -154,11 +156,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     if (fecha2.Equals("") && !fecha.Equals("") && !valor.Equals(null))
                 {
 
-                    string id_clinica = obtener_id_clinica(valor);
-
-
-
-
+                     id_clinica = obtener_id_clinica(valor);
                     fecha = fecha.Substring(0, fecha.Length - 8);
 
                     var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos(false).Ganacioas_c_clinica_fecha(id_clinica, fecha));
@@ -172,8 +170,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 else
                     if (!fecha2.Equals("") && !fecha.Equals("") && !valor.Equals(null))
                 {
-
-                    string id_clinica = obtener_id_clinica(valor);
+                    id_clinica = obtener_id_clinica(valor);
                     fecha = fecha.Substring(0, fecha.Length - 8);
                     fecha2 = fecha2.Substring(0, fecha2.Length - 8);
                     var ganancias = new ObservableCollection<Ganancias>(new Servicios.Abonos(false).Ganacioas_c_clinica_fecha2(id_clinica, fecha, fecha2));
@@ -188,10 +185,11 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (Exception ex)
             {
+                MessageBox.Show("el id de la clinica es :" + id_clinica);
                 fecha = calendario.SelectedDate.ToString();
                 fecha2 = calendario2.SelectedDate.ToString();
 
-                if (!fecha2.Equals("") && !fecha.Equals("") && valor.Equals(""))
+                if (!fecha2.Equals("") && !fecha.Equals("") && id_clinica.Equals(""))
                 {
                     MessageBox.Show("Debe de elegir un id de la clinica");
                     valor = "";
@@ -199,7 +197,15 @@ namespace bonita_smile_v1.Interfaz.Socio
                     fecha = "";
                 }
                 else
-                    if (!fecha2.Equals("") && fecha.Equals("") && valor.Equals(""))
+                    if (!fecha2.Equals("") && fecha.Equals("") && !id_clinica.Equals(""))
+                {
+                    MessageBox.Show("Porfavor elegir la fecha inicial elegir una clinica");
+                    valor = "";
+                    fecha2 = "";
+                    fecha = "";
+                }
+                else
+                    if (!fecha2.Equals("") && fecha.Equals("") && id_clinica.Equals(""))
                 {
                     MessageBox.Show("Porfavor elegir la fecha inicial con el id de la clinica");
                     valor = "";

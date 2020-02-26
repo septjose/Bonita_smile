@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +18,16 @@ namespace bonita_smile_v1.Servicios
         Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
         private bool online;
+        Configuracion_Model configuracion;
 
         public Clinicas(bool online)
         {
             this.conexionBD = obj.conexion(online);
             this.online = online;
+            string ruta = Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta);
+            this.configuracion = configuracion;
         }
 
 
@@ -40,7 +46,10 @@ namespace bonita_smile_v1.Servicios
                         permisosModel.nombre_sucursal = reader[0].ToString();
                         permisosModel.id_clinica = reader[1].ToString();
                         permisosModel.id_usuario = reader[2].ToString();
-                        permisosModel.alias = reader[3].ToString();
+                        string aliass = reader[3].ToString();
+                        string a = aliass.Replace("_" + reader[2].ToString(), "");
+                        // System.Windows.MessageBox.Show(a);
+                        permisosModel.alias = a;
                         permisosModel.nombre = reader[4].ToString();
                         permisosModel.apellidos = reader[5].ToString();
                         listaPermisos.Add(permisosModel);
@@ -72,7 +81,10 @@ namespace bonita_smile_v1.Servicios
                     permisosModel.nombre = reader[2].ToString();
                     permisosModel.apellidos = reader[3].ToString();
                     permisosModel.id_usuario = reader[4].ToString();
-                    permisosModel.alias = reader[5].ToString();
+                    string aliass = reader[5].ToString();
+                    string a = aliass.Replace("_" + reader[4].ToString(), "");
+                    // System.Windows.MessageBox.Show(a);
+                    permisosModel.alias = a;
 
                     listaPermisos.Add(permisosModel);
                 }
@@ -111,7 +123,7 @@ namespace bonita_smile_v1.Servicios
             return listaClinica;
         }
 
-        public bool eliminarClinica(string id_clinica)
+        public bool eliminarClinica(string id_clinica, string alias)
         {        
             bool internet = ti.Test();
             try
@@ -142,7 +154,7 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
                     return true;
                 }
                
@@ -155,7 +167,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool eliminar_Permiso(string id_usuario,string id_clinica)
+        public bool eliminar_Permiso(string id_usuario,string id_clinica,    string alias)
         {
             bool internet = ti.Test();
             try
@@ -179,7 +191,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {                   
-                   query = "DELETE FROM permisos where id_usuario='" + id_usuario + "' and id_clinica='" + id_clinica + "';";               
+                   query = "DELETE FROM permisos where id_usuario='" + id_usuario + "' and id_clinica='" + id_clinica + "'";               
                     conexionBD.Open();
 
                     cmd = new MySqlCommand(query, conexionBD);
@@ -187,7 +199,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                
@@ -200,7 +213,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool eliminar_Permisos(string id_usuario)
+        public bool eliminar_Permisos(string id_usuario , string alias)
         {
             bool internet = ti.Test();
             try
@@ -226,7 +239,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
 
-                    query = "DELETE FROM permisos where id_usuario='" + id_usuario+"';";
+                    query = "DELETE FROM permisos where id_usuario='" + id_usuario+"'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -234,7 +247,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                
@@ -247,7 +261,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarClinica(string nombre_sucursal, string color)
+        public bool insertarClinica(string nombre_sucursal, string color   ,string alias)
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
@@ -283,7 +297,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                
@@ -296,8 +311,9 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertar_Permisos(string id_usuario, string id_clinica)
+        public bool insertar_Permisos(string id_usuario, string id_clinica  ,string alias)
         {
+            MessageBox.Show(alias);
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
             auxiliar_identificador = seguridad.SHA1(id_usuario + id_clinica + DateTime.Now);
@@ -325,20 +341,22 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     query = "INSERT INTO permisos (id_usuario,id_clinica,auxiliar_identificador) VALUES('" + id_usuario + "','" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
-
+                    Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                 
             }
             catch (MySqlException ex)
             {
+                MessageBox.Show("No se inserto ");
                 System.Windows.MessageBox.Show(ex.ToString());
                 conexionBD.Close();
                 return false;
@@ -382,7 +400,7 @@ namespace bonita_smile_v1.Servicios
            
         }
 
-        public bool actualizarClinica(string id_clinica, string nombre_sucursal, string color)
+        public bool actualizarClinica(string id_clinica, string nombre_sucursal, string color  ,string alias)
         {
             bool internet = ti.Test();
             try
@@ -416,7 +434,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                 
@@ -429,7 +448,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizar_Permisos(string id_usuario, string id_clinica,string id_clinica_anterior)
+        public bool actualizar_Permisos(string id_usuario, string id_clinica,string id_clinica_anterior ,string alias)
         {
             bool internet = ti.Test();
             try
@@ -464,7 +483,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }               
             }

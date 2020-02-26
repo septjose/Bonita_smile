@@ -23,14 +23,25 @@ namespace bonita_smile_v1
             txt_imagen.Text=configuracion.carpetas.ruta_imagenes_carpeta;
             txt_subir_servidor.Text = configuracion.carpetas.ruta_subir_servidor_carpeta;
             txt_fotografias.Text = configuracion.carpetas.ruta_fotografias_carpeta;
-            txt_temporal.Text = configuracion.carpetas.ruta_temporal_carpeta;
+            txt_temporal.Text = configuracion.carpetas.ruta_respaldo_carpeta;
+            txt_script.Text = configuracion.carpetas.ruta_script_carpeta;
+            txt_eliminar.Text = configuracion.carpetas.ruta_eliminar_carpeta;
             this.configuracion = configuracion;
             this.ruta = ruta;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Actualizo_rutas_carpetas(this.configuracion);
+            if(txt_imagen.Text.Equals(txt_subir_servidor.Text)|| txt_imagen.Text.Equals(txt_fotografias.Text)||txt_imagen.Text.Equals(txt_temporal.Text)||txt_imagen.Text.Equals(txt_script.Text)||txt_imagen.Text.Equals(txt_eliminar.Text)|| txt_subir_servidor.Text.Equals(txt_fotografias.Text)||txt_subir_servidor.Text.Equals(txt_temporal.Text)||txt_subir_servidor.Text.Equals(txt_script.Text)||txt_subir_servidor.Text.Equals(txt_eliminar.Text)||txt_fotografias.Text.Equals(txt_temporal.Text)||txt_fotografias.Text.Equals(txt_script.Text)||txt_fotografias.Text.Equals(txt_eliminar.Text)||txt_temporal.Text.Equals(txt_script.Text)||txt_temporal.Text.Equals(txt_eliminar.Text)||txt_script.Text.Equals(txt_eliminar.Text))
+            {
+                MessageBox.Show("No se deben de repetir las rutas ");
+            }
+            else
+            {
+               
+                Actualizo_rutas_carpetas(this.configuracion);
+            }
+            
         }
 
         public void Actualizo_rutas_carpetas(Configuracion_Model configuracion)
@@ -40,7 +51,9 @@ namespace bonita_smile_v1
             configuracion.carpetas.ruta_imagenes_carpeta = txt_imagen.Text;
             configuracion.carpetas.ruta_subir_servidor_carpeta = txt_subir_servidor.Text;
             configuracion.carpetas.ruta_fotografias_carpeta = txt_fotografias.Text;
-            configuracion.carpetas.ruta_temporal_carpeta = txt_temporal.Text;
+            configuracion.carpetas.ruta_respaldo_carpeta = txt_temporal.Text;
+            configuracion.carpetas.ruta_script_carpeta = txt_script.Text;
+            configuracion.carpetas.ruta_eliminar_carpeta = txt_eliminar.Text;
             ab.SetFileReadAccess(ruta, false);
             File.Delete(ruta);
 
@@ -95,6 +108,28 @@ namespace bonita_smile_v1
             {
                 tempPath = folder_imagenes.SelectedPath; // prints path
                 txt_subir_servidor.Text = tempPath;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string tempPath = "";
+
+            if (folder_imagenes.ShowDialog() == DialogResult.OK)
+            {
+                tempPath = folder_imagenes.SelectedPath; // prints path
+                txt_script.Text = tempPath;
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string tempPath = "";
+
+            if (folder_imagenes.ShowDialog() == DialogResult.OK)
+            {
+                tempPath = folder_imagenes.SelectedPath; // prints path
+                txt_eliminar.Text = tempPath;
             }
         }
     }

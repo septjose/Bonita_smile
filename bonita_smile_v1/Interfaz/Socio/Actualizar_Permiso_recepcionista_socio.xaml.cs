@@ -35,7 +35,9 @@ namespace bonita_smile_v1.Interfaz.Socio
         string id_clinica_viejo = "";
         List<String> lista = new List<string>();
         bool bandera_online_offline = false;
-        public Actualizar_Permiso_recepcionista_socio(int id_rol,string alias, string nombre_sucursal,string Al,List<string>lista,string id_clinica_anterior)
+        string id_usuario;
+        string alias;
+        public Actualizar_Permiso_recepcionista_socio(int id_rol,string alias, string nombre_sucursal,string Al,List<string>lista,string id_clinica_anterior,string id_usuario)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.conexionBD2 = obj.conexion(bandera_online_offline);
@@ -50,6 +52,8 @@ namespace bonita_smile_v1.Interfaz.Socio
             this.lista = lista;
             this.id_rol = id_rol;
             this.id_clinica_viejo = id_clinica_anterior;
+            this.alias = alias;
+            this.id_usuario = id_usuario;
 
         }
 
@@ -97,14 +101,15 @@ namespace bonita_smile_v1.Interfaz.Socio
             {
                 valor = cmbUsuario.Text;
                 valor2 = cmbClinica.SelectedItem.ToString();
-                string id_usuario = obtener_id_usuario(valor);
+                string id_usuario = obtener_id_usuario(valor+"_"+this.id_usuario);
                 string id_clinica = obtener_id_Clinica(valor2);
                 Clinicas c = new Clinicas(bandera_online_offline);
                 System.Windows.MessageBox.Show(id_usuario + "     " + id_clinica);
                 bool existe = new Clinicas(bandera_online_offline).Verificar_Tabla_Permisos(id_usuario);
+                System.Windows.MessageBox.Show("EL VALOR DE EXISTE ES " + existe);
                 if (!existe)
                 {
-                    bool insertar = c.insertar_Permisos(id_usuario, id_clinica);
+                    bool insertar = c.insertar_Permisos(id_usuario, id_clinica ,Al);
                     if (insertar)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -121,7 +126,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 }
                 else
                 {
-                    bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
+                    bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo ,Al);
                     if (inserto)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);

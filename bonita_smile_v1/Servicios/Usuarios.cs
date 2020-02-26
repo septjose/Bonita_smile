@@ -26,6 +26,7 @@ namespace bonita_smile_v1.Servicios
         private Conexion obj = new Conexion();
         Test_Internet ti = new Test_Internet();
         private bool online;
+        Configuracion_Model configuracion;
 
 
         public Usuarios(bool online)
@@ -33,6 +34,10 @@ namespace bonita_smile_v1.Servicios
             
             this.conexionBD = obj.conexion(online);
             this.online = online;
+            string ruta = Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta);
+            this.configuracion = configuracion;
         }
 
         public List<UsuarioModel> MostrarUsuario_Socio(string alias)
@@ -52,8 +57,11 @@ namespace bonita_smile_v1.Servicios
                         RolModel rolModel = new RolModel();
 
                         usuarioModel.id_usuario = reader[0].ToString();
-                        usuarioModel.alias = reader[1].ToString();
-                        usuarioModel.nombre = reader[2].ToString();
+                    string aliass = reader[1].ToString();
+                    string a = aliass.Replace("_" + reader[0].ToString(), "");
+                   // System.Windows.MessageBox.Show(a);
+                    usuarioModel.alias = a;
+                    usuarioModel.nombre = reader[2].ToString();
                         usuarioModel.apellidos = reader[3].ToString();
                         usuarioModel.password = reader[4].ToString();
                         rolModel.id_rol = int.Parse(reader[5].ToString());
@@ -87,7 +95,10 @@ namespace bonita_smile_v1.Servicios
                     RolModel rolModel = new RolModel();
 
                     usuarioModel.id_usuario = reader[0].ToString();
-                    usuarioModel.alias = reader[1].ToString();
+                    string aliass = reader[1].ToString();
+                    string a=aliass.Replace("_"+reader[0].ToString(),"");
+                   // System.Windows.MessageBox.Show(a);
+                    usuarioModel.alias = a;
                     usuarioModel.nombre = reader[2].ToString();
                     usuarioModel.apellidos = reader[3].ToString();
                     usuarioModel.password = reader[4].ToString();
@@ -107,8 +118,10 @@ namespace bonita_smile_v1.Servicios
             return listaUsuario;
         }
 
-        public bool actualizarUsuarioSocio(string id_usu, string alias, string nombre, string apellidos, string password, int id_rol)
+        public bool actualizarUsuarioSocio(string id_usu, string alias, string nombre, string apellidos, string password, int id_rol   ,string alias_user)
         {
+            System.Windows.MessageBox.Show("Alias user : " + alias_user);
+            string alias_id = alias + "_" + id_usu;
             bool internet = ti.Test();
             try
             {
@@ -134,7 +147,7 @@ namespace bonita_smile_v1.Servicios
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
                     query =  "DELETE FROM permisos where id_usuario='" + id_usu + "';";
-                    query = query + "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + ",auxiliar_identificador = '" + id_usu + "' where id_usuario = '" + id_usu + "'; ";
+                    query = query + "UPDATE usuario set alias = '" + alias_id + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + ",auxiliar_identificador = '" + id_usu + "' where id_usuario = '" + id_usu + "'";
                    
                     Console.WriteLine(query);
                     conexionBD.Open();
@@ -143,7 +156,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias_user + ".txt");
+
                     return true;
                 }
 
@@ -156,7 +170,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool eliminarUsuario(string id_usuario)
+        public bool eliminarUsuario(string id_usuario , string alias)
         {
             bool internet = ti.Test();
             try
@@ -188,7 +202,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                 
@@ -201,11 +216,12 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarUsuario(string alias, string nombre, string apellidos, string password, int id_rol)
+        public bool insertarUsuario(string alias, string nombre, string apellidos, string password, int id_rol  ,string alias_user)
         {
             string auxiliar_identificador = new Seguridad().SHA1(alias + nombre + apellidos + password + id_rol + DateTime.Now);
             bool internet = ti.Test();
             password = new Seguridad().Encriptar(password);
+            string alias_id = alias + "_" + auxiliar_identificador;
             FileStream fs = null;
             try
             {
@@ -229,7 +245,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + alias + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ",'<!--" + auxiliar_identificador + "-->');";
+                    query = "INSERT INTO usuario (id_usuario,alias,nombre,apellidos,password,id_rol,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + alias_id + "','" + nombre + "','" + apellidos + "','" + password + "'," + id_rol + ",'<!--" + auxiliar_identificador + "-->')";
                     //query = query + "insert into permisos (id_usuario) VALUES('"+auxiliar_identificador+"');";
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -237,7 +253,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias_user + ".txt");
+
                     return true;
                 }
                 
@@ -250,8 +267,9 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarUsuario(string id_usuario, string alias, string nombre, string apellidos, string password, int id_rol)
+        public bool actualizarUsuario(string id_usuario, string alias, string nombre, string apellidos, string password, int id_rol , string alias_user)
         {
+            string alias_id = alias + "_" + id_usuario;
             bool internet = ti.Test();
             try
             {
@@ -276,7 +294,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + ",auxiliar_identificador = '" + id_usuario + "' where id_usuario = '" + id_usuario + "'";
+                    query = "UPDATE usuario set alias = '" + alias_id + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + ",auxiliar_identificador = '" + id_usuario + "' where id_usuario = '" + id_usuario + "'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -284,7 +302,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias_user + ".txt");
+
                     return true;
                 }
                
@@ -332,83 +351,114 @@ namespace bonita_smile_v1.Servicios
         }
 
         //Comprobara si existe el usuario en la base de datos y despues cimprobara si esta en la base de datos. Devuelve true si es correcto, de lo contario false
-        public void redireccionarLogin(string alias, string password)
+        public void redireccionarLogin(string aliass, string password)
         {
             string rol = "";
-            bool valido = Validar_login(alias, password);
-            if (valido)
+            string alias = regreso_alias(aliass, password);
+            if(!alias.Equals(""))
             {
-                rol = verificarRol(usuarioModel.rol.id_rol);
-                if (rol.Equals("Administrador"))
+                bool valido = Validar_login(alias, password);
+                if (valido)
                 {
-                    //Admin admin = new Admin();
-
-                    //Ingresar_Clinica ic = new Ingresar_Clinica();
-                    //Insertar_Color ic = new Insertar_Color();
-                    //Insertar_Usuario iu = new Insertar_Usuario();
-                    //Ingresar_Antecedentes_Clinicos iac = new Ingresar_Antecedentes_Clinicos();
-                    //Ventana_Administrador va = new Ventana_Administrador();
-                    //Ventana_Usuario vu = new Ventana_Usuario();
-
-
-                    System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //System.Windows.Application.Current.Windows[0].Close();
-                    new Admin().ShowDialog();
-
-
-                }
-                else
-                    if (rol.Equals("Doctor"))
-                {
-                    string id = Buscar_Clinica(alias,2);
-                    if(id.Equals(""))
+                    rol = verificarRol(usuarioModel.rol.id_rol);
+                    if (rol.Equals("Administrador"))
                     {
-                        System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
+                        //Admin admin = new Admin();
+
+                        //Ingresar_Clinica ic = new Ingresar_Clinica();
+                        //Insertar_Color ic = new Insertar_Color();
+                        //Insertar_Usuario iu = new Insertar_Usuario();
+                        //Ingresar_Antecedentes_Clinicos iac = new Ingresar_Antecedentes_Clinicos();
+                        //Ventana_Administrador va = new Ventana_Administrador();
+                        //Ventana_Usuario vu = new Ventana_Usuario();
+                        string nombre_doctor = obtener_nombre_doctor(alias);
+
                         System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                         //System.Windows.Application.Current.Windows[0].Close();
-                        //Application.Current.Windows[0].Close();
-                        new Clin(id).ShowDialog();
-                    }
-                    
-                }
-                else
-                    if (rol.Equals("Recepcionista"))
-                {
-                    string id = Buscar_Clinica(alias,4);
-                    if(id.Equals(""))
-                    {
-                        System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        new Admin(alias,nombre_doctor).ShowDialog();
+
+
                     }
                     else
+                        if (rol.Equals("Doctor"))
                     {
-                        System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        new Recep(id).ShowDialog();
-                    }
-                    
-                    //new Market().ShowDialog();
-                    //new Market(id).ShowDialog();
-                }
-                else
-                    if(rol.Equals("Socio"))
-                {
-                    List<string> list = Buscar_clinica_socio(alias, 5);
-                    
-                    if(list.Count!=0)
-                    {
-                        new Soc(list,alias).ShowDialog();
+                        string id = Buscar_Clinica(alias, 2);
+                        if (id.Equals(""))
+                        {
+                            System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            //System.Windows.Application.Current.Windows[0].Close();
+                            //Application.Current.Windows[0].Close();
+                            string nombre = obtener_nombre_clinica(id);
+                            string nombre_doctor = obtener_nombre_doctor(alias);
+                            new Clin(id,nombre,nombre_doctor,alias).ShowDialog();
+                        }
+
                     }
                     else
+                        if (rol.Equals("Recepcionista"))
                     {
-                        System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        string id = Buscar_Clinica(alias, 4);
+                        if (id.Equals(""))
+                        {
+                            System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            string nombre = obtener_nombre_clinica(id);
+                            System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            new Recep(id,nombre,alias).ShowDialog();
+                        }
+
+                        //new Market().ShowDialog();
+                        //new Market(id).ShowDialog();
+                    }
+                    else
+                        if (rol.Equals("Socio"))
+                    {
+                        List<string> list = Buscar_clinica_socio(alias, 5);
+
+                        if (list.Count != 0)
+                            
+                        {
+                            string nombre_doctor = obtener_nombre_doctor(alias);
+                            System.Windows.Forms.MessageBox.Show("Bienvenido usuario: " + alias, "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            new Soc(list, nombre_doctor,alias).ShowDialog();
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Este usuario no esta habilitado", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
                 }
             }
+            else
+            {
+                //System.Windows.MessageBox.Show("imprimo el alias :" + alias);
+                System.Windows.Forms.MessageBox.Show("Usuario incorrecto", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
         }
 
+        public string regreso_alias(string alias, string password)
+        {
+            string alias_nuevo = "";
+            Seguridad secure = new Seguridad();
+            List<UsuarioModel> list_usuarios = MostrarUsuario();
+            for(int i=0;i<list_usuarios.Count;i++)
+            {
+                //System.Windows.MessageBox.Show(list_usuarios[i].alias + "        " + secure.Desencriptar(list_usuarios[i].password));
+                if(alias.Equals(list_usuarios[i].alias)&& password.Equals(secure.Desencriptar(list_usuarios[i].password)))
+                {
+                    alias_nuevo = alias + "_" + list_usuarios[i].id_usuario;
+                }
+            }
+            return alias_nuevo;
+        }
 
         public bool Validar_login(string alias, string password)
         {
@@ -444,7 +494,7 @@ namespace bonita_smile_v1.Servicios
                 bool isEmpty = !listaUsuario.Any();
                 if (isEmpty)
                 {
-                    System.Windows.MessageBox.Show("Usuario incorrecto");
+                    System.Windows.Forms.MessageBox.Show("Usuario incorrecto", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     verdad = false; ;
                 }
                 else
@@ -495,8 +545,74 @@ namespace bonita_smile_v1.Servicios
             {
                 conexionBD.Open();
                 cmd = new MySqlCommand(query, conexionBD);
-                int existe = Convert.ToInt32(cmd.ExecuteScalar());
-                if (existe == 0)
+                string existe =cmd.ExecuteScalar().ToString();
+                if (existe.Equals(""))
+                {
+                    conexionBD.Close();
+                    return "";
+                }
+                else
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    id = reader[0].ToString();
+                    conexionBD.Close();
+                    return id;
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return "";
+            }
+        }
+
+        public string obtener_nombre_clinica(string id_clinica)
+        {
+            string id = "";
+            MySqlCommand cmd;
+            string query = "select nombre_sucursal from clinica where id_clinica='"+id_clinica+"'";
+            try
+            {
+                conexionBD.Open();
+                cmd = new MySqlCommand(query, conexionBD);
+                string existe = cmd.ExecuteScalar().ToString();
+                if (existe.Equals("") )
+                {
+                    conexionBD.Close();
+                    return "";
+                }
+                else
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    id = reader[0].ToString();
+                    conexionBD.Close();
+                    return id;
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                conexionBD.Close();
+                return "";
+            }
+        }
+
+        public string obtener_nombre_doctor(string alias)
+        {
+            string id = "";
+            MySqlCommand cmd;
+            string query = "select concat(nombre,' ',apellidos)as nombre_doctor from usuario where alias='"+alias+"'";
+            try
+            {
+                conexionBD.Open();
+                cmd = new MySqlCommand(query, conexionBD);
+                string existe = cmd.ExecuteScalar().ToString();
+                if (existe.Equals(""))
                 {
                     conexionBD.Close();
                     return "";

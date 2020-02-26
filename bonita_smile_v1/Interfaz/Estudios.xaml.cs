@@ -38,7 +38,8 @@ namespace bonita_smile_v1
         bool bandera_online_offline = false;
         Configuracion_Model configuracion;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-        public Pagina_Estudios(PacienteModel paciente, Motivo_citaModel motivo)
+        string alias;
+        public Pagina_Estudios(PacienteModel paciente, Motivo_citaModel motivo,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -49,6 +50,7 @@ namespace bonita_smile_v1
             id_paciente = paciente.id_paciente;
             id_motivo = motivo.id_motivo;
             llenar_list_view(id_paciente);
+            this.alias = alias;
         }
 
         void llenar_list_view(string id_paciente)
@@ -92,18 +94,18 @@ namespace bonita_smile_v1
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
 
                 if (admin != null)
-                    admin.Main.Content = new Fotos_de_Estudios(carpeta);
+                    admin.Main.Content = new Fotos_de_Estudios(carpeta,alias);
                 else
                 if(clin!=null)
                 {
                    
-                    clin.Main2.Content = new Fotos_de_Estudios(carpeta);
+                    clin.Main2.Content = new Fotos_de_Estudios(carpeta,alias);
                 }
                 else
                 if (socio != null)
                 {
 
-                    socio.Main4.Content = new Fotos_de_Estudios(carpeta);
+                    socio.Main4.Content = new Fotos_de_Estudios(carpeta,alias);
                 }
             }
         }
@@ -111,7 +113,7 @@ namespace bonita_smile_v1
         private void EditZoneInfoContextMenu_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Agregar_Carpetas(id_paciente, id_motivo);
+            Form mensaje = new Agregar_Carpetas(id_paciente, id_motivo,alias);
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;
@@ -142,7 +144,7 @@ namespace bonita_smile_v1
             //}
 
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             // ELIMINARLA DE LA BS LOCAL/
 
             // SI LA CARPETA ESTA ASOCIADA A UNA NOTA NO ELIMINARLA, DE LO CONTRARIO SI ELIMINARLA
@@ -156,7 +158,7 @@ namespace bonita_smile_v1
                 var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(this.item_carpeta.id_carpeta, id_paciente);
 
                 //ELIMINAR REGISTRO
-                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta);
+                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta,alias);
                 if (elimino)
                 {
                     System.Windows.MessageBox.Show("llego aqio");
@@ -164,7 +166,7 @@ namespace bonita_smile_v1
                     Escribir_Archivo ea = new Escribir_Archivo();
                     if (listaNombreArchivos.Count == 0)
                     {
-                        ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                        ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                     }
                     else
                     {
@@ -174,7 +176,7 @@ namespace bonita_smile_v1
                             System.Windows.MessageBox.Show("escribio en archivo");
 
                             //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                             //ELIMINAR FOTOS
                             System.Windows.MessageBox.Show("RUTA PARA BORRAR EN BS " + @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
                             File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
@@ -272,7 +274,7 @@ namespace bonita_smile_v1
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta, id_motivo);
+            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta, id_motivo, alias);
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;

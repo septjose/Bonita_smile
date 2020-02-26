@@ -224,7 +224,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
 
             if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
             {
@@ -249,7 +249,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                             {
                                 if (foto.Equals(""))
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica   ,alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -265,7 +265,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                                 }
                                 else
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica ,alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -284,7 +284,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                             {
                                 if (foto.Equals(""))
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica  ,alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -302,7 +302,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                                 {
                                     string nombre_nuevo_foto = txtNombre.Text + "_" + txtApellidos.Text + "_" + id_pacientes + ".jpg";
                                     nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica  ,alias);
                                     if (inserto)
                                     {
                                         renombrar(this.paciente.foto, nombre_nuevo_foto);
@@ -313,8 +313,13 @@ namespace bonita_smile_v1.Interfaz.Socio
                                         string destFile2 = System.IO.Path.Combine(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" , nombre_nuevo_foto);
                                         System.IO.File.Copy(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre_nuevo_foto, destFile2, true);
                                         Escribir_Archivo ea = new Escribir_Archivo();
-                                        ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                                        ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                        if (socio != null)
+                                        {
+                                            socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                                        }
                                         //pa = new Paciente(!bandera_online_offline);
                                         //bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         //if (actualizo)

@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Globalization;
 
 namespace bonita_smile_v1.Interfaz.Socio
 {
@@ -31,12 +32,16 @@ namespace bonita_smile_v1.Interfaz.Socio
     {
         // ObservableCollection<PacienteModel> GPaciente;
         List<string> lista = new List<string>();
-        public Pagina_Socio(List<string> lista)
+        string alias;
+        string nombre_doctor;
+        public Pagina_Socio(List<string> lista,string nombre_doctor,string alias)
         {
             
             InitializeComponent();
             llenar_list_view(lista);
             this.lista = lista;
+            this.alias = alias;
+            this.nombre_doctor = nombre_doctor;
             Conexion con = new Conexion();
 
 
@@ -81,18 +86,18 @@ namespace bonita_smile_v1.Interfaz.Socio
 
                 if (admin != null)
                 {
-                    admin.Main.Content = new Page2(paciente);
+                    admin.Main.Content = new Page2(paciente,nombre_doctor,alias);
                 }
 
                 else
                 if (clin != null)
                 {
-                    clin.Main2.Content = new Page2(paciente);
+                    clin.Main2.Content = new Page2(paciente,nombre_doctor,alias);
                 }
                 else
                 if (socio != null)
                 {
-                    socio.Main4.Content = new Page2(paciente);
+                    socio.Main4.Content = new Page2(paciente,nombre_doctor,alias);
                 }
                 //else
                 //    if(market != null)
@@ -205,26 +210,54 @@ namespace bonita_smile_v1.Interfaz.Socio
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            CultureInfo culture = new CultureInfo("en-US");
+            string id_membresia = "";
+            double abono = 0.0;
+            Membresia me = new Membresia(false);
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             if (lv_Paciente.SelectedItems.Count > 0)
             {
-                if (paciente.membresia.Equals(""))
+                List<MembresiaModel> list_membresia = me.MostrarMembresias(paciente.id_paciente, paciente.clinica.id_clinica);
+                foreach (var membresia in list_membresia)
+                {
+                    id_membresia = membresia.id_membresia;
+                    abono = Convert.ToDouble(membresia.costo);
+                }
+                if (id_membresia.Equals(""))
                 {
                     DialogResult resultado = new DialogResult();
-                    Form mensaje = new InsertarMembresia(paciente);
+                    Form mensaje = new InsertarMembresia(paciente, alias);
                     resultado = mensaje.ShowDialog();
-                    List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
-                    lv_Paciente.ItemsSource = pacientes;
+                    //List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                    //lv_Paciente.ItemsSource = pacientes;
                 }
                 else
                 {
-                    DialogResult resultado = new DialogResult();
-                    Form mensaje = new EliminarMembresia(paciente);
-                    resultado = mensaje.ShowDialog();
-                    List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
-                    lv_Paciente.ItemsSource = pacientes;
-                }
+                    //DialogResult resultado = new DialogResult();
+                    //Form mensaje = new EliminarMembresia(paciente,alias);
+                    //resultado = mensaje.ShowDialog();
+                    //List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                    //lv_Paciente.ItemsSource = pacientes;
+                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                    Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
 
+                    if (socio != null)
+                    {
+                        socio.Main4.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    }
+                    //else
+                    //if (clin != null)
+                    //{
+                    //    clin.Main2.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    //}
+                    //else
+                    //if (socio != null)
+                    //{
+                    //    socio.Main4.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    //}
+
+                }
             }
             else
             {

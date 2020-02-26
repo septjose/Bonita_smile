@@ -37,7 +37,9 @@ namespace bonita_smile_v1.Interfaz.Clinica
         bool bandera_online_offline = false;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
-        public Notas_recepcionista(PacienteModel paciente, Motivo_citaModel motivo)
+        string alias;
+        string nombre_doctor;
+        public Notas_recepcionista(PacienteModel paciente, Motivo_citaModel motivo,string nombre_doctor,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -50,6 +52,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
             txtMotivo.Text = motivo.descripcion;
             txtMotivo.IsEnabled = false;
             this.configuracion = configuracion;
+            this.nombre_doctor = nombre_doctor;
            
             //lblmotivo.Content = motivo.descripcion;
             //lblTotal.Content = motivo.costo.ToString();
@@ -61,7 +64,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
             id_motivo = motivo.id_motivo;
             id_paciente = paciente.id_paciente;
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
-
+            this.alias = alias;
         }
 
         void llenar_list_view(string id_motivo, string id_paciente)
@@ -75,7 +78,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Agregar_Nota_Evolucion(motivo.id_motivo, motivo.descripcion, paciente.id_paciente);
+            Form mensaje = new Agregar_Nota_Evolucion(motivo.id_motivo, motivo.descripcion, paciente.id_paciente,nombre_doctor,alias);
             resultado = mensaje.ShowDialog();
             this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
             lvNotas.ItemsSource = GNotas;
@@ -90,18 +93,18 @@ namespace bonita_smile_v1.Interfaz.Clinica
 
             if (admin != null)
             {
-                admin.Main.Content = new Pagina_Estudios(paciente, motivo);
+                admin.Main.Content = new Pagina_Estudios(paciente, motivo,alias);
             }
 
             else
             if (clin != null)
             {
-                clin.Main2.Content = new Pagina_Estudios(paciente, motivo);
+                clin.Main2.Content = new Pagina_Estudios(paciente, motivo,alias);
             }
             else
             if (socio != null)
             {
-                socio.Main4.Content = new Pagina_Estudios(paciente, motivo);
+                socio.Main4.Content = new Pagina_Estudios(paciente, motivo,alias);
             }
         }
 
@@ -116,24 +119,24 @@ namespace bonita_smile_v1.Interfaz.Clinica
 
             if (admin != null)
             {
-                admin.Main.Content = new Page2_Abonos(paciente, motivo);
+                admin.Main.Content = new Page2_Abonos(paciente, motivo,alias);
             }
             else
             if (clin != null)
             {
-                clin.Main2.Content = new Page2_Abonos(paciente, motivo);
+                clin.Main2.Content = new Page2_Abonos(paciente, motivo,alias);
             }
             else
             if (socio != null)
             {
-                socio.Main4.Content = new Page2_Abonos(paciente, motivo);
+                socio.Main4.Content = new Page2_Abonos(paciente, motivo,alias);
             }
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             Nota_de_digi_evolucionModel nota = (Nota_de_digi_evolucionModel)lvNotas.SelectedItem;
 
             var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el motivo :" + nota.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
@@ -147,7 +150,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(carpeta.id_nota, id_paciente);
 
                 //ELIMINAR REGISTRO
-                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta);
+                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta,alias);
                 if (elimino)
                 {
                     System.Windows.MessageBox.Show("llego aqio");
@@ -155,7 +158,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                     Escribir_Archivo ea = new Escribir_Archivo();
                     if (listaNombreArchivos.Count == 0)
                     {
-                        ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                        ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                     }
                     else
                     {
@@ -165,7 +168,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                             System.Windows.MessageBox.Show("escribio en archivo");
 
                             //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                             //ELIMINAR FOTOS
                             if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa))
                             {
@@ -210,7 +213,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 //ELIMINAR DESPUES TODO LO REFERENTE A LA NOTA
                 Nota_de_digi_evolucion mot = new Nota_de_digi_evolucion(bandera_online_offline);
 
-                elimino = mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
+                elimino = mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo,alias);
                 if (elimino)
                 {
                     //mot = new Nota_de_digi_evolucion(!bandera_online_offline);
@@ -229,7 +232,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
             if (lvNotas.SelectedItems.Count > 0)
             {
                 DialogResult resultado = new DialogResult();
-                Form mensaje = new Actualizar_Nota_Evolucion(nota);
+                Form mensaje = new Actualizar_Nota_Evolucion(nota,nombre_doctor,alias);
                 resultado = mensaje.ShowDialog();
                 System.Windows.MessageBox.Show(nota.fecha);
                 this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
@@ -290,18 +293,18 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
 
                 if (admin != null)
-                    admin.Main.Content = new Fotos_de_Estudios(carpeta);
+                    admin.Main.Content = new Fotos_de_Estudios(carpeta,alias);
                 else
                 if (clin != null)
                 {
 
-                    clin.Main2.Content = new Fotos_de_Estudios(carpeta);
+                    clin.Main2.Content = new Fotos_de_Estudios(carpeta,alias);
                 }
                 else
                 if (socio != null)
                 {
 
-                    socio.Main4.Content = new Fotos_de_Estudios(carpeta);
+                    socio.Main4.Content = new Fotos_de_Estudios(carpeta,alias);
                 }
 
 

@@ -23,11 +23,13 @@ namespace bonita_smile_v1
         string id_paciente = "";
         bool bandera_online_offline = false;
         string id_motivo = "";
-        public Agregar_Carpetas( string id_paciente,string id_motivo)
+        string alias;
+        public Agregar_Carpetas( string id_paciente,string id_motivo,string alias)
         {
             
             this.id_paciente = id_paciente;
             this.id_motivo = id_motivo;
+            this.alias = alias;
             InitializeComponent();
         }
 
@@ -135,7 +137,7 @@ namespace bonita_smile_v1
                 DateTime fecha = DateTime.Now;
                 //double abono = double.Parse(txtAbono.Text);
                 Carpeta_archivos ca = new Carpeta_archivos(bandera_online_offline);
-                bool insertarAbono = ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente, id_motivo);
+                bool insertarAbono = ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente, id_motivo ,alias);
                 if (insertarAbono)
                 {
                     System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

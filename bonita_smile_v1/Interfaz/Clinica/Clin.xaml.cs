@@ -23,11 +23,17 @@ namespace bonita_smile_v1.Interfaz.Clinica
     {
         ObservableCollection<PacienteModel> GPaciente;
         string id = "";
-        public Clin(string id)
+        string alias;
+        string nombre_doctor;
+        public Clin(string id,string nombre,string nombre_doctor,string alias)
         {
             InitializeComponent();
-            Main2.Content = new Pagina_Clinica(id);
+            Main2.Content = new Pagina_Clinica(id,nombre_doctor,alias);
             this.id = id;
+            nombre_clinica.Text = nombre;
+            this.alias = alias;
+            this.nombre_doctor = nombre_doctor;
+
             //llenar_list_view();
 
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -84,23 +90,28 @@ namespace bonita_smile_v1.Interfaz.Clinica
 
         private void listViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main2.Content = new Pagina_Clinica(this.id);
+            Main2.Content = new Pagina_Clinica(this.id,nombre_doctor,alias);
         }
 
         private void listViewItem1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main2.Content = new Pagina_Clinica(this.id);
+            Main2.Content = new Pagina_Clinica(this.id, nombre_doctor, alias);
         }
 
         private void listViewItem2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main2.Content = new Pagina_Clinica(this.id);
+            Main2.Content = new Pagina_Clinica(this.id, nombre_doctor, alias);
         }
 
         private void listViewItem3_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main2.Content = new Pagina_Clinica(this.id);
+            Main2.Content = new Pagina_Clinica(this.id, nombre_doctor, alias);
         }
 
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            Paleta_Colores p_c = new Paleta_Colores();
+            p_c.ShowDialog();
+        }
     }
 }

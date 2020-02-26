@@ -43,7 +43,10 @@ namespace bonita_smile_v1
         private string query, query2;
         private MySqlConnection conexionBD, conexionBD2;
         Conexion obj = new Conexion();
-        public Actualizar_Abono(string id_motivo, string id_paciente, string nombre, string motivo, double restante, double abonado, double total,AbonosModel abono,PacienteModel paciente)
+        string ruta = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+        Configuracion_Model configuracion;
+        string alias;
+        public Actualizar_Abono(string id_motivo, string id_paciente, string nombre, string motivo, double restante, double abonado, double total,AbonosModel abono,PacienteModel paciente, string alias)
         {
             this.id_motivo = id_motivo;
             this.id_paciente = id_paciente;
@@ -55,6 +58,10 @@ namespace bonita_smile_v1
             this.abono = abono;
             this.paciente = paciente;
             this.conexionBD = obj.conexion(bandera_online_offline);
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta);
+            this.configuracion = configuracion;
+            this.alias = alias;
             InitializeComponent();
             
         }
@@ -89,7 +96,6 @@ namespace bonita_smile_v1
             this.txt_efectivo = new System.Windows.Forms.TextBox();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txt_Aportacion = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -111,6 +117,7 @@ namespace bonita_smile_v1
             this.txtAbono.Name = "txtAbono";
             this.txtAbono.Size = new System.Drawing.Size(235, 26);
             this.txtAbono.TabIndex = 1;
+            this.txtAbono.Text = abono.monto.ToString();
             // 
             // txtComentario
             // 
@@ -120,6 +127,7 @@ namespace bonita_smile_v1
             this.txtComentario.Name = "txtComentario";
             this.txtComentario.Size = new System.Drawing.Size(500, 183);
             this.txtComentario.TabIndex = 2;
+            this.txtComentario.Text = abono.comentario.ToString();
             // 
             // btnAceptar
             // 
@@ -176,15 +184,6 @@ namespace bonita_smile_v1
             // 
             this.printDialog1.UseEXDialog = true;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 20);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "label2";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -210,7 +209,6 @@ namespace bonita_smile_v1
             this.ClientSize = new System.Drawing.Size(657, 529);
             this.Controls.Add(this.txt_Aportacion);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.txt_efectivo);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancelat);
@@ -231,9 +229,9 @@ namespace bonita_smile_v1
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-           if(!txtAbono.Text.Equals("")&& !txt_efectivo.Text.Equals(""))
+           if(!txtAbono.Text.Equals("")&& !txt_efectivo.Text.Equals("") && !txt_Aportacion.Text.Equals(""))
             {
-                if (new Seguridad().validar_numero(txtAbono.Text) && new Seguridad().validar_numero(txt_efectivo.Text))
+                if (new Seguridad().validar_numero(txtAbono.Text) && new Seguridad().validar_numero(txt_efectivo.Text) && new Seguridad().validar_numero(txt_Aportacion.Text))
                 {
                     string comentario = txtComentario.Text;
 
@@ -255,7 +253,7 @@ namespace bonita_smile_v1
                         if (abono <= restante && restante > 0.0)
                         {
                             Abonos ab = new Abonos(bandera_online_offline);
-                            bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario);
+                            bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario ,alias);
                             if (actualizar)
                             {
                                 //ab = new Abonos(!bandera_online_offline);
@@ -301,6 +299,7 @@ namespace bonita_smile_v1
 
         public void imprimir_recibo()
         {
+
             //double rest = restante - abono;
 
             // Document doc = new Document();
@@ -339,7 +338,7 @@ namespace bonita_smile_v1
             printDocument1.PrintPage += new PrintPageEventHandler(Imprimir);
 
             //printDocument1.PrinterSettings.PrinterName = "HPFEF3CF (HP Officejet Pro 6830) (Red)";
-            printDocument1.PrinterSettings.PrinterName = "58 Printer";
+            printDocument1.PrinterSettings.PrinterName = configuracion.ftp.nombre_impresora;
             //printDocument1.PrinterSettings.PrinterName = "Microsoft XPS Document Writer";
             //poner try catch
             if (printDocument1.PrinterSettings.IsValid)
@@ -382,7 +381,7 @@ namespace bonita_smile_v1
             double tamanio_hoja_horizontal = 3.8;
             // ----------------------------------/
 
-            double cambio = (Int32.Parse(this.txt_efectivo.Text)) - (Int32.Parse(this.txtAbono.Text));
+            double cambio = (Convert.ToDouble(this.txt_efectivo.Text)) - (Convert.ToDouble(this.txtAbono.Text));
             //double restante = this.restante - (Int32.Parse(this.txtAbono.Text));
 
             string fecha_inicio = DateTime.Now.ToString("d/M/yyyy");
@@ -393,7 +392,7 @@ namespace bonita_smile_v1
             double abonado_pagado = a.Abonados(id_motivo);
             string sucursal = obtener_nombre_sucursal(paciente.clinica.id_clinica);
 
-            System.Drawing.Image imagen = System.Drawing.Image.FromFile("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\bs_ticket_imagen.bmp");
+            System.Drawing.Image imagen = System.Drawing.Image.FromFile(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\bs_ticket_imagen.bmp"));
             System.Drawing.RectangleF rect = new System.Drawing.RectangleF(margen_izquierdo, margen_superior, centimetroAPixel(3.8), 30);//tamanio_hoja_horizontal en vez de 4
             RectangleF rImage = new RectangleF(38, margen_superior, 110, 110);
 
@@ -512,7 +511,6 @@ namespace bonita_smile_v1
         private TextBox txt_efectivo;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintDialog printDialog1;
-        private Label label2;
         private Label label3;
         private TextBox txt_Aportacion;
     }

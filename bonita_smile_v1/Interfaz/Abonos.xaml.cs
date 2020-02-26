@@ -36,7 +36,8 @@ namespace bonita_smile_v1
         CultureInfo culture = new CultureInfo("en-US");
         NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-        public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo)
+        string alias;
+        public Page2_Abonos(PacienteModel paciente, Motivo_citaModel motivo,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -66,6 +67,7 @@ namespace bonita_smile_v1
             restante = Convert.ToDouble(abono.Restante(motivo.id_motivo).ToString(),culture);
             abonado = Convert.ToDouble(abono.Abonados(motivo.id_motivo).ToString(),culture);
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
+            this.alias = alias;
             
 
         }
@@ -82,7 +84,7 @@ namespace bonita_smile_v1
             Abonos abonos = new Abonos(bandera_online_offline);
             DialogResult resultado = new DialogResult();
             double restanten = Convert.ToDouble(abonos.Restante(motivo.id_motivo).ToString(),culture);
-            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text, restanten, abonado, total,paciente);
+            Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text, restanten, abonado, total,paciente  , alias);
             resultado = mensaje.ShowDialog();
             this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
             lvNotas.ItemsSource = this.notas;
@@ -101,7 +103,7 @@ namespace bonita_smile_v1
                     {
                         Abonos abo = new Abonos(bandera_online_offline);
 
-                        bool elimino = abo.eliminarAbono(abono.id_abono);
+                        bool elimino = abo.eliminarAbono(abono.id_abono,alias);
                         if (elimino)
                         {
 
@@ -140,7 +142,7 @@ namespace bonita_smile_v1
                 Abonos abonos = new Abonos(bandera_online_offline);
                 double restanten = Convert.ToDouble(abonos.Restante(motivo.id_motivo).ToString(), culture);
                 DialogResult resultado = new DialogResult();
-                Form mensaje = new Actualizar_Abono(motivo.id_motivo, paciente.id_paciente, txtNombre.Text, txtMotivo.Text, restanten, abonado, total, abono,paciente);
+                Form mensaje = new Actualizar_Abono(motivo.id_motivo, paciente.id_paciente, txtNombre.Text, txtMotivo.Text, restanten, abonado, total, abono,paciente , alias);
                 resultado = mensaje.ShowDialog();
 
                 txtAbonado.Text = "$" + Convert.ToDouble(abonos.Abonados(motivo.id_motivo), culture).ToString("n", nfi);

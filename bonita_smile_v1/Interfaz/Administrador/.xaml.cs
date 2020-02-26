@@ -19,6 +19,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using bonita_smile_v1.Interfaz;
+using bonita_smile_v1.Interfaz.Socio;
+using System.Globalization;
 
 namespace bonita_smile_v1
 {
@@ -27,13 +30,16 @@ namespace bonita_smile_v1
     /// </summary>
     public partial class Page1 : Page
     {
-       // ObservableCollection<PacienteModel> GPaciente;
-        public Page1()
+        // ObservableCollection<PacienteModel> GPaciente;
+        string alias;
+        string nombre_doctor;
+        public Page1(string alias,string nombre_doctor)
         {
             InitializeComponent();
             llenar_list_view();
             Conexion con = new Conexion();
-            
+            this.alias = alias;
+            this.nombre_doctor = nombre_doctor;
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
             view.Filter = UserFilter;
@@ -75,14 +81,14 @@ namespace bonita_smile_v1
 
                 if (admin != null)
                 {
-                    admin.Main.Content = new Page2(paciente);
+                    admin.Main.Content = new Page2(paciente, nombre_doctor, alias);
                 }
                     
-                else
-                if( clin != null)
-                {
-                    clin.Main2.Content = new Page2(paciente);
-                }
+                //else
+                //if( clin != null)
+                //{
+                //    clin.Main2.Content = new Page2(paciente, alias);
+                //}
                 //else
                 //    if(market != null)
                 //{
@@ -129,110 +135,141 @@ namespace bonita_smile_v1
             //borrar fotos de la  nube listo
             //descargar las fotos   
 
-            Test_Internet ti = new Test_Internet();
+           Test_Internet ti = new Test_Internet();
             Sincronizar sinc = new Sincronizar();
-            bool verificar = ti.Test();
-            if (verificar)
-            {
-                //System.Windows.MessageBox.Show("hi");
-                try
-                {
-                    //  System.Windows.MessageBox.Show("hii x2");
-                    bool subir_scripts = sinc.SincronizarLocalServidor();
-                    if (subir_scripts) { System.Windows.MessageBox.Show("se subieron los scripts"); }
-                    //System.Windows.MessageBox.Show("hii x3");
-                    if (verificar)
-                    {
-                        System.Windows.MessageBox.Show("se hace el backup");
-                        sinc.Backup();
-                        System.Windows.MessageBox.Show("despues backup");
-                        bool borrar = sinc.borrar_bd();
-                        if (borrar)
-                        {
-                            System.Windows.MessageBox.Show("Se borro la bd");
-                            bool si_creo = sinc.crear_bd();
-                            if (si_creo)
-                            {
-                                System.Windows.MessageBox.Show("se creo la bd");
-                                sinc.Restore();
+            /*bool verificar = ti.Test();
+           if (verificar)
+           {
+               //System.Windows.MessageBox.Show("hi");
+               try
+               {
+                   //  System.Windows.MessageBox.Show("hii x2");
+                   bool subir_scripts = sinc.SincronizarLocalServidor();
+                   if (subir_scripts) { System.Windows.MessageBox.Show("se subieron los scripts"); }
+                   //System.Windows.MessageBox.Show("hii x3");
+                   if (verificar)
+                   {
+                       System.Windows.MessageBox.Show("se hace el backup");
+                       sinc.Backup();
+                       System.Windows.MessageBox.Show("despues backup");
+                       bool borrar = sinc.borrar_bd();
+                       if (borrar)
+                       {
+                           System.Windows.MessageBox.Show("Se borro la bd");
+                           bool si_creo = sinc.crear_bd();
+                           if (si_creo)
+                           {
+                               System.Windows.MessageBox.Show("se creo la bd");
+                               sinc.Restore();
 
-                                bool subio_fotos = sinc.subir_fotos();
-                                if (subio_fotos)
-                                {
-                                    System.Windows.MessageBox.Show("se subieron las fotos correctamente");
-                                    System.Windows.MessageBox.Show("toca eliminar fotos");
-                                    bool eliminar_fotos = sinc.eliminar_fotos();
-                                    if (eliminar_fotos)
-                                    {
-                                        System.Windows.MessageBox.Show("se eliminaron las fotos");
-                                    }
-                                    System.Windows.MessageBox.Show("toca descargar");
-                                    bool descargar_fotos = sinc.descargar_fotos();
-                                    if (descargar_fotos)
-                                    {
-                                        System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
-                                    }
-
-
-                                    else
-                                    {
-                                        System.Windows.MessageBox.Show("hubo problemas al eliminar las fotos");
-                                    }
-
-                                }
-                                else
-                                {
-                                    System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
-                                }
+                               bool subio_fotos = sinc.subir_fotos();
+                               if (subio_fotos)
+                               {
+                                   System.Windows.MessageBox.Show("se subieron las fotos correctamente");
+                                   System.Windows.MessageBox.Show("toca eliminar fotos");
+                                   bool eliminar_fotos = sinc.eliminar_fotos();
+                                   if (eliminar_fotos)
+                                   {
+                                       System.Windows.MessageBox.Show("se eliminaron las fotos");
+                                   }
+                                   System.Windows.MessageBox.Show("toca descargar");
+                                   bool descargar_fotos = sinc.descargar_fotos();
+                                   if (descargar_fotos)
+                                   {
+                                       System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
+                                   }
 
 
-                            }
-                            else
-                            {
-                                System.Windows.MessageBox.Show("No se pudo crear bd ");
-                            }
-                        }
-                        else
-                        {
-                            System.Windows.MessageBox.Show("No se pudo borrar");
-                        }
-                    }
+                                   else
+                                   {
+                                       System.Windows.MessageBox.Show("hubo problemas al eliminar las fotos");
+                                   }
 
-                }
-                catch (Exception ex)
-                {
+                               }
+                               else
+                               {
+                                   System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
+                               }
 
-                }
-                List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
-                lv_Paciente.ItemsSource = pacientes;
-            }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show("No hay conexión a internet intente más tarde.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+                           }
+                           else
+                           {
+                               System.Windows.MessageBox.Show("No se pudo crear bd ");
+                           }
+                       }
+                       else
+                       {
+                           System.Windows.MessageBox.Show("No se pudo borrar");
+                       }
+                   }
+
+               }
+               catch (Exception ex)
+               {
+
+               }
+               List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+               lv_Paciente.ItemsSource = pacientes;
+           }
+           else
+           {
+               System.Windows.Forms.MessageBox.Show("No hay conexión a internet intente más tarde.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+           }*/
+            bool subir_scripts = sinc.SincronizarLocalServidor();
+
 
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            CultureInfo culture = new CultureInfo("en-US");
+            string id_membresia = "" ;
+            double abono = 0.0;
+            Membresia me = new Membresia(false);
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             if (lv_Paciente.SelectedItems.Count > 0)
             {
-                if (paciente.membresia.Equals(""))
+                List<MembresiaModel> list_membresia = me.MostrarMembresias(paciente.id_paciente, paciente.clinica.id_clinica);
+                    foreach(var membresia in list_membresia)
+                {
+                    id_membresia = membresia.id_membresia;
+                    abono=Convert.ToDouble(membresia.costo);
+                }
+                if (id_membresia.Equals(""))
                 {
                     DialogResult resultado = new DialogResult();
-                    Form mensaje = new InsertarMembresia(paciente);
+                    Form mensaje = new InsertarMembresia(paciente,alias);
                     resultado = mensaje.ShowDialog();
-                    List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
-                    lv_Paciente.ItemsSource = pacientes;
+                    //List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                    //lv_Paciente.ItemsSource = pacientes;
                 }
                 else
                 {
-                    DialogResult resultado = new DialogResult();
-                    Form mensaje = new EliminarMembresia(paciente);
-                    resultado = mensaje.ShowDialog();
-                    List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
-                    lv_Paciente.ItemsSource = pacientes;
+                    //DialogResult resultado = new DialogResult();
+                    //Form mensaje = new EliminarMembresia(paciente,alias);
+                    //resultado = mensaje.ShowDialog();
+                    //List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                    //lv_Paciente.ItemsSource = pacientes;
+                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                    Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+
+                    if (admin != null)
+                    {
+                        admin.Main.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    }
+                    //else
+                    //if (clin != null)
+                    //{
+                    //    clin.Main2.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    //}
+                    //else
+                    //if (socio != null)
+                    //{
+                    //    socio.Main4.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    //}
+
                 }
             }
             else

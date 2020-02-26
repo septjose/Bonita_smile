@@ -79,13 +79,13 @@ namespace bonita_smile_v1
             if (admin != null)
             {
                 admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
-                admin.Main.Content = new Page8_ActualizarFoto(paciente_nuevo,null,"");
+                admin.Main.Content = new Page8_ActualizarFoto(paciente_nuevo,null,alias);
             }
                else
                 if(recep!=null)
             {
                 recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
-                recep.Main3.Content = new Page8_ActualizarFoto(paciente_nuevo,null,"");
+                recep.Main3.Content = new Page8_ActualizarFoto(paciente_nuevo,null,alias);
             }
             else
                 if (socio != null)
@@ -114,7 +114,7 @@ namespace bonita_smile_v1
                         {
                             if (this.foto.Equals(""))
                             {
-                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica ,alias);
                                 if (inserto)
                                 {
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -125,12 +125,12 @@ namespace bonita_smile_v1
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                             if (admin != null)
                                     {
-                                        admin.Main.Content = new Page6();
+                                        admin.Main.Content = new Page6(alias);
                                     }
                                     else
                         if (recep != null)
                                     {
-                                        recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                                        recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica,alias);
                                     }
                             else
                         if (socio != null)
@@ -142,7 +142,7 @@ namespace bonita_smile_v1
                             }
                             else
                             {
-                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica,alias);
                             if (inserto)
                                 {
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -153,12 +153,12 @@ namespace bonita_smile_v1
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                             if (admin != null)
                             {
-                                admin.Main.Content = new Page6();
+                                admin.Main.Content = new Page6(alias);
                             }
                             else
                         if (recep != null)
                             {
-                                recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                                recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica,alias);
                             }
                             else
                         if (socio != null)
@@ -173,7 +173,7 @@ namespace bonita_smile_v1
                         {
                             if (foto.Equals(""))
                             {
-                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica,alias);
                             {
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 //    pa = new Paciente(!bandera_online_offline);
@@ -183,12 +183,12 @@ namespace bonita_smile_v1
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                             if (admin != null)
                             {
-                                admin.Main.Content = new Page6();
+                                admin.Main.Content = new Page6(alias);
                             }
                             else
                         if (recep != null)
                             {
-                                recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                                recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica,alias);
                             }
                             else
                         if (socio != null)
@@ -202,7 +202,7 @@ namespace bonita_smile_v1
                             {
                                 string nombre_nuevo_foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.id_paciente + ".jpg";
                                 nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
-                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica,alias);
                             if (inserto)
                                 {
                                     renombrar(this.paciente.foto, nombre_nuevo_foto);
@@ -213,10 +213,27 @@ namespace bonita_smile_v1
                             string destFile2 = System.IO.Path.Combine(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" , nombre_nuevo_foto);
                                     System.IO.File.Copy(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre_nuevo_foto, destFile2, true);
                                     Escribir_Archivo ea = new Escribir_Archivo();
-                                    ea.escribir_imagen_eliminar(this.paciente.foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt" );
+                                    ea.escribir_imagen_eliminar(this.paciente.foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt" );
                                     System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    //pa = new Paciente(!bandera_online_offline);
-                                    //bool actualizo = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+                            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                            Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                            if (admin != null)
+                            {
+                                admin.Main.Content = new Page6(alias);
+                            }
+                            else
+                        if (recep != null)
+                            {
+                                recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica, alias);
+                            }
+                            else
+                        if (socio != null)
+                            {
+                                socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                            }
+                            //pa = new Paciente(!bandera_online_offline);
+                            //bool actualizo = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                             //    if (actualizo)
                             //        {
                             //            var datos = ea.leer(rutaArchivoEliminar);
@@ -276,7 +293,7 @@ namespace bonita_smile_v1
         {
             string sourceFile;
 
-            sourceFile = @"\\DESKTOP-ED8E774\bs\";
+            sourceFile = @configuracion.carpetas.ruta_imagenes_carpeta+"\\";
 
             // Create a FileInfo  
             System.IO.FileInfo fi = new System.IO.FileInfo(sourceFile + nombre_viejo);

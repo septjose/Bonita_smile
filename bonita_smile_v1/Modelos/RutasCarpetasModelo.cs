@@ -11,8 +11,12 @@ namespace bonita_smile_v1.Modelos
     {
        
         public string ruta_imagenes_carpeta { get; set; }
-        public string ruta_temporal_carpeta { get; set; }
         public string ruta_fotografias_carpeta { get; set; }
         public string ruta_subir_servidor_carpeta { get; set; }
+        //rutas que no son imagenes
+        public string ruta_respaldo_carpeta { get; set;}
+        public string ruta_script_carpeta { get; set; }
+        public string ruta_eliminar_carpeta { get; set; }
+       
     }
 }

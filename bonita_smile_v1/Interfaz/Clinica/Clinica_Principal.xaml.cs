@@ -30,7 +30,9 @@ namespace bonita_smile_v1
     {
         ObservableCollection<PacienteModel> GPaciente;
         string id_clinica = "";
-        public Pagina_Clinica(string id)
+        string alias;
+        string nombre_doctor;
+        public Pagina_Clinica(string id,string nombre_doctor,string alias)
         {
 
             InitializeComponent();
@@ -40,6 +42,8 @@ namespace bonita_smile_v1
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
             view.Filter = UserFilter;
+            this.alias = alias;
+            this.nombre_doctor = nombre_doctor;
 
         }
         private bool UserFilter(object item)
@@ -160,7 +164,7 @@ namespace bonita_smile_v1
                 if(clin!=null)
                 {
                    
-                        clin.Main2.Content = new Datos_Personales_Doctor(paciente);
+                        clin.Main2.Content = new Datos_Personales_Doctor(paciente,nombre_doctor,alias);
                     
                 }
 

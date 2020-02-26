@@ -28,10 +28,12 @@ namespace bonita_smile_v1
         ObservableCollection<UsuarioModel> Gusuario;
         System.Windows.Controls.ListView lv_aux;
         bool bandera_online_offline = false;
-        public Page4()
+        string alias;
+        public Page4(string alias)
         {
             InitializeComponent();
             llenar_list_view();
+            this.alias=alias;
         }
 
         void llenar_list_view()
@@ -61,20 +63,29 @@ namespace bonita_smile_v1
             {
                 string id_usuario = usuario.id_usuario;
                 string alias = usuario.alias;
+
                 Test_Internet ti = new Test_Internet();
                 var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar al usuario :" + alias + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (confirmation == System.Windows.Forms.DialogResult.Yes)
                 {
                     Usuarios user = new Usuarios(bandera_online_offline);
 
-                    bool elimino = user.eliminarUsuario(id_usuario);
-                    if (elimino)
+                    if(usuario.rol.id_rol==1)
                     {
-                        //user = new Usuarios(!bandera_online_offline);
-                        //user.eliminarUsuario(id_usuario);
-                        Gusuario.Remove((UsuarioModel)lv_Users.SelectedItem);
-                        System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        System.Windows.Forms.MessageBox.Show("No se puede borrar un Administrador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    else
+                    {
+                        bool elimino = user.eliminarUsuario(id_usuario,alias);
+                        if (elimino)
+                        {
+                            //user = new Usuarios(!bandera_online_offline);
+                            //user.eliminarUsuario(id_usuario);
+                            Gusuario.Remove((UsuarioModel)lv_Users.SelectedItem);
+                            System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    
 
                 }
             }
@@ -100,7 +111,7 @@ namespace bonita_smile_v1
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                    admin.Main.Content = new Page4_Actualizar(usuario, lv_aux);
+                    admin.Main.Content = new Page4_Actualizar(usuario, lv_aux,this.alias);
             }
             else
             {
@@ -113,7 +124,7 @@ namespace bonita_smile_v1
         {
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
-                admin.Main.Content = new Page4_Ingresar();
+                admin.Main.Content = new Page4_Ingresar(alias);
         }
     }
 }

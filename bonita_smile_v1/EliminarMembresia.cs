@@ -16,11 +16,12 @@ namespace bonita_smile_v1
     {
         PacienteModel paciente = new PacienteModel();
         bool bandera_online_offline = false;
-        public EliminarMembresia(PacienteModel paciente)
+        string alias;
+        public EliminarMembresia(PacienteModel paciente,string alias)
         {
             this.paciente = paciente;
             InitializeComponent();
-
+            this.alias = alias;
             label1.Text = "El paciente: " + paciente.nombre + " " + paciente.apellidos + " cuanta con una suscipción activa, ¿Desea cancelar la membresia?";
         }
 
@@ -31,7 +32,7 @@ namespace bonita_smile_v1
             {
                 try
                 {
-                    bool elimino = new Paciente(bandera_online_offline).eliminarMembresia(paciente);
+                    bool elimino = new Paciente(bandera_online_offline).eliminarMembresia(paciente,alias);
                     if (elimino)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Eliminó la membresia", "Se Eliminó", MessageBoxButtons.OK, MessageBoxIcon.Information);

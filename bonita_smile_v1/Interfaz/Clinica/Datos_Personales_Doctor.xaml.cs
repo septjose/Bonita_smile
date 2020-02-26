@@ -37,7 +37,9 @@ namespace bonita_smile_v1.Interfaz.Clinica
         bool bandera_online_offline = false;
         Configuracion_Model configuracion;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-        public Datos_Personales_Doctor(PacienteModel paciente)
+        string alias;
+        string nombre_doctor;
+        public Datos_Personales_Doctor(PacienteModel paciente,string nombre_doctor,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -47,10 +49,8 @@ namespace bonita_smile_v1.Interfaz.Clinica
             this.configuracion = configuracion;
             this.ruta = @configuracion.carpetas.ruta_imagenes_carpeta + "\\";
             rt_imagen.Fill = Imagen(this.ruta+paciente.foto);
-
-         
-
-
+            this.alias = alias;
+            this.nombre_doctor = nombre_doctor;
 
             txtNombre.Text = paciente.nombre + " " + paciente.apellidos;
             txtNombre.IsEnabled = false;
@@ -138,14 +138,11 @@ namespace bonita_smile_v1.Interfaz.Clinica
             if (lvMotivo.SelectedItems.Count > 0)
             {
                 //System.Windows.MessageBox.Show("id_paciente :" + motivo.paciente.id_paciente.ToString() + "   " + "id_motivo   " + motivo.id_motivo.ToString());
-
-
-                
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
                 
                 if (clin != null)
                 {
-                    clin.Main2.Content = new Notas_recepcionista(paciente, motivo);
+                    clin.Main2.Content = new Notas_recepcionista(paciente, motivo, nombre_doctor, alias);
                 }
 
               

@@ -1,12 +1,12 @@
 ﻿using bonita_smile_v1.Interfaz.Administrador;
 using bonita_smile_v1.Interfaz.Clinica;
-
-
+using bonita_smile_v1.Interfaz.Socio;
 using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,12 +30,14 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
     {
         ObservableCollection<PacienteModel> GPaciente;
         string id_clinica = "";
-        public Recepcionista_Principal(string id)
+        string alias;
+        public Recepcionista_Principal(string id,string alias)
         {
 
             InitializeComponent();
             llenar_list_view(id);
             id_clinica = id;
+            this.alias = alias;
             //System.Windows.MessageBox.Show("imprimo el id de la clinica "+id);
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -172,7 +174,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                     if (recep != null)
                 {
                    
-                    recep.Main3.Content = new  Datos_personales_recepcionista(paciente);
+                    recep.Main3.Content = new  Datos_personales_recepcionista(paciente,alias);
                 }
 
 
@@ -186,26 +188,55 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            CultureInfo culture = new CultureInfo("en-US");
+            string id_membresia = "";
+            double abono = 0.0;
+            Membresia me = new Membresia(false);
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             if (lv_Paciente.SelectedItems.Count > 0)
             {
-                if (paciente.membresia.Equals(""))
+                List<MembresiaModel> list_membresia = me.MostrarMembresias(paciente.id_paciente, paciente.clinica.id_clinica);
+                foreach (var membresia in list_membresia)
+                {
+                    id_membresia = membresia.id_membresia;
+                    abono = Convert.ToDouble(membresia.costo);
+                }
+                if (id_membresia.Equals(""))
                 {
                     DialogResult resultado = new DialogResult();
-                    Form mensaje = new InsertarMembresia(paciente);
+                    Form mensaje = new InsertarMembresia(paciente, alias);
                     resultado = mensaje.ShowDialog();
-                    List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
-                    lv_Paciente.ItemsSource = pacientes;
+                    //List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                    //lv_Paciente.ItemsSource = pacientes;
                 }
                 else
                 {
-                    DialogResult resultado = new DialogResult();
-                    Form mensaje = new EliminarMembresia(paciente);
-                    resultado = mensaje.ShowDialog();
-                    List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
-                    lv_Paciente.ItemsSource = pacientes;
-                }
+                    //DialogResult resultado = new DialogResult();
+                    //Form mensaje = new EliminarMembresia(paciente,alias);
+                    //resultado = mensaje.ShowDialog();
+                    //List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                    //lv_Paciente.ItemsSource = pacientes;
+                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                    Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+                    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
+                    if (recep != null)
+                    {
+                        recep.Main3.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    }
+                    //else
+                    //if (clin != null)
+                    //{
+                    //    clin.Main2.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    //}
+                    //else
+                    //if (socio != null)
+                    //{
+                    //    socio.Main4.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                    //}
+
+                }
             }
             else
             {

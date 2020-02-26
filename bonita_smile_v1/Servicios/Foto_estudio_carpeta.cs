@@ -72,7 +72,7 @@ namespace bonita_smile_v1.Servicios
 
         }
 
-        public bool eliminarFoto_estudio_carpeta(string id_foto)
+        public bool eliminarFoto_estudio_carpeta(string id_foto ,string alias)
         {
             bool internet = ti.Test();
             try
@@ -105,7 +105,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                 //return true;
@@ -187,7 +188,7 @@ namespace bonita_smile_v1.Servicios
             return listaFoto_estudio_carpeta;
         }
 
-        public bool insertarFoto_estudio_carpeta(string id_carpeta, string id_paciente, string foto)
+        public bool insertarFoto_estudio_carpeta(string id_carpeta, string id_paciente, string foto ,string alias)
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
@@ -224,7 +225,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
             }
@@ -237,7 +239,7 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        public bool actualizarFoto_estudio_carpeta(string id_foto, string id_carpeta, string id_paciente, string foto)
+        public bool actualizarFoto_estudio_carpeta(string id_foto, string id_carpeta, string id_paciente, string foto ,string alias)
         {
 
             bool internet = ti.Test();
@@ -273,7 +275,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                 
@@ -335,7 +338,7 @@ namespace bonita_smile_v1.Servicios
             {
                 MessageBox.Show(" No Existe la foto");
                 var bitmap = new BitmapImage();
-                var stream = File.OpenRead(@"E:\PortableGit\programs_c#\bs_v1.4\Bonita_smile\bonita_smile_v1\Assets\img1.jpg");
+                var stream = File.OpenRead(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg"));
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.StreamSource = stream;

@@ -27,13 +27,15 @@ namespace bonita_smile_v1.Servicios
         List<string> paciente = new List<string>();
         List<string> permisos = new List<string>();
         List<string> usuario = new List<string>();
-
+        string alias;
+        Configuracion_Model configuracion;
         public Escribir_Archivo()
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
-            this.ruta_borrar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
-            this.ruta= @configuracion.carpetas.ruta_temporal_carpeta + "\\script_temporal.txt";
+            this.ruta_borrar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
+            this.configuracion = configuracion;
+           // this.ruta= @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal.txt";
             abonos.Add("id_paciente");
             abonos.Add("id_motivo");
             abonos.Add("fecha");
@@ -91,45 +93,6 @@ namespace bonita_smile_v1.Servicios
             usuario.Add("password");
             usuario.Add("id_rol");
             usuario.Add("auxiliar_identificador");
-        }
-
-
-        public void escribir(string script)
-        {
-            //FileAttributes attributes = File.GetAttributes(ruta);
-            FileStream fs = null;
-            try
-            {
-
-                if (File.Exists(ruta))
-                {
-                    SetFileReadAccess(ruta, false);
-                    // Create the file, or overwrite if the file exists.
-                    StreamWriter sw = new StreamWriter(ruta, true);
-                    sw.WriteLine(script);
-                    sw.Close();
-                    File.SetAttributes(ruta, File.GetAttributes(ruta) | FileAttributes.Hidden);
-                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
-                    SetFileReadAccess(ruta, true);
-                }
-                else
-                {
-                    fs = new FileStream(ruta, FileMode.Create, FileAccess.Write);
-                    fs.Close();
-                    StreamWriter sw = new StreamWriter(ruta, true);
-                    sw.WriteLine(script);
-                    sw.Close();
-                    File.SetAttributes(ruta, File.GetAttributes(ruta) | FileAttributes.Hidden);
-                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
-                    SetFileReadAccess(ruta, true);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("Archivo no encontrado");
-                Console.WriteLine(ex.ToString());
-            }
         }
 
         public void escribir_imagen_eliminar(string script, string ruta)
@@ -597,63 +560,47 @@ namespace bonita_smile_v1.Servicios
         public List<string> obtenerQueryArchivo()
         {
             List<string> lista = new List<string>();
-            if (File.Exists(ruta))
+            List<string> lista_nombre_archivos = Obtener_nombre_de_querys();
+            foreach(var txt in lista_nombre_archivos)
             {
-                using (StreamReader sr = File.OpenText(ruta))
+                MessageBox.Show(txt);
+                if (File.Exists(configuracion.carpetas.ruta_script_carpeta+"\\"+txt))
                 {
-
-                    string query = "";
-                    while ((query = sr.ReadLine()) != null)
+                    using (StreamReader sr = File.OpenText(configuracion.carpetas.ruta_script_carpeta + "\\" + txt))
                     {
-                        lista.Add(query);
+                        string query = "";
+                        while ((query = sr.ReadLine()) != null)
+                        {
+                            lista.Add(query);
+                        }
+                        
                     }
-                    return lista;
-                }
-            }
-            else
-            {
-                return lista=null;
-            }
-           
-           
-        }
-
-        public void escribir_fotos_borrar(string nombre_foto)
-        {
-            //FileAttributes attributes = File.GetAttributes(ruta);
-            FileStream fs = null;
-            try
-            {
-
-                if (File.Exists(ruta_borrar))
-                {
-                    SetFileReadAccess(ruta_borrar, false);
-                    // Create the file, or overwrite if the file exists.
-                    StreamWriter sw = new StreamWriter(ruta_borrar, true);
-                    sw.WriteLine(nombre_foto);
-                    sw.Close();
-                    File.SetAttributes(ruta, File.GetAttributes(ruta_borrar) | FileAttributes.Hidden);
-                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
-                    SetFileReadAccess(ruta_borrar, true);
                 }
                 else
                 {
-                    fs = new FileStream(ruta_borrar, FileMode.Create, FileAccess.Write);
-                    fs.Close();
-                    StreamWriter sw = new StreamWriter(ruta_borrar, true);
-                    sw.WriteLine(nombre_foto);
-                    sw.Close();
-                    File.SetAttributes(ruta, File.GetAttributes(ruta_borrar) | FileAttributes.Hidden);
-                    //attributes = RemoveAttribute(attributes, FileAttributes.Hidden);
-                    SetFileReadAccess(ruta_borrar, true);
+                    return lista = null;
                 }
             }
+            return lista;
+        }
 
-            catch (Exception ex)
+        private List<string> Obtener_nombre_de_querys()
+        {
+          
+            List<string> lista = new List<string>();
+            string ruta = @configuracion.carpetas.ruta_script_carpeta + "\\";
+
+
+            DirectoryInfo di = new DirectoryInfo(ruta);
+
+            foreach (var fi in di.GetFiles())
             {
-                MessageBox.Show("Archivo no encontrado");
-                Console.WriteLine(ex.ToString());
+                //MessageBox.Show(fi.ToString());
+                lista.Add(fi.ToString());
             }
+
+            return lista;
+
         }
 
         public List<string> obtener_nombre_foto_eliminar()

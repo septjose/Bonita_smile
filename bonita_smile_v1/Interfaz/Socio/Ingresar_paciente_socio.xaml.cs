@@ -218,7 +218,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     {
                         if (new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
-                            bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
+                            bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica , alias);
                             if (inserto)
 
                             {

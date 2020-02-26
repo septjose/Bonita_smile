@@ -32,7 +32,8 @@ namespace bonita_smile_v1
         bool bandera_online_offline = false;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
-        public Page6()
+        string alias;
+        public Page6(string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -41,6 +42,7 @@ namespace bonita_smile_v1
             llenar_list_view();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
             view.Filter = UserFilter;
+            this.alias = alias;
         }
 
         private bool UserFilter(object item)
@@ -54,7 +56,7 @@ namespace bonita_smile_v1
         private void Borrar(object sender, RoutedEventArgs e)
         {            
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             Escribir_Archivo ea = new Escribir_Archivo();
 
@@ -68,7 +70,7 @@ namespace bonita_smile_v1
                 {
                     //se elimina todo lo relacionado con el pacinete incluyento sus registros de carpetas,fotos,etc. osea que no se puede recuperar nada
                     var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_Paciente(id_paciente);
-                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente);                  
+                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente,alias);                  
                     if (elimino)
                     {
                         //obtener todas sus imagenes y guardarlas dentro del archivo
@@ -76,7 +78,7 @@ namespace bonita_smile_v1
 
                         if (listaNombreArchivos.Count == 0)
                         {
-                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                         }
                         else
                         {
@@ -85,7 +87,7 @@ namespace bonita_smile_v1
                                 System.Windows.MessageBox.Show("escribio en archivo");
 
                                 //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                                ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                                ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                                 //ELIMINAR FOTOS
                                 if (File.Exists (@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa))
                                 {
@@ -104,7 +106,7 @@ namespace bonita_smile_v1
                         else
                         {
                             //PASAR FOTO EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(paciente.foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(paciente.foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                             //ELIMINAR FOTO
                             if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + paciente.foto))
                             {
@@ -198,7 +200,7 @@ namespace bonita_smile_v1
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 if (admin != null)
                 {
-                    admin.Main.Content = new Page6_Actualizar(paciente);
+                    admin.Main.Content = new Page6_Actualizar(paciente,alias);
                 }
                
                     
@@ -231,7 +233,7 @@ namespace bonita_smile_v1
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
             {
-                admin.Main.Content = new Page6_Ingresar();
+                admin.Main.Content = new Page6_Ingresar(alias);
             }
            
 

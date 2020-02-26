@@ -33,7 +33,7 @@
 
 
             <TextBox Grid.Column="1" Grid.Row="1" Height="25"  FontSize="17" x:Name="txtNombre"  BorderBrush="LightGray"  TextWrapping="Wrap" Margin="0 30 0 0" Style="{DynamicResource MaterialDesignTitleTextBox}" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Left"   Width="800"  TextChanged="txtNombre_TextChanged" />
-            <Image Source="/Assets//lupa.png" Grid.Column="1" Grid.Row="1" Height="20" Width="20"  Margin="390 30 0 0"></Image>
+            <Image Source="/Assets/lupa.png" Grid.Column="1" Grid.Row="1" Height="20" Width="20"  Margin="390 30 0 0"></Image>
 
 
 

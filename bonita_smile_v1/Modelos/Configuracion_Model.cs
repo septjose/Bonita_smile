@@ -45,6 +45,8 @@ namespace bonita_smile_v1.Modelos
         public ServidorModelo servidor_externo { get; set; }
         public ServidorModelo servidor_interno { get; set; }
         public RutasCarpetasModelo carpetas { get; set; }
+
+        public ConfiguracionFTPModel ftp { get; set; }
        
     }
 }

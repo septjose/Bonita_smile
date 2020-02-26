@@ -48,6 +48,7 @@ namespace bonita_smile_v1
         ObservableCollection<Fotos_estudio_carpetaModel> fotos;
         ObservableCollection<Fotos_estudio_carpetaModel> GFotos;
         Configuracion_Model configuracion;
+        string alias;
         void llenar_list_view(string id_carpeta, string id_paciente)
         {
             Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta(bandera_online_offline);
@@ -69,7 +70,7 @@ namespace bonita_smile_v1
             //lb_imagen.ItemsSource = lista;
 
         }
-        public Fotos_de_Estudios(Carpeta_archivosModel carpeta)
+        public Fotos_de_Estudios(Carpeta_archivosModel carpeta,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -82,6 +83,7 @@ namespace bonita_smile_v1
             llenar_list_view(carpeta.id_carpeta, carpeta.id_paciente);
             id_carpeta = carpeta.id_carpeta;
             id_paciente = carpeta.id_paciente;
+            this.alias = alias;
             //llenar_list_view2();
         }
 
@@ -175,7 +177,7 @@ namespace bonita_smile_v1
                      //SUBIRLO TODO LOCAL
                      //REALIZAR INSERCION DEL REGISTRO
                      Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta(bandera_online_offline);
-                    bool insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result);
+                    bool insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result,alias);
                     //SI SE INSERTA PROCEDER A PASAR LA IMAGEN A CARPETA BS Y BS_OFFLINE
                     if (insertar_foto)
                     {
@@ -207,10 +209,10 @@ namespace bonita_smile_v1
                         if (insertar_foto)
                         {
 
-                            System.Windows.MessageBox.Show("ENTRO PARA SUBIR FOTO A SERVIDOR");
+                            //System.Windows.MessageBox.Show("ENTRO PARA SUBIR FOTO A SERVIDOR");
                             //PROCEDER A MIGRAR LA IMAGEN POR FTP
-                            inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
-                            if (inserto)
+                            //inserto = SubirFicheroStockFTP(id_carpeta + "_" + result, s[i]);
+                            /*if (inserto)
                             {
                                 //ELIMINAR FOTO QUE SE SUBIO AL SERVIDOR DE CARPETA OFFLINE
                                 if(File.Exists(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\"+ id_carpeta + "_" + result))
@@ -218,7 +220,7 @@ namespace bonita_smile_v1
                                     File.Delete(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + id_carpeta + "_" + result);
                                 }
                                 
-                            }
+                            }*/
                         }
                         else
                         {
@@ -349,18 +351,18 @@ namespace bonita_smile_v1
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             // ELIMINARLA DE LA BS LOCAL/
 
              //ELIMINAR REGISTRO
-             bool elimino = new Fotos_estudio_carpeta(bandera_online_offline).eliminarFoto_estudio_carpeta(this.item_foto_carpeta.id_foto);
+             bool elimino = new Fotos_estudio_carpeta(bandera_online_offline).eliminarFoto_estudio_carpeta(this.item_foto_carpeta.id_foto,alias);
             //ELIMINAR IMAGEN
             File.Delete(item_foto_carpeta.foto_completa);
             if (elimino)
             {
                 //PASAR FOTO EN UN ARCHIVO
                 Escribir_Archivo ea = new Escribir_Archivo();
-                ea.escribir_imagen_eliminar(this.item_foto_carpeta.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                ea.escribir_imagen_eliminar(this.item_foto_carpeta.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                 //ELIMINAR FOTO
                 item_foto_carpeta.imagen = null;
                 rt_imagen.Fill = null;

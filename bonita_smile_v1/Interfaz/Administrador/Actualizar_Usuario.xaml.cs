@@ -34,8 +34,9 @@ namespace bonita_smile_v1
         UsuarioModel usu;
         System.Windows.Controls.ListView lv_aux;
         bool bandera_online_offline = false;
+        string alias_user;
 
-        public Page4_Actualizar(UsuarioModel usu, System.Windows.Controls.ListView lv_aux)
+        public Page4_Actualizar(UsuarioModel usu, System.Windows.Controls.ListView lv_aux,string alias_user)
         {
 
             this.conexionBD = obj.conexion(bandera_online_offline);
@@ -47,6 +48,7 @@ namespace bonita_smile_v1
             txtNombre.Text = usu.nombre;
             pwbPassword.Password = usu.password;
             cmbRol.SelectedItem = usu.rol.descripcion;
+            this.alias_user = alias_user;
             
             //System.Windows.MessageBox.Show("imprimir :" + usu.rol.descripcion);
             id_usu = usu.id_usuario;
@@ -119,7 +121,7 @@ namespace bonita_smile_v1
                         //si no solo se actualiza y listo
                         if (usu.rol.id_rol == 5 && id_rol != 5)
                         {
-                            actualizo = user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, password, id_rol);
+                            actualizo = user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, password, id_rol,alias_user);
                             if(actualizo)
                             {
                                 //user = new Usuarios(!bandera_online_offline);
@@ -128,19 +130,19 @@ namespace bonita_smile_v1
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                     
-                                    admin.Main.Content = new Page4();
+                                    admin.Main.Content = new Page4(alias);
                             }
                             else
                             {
                                 System.Windows.Forms.MessageBox.Show("No se pudo Actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
-                                    admin.Main.Content = new Page4();
+                                    admin.Main.Content = new Page4(alias);
                             }
                         }
                         else
                         {
-                            actualizo= user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                            actualizo= user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol,alias_user);
                             if(actualizo)
                             {
                                 //user = new Usuarios(!bandera_online_offline);
@@ -148,14 +150,14 @@ namespace bonita_smile_v1
                                 System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
-                                    admin.Main.Content = new Page4();
+                                    admin.Main.Content = new Page4(alias_user);
                             }
                             else
                             {
                                 System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
-                                    admin.Main.Content = new Page4();
+                                    admin.Main.Content = new Page4(alias_user);
                             }
                         }
                         
@@ -166,7 +168,7 @@ namespace bonita_smile_v1
                         string new_pass = secure.Encriptar(password);
                         if (usu.rol.id_rol == 5 && id_rol != 5)
                         {
-                            actualizo = user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                            actualizo = user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user);
                             if (actualizo)
                             {
                                 //user = new Usuarios(!bandera_online_offline);
@@ -180,7 +182,7 @@ namespace bonita_smile_v1
                         }
                         else
                         {
-                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user);
                             if (actualizo)
                             {
                                 //user = new Usuarios(!bandera_online_offline);

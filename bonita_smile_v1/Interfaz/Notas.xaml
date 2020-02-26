@@ -95,11 +95,6 @@
 
                     </Grid>
 
-
-
-
-
-
                 </Grid>
             </Border>
 
@@ -222,11 +217,11 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="200"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="20"/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="20"/>
                                     <RowDefinition Height="*"/>
@@ -236,10 +231,13 @@
                                 <Grid Grid.Row="1" Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
                                         <RowDefinition Height="50"></RowDefinition>
+
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Text="{Binding fecha}"/>
-                                    <Image Grid.Row="1" Grid.Column="0"  VerticalAlignment="Center" HorizontalAlignment="Left" Source="/Assets/carpeta.png"  Width="60" Height="60" Margin="0 0 0 0"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Text="{Binding nombre_doctor}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Text="{Binding fecha}"/>
+                                    <Image Grid.Row="2" Grid.Column="0"  VerticalAlignment="Center" HorizontalAlignment="Left" Source="/Assets/carpeta.png"  Width="60" Height="60" Margin="0 0 0 0"/>
                                 </Grid>
                                 <!--<Grid Grid.Row="1" Grid.Column="1">
                                     <Grid.RowDefinitions>

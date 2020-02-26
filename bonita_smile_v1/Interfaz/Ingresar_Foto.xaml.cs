@@ -133,7 +133,7 @@ namespace bonita_smile_v1
             }
 
            Servicios.Paciente paciente = new Servicios.Paciente(bandera_offline_online);
-            bool inserto= paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+            bool inserto= paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica,alias);
             if(inserto)
             {
                 string destFile = System.IO.Path.Combine(ruta_offline, foto);
@@ -144,7 +144,28 @@ namespace bonita_smile_v1
                 {
                     File.Delete(ruta + foto);
                 }
-                 
+                System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                if (admin != null)
+                {
+                    admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                    admin.Main.Content = new Page6(alias);
+                }
+                else
+                if (recep != null)
+                {
+                    recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                    recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica,alias);
+                }
+                else
+                if (socio != null)
+                {
+                    socio.Main4.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
+                    socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
+                }
+
                 //paciente = new Servicios.Paciente(!bandera_offline_online);
                 //bool inserto_2 = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, foto, this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
                 //if(inserto_2)
@@ -153,7 +174,7 @@ namespace bonita_smile_v1
                 //    bool subir = SubirFicheroStockFTP(foto, @configuracion.carpetas.ruta_imagenes_carpeta + "\\");
                 //    if (subir)
                 //    {
-                        
+
                 //        System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 //        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
@@ -225,7 +246,7 @@ namespace bonita_smile_v1
                 //        socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
                 //    }
 
-                
+
             }
             else
             {
@@ -437,7 +458,7 @@ namespace bonita_smile_v1
                 CerrarWebCam();
             }
             Servicios.Paciente paciente = new Servicios.Paciente(bandera_offline_online);
-            bool inserto = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, "", this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica);
+            bool inserto = paciente.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, "", this.paciente.antecedente, this.paciente.email, this.paciente.marketing, this.paciente.clinica.id_clinica,alias);
             if(inserto)
             {
                 //paciente = new Servicios.Paciente(!bandera_offline_online);
@@ -449,13 +470,13 @@ namespace bonita_smile_v1
                 if (admin != null)
                 {
                     admin.Main.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                    admin.Main.Content = new Page6();
+                    admin.Main.Content = new Page6(alias);
                 }
                 else
                 if (recep != null)
                 {
                     recep.Main3.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Visible;
-                    recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                    recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica,alias);
                 }
                 else
                 if (socio != null)

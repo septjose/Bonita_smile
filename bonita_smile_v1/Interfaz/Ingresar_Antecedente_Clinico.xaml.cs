@@ -68,7 +68,7 @@ namespace bonita_smile_v1
         private void btnOmitir_Click(object sender, RoutedEventArgs e)
         {
             Paciente pa = new Paciente(bandera_offline_online);
-            bool inserto = pa.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica);
+            bool inserto = pa.insertarPaciente(this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.paciente.foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica,alias);
             if (inserto)
             {
                 //pa = new Paciente(!bandera_offline_online);
@@ -78,13 +78,13 @@ namespace bonita_smile_v1
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 if (admin != null)
                 {
-                    admin.Main.Content = new Page6();
+                    admin.Main.Content = new Page6(alias);
                     System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     if(recep!=null)
                 {
-                    recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica);
+                    recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica,alias);
                     System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else

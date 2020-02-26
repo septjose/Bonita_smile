@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,10 +25,15 @@ namespace bonita_smile_v1.Servicios
         private bool online;
         CultureInfo culture = new CultureInfo("en-US");
         NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
+        Configuracion_Model configuracion;
         public Abonos(bool online)
         {
             this.conexionBD = obj.conexion(online);
             this.online = online;
+            string ruta = Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta);
+            this.configuracion = configuracion;
         }
 
         public List<AbonosModel> MostrarAbonos(string id_motivo, string id_paciente)
@@ -117,7 +123,7 @@ namespace bonita_smile_v1.Servicios
             return restante;
         }
 
-        public bool eliminarAbono(string id_abono)
+        public bool eliminarAbono(string id_abono,string alias)
         {
             bool internet = ti.Test();
             try
@@ -149,7 +155,7 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
                     return true;
                 }
                
@@ -163,7 +169,7 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        public bool insertarAbono(string id_paciente, string id_motivo, string fecha, string monto, string comentario)
+        public bool insertarAbono(string id_paciente, string id_motivo, string fecha, string monto, string comentario , string alias)
         {
             Seguridad seguridad = new Seguridad();
             string id_abono = "";
@@ -199,7 +205,7 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
                     return true;
                 }
             }
@@ -211,7 +217,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, string monto,string comentario)
+        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, string monto,string comentario  ,string alias)
         {          
             bool internet = ti.Test();
             try
@@ -244,7 +250,7 @@ namespace bonita_smile_v1.Servicios
                     cmd.ExecuteReader();
                     conexionBD.Close();
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
                     return true;
                 } 
             }

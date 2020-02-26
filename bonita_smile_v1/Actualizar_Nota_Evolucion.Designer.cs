@@ -22,11 +22,15 @@ namespace bonita_smile_v1
         
         Nota_de_digi_evolucionModel nota;
         bool bandera_online_offline = false;
-        public Actualizar_Nota_Evolucion(Nota_de_digi_evolucionModel nota)
+        string alias;
+        string nombre_doctor;
+        public Actualizar_Nota_Evolucion(Nota_de_digi_evolucionModel nota,string nombre_doctor,string alias)
         {
            
             this.nota = nota;
             System.Windows.MessageBox.Show(nota.fecha);
+            this.alias = alias;
+            this.nombre_doctor = nota.nombre_doctor;
             InitializeComponent();
         }
 
@@ -75,7 +79,7 @@ namespace bonita_smile_v1
             this.txtComentario.Name = "txtComentario";
             this.txtComentario.Size = new System.Drawing.Size(498, 255);
             this.txtComentario.TabIndex = 2;
-            this.txtComentario.Text = nota.descripcion;
+            this.txtComentario.Text = this.nota.descripcion;
             // 
             // btnAceptar
             // 
@@ -138,7 +142,7 @@ namespace bonita_smile_v1
                 System.Windows.MessageBox.Show(" imprimo conversion  " + parsedDate.ToString("yyyy/MM/dd"));
                 string fecha_actual = parsedDate.ToString("yyyy/MM/dd");
                 Nota_de_digi_evolucion ne = new Nota_de_digi_evolucion(bandera_online_offline);
-                bool insertarAbono = ne.actualizarNota_de_digi_evolucion(nota.id_nota, nota.id_paciente, nota.id_motivo, comentario, fecha_actual);
+                bool insertarAbono = ne.actualizarNota_de_digi_evolucion(nota.id_nota, nota.id_paciente, nota.id_motivo, comentario, fecha_actual,nombre_doctor , alias);
                 if (insertarAbono)
                 {
                     System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

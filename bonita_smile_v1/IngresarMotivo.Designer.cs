@@ -27,9 +27,10 @@ namespace bonita_smile_v1
         /// </summary>
         private System.ComponentModel.IContainer components = null;
         string id = "";
-
-        public IngresarMotivo(string id_paciente)
+        string alias;
+        public IngresarMotivo(string id_paciente , string alias)
         {
+            this.alias = alias;
             id = id_paciente;
             InitializeComponent();
         }
@@ -170,7 +171,7 @@ namespace bonita_smile_v1
                     double costo =  Convert.ToDouble(txt_efectivo.Text, culture);
                     System.Windows.MessageBox.Show(costo.ToString(culture));
                     Motivo_cita mc = new Motivo_cita(false);
-                    bool inserto = mc.insertarMotivo_cita(nombre, costo.ToString(culture), id);
+                    bool inserto = mc.insertarMotivo_cita(nombre, costo.ToString(culture), id , alias);
                     if (inserto)
                     {
                         //mc = new Motivo_cita(true);

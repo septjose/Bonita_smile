@@ -122,7 +122,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 string id_clinica = obtener_id_Clinica(valor2);
 
                 Clinicas c = new Clinicas(bandera_online_offline);
-                bool inserto = c.insertar_Permisos(id_usuario, id_clinica);
+                bool inserto = c.insertar_Permisos(id_usuario, id_clinica,alias);
                 if (inserto)
                 {
                     System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);

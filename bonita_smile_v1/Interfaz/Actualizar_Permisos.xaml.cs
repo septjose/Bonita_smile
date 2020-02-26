@@ -33,7 +33,9 @@ namespace bonita_smile_v1
         int id_rol = 0;
         bool bandera_online_offline = false;
         string clinica_anterior = "";
-        public Pagina_Actualizar_Permisos(int id_rol,string alias,string nombre_sucursal,string id_clinica_anterior)
+        string alias_user;
+        string id_usuario;
+        public Pagina_Actualizar_Permisos(int id_rol,string alias,string nombre_sucursal,string id_clinica_anterior , string alias_user,string id_usuario)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.conexionBD2 = obj.conexion(bandera_online_offline);
@@ -46,6 +48,8 @@ namespace bonita_smile_v1
             this.clinica_anterior = id_clinica_anterior;
            
             this.id_rol = id_rol;
+            this.alias_user = alias_user;
+            this.id_usuario = id_usuario;
 
         }
 
@@ -92,14 +96,14 @@ namespace bonita_smile_v1
             {
                 valor = cmbUsuario.Text;
                 valor2 = cmbClinica.SelectedItem.ToString();
-                string id_usuario = obtener_id_usuario(valor);
+                string id_usuario = obtener_id_usuario(valor+"_"+this.id_usuario);
                 string id_clinica = obtener_id_Clinica(valor2);
                 Clinicas c = new Clinicas(bandera_online_offline);
                 System.Windows.MessageBox.Show(id_usuario + "     " + id_clinica);
                 bool existe = new Clinicas(bandera_online_offline).Verificar_Tabla_Permisos(id_usuario);
                 if (!existe)
                 {
-                    bool insertar = c.insertar_Permisos(id_usuario, id_clinica);
+                    bool insertar = c.insertar_Permisos(id_usuario, id_clinica , alias_user);
                     if (insertar)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -107,7 +111,7 @@ namespace bonita_smile_v1
                         //c.insertar_Permisos(id_usuario, id_clinica);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
-                            admin.Main.Content = new Pagina_Permisos(this.id_rol);
+                            admin.Main.Content = new Pagina_Permisos(this.id_rol , alias_user);
                         else
                         {
                             System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -117,7 +121,7 @@ namespace bonita_smile_v1
                 }
                 else
                 {
-                    bool actualizo = c.actualizar_Permisos(id_usuario, id_clinica, clinica_anterior);
+                    bool actualizo = c.actualizar_Permisos(id_usuario, id_clinica, clinica_anterior , alias_user);
                     if (actualizo)
                     {
                         System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -125,7 +129,7 @@ namespace bonita_smile_v1
                         //c.actualizar_Permisos(id_usuario, id_clinica, clinica_anterior);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
-                            admin.Main.Content = new Pagina_Permisos(this.id_rol);
+                            admin.Main.Content = new Pagina_Permisos(this.id_rol , alias_user);
 
                     }
                     else

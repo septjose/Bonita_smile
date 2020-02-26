@@ -23,11 +23,15 @@ namespace bonita_smile_v1
         string id_paciente = "";
         string descripcion = "";
         bool bandera_online_offline = false;
-        public Agregar_Nota_Evolucion(string id_motivo, string descripcion, string id_paciente)
+        string alias;
+        string nombre_doctor;
+        public Agregar_Nota_Evolucion(string id_motivo, string descripcion, string id_paciente,string nombre_doctor , string alias)
         {
             this.id_motivo = id_motivo;
             this.id_paciente = id_paciente;
             this.descripcion = descripcion;
+            this.alias = alias;
+            this.nombre_doctor = nombre_doctor;
             InitializeComponent();
         }
 
@@ -136,7 +140,7 @@ namespace bonita_smile_v1
                 DateTime fecha = DateTime.Now;
                 System.Windows.MessageBox.Show("IMPRIMO LA FECHA EN INGRESAR" + fecha.ToString("yyyy/MM/dd"));
                 Nota_de_digi_evolucion nde = new Nota_de_digi_evolucion(bandera_online_offline);
-                bool insertarAbono = nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, descripcion, comentario, fecha.ToString("yyyy/MM/dd"));
+                bool insertarAbono = nde.insertarNota_de_digi_evolucion(id_paciente, id_motivo, descripcion, comentario, fecha.ToString("yyyy/MM/dd"),nombre_doctor , alias);
                 if (insertarAbono)
                 {
                     System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

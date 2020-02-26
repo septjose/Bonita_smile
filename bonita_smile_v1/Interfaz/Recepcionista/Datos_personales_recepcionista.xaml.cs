@@ -37,7 +37,8 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         bool bandera_online_offline = false;
         Configuracion_Model configuracion;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-        public Datos_personales_recepcionista (PacienteModel paciente)
+        string alias;
+        public Datos_personales_recepcionista (PacienteModel paciente,string alias)
         {
 
             Archivo_Binario ab = new Archivo_Binario();
@@ -62,6 +63,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             llenar_list_view(paciente.id_paciente);
             id = paciente.id_paciente;
             this.paciente = paciente;
+            this.alias = alias;
         }
 
         public Datos_personales_recepcionista()
@@ -135,7 +137,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                 if (recep != null)
                 {
 
-                    recep.Main3.Content = new Page2_Abonos(paciente, motivo);
+                    recep.Main3.Content = new Page2_Abonos(paciente, motivo,alias);
                 }
 
 
@@ -154,7 +156,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             //im.ShowDialog();
 
             DialogResult resultado = new DialogResult();
-            Form mensaje = new IngresarMotivo(id);
+            Form mensaje = new IngresarMotivo(id,alias);
             resultado = mensaje.ShowDialog();
             this.GMotivo = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
             lvMotivo.ItemsSource = GMotivo;
@@ -171,11 +173,11 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                 if (confirmation == System.Windows.Forms.DialogResult.Yes)
                 {
                     Motivo_cita mot = new Motivo_cita(bandera_online_offline);
-                    bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo, motivo.paciente.id_paciente);
+                    bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo, motivo.paciente.id_paciente,alias);
                     if (elimino)
                     {
                         mot = new Motivo_cita(!bandera_online_offline);
-                        elimino = mot.eliminarMotivo_cita(motivo.id_motivo, motivo.paciente.id_paciente);
+                        elimino = mot.eliminarMotivo_cita(motivo.id_motivo, motivo.paciente.id_paciente,alias);
                         GMotivo.Remove((Motivo_citaModel)lvMotivo.SelectedItem);
 
                         //lvMotivo.ItemsSource = GMotivo;
@@ -196,7 +198,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             if (lvMotivo.SelectedItems.Count > 0)
             {
                 DialogResult resultado = new DialogResult();
-                Form mensaje = new Actualizar_Motivo(motivo);
+                Form mensaje = new Actualizar_Motivo(motivo,alias);
                 resultado = mensaje.ShowDialog();
                 this.GMotivo = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
                 lvMotivo.ItemsSource = GMotivo;

@@ -13,6 +13,7 @@ namespace bonita_smile_v1.Servicios
 {
     class Sincronizar
     {
+        string alias;
         private MySqlDataReader reader = null;
         private string query;
         private MySqlConnection conexionBD,conexionBD2;
@@ -32,8 +33,8 @@ namespace bonita_smile_v1.Servicios
 
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
-            this.ruta = @configuracion.carpetas.ruta_temporal_carpeta+ "\\script_temporal.txt";
-            this.ruta_borrar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            this.ruta = @configuracion.carpetas.ruta_respaldo_carpeta+ "\\script_temporal.txt";
+            this.ruta_borrar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             
             this.conexionBD = obj.conexion_offline();
             this.conexionBD2 = obj.conexion_offline();
@@ -54,7 +55,7 @@ namespace bonita_smile_v1.Servicios
             string constring = "server="+configuracion.servidor_externo.servidor_local+";user="+configuracion.servidor_externo.usuario_local+";pwd="+configuracion.servidor_externo.password_local+";database="+configuracion.servidor_externo.database_local+";";
             constring += "charset=utf8;convertzerodatetime=true;";
             MessageBox.Show(constring);
-            string file = @configuracion.carpetas.ruta_temporal_carpeta+"\\backup.sql";
+            string file = @configuracion.carpetas.ruta_respaldo_carpeta+"\\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -77,7 +78,7 @@ namespace bonita_smile_v1.Servicios
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
             string constring = "server="+configuracion.servidor_interno.servidor_local+";user="+configuracion.servidor_interno.usuario_local+";pwd="+configuracion.servidor_interno.password_local+";database="+configuracion.servidor_interno.database_local+";";
-            string file = @configuracion.carpetas.ruta_temporal_carpeta + "\\backup.sql";
+            string file = @configuracion.carpetas.ruta_respaldo_carpeta + "\\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -149,8 +150,9 @@ namespace bonita_smile_v1.Servicios
                         else
                         {
                             MessageBox.Show("NO ESTA"+ filename);
-                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
-                            if(descargo)
+                            // bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
+                            bool descargo = downloadFile(configuracion.ftp.ftp_server+configuracion.ftp.ftp_path, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password, filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
+                            if (descargo)
                             {
                                 MessageBox.Show("si descargo");
                             }
@@ -196,7 +198,8 @@ namespace bonita_smile_v1.Servicios
                         else
                         {
                             MessageBox.Show("NO ESTA" + filename);
-                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
+                            //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
+                            bool descargo = downloadFile(configuracion.ftp.ftp_server + configuracion.ftp.ftp_path, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password, filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
 
                         }
 
@@ -237,7 +240,8 @@ namespace bonita_smile_v1.Servicios
                         else
                         {
                             MessageBox.Show("NO ESTA" + filename);
-                            bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
+                            //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
+                            bool descargo = downloadFile(configuracion.ftp.ftp_server + configuracion.ftp.ftp_path, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password, filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
 
                         }
 
@@ -442,63 +446,73 @@ namespace bonita_smile_v1.Servicios
         public bool SincronizarLocalServidor()
         {
             
-            conexionBD = obj2.conexion(false);
+            conexionBD = obj2.conexion(true);
             Escribir_Archivo ea = new Escribir_Archivo();
             bool internet = ti.Test();
-            List<String> lQuery = new List<string>();
+            List<string> lQuery = new List<string>();
             //lQuery = ea.corregirArchivo();
             lQuery = ea.obtenerQueryArchivo();
-            if(lQuery!=null)
+            MessageBox.Show(lQuery.Count() + "");
+            foreach(var q in lQuery)
             {
+                MessageBox.Show(q);
+            }
+            return true;
+            //if(lQuery!=null)
+            //{
 
-                if (!internet)
-                {
-                    MessageBox.Show("entro al if1");
-                    MessageBox.Show("Intentelo más tarde, no cuenta con acceso a internet");
-                    return false;
-                }
-                else
-                {
-                    //CREAR TRANSACCION
-                    MySqlTransaction tr = null;
-                    try
-                    {
-                        conexionBD.Open();
+            //    if (!internet)
+            //    {
+            //        MessageBox.Show("entro al if1");
+            //        MessageBox.Show("Intentelo más tarde, no cuenta con acceso a internet");
+            //        return false;
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("entro al else");
+            //        //CREAR TRANSACCION
+            //        MySqlTransaction tr = null;
+            //        try
+            //        {
+            //            MessageBox.Show("entro al try");
+            //            conexionBD.Open();
 
-                        tr = conexionBD.BeginTransaction();
-                        foreach (var query in lQuery)
-                        {
+            //            tr = conexionBD.BeginTransaction();
+            //            foreach (var query in lQuery)
+            //            {
 
-                            if (!query.Equals(""))
-                            {
-                                MessageBox.Show("entro aqui" + query);
-                                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-                                cmd.ExecuteReader();
-                                cmd.Dispose();
+            //                if (!query.Equals(""))
+            //                {
+            //                    MessageBox.Show("entro aqui" + query);
+            //                    Console.WriteLine("query : ->" +query);
+            //                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+            //                    cmd.ExecuteReader();
+            //                    cmd.Dispose();
 
-                            }
-                        }
-                        tr.Commit();
-                        File.Delete(ruta);
-                        return true;
+            //                }
+            //            }
+            //            tr.Commit();
+            //            ea.SetFileReadAccess(ruta, false);
+            //            File.Delete(ruta);
+            //            return true;
 
-                    }
-                    catch (Exception ex) {
-                        MessageBox.Show("entro al catch :(");
-                        MessageBox.Show("error intente mas tarde");
-                        tr.Rollback(); 
-                        return false; }
-                    finally
-                    {
-                        conexionBD.Close();
-                    }
+            //        }
+            //        catch (Exception ex) {
+            //            MessageBox.Show("entro al catch :("+ex.ToString());
+            //            MessageBox.Show("error intente mas tarde");
+            //            tr.Rollback(); 
+            //            return false; }
+            //        finally
+            //        {
+            //            conexionBD.Close();
+            //        }
                     
-                }
-            }
-            else
-            {
-                return false;
-            }
+            //    }
+            //}
+            //else
+            //{
+            //    return false;
+            //}
 
         }
 
@@ -604,12 +618,15 @@ namespace bonita_smile_v1.Servicios
 
         private bool SubirFicheroStockFTP(string foto, string ruta)
         {
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
             bool verdad;
             try
             {
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(
-                        "ftp://jjdeveloperswdm.com" +
-                        "/" +
+                        configuracion.ftp.ftp_server +
+                        configuracion.ftp.ftp_path +
                        foto);
 
                 string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -619,8 +636,8 @@ namespace bonita_smile_v1.Servicios
                 request.Method = WebRequestMethods.Ftp.UploadFile;
 
                 request.Credentials = new NetworkCredential(
-                        "bonita_smile@jjdeveloperswdm.com",
-                        "bonita_smile");
+                        configuracion.ftp.ftp_user,
+                        configuracion.ftp.ftp_password);
 
                 request.UsePassive = true;
                 request.UseBinary = true;
@@ -772,8 +789,8 @@ namespace bonita_smile_v1.Servicios
                     foreach (string imagen in datos)
                     {
 
-                        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+                        Uri siteUri = new Uri(configuracion.ftp.ftp_server+configuracion.ftp.ftp_path + imagen);
+                        bool verdad = DeleteFileOnServer(siteUri, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password);
 
                         if (!verdad)
                             eliminarArchivo = false;
@@ -783,7 +800,7 @@ namespace bonita_smile_v1.Servicios
                         System.Windows.MessageBox.Show("elimino Archivo");
                         ea.SetFileReadAccess(ruta_borrar, false);
 
-                        File.Delete(@configuracion.carpetas.ruta_temporal_carpeta+"\\eliminar_imagen_temporal.txt");
+                        File.Delete(@configuracion.carpetas.ruta_respaldo_carpeta+"\\eliminar_imagen_temporal.txt");
                     }
                     return true;
                 }

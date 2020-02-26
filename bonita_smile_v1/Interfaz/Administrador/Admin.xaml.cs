@@ -25,10 +25,14 @@ namespace bonita_smile_v1.Interfaz.Administrador
     public partial class Admin : MetroWindow
     {
         ObservableCollection<PacienteModel> GPaciente;
-        public Admin()
+        string alias;
+        string nombre_doctor;
+        public Admin(string alias,string nombre_doctor)
         {
             InitializeComponent();
-            Main.Content = new Page1();
+            Main.Content = new Page1(alias,nombre_doctor);
+            this.alias = alias;
+            this.nombre_doctor=nombre_doctor;
             //llenar_list_view();
 
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -86,38 +90,40 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void listViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main.Content = new Page1();
+            Main.Content = new Page1( alias,nombre_doctor);
         }
 
         private void listViewItem1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main.Content = new Page4();
+            Main.Content = new Page4( alias);
         }
 
         private void listViewItem2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main.Content = new Page5();
+            Main.Content = new Page5( alias);
         }
 
         private void listViewItem3_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main.Content = new Page6();
+            Main.Content = new Page6( alias);
         }
 
         private void listViewItem5_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main.Content = new Pagina_Permisos(2);
+            Main.Content = new Pagina_Permisos(2, alias);
         }
 
         private void listViewItem6_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main.Content = new Pagina_Permisos(4);
+            Main.Content = new Pagina_Permisos(4,alias);
              
         }
 
         private void listViewItem7_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main.Content = new Pagina_Permisos(5);
+            System.Windows.MessageBox.Show(alias+"listview 7");
+            Main.Content = new Pagina_Permisos(5,alias);
+           
              
         }
 
@@ -142,6 +148,16 @@ namespace bonita_smile_v1.Interfaz.Administrador
             DialogResult resultado = new DialogResult();
             Form mensaje = new Configuracion(configuracion,ruta);
             resultado = mensaje.ShowDialog();
+        }
+
+        private void button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+            Paleta_Colores p_c = new Paleta_Colores();
+            p_c.ShowDialog();
+            //StackPanelMenu.Background = new SolidColorBrush(Colors.Brown);
+            //sp.Background = new SolidColorBrush(Colors.Red);
+           
         }
     }
 }

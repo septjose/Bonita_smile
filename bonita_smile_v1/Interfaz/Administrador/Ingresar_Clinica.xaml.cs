@@ -25,11 +25,13 @@ namespace bonita_smile_v1
     {
         string color = "";
         bool bandera_online_offline = false;
-        public Page5_Ingresar()
+        string alias;
+        public Page5_Ingresar(string alias)
         {
 
             InitializeComponent();
             cmbColor.ItemsSource = typeof(Colors).GetProperties();
+            this.alias = alias;
         }
 
 
@@ -52,7 +54,7 @@ namespace bonita_smile_v1
                     string nombre_sucursal = txtNombre.Text;
                     //MessageBox.Show(nombre_sucursal);
                     Clinicas c = new Clinicas(bandera_online_offline);
-                    bool correcto = c.insertarClinica(nombre_sucursal, color);
+                    bool correcto = c.insertarClinica(nombre_sucursal, color,alias);
                     if (correcto)
                     {
                         //c = new Clinicas(!bandera_online_offline);
@@ -60,7 +62,7 @@ namespace bonita_smile_v1
                         System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
-                            admin.Main.Content = new Page5();
+                            admin.Main.Content = new Page5(alias);
                     }
                     else
                     {

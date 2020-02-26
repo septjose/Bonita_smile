@@ -31,6 +31,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         List<string> lista = new List<string>();
         string alias = "";
         int id_rol = 0;
+        string user_alias;
         public Permisos_Recepcionista_socio (List<string>lista,string alias,int id_rol)
         {
             InitializeComponent();
@@ -84,7 +85,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     {
                         Clinicas cli = new Clinicas(bandera_online_offline);
 
-                        bool elimino = cli.eliminar_Permiso(permiso.id_usuario, permiso.id_clinica);
+                        bool elimino = cli.eliminar_Permiso(permiso.id_usuario, permiso.id_clinica,alias);
                         if (elimino)
                         {
                             //cli = new Clinicas(!bandera_online_offline);
@@ -117,7 +118,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 if (socio != null)
                     //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                    socio.Main4.Content = new Actualizar_Permiso_recepcionista_socio(this.id_rol,permiso.alias, permiso.nombre_sucursal,this.alias,this.lista,permiso.id_clinica);
+                    socio.Main4.Content = new Actualizar_Permiso_recepcionista_socio(this.id_rol,permiso.alias, permiso.nombre_sucursal,this.alias,this.lista,permiso.id_clinica,permiso.id_usuario);
             }
             else
             {

@@ -41,7 +41,7 @@ namespace bonita_smile_v1.Servicios
         {
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
 
-            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(paciente.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(paciente.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica";
+            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente";
             //query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, date_format(paciente.membresia, '%d/%m/%Y') as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica";
             try
             {
@@ -99,7 +99,7 @@ namespace bonita_smile_v1.Servicios
             foreach (var id in lista)
             {
                 MessageBox.Show("el id de la clinica es " + id);
-                query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(paciente.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(paciente.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica where clinica.id_clinica='" + id + "' ";
+                query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id + "' ";
 
                 try
                 {
@@ -155,7 +155,7 @@ namespace bonita_smile_v1.Servicios
         {
 
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
-            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(paciente.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(paciente.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(paciente.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica where clinica.id_clinica='"+id+"' ";
+            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id+"' ";
 
             try
             {
@@ -258,7 +258,7 @@ namespace bonita_smile_v1.Servicios
         //    return listaPaciente;
         //}
 
-        public bool eliminarPaciente(string id_paciente)
+        public bool eliminarPaciente(string id_paciente  ,string alias)
         {
             bool internet = ti.Test();
             try
@@ -291,7 +291,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                 
@@ -304,7 +305,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarPaciente(string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica)
+        public bool insertarPaciente(string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica  ,string alias)
         {
             Seguridad s = new Seguridad();
             string foto_paciente ="";
@@ -351,7 +352,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                 
@@ -364,7 +366,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarPaciente(string id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica)
+        public bool actualizarPaciente(string id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica  ,string alias)
         {
             Seguridad s = new Seguridad();
             string foto_paciente = "";
@@ -410,7 +412,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
                
@@ -499,7 +502,7 @@ namespace bonita_smile_v1.Servicios
                 return bitmap;
          
         }
-        public bool eliminarMembresia(PacienteModel paciente)
+        public bool eliminarMembresia(PacienteModel paciente , string alias)
         {
             bool internet = ti.Test();
             try
@@ -535,7 +538,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
             }
@@ -547,7 +551,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarMembresia(PacienteModel paciente)
+        public bool actualizarMembresia(PacienteModel paciente , string alias)
         {
             bool internet = ti.Test();
             try
@@ -585,7 +589,8 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir(query + ";");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+
                     return true;
                 }
             }

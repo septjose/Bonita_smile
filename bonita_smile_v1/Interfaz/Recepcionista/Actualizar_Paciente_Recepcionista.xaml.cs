@@ -44,8 +44,9 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         bool bandera_online_offline = false;
         PacienteModel paciente;
         Configuracion_Model configuracion;
+        string alias;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-        public Actualizar_Paciente_Recepcionista(PacienteModel paciente,string id)
+        public Actualizar_Paciente_Recepcionista(PacienteModel paciente,string id,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
@@ -63,6 +64,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             antecedentes = paciente.antecedente;
             id_pacientes = paciente.id_paciente;
             foto = paciente.foto;
+            this.alias = alias;
 
         }
 
@@ -147,7 +149,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                             // new Actualizar_Antecedentes(pacienteModel).ShowDialog();
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             if (recep != null)
-                                recep.Main3.Content = new Page7_Actualizar(pacienteModel, nombres_viejo, null, ""); ;
+                                recep.Main3.Content = new Page7_Actualizar(pacienteModel, nombres_viejo, null, alias); ;
                         }
                         else
                         {
@@ -218,7 +220,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
 
             if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
             {
@@ -242,7 +244,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                             {
                                 if (foto.Equals(""))
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica,alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -253,14 +255,14 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                                         if (recep != null)
                                         {
-                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
+                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica,alias);
                                         }
 
                                     }
                                 }
                                 else
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica,alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -271,7 +273,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                                         if (recep != null)
                                         {
-                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
+                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica,alias);
                                         }
 
                                     }
@@ -281,7 +283,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                             {
                                 if (foto.Equals(""))
                                 {
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica,alias);
                                     if (inserto)
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -292,7 +294,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                                         if (recep != null)
                                         {
-                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
+                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica,alias);
                                         }
 
                                     }
@@ -301,7 +303,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                 {
                                     string nombre_nuevo_foto = txtNombre.Text + "_" + txtApellidos.Text + "_" + id_pacientes + ".jpg";
                                     nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
-                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
+                                    bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica,alias);
                                     if (inserto)
                                     {
                                         renombrar(this.paciente.foto, nombre_nuevo_foto);
@@ -312,8 +314,15 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                         string destFile2 = System.IO.Path.Combine(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" , nombre_nuevo_foto);
                                         System.IO.File.Copy(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre_nuevo_foto, destFile2, true);
                                         Escribir_Archivo ea = new Escribir_Archivo();
-                                        ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                                        ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                                         System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+
+
+                                        if (recep != null)
+                                        {
+                                            recep.Main3.Content = new Pacientes_Recepcionista(id_clinica, alias);
+                                        }
                                         //pa = new Paciente(!bandera_online_offline);
                                         //bool actualizo = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         //if (actualizo)

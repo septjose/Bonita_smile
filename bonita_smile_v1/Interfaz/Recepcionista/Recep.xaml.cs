@@ -23,11 +23,14 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
     {
         ObservableCollection<PacienteModel> GPaciente;
         string id = "";
-        public Recep(string id)
+        string alias;
+        public Recep(string id,string nombre,string alias)
         {
             InitializeComponent();
-            Main3.Content = new Recepcionista_Principal(id);
+            Main3.Content = new Recepcionista_Principal(id,alias);
             this.id = id;
+            nombre_clinica.Text = nombre;
+            this.alias = alias;
             //llenar_list_view();
 
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -81,23 +84,29 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
         private void listViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main3.Content = new Recepcionista_Principal(this.id);
+            Main3.Content = new Recepcionista_Principal(this.id,alias);
         }
 
         private void listViewItem1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main3.Content = new Pacientes_Recepcionista(this.id);
+            Main3.Content = new Pacientes_Recepcionista(this.id,alias);
         }
 
         private void listViewItem2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main3.Content = new Recepcionista_Principal(this.id);
+            Main3.Content = new Recepcionista_Principal(this.id,alias);
         }
 
         private void listViewItem3_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Main3.Content = new Recepcionista_Principal(this.id);
+            Main3.Content = new Recepcionista_Principal(this.id,alias);
 
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            Paleta_Colores p_c = new Paleta_Colores();
+            p_c.ShowDialog();
         }
     }
 }

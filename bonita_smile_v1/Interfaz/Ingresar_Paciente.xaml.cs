@@ -46,12 +46,14 @@ namespace bonita_smile_v1
         private MySqlConnection conexionBD;
         Conexion obj = new Conexion();
         string valor = "";
-        public Page6_Ingresar()
+        string alias;
+        public Page6_Ingresar(string alias)
         {
             this.conexionBD = obj.conexion(false);
             InitializeComponent();
            
             llenar_Combo();
+            this.alias = alias;
         }
 
         private void Capturar_Click(object sender, RoutedEventArgs e)
@@ -172,12 +174,12 @@ namespace bonita_smile_v1
                             if (admin != null)
                             {
                                 System.Windows.MessageBox.Show("SI AVANZO A ADMIN");
-                                admin.Main.Content = new Page7_Ingresar(pacienteModel, null, "");
+                                admin.Main.Content = new Page7_Ingresar(pacienteModel, null, alias);
                             }
                             else
                                 if (recep != null)
                             {
-                                recep.Main3.Content = new Page7_Ingresar(pacienteModel, null, "");
+                                recep.Main3.Content = new Page7_Ingresar(pacienteModel, null, alias);
                             }
                         }
                         else
@@ -221,7 +223,7 @@ namespace bonita_smile_v1
                         {
                            string tel = txtTelefono.Text;
                             System.Windows.MessageBox.Show(tel);
-                            bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, "", "", txtEmail.Text, 0, id_clinica);
+                            bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, "", "", txtEmail.Text, 0, id_clinica,alias);
                             if (inserto)
                             {
                                 //pa = new Paciente(true);
@@ -230,13 +232,13 @@ namespace bonita_smile_v1
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                 {
-                                    admin.Main.Content = new Page6();
+                                    admin.Main.Content = new Page6(alias);
                                     System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                                 else
                                 if (recep != null)
                                 {
-                                    recep.Main3.Content = new Page6();
+                                    recep.Main3.Content = new Page6(alias);
                                     System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
 

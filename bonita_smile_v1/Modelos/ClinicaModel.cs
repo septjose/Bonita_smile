@@ -13,5 +13,7 @@ namespace bonita_smile_v1.Modelos
         public string color { get; set; }
 
         public string fecha { get; set; }
+
+        
     }
 }

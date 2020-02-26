@@ -47,12 +47,14 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         Conexion obj = new Conexion();
         string valor = "";
         string id = "";
-        public Ingresar_Paciente_Recepcionista( string id)
+        string alias;
+        public Ingresar_Paciente_Recepcionista( string id,string alias)
         {
             this.conexionBD = obj.conexion(false);
             InitializeComponent();
             this.id = id;
             llenar_Combo(id);
+            this.alias = alias;
         }
 
         private void Capturar_Click(object sender, RoutedEventArgs e)
@@ -167,7 +169,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                             if (recep != null)
                             {
-                                recep.Main3.Content = new Page7_Ingresar(pacienteModel, null, "");
+                                recep.Main3.Content = new Page7_Ingresar(pacienteModel, null, alias);
                             }
                         }
                       else
@@ -215,7 +217,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                     {
                         if(new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
-                            bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica);
+                            bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, "", "", txtEmail.Text, 0, id_clinica,alias);
                             if (inserto)
 
                             {
@@ -225,7 +227,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                                 if (recep != null)
                                 {
-                                    recep.Main3.Content = new Pacientes_Recepcionista(id_clinica);
+                                    recep.Main3.Content = new Pacientes_Recepcionista(id_clinica,alias);
                                     System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
 

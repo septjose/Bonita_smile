@@ -58,7 +58,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         private void Borrar(object sender, RoutedEventArgs e)
         {
             bool eliminarArchivo = true;
-            string rutaArchivoEliminar = @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt";
+            string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
             Escribir_Archivo ea = new Escribir_Archivo();
 
@@ -72,7 +72,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 {
                     //se elimina todo lo relacionado con el pacinete incluyento sus registros de carpetas,fotos,etc. osea que no se puede recuperar nada
                     var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_Paciente(id_paciente);
-                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente);
+                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente,alias);
                     if (elimino)
                     {
                         //obtener todas sus imagenes y guardarlas dentro del archivo
@@ -80,7 +80,7 @@ namespace bonita_smile_v1.Interfaz.Socio
 
                         if (listaNombreArchivos.Count == 0)
                         {
-                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                         }
                         else
                         {
@@ -89,7 +89,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                                 System.Windows.MessageBox.Show("escribio en archivo");
 
                                 //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                                ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                                ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                                 //ELIMINAR FOTOS
                                 if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa))
                                 {
@@ -108,7 +108,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                         else
                         {
                             //PASAR FOTO EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(paciente.foto, @configuracion.carpetas.ruta_temporal_carpeta + "\\eliminar_imagen_temporal.txt");
+                            ea.escribir_imagen_eliminar(paciente.foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                             //ELIMINAR FOTO
                             if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + paciente.foto))
                             {

@@ -1,4 +1,7 @@
-﻿using bonita_smile_v1.Modelos;
+﻿using bonita_smile_v1.Interfaz.Administrador;
+using bonita_smile_v1.Interfaz.Clinica;
+using bonita_smile_v1.Interfaz.Socio;
+using bonita_smile_v1.Modelos;
 using bonita_smile_v1.Servicios;
 using MySql.Data.MySqlClient;
 using System;
@@ -8,10 +11,13 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using bonita_smile_v1.Interfaz;
 using System.Windows.Forms;
+using bonita_smile_v1.Interfaz.Recepcionista;
 
 namespace bonita_smile_v1
 {
@@ -24,40 +30,81 @@ namespace bonita_smile_v1
         private MySqlConnection conexionBD, conexionBD2;
         Conexion obj = new Conexion();
         CultureInfo culture = new CultureInfo("en-US");
-        public InsertarMembresia(PacienteModel paciente)
+        Configuracion_Model configuracion;
+        string ruta = Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+        string alias;
+        public InsertarMembresia(PacienteModel paciente,string alias)
         {
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.paciente = paciente;
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta);
+            this.configuracion = configuracion;
+            this.alias = alias;
             InitializeComponent();
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            string id_membresia="";
             if (!txtPrecio.Text.Equals("") && !txt_efectivo.Text.Equals(""))
             {
                 if (new Seguridad().validar_numero(txtPrecio.Text) && new Seguridad().validar_numero(txt_efectivo.Text))
                 {
                     double abono = Convert.ToDouble(txtPrecio.Text, culture);
                     double efectivo = Convert.ToDouble(txt_efectivo.Text, culture);
-                    if ( efectivo >= abono)
+                    if ( efectivo > 0)
                     {
                         try
                         {
 
                             //MessageBox.Show(paciente.nombre);
-                            bool inserto = new Paciente(bandera_online_offline).actualizarMembresia(paciente);
+                            bool inserto = new Membresia(bandera_online_offline).InsertarMembresia(paciente.id_paciente, DateTime.Now.ToString("yyyy/MM/dd"),paciente.clinica.id_clinica,abono.ToString(culture),alias);
                             if (inserto)
                             {
-                                System.Windows.Forms.MessageBox.Show("El paciente " + paciente.nombre + " " + paciente.apellidos + " es ahora miembro", "Se ingreso correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                List<MembresiaModel> lista = new Membresia(bandera_online_offline).MostrarMembresias(paciente.id_paciente, paciente.clinica.id_clinica);
+                                foreach(var membresia in lista)
+                                {
+                                    id_membresia=membresia.id_membresia;
+                                }
+
+                                bool inserto2 = new Abonos_Membresia(bandera_online_offline).InsertarAbonoMembresia(DateTime.Now.ToString("yyyy/MM/dd"), efectivo.ToString(culture), "Primer pago para tener la membresia", id_membresia, paciente.id_paciente, paciente.clinica.id_clinica, alias);
+                                if(inserto2)
+                                {
+                                    System.Windows.Forms.MessageBox.Show("El paciente " + paciente.nombre + " " + paciente.apellidos + " es ahora miembro", "Se ingreso correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    imprimir_recibo();
+
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
+
+                                    if (admin != null)
+                                    {
+                                        MessageBox.Show(abono.ToString());
+                                        admin.Main.Content = new Abonos_Mem(paciente,id_membresia, abono, alias);
+                                    }
+                                    else
+                                    if (recep != null)
+                                    {
+                                        recep.Main3.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                                    }
+                                    else
+                                    if (socio != null)
+                                    {
+                                        socio.Main4.Content = new Abonos_Mem(paciente, id_membresia, abono, alias);
+                                    }
+                                }
+                                
 
                                 // -----------------------------------------------/
                                 //inserto = new Paciente(!bandera_online_offline).actualizarMembresia(paciente);
 
-                                imprimir_recibo();
+                                
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo  Eliminar la membresia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar la membresia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
@@ -95,7 +142,7 @@ namespace bonita_smile_v1
             printDocument1.PrintPage += new PrintPageEventHandler(Imprimir);
 
             //printDocument1.PrinterSettings.PrinterName = "HPFEF3CF (HP Officejet Pro 6830) (Red)";
-            printDocument1.PrinterSettings.PrinterName = "58 Printer";
+            printDocument1.PrinterSettings.PrinterName = configuracion.ftp.nombre_impresora;
 
             //printDocument1.PrinterSettings.PrinterName = "Microsoft XPS Document Writer";
             printDocument1.DefaultPageSettings.PaperSize = new PaperSize("210 x 297 mm", 196, 822);
@@ -147,9 +194,9 @@ namespace bonita_smile_v1
             string fecha_finalizacion = DateTime.Now.AddYears(1).ToString("d/M/yyyy");
             string hora = DateTime.Now.ToString("HH:mm:ss") + " hrs";
             Abonos a = new Abonos(bandera_online_offline);
-          
 
-            System.Drawing.Image imagen = System.Drawing.Image.FromFile("E:\\PortableGit\\programs_c#\\bs_v1.4\\Bonita_smile\\bonita_smile_v1\\Assets\\bs_ticket_imagen.bmp");
+
+            System.Drawing.Image imagen = System.Drawing.Image.FromFile(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\bs_ticket_imagen.bmp"));
             System.Drawing.RectangleF rect = new System.Drawing.RectangleF(margen_izquierdo, margen_superior, centimetroAPixel(4), 30);//tamanio_hoja_horizontal en vez de 4
             RectangleF rImage = new RectangleF(38, margen_superior, 110, 110);
 
