@@ -106,117 +106,90 @@ namespace bonita_smile_v1
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
-            //if (lv_Paciente.SelectedItems.Count > 0)
-            //{
-            //    if (paciente.membresia.Equals(""))
-            //    {
-            //        DialogResult resultado = new DialogResult();
-            //        Form mensaje = new InsertarMembresia(paciente);
-            //        resultado = mensaje.ShowDialog();
-            //    }
-            //    else
-            //    {
-            //        DialogResult resultado = new DialogResult();
-            //        Form mensaje = new EliminarMembresia(paciente);
-            //        resultado = mensaje.ShowDialog();
-            //    }
-
-            //}
-            //else
-            //{
-            //    System.Windows.MessageBox.Show("No se seleccionó ningún registro, error");
-            //}
-
-            //verificar si hay internet   -listo
-            //subir los scripts del archivo -listo
-            //hacer respaldo y restaurar - listo
-            //subir fotos a la nube - listo
-            //borrar fotos de la  nube listo
-            //descargar las fotos   
+            
 
            Test_Internet ti = new Test_Internet();
             Sincronizar sinc = new Sincronizar();
-            /*bool verificar = ti.Test();
-           if (verificar)
-           {
-               //System.Windows.MessageBox.Show("hi");
-               try
-               {
-                   //  System.Windows.MessageBox.Show("hii x2");
-                   bool subir_scripts = sinc.SincronizarLocalServidor();
-                   if (subir_scripts) { System.Windows.MessageBox.Show("se subieron los scripts"); }
-                   //System.Windows.MessageBox.Show("hii x3");
-                   if (verificar)
-                   {
-                       System.Windows.MessageBox.Show("se hace el backup");
-                       sinc.Backup();
-                       System.Windows.MessageBox.Show("despues backup");
-                       bool borrar = sinc.borrar_bd();
-                       if (borrar)
-                       {
-                           System.Windows.MessageBox.Show("Se borro la bd");
-                           bool si_creo = sinc.crear_bd();
-                           if (si_creo)
-                           {
-                               System.Windows.MessageBox.Show("se creo la bd");
-                               sinc.Restore();
+            bool verificar = ti.Test();
+            if (verificar)
+            {
+                System.Windows.MessageBox.Show("hi");
+                try
+                {
+                      System.Windows.MessageBox.Show("hii x2");
+                    bool subir_scripts = sinc.SincronizarLocalServidor();
+                    if (subir_scripts) { System.Windows.MessageBox.Show("se subieron los scripts"); }
+                    System.Windows.MessageBox.Show("hii x3");
+                    if (verificar)
+                    {
+                        System.Windows.MessageBox.Show("se hace el backup");
+                        sinc.Backup();
+                        System.Windows.MessageBox.Show("despues backup");
+                        bool borrar = sinc.borrar_bd();
+                        if (borrar)
+                        {
+                            System.Windows.MessageBox.Show("Se borro la bd");
+                            bool si_creo = sinc.crear_bd();
+                            if (si_creo)
+                            {
+                                System.Windows.MessageBox.Show("se creo la bd");
+                                sinc.Restore();
 
-                               bool subio_fotos = sinc.subir_fotos();
-                               if (subio_fotos)
-                               {
-                                   System.Windows.MessageBox.Show("se subieron las fotos correctamente");
-                                   System.Windows.MessageBox.Show("toca eliminar fotos");
-                                   bool eliminar_fotos = sinc.eliminar_fotos();
-                                   if (eliminar_fotos)
-                                   {
-                                       System.Windows.MessageBox.Show("se eliminaron las fotos");
-                                   }
-                                   System.Windows.MessageBox.Show("toca descargar");
-                                   bool descargar_fotos = sinc.descargar_fotos();
-                                   if (descargar_fotos)
-                                   {
-                                       System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
-                                   }
-
-
-                                   else
-                                   {
-                                       System.Windows.MessageBox.Show("hubo problemas al eliminar las fotos");
-                                   }
-
-                               }
-                               else
-                               {
-                                   System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
-                               }
+                                bool subio_fotos = sinc.subir_fotos();
+                                if (subio_fotos)
+                                {
+                                    System.Windows.MessageBox.Show("se subieron las fotos correctamente");
+                                    System.Windows.MessageBox.Show("toca eliminar fotos");
+                                    bool eliminar_fotos = sinc.eliminar_fotos();
+                                    if (eliminar_fotos)
+                                    {
+                                        System.Windows.MessageBox.Show("se eliminaron las fotos");
+                                    }
+                                    System.Windows.MessageBox.Show("toca descargar");
+                                    bool descargar_fotos = sinc.descargar_fotos();
+                                    if (descargar_fotos)
+                                    {
+                                        System.Windows.MessageBox.Show("se descargaron las fotos correctamente");
+                                    }
 
 
-                           }
-                           else
-                           {
-                               System.Windows.MessageBox.Show("No se pudo crear bd ");
-                           }
-                       }
-                       else
-                       {
-                           System.Windows.MessageBox.Show("No se pudo borrar");
-                       }
-                   }
+                                    else
+                                    {
+                                        System.Windows.MessageBox.Show("hubo problemas al eliminar las fotos");
+                                    }
 
-               }
-               catch (Exception ex)
-               {
+                                }
+                                else
+                                {
+                                    System.Windows.MessageBox.Show("hubo problemas al subir las fotos");
+                                }
 
-               }
-               List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
-               lv_Paciente.ItemsSource = pacientes;
-           }
-           else
-           {
-               System.Windows.Forms.MessageBox.Show("No hay conexión a internet intente más tarde.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-           }*/
-            bool subir_scripts = sinc.SincronizarLocalServidor();
+
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("No se pudo crear bd ");
+                            }
+                        }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("No se pudo borrar");
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+                List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                lv_Paciente.ItemsSource = pacientes;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No hay conexión a internet intente más tarde.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
 
 
         }

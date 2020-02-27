@@ -21,7 +21,7 @@ namespace bonita_smile_v1.Servicios
         Test_Internet ti = new Test_Internet();
         Conexion obj2 = new Conexion();
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-
+        Configuracion_Model configuracion;
         string ruta;
         string ruta_borrar ;
         //string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";
@@ -33,11 +33,12 @@ namespace bonita_smile_v1.Servicios
 
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
-            this.ruta = @configuracion.carpetas.ruta_respaldo_carpeta+ "\\script_temporal.txt";
-            this.ruta_borrar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
+            //this.ruta = @configuracion.carpetas.ruta_respaldo_carpeta+ "\\script_temporal.txt";
+            //this.ruta_borrar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             
             this.conexionBD = obj.conexion_offline();
             this.conexionBD2 = obj.conexion_offline();
+            this.configuracion = configuracion;
         }
         public void Backup()
         {
@@ -445,75 +446,81 @@ namespace bonita_smile_v1.Servicios
 
         public bool SincronizarLocalServidor()
         {
-            
+            MessageBox.Show("ENTRO AL METODO");
             conexionBD = obj2.conexion(true);
             Escribir_Archivo ea = new Escribir_Archivo();
             bool internet = ti.Test();
-            List<string> lQuery = new List<string>();
-            //lQuery = ea.corregirArchivo();
-            lQuery = ea.obtenerQueryArchivo();
-            MessageBox.Show(lQuery.Count() + "");
-            foreach(var q in lQuery)
+            List<String> lQuery = new List<string>();
+            List<String> archivos = new List<String>();
+            string ruta_carpeta = @configuracion.carpetas.ruta_script_carpeta + "\\";  //=====> variable que contiene el nombre de la carpeta donde estan alojados los queries
+
+            archivos = Obtener_nombres_archivos(ruta_carpeta);
+            MessageBox.Show(archivos.Count() + "la lista de archivos tiene ");
+
+            if (archivos.Count > 0)
             {
-                MessageBox.Show(q);
+
+                foreach (var archivo in archivos)
+                {
+                    lQuery = ea.obtenerQueryArchivo(@configuracion.carpetas.ruta_script_carpeta + "\\"+archivo);
+                    MessageBox.Show(lQuery.Count() + "");
+                    if (lQuery != null)
+                    {
+                        if (!internet)
+                        {
+                            MessageBox.Show("entro al if1");
+                            MessageBox.Show("Intentelo más tarde, no cuenta con acceso a internet");
+                            return false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("entro al else");
+                            //CREAR TRANSACCION
+                            MySqlTransaction tr = null;
+                            try
+                            {
+
+                                MessageBox.Show("entro al try");
+                                conexionBD.Open();
+
+                                tr = conexionBD.BeginTransaction();
+                                foreach (var query in lQuery)
+                                {
+
+                                    if (!query.Equals(""))
+                                    {
+                                        MessageBox.Show("entro aqui" + query);
+                                        Console.WriteLine("query : ->" + query);
+                                        MySqlCommand cmd = new MySqlCommand(query, conexionBD);
+                                        cmd.ExecuteReader();
+                                        cmd.Dispose();
+
+                                    }
+                                }
+                                tr.Commit();
+                                ea.SetFileReadAccess(@configuracion.carpetas.ruta_script_carpeta + "\\" + archivo, false);
+                                File.Delete(@configuracion.carpetas.ruta_script_carpeta + "\\" + archivo);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("entro al catch :(" + ex.ToString());
+                                MessageBox.Show("error intente mas tarde");
+                                tr.Rollback();
+                                return false;
+                            }
+                            finally
+                            {
+                                conexionBD.Close();
+                            }
+                        }
+                    }
+                }
+                return true;
             }
-            return true;
-            //if(lQuery!=null)
-            //{
-
-            //    if (!internet)
-            //    {
-            //        MessageBox.Show("entro al if1");
-            //        MessageBox.Show("Intentelo más tarde, no cuenta con acceso a internet");
-            //        return false;
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("entro al else");
-            //        //CREAR TRANSACCION
-            //        MySqlTransaction tr = null;
-            //        try
-            //        {
-            //            MessageBox.Show("entro al try");
-            //            conexionBD.Open();
-
-            //            tr = conexionBD.BeginTransaction();
-            //            foreach (var query in lQuery)
-            //            {
-
-            //                if (!query.Equals(""))
-            //                {
-            //                    MessageBox.Show("entro aqui" + query);
-            //                    Console.WriteLine("query : ->" +query);
-            //                    MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-            //                    cmd.ExecuteReader();
-            //                    cmd.Dispose();
-
-            //                }
-            //            }
-            //            tr.Commit();
-            //            ea.SetFileReadAccess(ruta, false);
-            //            File.Delete(ruta);
-            //            return true;
-
-            //        }
-            //        catch (Exception ex) {
-            //            MessageBox.Show("entro al catch :("+ex.ToString());
-            //            MessageBox.Show("error intente mas tarde");
-            //            tr.Rollback(); 
-            //            return false; }
-            //        finally
-            //        {
-            //            conexionBD.Close();
-            //        }
-                    
-            //    }
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-
+            else
+            {
+                return false;
+            }
         }
 
         /*public bool SincronizarLocalServidor()
@@ -557,25 +564,23 @@ namespace bonita_smile_v1.Servicios
             }
         }*/
 
-        private List<string> Obtener_nombres_archivos()
+        private List<string> Obtener_nombres_archivos(string ruta_carpeta)
         {
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
             List<string> lista = new List<string>();
-            string ruta = @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\";
-               
+            //string ruta = @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\";
 
-            DirectoryInfo di = new DirectoryInfo(ruta);
-            
+
+            DirectoryInfo di = new DirectoryInfo(ruta_carpeta);
+
             foreach (var fi in di.GetFiles())
             {
                 //MessageBox.Show(fi.ToString());
                 lista.Add(fi.ToString());
             }
-
             return lista;
-
         }
 
 
@@ -586,7 +591,7 @@ namespace bonita_smile_v1.Servicios
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
-            var lista = Obtener_nombres_archivos();
+            var lista = Obtener_nombres_archivos(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\");
             bool bandera = true;
             foreach (var filename in lista)
             {
@@ -717,7 +722,7 @@ namespace bonita_smile_v1.Servicios
         {
             Escribir_Archivo ea = new Escribir_Archivo();
             List<String> lQuery = new List<string>();
-            lQuery = ea.obtenerQueryArchivo();
+            lQuery = ea.obtenerQueryArchivo("");
 
             if (lQuery != null)
             {
@@ -773,46 +778,112 @@ namespace bonita_smile_v1.Servicios
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
             Escribir_Archivo ea = new Escribir_Archivo();
-            List<String> lista = new List<string>();
-            lista = ea.obtener_nombre_foto_eliminar();
+            List<String> lQuery = new List<string>();
+            List<String> archivos = new List<String>();
+           
             bool eliminarArchivo = true;
 
-            if (lista != null)
+            MessageBox.Show("ENTRO AL METODO");
+          
+            bool internet = ti.Test();
+            
+           
+            string ruta_carpeta = @configuracion.carpetas.ruta_eliminar_carpeta + "\\";  //=====> variable que contiene el nombre de la carpeta donde estan alojados los queries
+
+            archivos = Obtener_nombres_archivos(ruta_carpeta);
+            MessageBox.Show(archivos.Count() + "la lista de archivos tiene ");
+
+            if (archivos.Count > 0)
             {
-                //CREAR TRANSACCION
 
-                try
+                foreach (var archivo in archivos)
                 {
-                    //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
-                    var datos = ea.leer(ruta_borrar);
-
-                    foreach (string imagen in datos)
+                    lQuery = ea.obtenerQueryArchivo(@configuracion.carpetas.ruta_eliminar_carpeta + "\\" + archivo);
+                    MessageBox.Show(lQuery.Count() + "");
+                    if (lQuery != null)
                     {
+                        //CREAR TRANSACCION
 
-                        Uri siteUri = new Uri(configuracion.ftp.ftp_server+configuracion.ftp.ftp_path + imagen);
-                        bool verdad = DeleteFileOnServer(siteUri, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password);
+                        try
+                        {
+                            //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+                           // var datos = ea.leer(ruta_borrar);
 
-                        if (!verdad)
-                            eliminarArchivo = false;
+                            foreach (string imagen in lQuery)
+                            {
+                                if(!imagen.Equals(""))
+                                {
+                                    MessageBox.Show(imagen);
+                                    Uri siteUri = new Uri(configuracion.ftp.ftp_server + configuracion.ftp.ftp_path + imagen);
+                                    bool verdad = DeleteFileOnServer(siteUri, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password);
+
+                                    if (!verdad)
+                                        eliminarArchivo = false;
+                                }
+
+                               
+                            }
+                            if (eliminarArchivo)
+                            {
+                                System.Windows.MessageBox.Show("elimino Archivo");
+                                ea.SetFileReadAccess(@configuracion.carpetas.ruta_eliminar_carpeta + "\\" + archivo, false);
+
+                                File.Delete(@configuracion.carpetas.ruta_eliminar_carpeta + "\\" + archivo);
+                            }
+                            
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex + "");
+
+                            return false;
+                        }
                     }
-                    if (eliminarArchivo)
-                    {
-                        System.Windows.MessageBox.Show("elimino Archivo");
-                        ea.SetFileReadAccess(ruta_borrar, false);
-
-                        File.Delete(@configuracion.carpetas.ruta_respaldo_carpeta+"\\eliminar_imagen_temporal.txt");
-                    }
-                    return true;
+                    
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex + "");
-
-                    return false;
-                }
+                return true;
             }
             else
+            {
                 return false;
+            }
+
+            //if (lista != null)
+            //{
+            //    //CREAR TRANSACCION
+
+            //    try
+            //    {
+            //        //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+            //        var datos = ea.leer(ruta_borrar);
+
+            //        foreach (string imagen in datos)
+            //        {
+
+            //            Uri siteUri = new Uri(configuracion.ftp.ftp_server + configuracion.ftp.ftp_path + imagen);
+            //            bool verdad = DeleteFileOnServer(siteUri, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password);
+
+            //            if (!verdad)
+            //                eliminarArchivo = false;
+            //        }
+            //        if (eliminarArchivo)
+            //        {
+            //            System.Windows.MessageBox.Show("elimino Archivo");
+            //            ea.SetFileReadAccess(ruta_borrar, false);
+
+            //            File.Delete(@configuracion.carpetas.ruta_respaldo_carpeta + "\\eliminar_imagen_temporal.txt");
+            //        }
+            //        return true;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex + "");
+
+            //        return false;
+            //    }
+            //}
+            //else
+            //    return false;
         }
 
         public static bool DeleteFileOnServer(Uri serverUri, string ftpUsername, string ftpPassword)

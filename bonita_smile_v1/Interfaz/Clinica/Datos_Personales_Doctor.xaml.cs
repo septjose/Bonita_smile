@@ -86,7 +86,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
         {
             ImageBrush ib = new ImageBrush();
             BitmapImage bi = new BitmapImage();
-            string ruta2 = System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg");
+            string ruta2 = System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg");
             if (File.Exists( filename))
             {
       

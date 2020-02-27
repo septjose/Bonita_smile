@@ -70,7 +70,7 @@ namespace bonita_smile_v1.Servicios
                     }
                     else
                     {
-                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
+                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\trofeo.jpg"));
 
                     }
                     pacienteModel.membresia = reader[11].ToString(); 
@@ -127,7 +127,7 @@ namespace bonita_smile_v1.Servicios
                         }
                         else
                         {
-                            pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
+                            pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\trofeo.jpg"));
 
                         }
                         pacienteModel.membresia = reader[11].ToString();
@@ -187,7 +187,7 @@ namespace bonita_smile_v1.Servicios
                     else
                     {
                         
-                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
+                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\trofeo.jpg"));
 
                     }
                     pacienteModel.membresia = reader[11].ToString();
@@ -457,7 +457,7 @@ namespace bonita_smile_v1.Servicios
                 //MessageBox.Show("no se encontro la foto en " + filename);
                 var bitmap = new BitmapImage();
                 //MessageBox.Show("A");
-                var stream = File.OpenRead( System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg"));
+                var stream = File.OpenRead( System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg"));
                 //MessageBox.Show("B");
                 bitmap.BeginInit();
                 //MessageBox.Show("C");

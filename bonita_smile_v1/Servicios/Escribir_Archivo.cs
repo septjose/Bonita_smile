@@ -557,31 +557,30 @@ namespace bonita_smile_v1.Servicios
             fInfo.IsReadOnly = SetReadOnly;
         }
 
-        public List<string> obtenerQueryArchivo()
+        public List<string> obtenerQueryArchivo(string ruta_archivo)
         {
             List<string> lista = new List<string>();
-            List<string> lista_nombre_archivos = Obtener_nombre_de_querys();
-            foreach(var txt in lista_nombre_archivos)
+            if (File.Exists(ruta_archivo))
             {
-                MessageBox.Show(txt);
-                if (File.Exists(configuracion.carpetas.ruta_script_carpeta+"\\"+txt))
+                using (StreamReader sr = File.OpenText(ruta_archivo))
                 {
-                    using (StreamReader sr = File.OpenText(configuracion.carpetas.ruta_script_carpeta + "\\" + txt))
+
+                    string query = "";
+                    while ((query = sr.ReadLine()) != null)
                     {
-                        string query = "";
-                        while ((query = sr.ReadLine()) != null)
+                        if(!query.Equals(""))
                         {
                             lista.Add(query);
                         }
                         
                     }
-                }
-                else
-                {
-                    return lista = null;
+                    return lista;
                 }
             }
-            return lista;
+            else
+            {
+                return null;
+            }
         }
 
         private List<string> Obtener_nombre_de_querys()

@@ -338,7 +338,7 @@ namespace bonita_smile_v1.Servicios
             {
                 MessageBox.Show(" No Existe la foto");
                 var bitmap = new BitmapImage();
-                var stream = File.OpenRead(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg"));
+                var stream = File.OpenRead(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg"));
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.StreamSource = stream;

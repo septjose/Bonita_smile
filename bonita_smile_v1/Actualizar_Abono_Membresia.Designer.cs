@@ -370,7 +370,7 @@ namespace bonita_smile_v1
             double abonado_pagado = a.Abonados(id_membresia,paciente.id_paciente,paciente.clinica.id_clinica);
             string sucursal = obtener_nombre_sucursal(paciente.clinica.id_clinica);
 
-            System.Drawing.Image imagen = System.Drawing.Image.FromFile(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\bs_ticket_imagen.bmp"));
+            System.Drawing.Image imagen = System.Drawing.Image.FromFile(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\bs_ticket_imagen.bmp"));
             System.Drawing.RectangleF rect = new System.Drawing.RectangleF(margen_izquierdo, margen_superior, centimetroAPixel(3.8), 30);//tamanio_hoja_horizontal en vez de 4
             RectangleF rImage = new RectangleF(38, margen_superior, 110, 110);
 

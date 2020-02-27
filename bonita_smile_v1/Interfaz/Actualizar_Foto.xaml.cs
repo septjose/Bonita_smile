@@ -87,7 +87,7 @@ namespace bonita_smile_v1
             System.Windows.MessageBox.Show(paciente.foto);
             if(paciente.foto.Equals(""))
             {
-                string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg");;
+                string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg");;
                 rt_imagen.Fill = Imagen(ruta2);
             }
             else
@@ -100,7 +100,7 @@ namespace bonita_smile_v1
         }
         public ImageBrush Imagen(string filename)
         {
-            string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg");;
+            string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg");;
             if (File.Exists(filename))
             {
                 Image image = new Image();
