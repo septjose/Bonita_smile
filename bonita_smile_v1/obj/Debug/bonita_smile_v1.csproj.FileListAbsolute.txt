@@ -1886,3 +1886,5 @@ E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interf
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Abonos_Mem.baml
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Ingresar_Abono_Membresia.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Abono_Membresia.resources
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Perfil.g.cs
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Perfil.baml

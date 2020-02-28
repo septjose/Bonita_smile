@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -36,7 +37,7 @@ namespace bonita_smile_v1.Servicios
             CultureInfo culture = new CultureInfo("en-US");
             NumberFormatInfo nfi = new CultureInfo("en-US", true).NumberFormat;
             List<Motivo_citaModel> listaMotivo_cita = new List<Motivo_citaModel>();
-            query = "select * from motivo_cita inner join paciente on paciente.id_paciente=motivo_cita.id_paciente where paciente.id_paciente='" + id_paciente+"'";
+            query = "select * from motivo_cita inner join paciente on paciente.id_paciente=motivo_cita.id_paciente where paciente.id_paciente='" + id_paciente + "'";
 
             try
             {
@@ -54,7 +55,7 @@ namespace bonita_smile_v1.Servicios
                     motivo_CitaModel.descripcion = reader[1].ToString();
                     motivo_CitaModel.costo = double.Parse(reader[2].ToString());
                     double attemp4 = Convert.ToDouble(motivo_CitaModel.costo, culture);
-                    motivo_CitaModel.costito = "$"+attemp4.ToString("n", nfi);
+                    motivo_CitaModel.costito = "$" + attemp4.ToString("n", nfi);
                     pacienteModel.id_paciente = reader[5].ToString();
                     motivo_CitaModel.paciente = pacienteModel;
                     listaMotivo_cita.Add(motivo_CitaModel);
@@ -62,22 +63,23 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return listaMotivo_cita;
         }
 
-        public bool eliminarMotivo_cita(string id_motivo, string id_paciente,string alias)
+        public bool eliminarMotivo_cita(string id_motivo, string id_paciente, string alias)
         {
-            
-            bool internet = ti.Test();
+
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -94,7 +96,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                   query =  "DELETE FROM motivo_cita WHERE id_motivo = '"+id_motivo+"' AND id_paciente ='"+id_paciente+"'";
+                    query = "DELETE FROM motivo_cita WHERE id_motivo = '" + id_motivo + "' AND id_paciente ='" + id_paciente + "'";
 
                     //query = "DELETE FROM motivo_cita where id_motivo='" + id_motivo + "'";
 
@@ -104,31 +106,33 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_"+alias+".txt");
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se eliminó correctamente el Motivo: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-                
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool insertarMotivo_cita(string descripcion, string costo, string id_paciente,string alias)
+        public bool insertarMotivo_cita(string descripcion, string costo, string id_paciente, string alias)
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
             auxiliar_identificador = seguridad.SHA1(descripcion + costo + id_paciente + DateTime.Now);
-            bool internet = ti.Test();
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -155,27 +159,29 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se insertó correctamente el Motivo: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-                
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar insertar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool actualizarMotivo_cita(string id_motivo, string descripcion, string costo, string id_paciente,string alias)
-        {          
-            bool internet = ti.Test();
+        public bool actualizarMotivo_cita(string id_motivo, string descripcion, string costo, string id_paciente, string alias)
+        {
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -203,13 +209,14 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se actualizó correctamente el Motivo: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-               
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }

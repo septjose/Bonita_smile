@@ -46,7 +46,7 @@ namespace bonita_smile_v1
                 Archivo_Binario ab = new Archivo_Binario();
                 //string ruta = @"C:\Users\juani\AppData\Roaming\dentista\setup\conf\configuracion.txt";
                 string ruta = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
-                System.Windows.MessageBox.Show("entre a configuracion");
+                //System.Windows.MessageBox.Show("entre a configuracion");
                 Configuracion_Model configuracion = ab.Cargar(ruta);
                 DialogResult resultado = new DialogResult();
                 Form mensaje = new Configuracion(configuracion, ruta);

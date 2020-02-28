@@ -74,8 +74,8 @@ namespace bonita_smile_v1
             this.ClientSize = new System.Drawing.Size(1057, 929);
             this.Controls.Add(this.pictureBox1);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "Form1";
-            this.Text = "MessageBoxAbono";
+            this.Name = "Visualizador de Imagnes Bonita Smile";
+            this.Text = "Visualizador de Imagnes Bonita Smile";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

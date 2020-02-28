@@ -86,7 +86,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -143,7 +143,7 @@ namespace bonita_smile_v1
             }
             else
             {
-                System.Windows.MessageBox.Show("si avanzo");
+                //System.Windows.MessageBox.Show("si avanzo");
                 valor = cmbClinica.SelectedItem.ToString();
                 string id_clinica = obtener_id_clinica(valor);
                 PacienteModel pacienteModel = new PacienteModel();
@@ -173,7 +173,7 @@ namespace bonita_smile_v1
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             if (admin != null)
                             {
-                                System.Windows.MessageBox.Show("SI AVANZO A ADMIN");
+                                //System.Windows.MessageBox.Show("SI AVANZO A ADMIN");
                                 admin.Main.Content = new Page7_Ingresar(pacienteModel, null, alias);
                             }
                             else
@@ -184,12 +184,12 @@ namespace bonita_smile_v1
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 dígitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }  
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("Correo no valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show("Correo no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }  
                 }
                 catch (Exception ex)
@@ -222,7 +222,7 @@ namespace bonita_smile_v1
                         if(new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
                            string tel = txtTelefono.Text;
-                            System.Windows.MessageBox.Show(tel);
+                            //System.Windows.MessageBox.Show(tel);
                             bool inserto = pa.insertarPaciente(txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, "", "", txtEmail.Text, 0, id_clinica,alias);
                             if (inserto)
                             {
@@ -233,29 +233,29 @@ namespace bonita_smile_v1
                                 if (admin != null)
                                 {
                                     admin.Main.Content = new Page6(alias);
-                                    System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                  //  System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                                 else
                                 if (recep != null)
                                 {
                                     recep.Main3.Content = new Page6(alias);
-                                    System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                   // System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
 
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 dígitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("Correo no valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show("Correo no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                         
 
@@ -294,7 +294,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

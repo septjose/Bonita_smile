@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using bonita_smile_v1.Modelos;
 using MySql.Data.MySqlClient;
 
@@ -39,7 +40,7 @@ namespace bonita_smile_v1.Servicios
         public List<AbonosModel> MostrarAbonos(string id_motivo, string id_paciente)
         {
             List<AbonosModel> listaAbonos = new List<AbonosModel>();
-            query = "SELECT id_abono,id_paciente,id_motivo,date_format(fecha, '%d/%m/%Y') as fecha,monto,comentario FROM abonos where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo+"'";
+            query = "SELECT id_abono,id_paciente,id_motivo,date_format(fecha, '%d/%m/%Y') as fecha,monto,comentario FROM abonos where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo + "'";
 
             try
             {
@@ -66,7 +67,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return listaAbonos;
@@ -76,7 +77,7 @@ namespace bonita_smile_v1.Servicios
         {
             double abonado = 0.0;
 
-            query = "select  IFNULL(sum(monto),0)as abonado from abonos where id_motivo = '" + id_motivo+"'";
+            query = "select  IFNULL(sum(monto),0)as abonado from abonos where id_motivo = '" + id_motivo + "'";
 
             try
             {
@@ -92,10 +93,10 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
-           
+
             return abonado;
         }
 
@@ -117,20 +118,21 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return restante;
         }
 
-        public bool eliminarAbono(string id_abono,string alias)
+        public bool eliminarAbono(string id_abono, string alias)
         {
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -156,30 +158,34 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se eliminó correctamente el Abono: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     return true;
                 }
-               
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 conexionBD.Close();
                 return false;
             }
         }
 
 
-        public bool insertarAbono(string id_paciente, string id_motivo, string fecha, string monto, string comentario , string alias)
+        public bool insertarAbono(string id_paciente, string id_motivo, string fecha, string monto, string comentario, string alias)
         {
             Seguridad seguridad = new Seguridad();
             string id_abono = "";
-            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario + DateTime.Now);           
-            bool internet = ti.Test();
+            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario + DateTime.Now);
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -206,25 +212,27 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se insertó correctamente el Abono: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar ingresar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, string monto,string comentario  ,string alias)
-        {          
-            bool internet = ti.Test();
+        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, string monto, string comentario, string alias)
+        {
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO
@@ -243,7 +251,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE abonos set id_paciente ='"+ id_paciente + "',id_motivo = '" + id_motivo + "',fecha = '" + fecha + "',monto = " + monto + ",comentario='" + comentario + "',auxiliar_identificador = '" + id_abono + "'where id_abono = '" + id_abono + "'";
+                    query = "UPDATE abonos set id_paciente ='" + id_paciente + "',id_motivo = '" + id_motivo + "',fecha = '" + fecha + "',monto = " + monto + ",comentario='" + comentario + "',auxiliar_identificador = '" + id_abono + "'where id_abono = '" + id_abono + "'";
                     Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -251,12 +259,14 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se actualizó correctamente el Abono: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     return true;
-                } 
+                }
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
@@ -275,12 +285,12 @@ namespace bonita_smile_v1.Servicios
 
                 while (reader.Read())
                 {
-                  lista.Add( reader[0].ToString());   
+                    lista.Add(reader[0].ToString());
                 }
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return lista;
@@ -291,9 +301,9 @@ namespace bonita_smile_v1.Servicios
         {
             List<string> lista = Mostrar_ids_clinicas();
             List<Ganancias> lista_ganancias = new List<Ganancias>();
-            foreach(var id in lista)
+            foreach (var id in lista)
             {
-                query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '"+id+"'";
+                query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'), '') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "'";
                 try
                 {
                     conexionBD.Open();
@@ -314,16 +324,16 @@ namespace bonita_smile_v1.Servicios
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 conexionBD.Close();
             }
-            
+
             return lista_ganancias;
         }
 
 
-        public List<Ganancias> Mostrar_Ganancias_Socio(List<string>list)
+        public List<Ganancias> Mostrar_Ganancias_Socio(List<string> list)
         {
             List<string> lista = list;
             List<Ganancias> lista_ganancias = new List<Ganancias>();
@@ -350,7 +360,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 conexionBD.Close();
             }
@@ -381,16 +391,16 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return lista_ganancias;
         }
 
-        public List<Ganancias> Ganacioas_c_clinica_fecha(string id,string fecha)
+        public List<Ganancias> Ganacioas_c_clinica_fecha(string id, string fecha)
         {
             List<Ganancias> lista_ganancias = new List<Ganancias>();
-            query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'),'"+fecha+"') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "' and a.fecha='"+fecha+"'";
+            query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'),'" + fecha + "') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "' and a.fecha='" + fecha + "'";
             try
             {
                 conexionBD.Open();
@@ -411,16 +421,16 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return lista_ganancias;
         }
 
-        public List<Ganancias> Ganacioas_c_clinica_fecha2(string id, string fecha,string fecha2)
+        public List<Ganancias> Ganacioas_c_clinica_fecha2(string id, string fecha, string fecha2)
         {
             List<Ganancias> lista_ganancias = new List<Ganancias>();
-            query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'),'" + fecha + "'' - ''"+fecha2+"') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '"+id+"' and (a.fecha BETWEEN '"+fecha+"' AND '"+fecha2+"')";
+            query = "select c.nombre_sucursal,IFNULL(sum(monto), 0) as ganancia,IFNULL(date_format(a.fecha, '%d/%m/%Y'),'" + fecha + "'' - ''" + fecha2 + "') as fecha from abonos a inner JOIN paciente p on a.id_paciente = p.id_paciente INNER join clinica c on c.id_clinica = p.id_clinica where c.id_clinica = '" + id + "' and (a.fecha BETWEEN '" + fecha + "' AND '" + fecha2 + "')";
             try
             {
                 conexionBD.Open();
@@ -441,7 +451,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return lista_ganancias;

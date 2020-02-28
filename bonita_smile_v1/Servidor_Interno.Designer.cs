@@ -189,8 +189,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Servidor_Interno";
-            this.Text = "Servidor_Interno";
+            this.Name = "Configuracion del Servidor Interno";
+            this.Text = "Configuracion del Servidor Interno";
             this.ResumeLayout(false);
             this.PerformLayout();
 

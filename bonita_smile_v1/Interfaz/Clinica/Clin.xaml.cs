@@ -25,7 +25,8 @@ namespace bonita_smile_v1.Interfaz.Clinica
         string id = "";
         string alias;
         string nombre_doctor;
-        public Clin(string id,string nombre,string nombre_doctor,string alias)
+        UsuarioModel usu;
+        public Clin(UsuarioModel usu,string id,string nombre,string nombre_doctor,string alias)
         {
             InitializeComponent();
             Main2.Content = new Pagina_Clinica(id,nombre_doctor,alias);
@@ -33,7 +34,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
             nombre_clinica.Text = nombre;
             this.alias = alias;
             this.nombre_doctor = nombre_doctor;
-
+            this.usu = usu;
             //llenar_list_view();
 
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -112,6 +113,11 @@ namespace bonita_smile_v1.Interfaz.Clinica
         {
             Paleta_Colores p_c = new Paleta_Colores();
             p_c.ShowDialog();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Main2.Content = new Actualizar_Perfil(usu,id, null, alias);
         }
     }
 }

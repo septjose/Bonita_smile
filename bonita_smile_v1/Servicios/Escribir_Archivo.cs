@@ -128,8 +128,7 @@ namespace bonita_smile_v1.Servicios
 
             catch (Exception ex)
             {
-                MessageBox.Show("Archivo no encontrado");
-                Console.WriteLine(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -300,8 +299,8 @@ namespace bonita_smile_v1.Servicios
             cate.clinica = generalizar_("clinica", clinica, categorias.clinica);
             foreach (var l in cate.clinica)
             {
-                MessageBox.Show("VALORES NUEVOS DE LA LISTA");
-                MessageBox.Show(l);
+                //MessageBox.Show("VALORES NUEVOS DE LA LISTA");
+                //MessageBox.Show(l);
             }
             return cate.clinica;
 
@@ -319,7 +318,7 @@ namespace bonita_smile_v1.Servicios
             categorias = categorizar(@"\\DESKTOP-ED8E774\offline\script_temporal.txt");
             foreach (var list in categorias.clinica)
             {
-                MessageBox.Show(list);
+                //MessageBox.Show(list);
             }
             return verificarActualizaciones(categorias);
         }
@@ -489,22 +488,22 @@ namespace bonita_smile_v1.Servicios
 
                 if (query.Contains("UPDATE"))
                 {
-                    MessageBox.Show(i.ToString());
-                    MessageBox.Show("imprimo query : " + query);
+                    //MessageBox.Show(i.ToString());
+                   // MessageBox.Show("imprimo query : " + query);
                     if (i != 0)
                     {
                         for (int j = i - 1; j != -1; j--)
                         {
-                            MessageBox.Show("imprimo J " + j);
-                            MessageBox.Show("imprimo lista en posicion j " + aux_categoria[j]);
+                            //MessageBox.Show("imprimo J " + j);
+                            //MessageBox.Show("imprimo lista en posicion j " + aux_categoria[j]);
                             if (aux_categoria[j].Contains("INSERT"))
                             {
-                                MessageBox.Show("imprimo J en if" + j);
+                                //MessageBox.Show("imprimo J en if" + j);
                                 string aux_identificador_update = extraer_aux_identificador(query);
                                 string aux_identificador_insert = extraer_aux_identificador(aux_categoria[j]);
 
-                                MessageBox.Show("aux_update " + aux_identificador_update);
-                                MessageBox.Show("aux_insert " + aux_identificador_insert);
+                                //MessageBox.Show("aux_update " + aux_identificador_update);
+                                //MessageBox.Show("aux_insert " + aux_identificador_insert);
 
                                 if (aux_identificador_insert.Equals(aux_identificador_update, StringComparison.InvariantCultureIgnoreCase))
                                 {
@@ -528,11 +527,11 @@ namespace bonita_smile_v1.Servicios
                                     //aux_categoria.Add("");
                                     //aux_categoria.Add(query_insert);
                                     //aux_categoria.Insert(i, query_insert);
-                                    MessageBox.Show("El valor de j es " + j);
-                                    MessageBox.Show("El valor de i es " + i);
+                                    //MessageBox.Show("El valor de j es " + j);
+                                    //MessageBox.Show("El valor de i es " + i);
                                     aux_categoria[j] = "";
                                     aux_categoria[i] = query_insert;
-                                    MessageBox.Show("imprimo query_insert :" + query_insert);
+                                    //MessageBox.Show("imprimo query_insert :" + query_insert);
                                     campos_tabla = "";
                                     valor_tabla = "";
                                     //categoria.Add(query_insert);

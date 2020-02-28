@@ -121,7 +121,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void listViewItem7_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            System.Windows.MessageBox.Show(alias+"listview 7");
+           // System.Windows.MessageBox.Show(alias+"listview 7");
             Main.Content = new Pagina_Permisos(5,alias);
            
              

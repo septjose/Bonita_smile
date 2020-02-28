@@ -149,8 +149,8 @@ namespace bonita_smile_v1
             this.Controls.Add(this.txtAbono);
             this.Controls.Add(this.lblAbono);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "IngresarMotivo";
-            this.Text = "MessageBoxAbono";
+            this.Name = "Ingresar Motivo";
+            this.Text = "Ingresar Motivo";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,19 +169,19 @@ namespace bonita_smile_v1
                 {
                     string nombre = txtAbono.Text;
                     double costo =  Convert.ToDouble(txt_efectivo.Text, culture);
-                    System.Windows.MessageBox.Show(costo.ToString(culture));
+                    //System.Windows.MessageBox.Show(costo.ToString(culture));
                     Motivo_cita mc = new Motivo_cita(false);
                     bool inserto = mc.insertarMotivo_cita(nombre, costo.ToString(culture), id , alias);
                     if (inserto)
                     {
                         //mc = new Motivo_cita(true);
                         //mc.insertarMotivo_cita(nombre, costo.ToString(culture), id);
-                        System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                      //  System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     this.DialogResult = DialogResult.OK;
                 }

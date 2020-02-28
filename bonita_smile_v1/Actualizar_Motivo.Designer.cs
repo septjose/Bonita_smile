@@ -150,8 +150,8 @@ namespace bonita_smile_v1
             this.Controls.Add(this.txtAbono);
             this.Controls.Add(this.lblAbono);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "Actualizar_Motivo";
-            this.Text = "MessageBoxAbono";
+            this.Name = "Actualizar Motivo";
+            this.Text = "Actualizar Motivo";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,20 +170,20 @@ namespace bonita_smile_v1
                     string nombre = txtAbono.Text;
                     double costo = Convert.ToDouble(txt_efectivo.Text, culture);
 
-                    System.Windows.MessageBox.Show(costo + " ");
+                    //System.Windows.MessageBox.Show(costo + " ");
 
                     Motivo_cita mc = new Motivo_cita(bandera_online_offline);
                     //System.Windows.MessageBox.Show("imprimo el id del paciente" + motivo.paciente.id_paciente);
                     bool inserto = mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo.ToString(culture), motivo.paciente.id_paciente  ,alias);
                     if (inserto)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                      //  System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //mc = new Motivo_cita(!bandera_online_offline);
                         //mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo.ToString(culture), motivo.paciente.id_paciente);
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se Actualizo el motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //System.Windows.Forms.MessageBox.Show("No se Actualizo el motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     this.DialogResult = DialogResult.OK;
                 }

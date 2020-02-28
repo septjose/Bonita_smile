@@ -139,7 +139,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
             string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             Nota_de_digi_evolucionModel nota = (Nota_de_digi_evolucionModel)lvNotas.SelectedItem;
 
-            var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el motivo :" + nota.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            var confirmation = System.Windows.Forms.MessageBox.Show("Está seguro de borrar el motivo :" + nota.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (confirmation == System.Windows.Forms.DialogResult.Yes)
             {
 
@@ -153,7 +153,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta,alias);
                 if (elimino)
                 {
-                    System.Windows.MessageBox.Show("llego aqio");
+                    //System.Windows.MessageBox.Show("llego aqio");
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     if (listaNombreArchivos.Count == 0)
@@ -165,7 +165,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
 
                         foreach (var nombre in listaNombreArchivos)
                         {
-                            System.Windows.MessageBox.Show("escribio en archivo");
+                            //System.Windows.MessageBox.Show("escribio en archivo");
 
                             //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
                             ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
@@ -220,7 +220,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                     //mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
                     // mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
                     GNotas.Remove((Nota_de_digi_evolucionModel)lvNotas.SelectedItem);
-                    System.Windows.Forms.MessageBox.Show("Se elimino el motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   // System.Windows.Forms.MessageBox.Show("Se elimino el motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
             }
@@ -234,14 +234,14 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 DialogResult resultado = new DialogResult();
                 Form mensaje = new Actualizar_Nota_Evolucion(nota,nombre_doctor,alias);
                 resultado = mensaje.ShowDialog();
-                System.Windows.MessageBox.Show(nota.fecha);
+                //System.Windows.MessageBox.Show(nota.fecha);
                 this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
-                System.Windows.MessageBox.Show(GNotas[0].fecha);
+                //System.Windows.MessageBox.Show(GNotas[0].fecha);
                 lvNotas.ItemsSource = GNotas;
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

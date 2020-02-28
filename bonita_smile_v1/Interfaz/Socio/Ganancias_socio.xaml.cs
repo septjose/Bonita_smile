@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -75,7 +76,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -107,7 +108,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();
@@ -185,13 +186,14 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (Exception ex)
             {
-                MessageBox.Show("el id de la clinica es :" + id_clinica);
+                //MessageBox.Show("el id de la clinica es :" + id_clinica);
                 fecha = calendario.SelectedDate.ToString();
                 fecha2 = calendario2.SelectedDate.ToString();
 
                 if (!fecha2.Equals("") && !fecha.Equals("") && id_clinica.Equals(""))
                 {
-                    MessageBox.Show("Debe de elegir un id de la clinica");
+                    System.Windows.Forms.MessageBox.Show("Debe de elegir un id de la clinica ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
                     valor = "";
                     fecha2 = "";
                     fecha = "";
@@ -199,7 +201,9 @@ namespace bonita_smile_v1.Interfaz.Socio
                 else
                     if (!fecha2.Equals("") && fecha.Equals("") && !id_clinica.Equals(""))
                 {
-                    MessageBox.Show("Porfavor elegir la fecha inicial elegir una clinica");
+                    System.Windows.Forms.MessageBox.Show("Porfavor elegir la fecha inicial elegir una clinica ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                  
                     valor = "";
                     fecha2 = "";
                     fecha = "";
@@ -207,7 +211,9 @@ namespace bonita_smile_v1.Interfaz.Socio
                 else
                     if (!fecha2.Equals("") && fecha.Equals("") && id_clinica.Equals(""))
                 {
-                    MessageBox.Show("Porfavor elegir la fecha inicial con el id de la clinica");
+                    System.Windows.Forms.MessageBox.Show("Porfavor elegir la fecha inicial con el id de la clinica ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    
                     valor = "";
                     fecha2 = "";
                     fecha = "";

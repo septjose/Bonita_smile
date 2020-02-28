@@ -86,7 +86,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
         {
             ImageBrush ib = new ImageBrush();
             BitmapImage bi = new BitmapImage();
-            string ruta2 = System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg");
+            string ruta2 = System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg");
             if (File.Exists( filename))
             {
       
@@ -150,7 +150,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }  
 

@@ -63,7 +63,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -94,7 +94,7 @@ namespace bonita_smile_v1
 
                     if (inserto)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         /*-----------------------------------------------*/
                         //user = new Usuarios(!bandera_online_offline);
@@ -107,12 +107,12 @@ namespace bonita_smile_v1
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(ex+"");  
+                    System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
             conexionBD.Close();

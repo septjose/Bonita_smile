@@ -91,8 +91,8 @@
             this.Controls.Add(this.txtAbono);
             this.Controls.Add(this.lblAbono);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "Actualizar_Nombre_Carpeta";
-            this.Text = "Form1";
+            this.Name = "Actualizar Nombre de la Carpeta";
+            this.Text = "Actualizar Nombre de la Carpeta";
             this.ResumeLayout(false);
             this.PerformLayout();
 

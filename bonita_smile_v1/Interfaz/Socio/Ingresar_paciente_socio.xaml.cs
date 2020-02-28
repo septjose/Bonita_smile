@@ -87,7 +87,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -176,13 +176,13 @@ namespace bonita_smile_v1.Interfaz.Socio
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 dígitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("Correo no valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show("Correo no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }
@@ -230,31 +230,31 @@ namespace bonita_smile_v1.Interfaz.Socio
                                 if (socio != null)
                                 {
                                     socio.Main4.Content = new Pacientes_socio(this.lista, this.alias);
-                                    System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
 
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 dígitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("Correo no valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show("Correo no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
 
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show("No selecciono el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("No seleccionó el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
                     {
                         System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -287,7 +287,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

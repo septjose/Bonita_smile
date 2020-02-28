@@ -117,8 +117,8 @@ namespace bonita_smile_v1
             this.Controls.Add(this.txtAbono);
             this.Controls.Add(this.lblAbono);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "Agregar_Carpetas";
-            this.Text = "MessageBoxAbono";
+            this.Name = "Agregar Carpeta";
+            this.Text = "Agregar Carpeta";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,13 +140,13 @@ namespace bonita_smile_v1
                 bool insertarAbono = ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente, id_motivo ,alias);
                 if (insertarAbono)
                 {
-                    System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   // System.Windows.Forms.MessageBox.Show("Se registro Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //ca = new Carpeta_archivos(!bandera_online_offline);
                     //ca.insertarCarpeta_archivos(txtAbono.Text, id_paciente, id_motivo);
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //System.Windows.Forms.MessageBox.Show("No se ingreso ningun motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 this.DialogResult = DialogResult.OK;

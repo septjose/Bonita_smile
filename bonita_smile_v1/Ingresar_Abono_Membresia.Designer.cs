@@ -197,8 +197,8 @@ namespace bonita_smile_v1
             this.Controls.Add(this.txtAbono);
             this.Controls.Add(this.lblAbono);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "Ingresar_Abono_Membresia";
-            this.Text = "MessageBoxAbono";
+            this.Name = "Ingresar Abono Membresia";
+            this.Text = "Ingresar Abono Membresia";
             this.Load += new System.EventHandler(this.MessageBoxAbono_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -228,8 +228,8 @@ namespace bonita_smile_v1
                     if (efectivo >= abono && abono > 0)
                     {
 
-                        System.Windows.MessageBox.Show("abono es " + abono);
-                        System.Windows.MessageBox.Show("restante es " + restante);
+                       // System.Windows.MessageBox.Show("abono es " + abono);
+                       // System.Windows.MessageBox.Show("restante es " + restante);
                         if (abono <= restante && restante > 0.0)
                         {
 
@@ -248,7 +248,7 @@ namespace bonita_smile_v1
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo realizar el pago", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                               // System.Windows.Forms.MessageBox.Show("No se pudo realizar el pago", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
 
                             this.DialogResult = DialogResult.OK;
@@ -331,7 +331,8 @@ namespace bonita_smile_v1
             }
             else
             {
-                System.Windows.MessageBox.Show("Impresora no válida.");
+                System.Windows.Forms.MessageBox.Show("Impresora no válida. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               
             }
         }
         float centimetroAPixel(double Centimeter)
@@ -377,7 +378,7 @@ namespace bonita_smile_v1
             System.Drawing.Font final = new System.Drawing.Font("Courier New", 6);
 
 
-            System.Drawing.Image imagen = System.Drawing.Image.FromFile(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\bs_ticket_imagen.bmp"));
+            System.Drawing.Image imagen = System.Drawing.Image.FromFile(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\bs_ticket_imagen.bmp"));
             System.Drawing.RectangleF rect = new System.Drawing.RectangleF(margen_izquierdo, margen_superior, centimetroAPixel(3.8), 30);//tamanio_hoja_horizontal en vez de 4
             RectangleF rImage = new RectangleF(38, margen_superior, 110, 110);
 
@@ -477,7 +478,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

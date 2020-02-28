@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -160,9 +161,8 @@ namespace bonita_smile_v1.Servicios
 
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Esta entrando en el cath");
-                    MessageBox.Show("Archivo no encontrado");
-                    Console.WriteLine(ex.ToString());
+                    System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //Console.WriteLine(ex.ToString());
                 }
             }
         }

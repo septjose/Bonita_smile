@@ -6,28 +6,25 @@
       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:local="clr-namespace:bonita_smile_v1"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="950"
+      d:DesignHeight="950" d:DesignWidth="1150"
       Title="Page2">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition  Height="100" />
-                <RowDefinition Height="250"/>
-                <RowDefinition Height="600"/>
+                <RowDefinition Height="355.333"/>
+                <RowDefinition Height="494.667"/>
 
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="1150"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Datos Personales" Margin="0 20 0 0"/>
-
-
-
-            <Border Grid.Row="1" Grid.Column="1" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+            <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Text="Expediente" Margin="0 20 0 0"/>
+            <Border Grid.Row="1" Grid.Column="1" Margin="0,25,0,9.333" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
                 <Grid Margin=" 10">
                     <Grid.RowDefinitions>
 
@@ -40,19 +37,19 @@
                         <ColumnDefinition Width="500"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid Grid.Row="0" Grid.Column="0" Margin="0,86,0,-86.333">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200"/>
 
 
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="bord" BorderThickness="2" BorderBrush="{Binding clinica.color}">
-                            <Rectangle Grid.Column="0" x:Name="rt_imagen" Fill="#FFF4F4F5"  Margin="0,0,0,0"/>
+                        <Border x:Name="bord" BorderThickness="2" BorderBrush="{Binding clinica.color}" Margin="0,-1,0,1">
+                            <Rectangle Grid.Column="0" x:Name="rt_imagen" Fill="#FFF4F4F5"  Margin="0,-1,0,0.667"/>
                         </Border>
                     </Grid>
 
 
-                    <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid Grid.Row="0" Grid.Column="1" Margin="0,67,0,-67.333">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
@@ -96,51 +93,52 @@
 
                     </Grid>
 
-                    <Grid Grid.Row="0" Grid.Column="2">
+                    <Grid Grid.Row="0" Grid.Column="2" Margin="0,79,131,-79.333">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="150"/>
 
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="2" Grid.Row="0"  x:Name="lblAntecedentes" Content="Antecedentes Clinicos :"  Margin="50,0,0,0" FontSize="15" />
-                        <TextBox  Grid.Column="2" Grid.Row="1" x:Name="txtAntecedentes"  Height="150" Margin="0,0,0,0" TextWrapping="Wrap"   Width="380" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Auto" Style="{StaticResource MetroTextBox}" />
+                        <Label Grid.Row="0"  x:Name="lblAntecedentes" Content="Antecedentes Clinicos :"  Margin="23,-33,27,32.667" FontSize="15" />
+                        <TextBox x:Name="txtAntecedentes"  Height="150" Margin="33,20,0,11.333" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Auto" Style="{StaticResource MetroTextBox}" HorizontalAlignment="Left" Width="329" Grid.RowSpan="2" />
                     </Grid>
-
-
-
-
+                    <Label Content="Datos Personales" Margin="19,8,396,137.667" FontSize="30" Foreground="#FF3580BF"  FontWeight="Bold" Grid.ColumnSpan="2"/>
 
                 </Grid>
             </Border>
-
-            <Grid Grid.Row="2" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <!--<Button Grid.Row="0" Content="Agregar un Motivo"  Margin="0,0,950,0" Click="Button_Click_1" Width="200" Height="30" />-->
-                
-
+            <Border Grid.Row="2" Grid.Column="1" Margin="0,24.667,0,35" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <!--<Button Grid.Row="0" Content="Agregar un Motivo"  Margin="0,0,950,0" Click="Button_Click_1" Width="200" Height="30" />-->
 
 
+                    <Grid Margin="-6,12,208.333,401.667" Grid.RowSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="284"/>
+                            <ColumnDefinition Width="306"/>
+                            <ColumnDefinition Width="610.667"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Motivos de Cita" Margin="20,1,32,0.667" FontSize="30" Foreground="#FF3580BF"  FontWeight="Bold"/>
+                        <Button Grid.Column="2" Content="Ver historial del motivo" FontSize="15" Margin="85,12,335.667,381" Height="Auto" Click="Button_Click" RenderTransformOrigin="0.5,0.5">
+                            <Button.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleX="0.939"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="0.317"/>
+                                </TransformGroup>
+                            </Button.RenderTransform>
+                        </Button>
+
+                    </Grid>
 
 
-
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="440.667"/>
-                        <ColumnDefinition Width="600"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="1" Content="Motivos de Cita" Margin="155,0,600.334,0" FontSize="25" Grid.ColumnSpan="2"/>
-                    <Button Grid.Column="2" Content="Ver historial del motivo"  Margin="20.333,6,380.334,26" Width="200" Height="30" Click="Button_Click"/>
-
-                </Grid>
-
-                <Border Grid.Row="2" Margin="0,20,0,0" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="400" Width="400">
-                    <Grid Margin=" 10" Height="400" Width="400">
-                        <ListView  x:Name="lvMotivo" Height="400" Width="400"  Margin="0,0,0,0"   Style="{StaticResource MetroListView}">
+                    <Grid   Grid.Row="2" Margin="9.667,-150,-12.333,156.333" Width="400">
+                        <ListView  Height="200" x:Name="lvMotivo" Width="400"   Style="{StaticResource MetroListView}" Margin="-46,178,46,320.334">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -161,16 +159,17 @@
 
                                     <GridViewColumn Header="Descripcion" Width="250" DisplayMemberBinding="{Binding descripcion}" />
 
-                                    <!--<GridViewColumn Header="Costo" Width="150" DisplayMemberBinding="{Binding costo}" />-->
+                                    <GridViewColumn Header="Costo" Width="150" DisplayMemberBinding="{Binding costito}" />
 
                                 </GridView>
                             </ListView.View>
                         </ListView>
                     </Grid>
-                </Border>
 
 
-            </Grid >
+
+                </Grid >
+            </Border>
 
 
 

@@ -108,8 +108,8 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "Configuracion";
-            this.Text = "Configuracion";
+            this.Name = "Configuraciones";
+            this.Text = "Configuraciones";
             this.ResumeLayout(false);
             this.PerformLayout();
 

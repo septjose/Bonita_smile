@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -54,7 +55,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return listaCarpeta_archivos;
@@ -65,7 +66,7 @@ namespace bonita_smile_v1.Servicios
             Carpeta_archivosModel listaCarpeta_archivos = new Carpeta_archivosModel();
             Carpeta_archivosModel carpeta_ArchivosModel = new Carpeta_archivosModel();
             query = "SELECT * FROM carpeta_archivos where id_nota='" + id_nota + "'";
-            MessageBox.Show(query);
+            //MessageBox.Show(query);
             try
             {
                 conexionBD.Open();
@@ -84,19 +85,20 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return carpeta_ArchivosModel;
         }
-        public bool eliminarCarpeta_archivos(string id_carpeta , string alias)
+        public bool eliminarCarpeta_archivos(string id_carpeta, string alias)
         {
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -122,29 +124,30 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se eliminó correctamente la carpeta: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool insertarCarpeta_archivos(string nombre_carpeta, string id_paciente, string id_motivo , string alias)
+        public bool insertarCarpeta_archivos(string nombre_carpeta, string id_paciente, string id_motivo, string alias)
         {
             string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
             auxiliar_identificador = seguridad.SHA1(nombre_carpeta + id_paciente + DateTime.Now);
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -170,26 +173,28 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se insertó correctamente la Carpeta: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-                
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar insertar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool actualizarCarpeta_archivos(string id_carpeta, string nombre_carpeta, string id_paciente, string id_motivo ,string alias)
+        public bool actualizarCarpeta_archivos(string id_carpeta, string nombre_carpeta, string id_paciente, string id_motivo, string alias)
         {
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -217,13 +222,14 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se actualizó correctamente la carpeta: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-                
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
@@ -248,15 +254,15 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return aux_identi;
         }
-        public List<Carpeta_archivosModel> MostrarCarpeta_archivos_paciente(string id_paciente,string id_motivo)
+        public List<Carpeta_archivosModel> MostrarCarpeta_archivos_paciente(string id_paciente, string id_motivo)
         {
             List<Carpeta_archivosModel> listaCarpeta_archivos = new List<Carpeta_archivosModel>();
-            query = "SELECT * FROM carpeta_archivos where id_paciente='" + id_paciente + "' and id_motivo='"+id_motivo+"'" ;
+            query = "SELECT * FROM carpeta_archivos where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo + "'";
             try
             {
                 conexionBD.Open();
@@ -278,7 +284,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return listaCarpeta_archivos;

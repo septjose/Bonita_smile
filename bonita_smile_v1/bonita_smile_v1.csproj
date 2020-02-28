@@ -302,6 +302,9 @@
     <Compile Include="Interfaz\Abonos_Mem.xaml.cs">
       <DependentUpon>Abonos_Mem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\Actualizar_Perfil.xaml.cs">
+      <DependentUpon>Actualizar_Perfil.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\Administrador\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
@@ -500,6 +503,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaz\Abonos_Mem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaz\Actualizar_Perfil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

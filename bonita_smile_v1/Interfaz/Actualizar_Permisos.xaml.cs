@@ -99,14 +99,14 @@ namespace bonita_smile_v1
                 string id_usuario = obtener_id_usuario(valor+"_"+this.id_usuario);
                 string id_clinica = obtener_id_Clinica(valor2);
                 Clinicas c = new Clinicas(bandera_online_offline);
-                System.Windows.MessageBox.Show(id_usuario + "     " + id_clinica);
+                //System.Windows.MessageBox.Show(id_usuario + "     " + id_clinica);
                 bool existe = new Clinicas(bandera_online_offline).Verificar_Tabla_Permisos(id_usuario);
                 if (!existe)
                 {
                     bool insertar = c.insertar_Permisos(id_usuario, id_clinica , alias_user);
                     if (insertar)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //c = new Clinicas(!bandera_online_offline);
                         //c.insertar_Permisos(id_usuario, id_clinica);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -114,7 +114,7 @@ namespace bonita_smile_v1
                             admin.Main.Content = new Pagina_Permisos(this.id_rol , alias_user);
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                    
@@ -124,7 +124,7 @@ namespace bonita_smile_v1
                     bool actualizo = c.actualizar_Permisos(id_usuario, id_clinica, clinica_anterior , alias_user);
                     if (actualizo)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                      //  System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //c = new Clinicas(!bandera_online_offline);
                         //c.actualizar_Permisos(id_usuario, id_clinica, clinica_anterior);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -134,7 +134,7 @@ namespace bonita_smile_v1
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 
@@ -175,7 +175,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();
@@ -207,7 +207,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

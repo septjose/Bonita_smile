@@ -101,7 +101,7 @@ namespace bonita_smile_v1
                         {
                             foreach (var nombre in listaNombreArchivos)
                             {
-                                System.Windows.MessageBox.Show("escribio en archivo");
+                                //System.Windows.MessageBox.Show("escribio en archivo");
 
                                 //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
                                 ea.escribir_imagen_eliminar(nombre, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
@@ -118,7 +118,7 @@ namespace bonita_smile_v1
                             }
                         }
                         Gclinica.Remove((ClinicaModel)lv_Clinica.SelectedItem);
-                        System.Windows.Forms.MessageBox.Show("Se elimino la clinica correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Forms.MessageBox.Show("Se elimino la clinica correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         /*-------------------------------------------------------------------------*/
 
                         /*PARTE ONLINE*/
@@ -154,7 +154,7 @@ namespace bonita_smile_v1
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

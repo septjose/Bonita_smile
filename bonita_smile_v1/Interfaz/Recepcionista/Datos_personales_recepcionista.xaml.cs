@@ -82,7 +82,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         {
             ImageBrush ib = new ImageBrush();
             BitmapImage bi = new BitmapImage();
-            string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg");;
+            string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg");;
             if (File.Exists(filename))
             {
                 Image image = new Image();
@@ -144,7 +144,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -181,14 +181,14 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                         GMotivo.Remove((Motivo_citaModel)lvMotivo.SelectedItem);
 
                         //lvMotivo.ItemsSource = GMotivo;
-                        System.Windows.Forms.MessageBox.Show("Se elimino el Motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Forms.MessageBox.Show("Se elimino el Motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                 }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -205,7 +205,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 

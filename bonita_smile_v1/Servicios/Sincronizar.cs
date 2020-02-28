@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -16,17 +17,17 @@ namespace bonita_smile_v1.Servicios
         string alias;
         private MySqlDataReader reader = null;
         private string query;
-        private MySqlConnection conexionBD,conexionBD2;
+        private MySqlConnection conexionBD, conexionBD2;
         Conexion_Offline obj = new Conexion_Offline();
         Test_Internet ti = new Test_Internet();
         Conexion obj2 = new Conexion();
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+        string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         string ruta;
-        string ruta_borrar ;
+        string ruta_borrar;
         //string ruta = @"\\DESKTOP-ED8E774\backup_bs\script_temporal.txt";
         //string ruta_borrar= @"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt";
-        
+
 
         public Sincronizar()
         {
@@ -35,7 +36,7 @@ namespace bonita_smile_v1.Servicios
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
             //this.ruta = @configuracion.carpetas.ruta_respaldo_carpeta+ "\\script_temporal.txt";
             //this.ruta_borrar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
-            
+
             this.conexionBD = obj.conexion_offline();
             this.conexionBD2 = obj.conexion_offline();
             this.configuracion = configuracion;
@@ -48,15 +49,15 @@ namespace bonita_smile_v1.Servicios
             password = "jjpd1996";
             database = "jjdevelo_dentist";
             */
-           
+
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
             // string constring = "server=162.241.60.126;user=jjdevelo_dentist;pwd=jjpd1996;database=jjdevelo_dentist;";
-            string constring = "server="+configuracion.servidor_externo.servidor_local+";user="+configuracion.servidor_externo.usuario_local+";pwd="+configuracion.servidor_externo.password_local+";database="+configuracion.servidor_externo.database_local+";";
+            string constring = "server=" + configuracion.servidor_externo.servidor_local + ";user=" + configuracion.servidor_externo.usuario_local + ";pwd=" + configuracion.servidor_externo.password_local + ";database=" + configuracion.servidor_externo.database_local + ";";
             constring += "charset=utf8;convertzerodatetime=true;";
-            MessageBox.Show(constring);
-            string file = @configuracion.carpetas.ruta_respaldo_carpeta+"\\backup.sql";
+            //MessageBox.Show(constring);
+            string file = @configuracion.carpetas.ruta_respaldo_carpeta + "\\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -66,7 +67,7 @@ namespace bonita_smile_v1.Servicios
                         cmd.Connection = conn;
                         conn.Open();
                         mb.ExportToFile(file);
-                        MessageBox.Show("Se hizo el respaldo correctamente");
+                        //System.Windows.Forms.MessageBox.Show("Se hizo el respaldo correctamente ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         conn.Close();
                     }
                 }
@@ -78,7 +79,7 @@ namespace bonita_smile_v1.Servicios
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
-            string constring = "server="+configuracion.servidor_interno.servidor_local+";user="+configuracion.servidor_interno.usuario_local+";pwd="+configuracion.servidor_interno.password_local+";database="+configuracion.servidor_interno.database_local+";";
+            string constring = "server=" + configuracion.servidor_interno.servidor_local + ";user=" + configuracion.servidor_interno.usuario_local + ";pwd=" + configuracion.servidor_interno.password_local + ";database=" + configuracion.servidor_interno.database_local + ";";
             string file = @configuracion.carpetas.ruta_respaldo_carpeta + "\\backup.sql";
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
@@ -92,15 +93,19 @@ namespace bonita_smile_v1.Servicios
 
                             conn.Open();
                             mb.ImportFromFile(file);
-                            MessageBox.Show("Se restauro correctamente");
-                            
+                            //MessageBox.Show("Se restauro correctamente");
+
                         }
-                        catch (Exception ex) { }
+                        catch (Exception ex)
+                        {
+                            System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        }
                         finally
                         {
                             conn.Close();
                         }
-                        
+
                     }
                 }
             }
@@ -120,7 +125,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD2.Close();
                 return false;
             }
@@ -136,7 +141,7 @@ namespace bonita_smile_v1.Servicios
             bool bandera = true;
             foreach (var filename in lista)
             {
-                if(filename.Equals(""))
+                if (filename.Equals(""))
                 {
 
                 }
@@ -144,22 +149,22 @@ namespace bonita_smile_v1.Servicios
                 {
                     if (new Test_Internet().Test())
                     {
-                        if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta+"\\" + filename))
+                        if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename))
                         {
-                            MessageBox.Show("SI ESTA"+filename);
+                            //MessageBox.Show("SI ESTA"+filename);
                         }
                         else
                         {
-                            MessageBox.Show("NO ESTA"+ filename);
+                            //MessageBox.Show("NO ESTA"+ filename);
                             // bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
-                            bool descargo = downloadFile(configuracion.ftp.ftp_server+configuracion.ftp.ftp_path, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password, filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
+                            bool descargo = downloadFile(configuracion.ftp.ftp_server + configuracion.ftp.ftp_path, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password, filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
                             if (descargo)
                             {
-                                MessageBox.Show("si descargo");
+                                //MessageBox.Show("si descargo");
                             }
                             else
                             {
-                                MessageBox.Show("no se descargo");
+                                //MessageBox.Show("no se descargo");
                             }
                         }
 
@@ -194,11 +199,11 @@ namespace bonita_smile_v1.Servicios
                     {
                         if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename))
                         {
-                            MessageBox.Show("SI ESTA" + filename);
+                            //MessageBox.Show("SI ESTA" + filename);
                         }
                         else
                         {
-                            MessageBox.Show("NO ESTA" + filename);
+                            //MessageBox.Show("NO ESTA" + filename);
                             //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
                             bool descargo = downloadFile(configuracion.ftp.ftp_server + configuracion.ftp.ftp_path, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password, filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
 
@@ -236,11 +241,11 @@ namespace bonita_smile_v1.Servicios
                     {
                         if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename))
                         {
-                            MessageBox.Show("SI ESTA" + filename);
+                            //MessageBox.Show("SI ESTA" + filename);
                         }
                         else
                         {
-                            MessageBox.Show("NO ESTA" + filename);
+                            //MessageBox.Show("NO ESTA" + filename);
                             //bool descargo = downloadFile("ftp://jjdeveloperswdm.com/", "bonita_smile@jjdeveloperswdm.com", "bonita_smile", filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
                             bool descargo = downloadFile(configuracion.ftp.ftp_server + configuracion.ftp.ftp_path, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password, filename, @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + filename, 10);
 
@@ -264,7 +269,7 @@ namespace bonita_smile_v1.Servicios
             string var = "";
             conexionBD = obj2.conexion(false);
             List<string> lista = new List<string>();
-            foreach(var id_clinica in list_clinicas)
+            foreach (var id_clinica in list_clinicas)
             {
                 query = "select paciente.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica where clinica.id_clinica='" + id_clinica + "'";
                 try
@@ -276,19 +281,22 @@ namespace bonita_smile_v1.Servicios
 
                     while (reader.Read())
                     {
-                       if(reader[0].ToString().Equals(""))
+                        if (reader[0].ToString().Equals(""))
                         {
 
                         }
-                       else
+                        else
                         {
                             lista.Add(reader[0].ToString());
                         }
-                        
+
                     }
-                    MessageBox.Show(lista.Count() + "" + var);
+                    //MessageBox.Show(lista.Count() + "" + var);
                 }
-                catch (Exception ex) { }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("Se ha producido un error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 conexionBD.Close();
                 query = "select fotos_estudio_carpeta.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica inner join fotos_estudio_carpeta on fotos_estudio_carpeta.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id_clinica + "'";
                 try
@@ -309,11 +317,14 @@ namespace bonita_smile_v1.Servicios
                             lista.Add(reader[0].ToString());
                         }
                     }
-                    MessageBox.Show(lista.Count() + "" + var);
+                    //MessageBox.Show(lista.Count() + "" + var);
                 }
-                catch (Exception ex) { }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            
+
             return lista;
         }
 
@@ -322,7 +333,7 @@ namespace bonita_smile_v1.Servicios
             string var = "";
             conexionBD = obj2.conexion(false);
             List<string> lista = new List<string>();
-            query = "select paciente.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica where clinica.id_clinica='"+id_clinica+"'";
+            query = "select paciente.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica where clinica.id_clinica='" + id_clinica + "'";
             try
             {
                 conexionBD.Open();
@@ -341,11 +352,15 @@ namespace bonita_smile_v1.Servicios
                         lista.Add(reader[0].ToString());
                     }
                 }
-                MessageBox.Show(lista.Count() + "" + var);
+                //MessageBox.Show(lista.Count() + "" + var);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
             conexionBD.Close();
-            query = "select fotos_estudio_carpeta.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica inner join fotos_estudio_carpeta on fotos_estudio_carpeta.id_paciente=paciente.id_paciente where clinica.id_clinica='"+id_clinica+"'";
+            query = "select fotos_estudio_carpeta.foto from paciente inner join clinica on paciente.id_clinica=clinica.id_clinica inner join fotos_estudio_carpeta on fotos_estudio_carpeta.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id_clinica + "'";
             try
             {
                 conexionBD.Open();
@@ -364,9 +379,13 @@ namespace bonita_smile_v1.Servicios
                         lista.Add(reader[0].ToString());
                     }
                 }
-                MessageBox.Show(lista.Count() + "" + var);
+                //MessageBox.Show(lista.Count() + "" + var);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
             return lista;
         }
 
@@ -382,7 +401,7 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd = new MySqlCommand(query, conexionBD);
 
                 reader = cmd.ExecuteReader();
-                
+
                 while (reader.Read())
                 {
                     if (reader[0].ToString().Equals(""))
@@ -394,9 +413,12 @@ namespace bonita_smile_v1.Servicios
                         lista.Add(reader[0].ToString());
                     }
                 }
-                MessageBox.Show( lista.Count()+""+var);
+                //MessageBox.Show( lista.Count()+""+var);
             }
-            catch(Exception ex) { }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             conexionBD.Close();
             query = "SELECT foto from fotos_estudio_carpeta";
             try
@@ -417,9 +439,12 @@ namespace bonita_smile_v1.Servicios
                         lista.Add(reader[0].ToString());
                     }
                 }
-                MessageBox.Show(lista.Count() + "\n" + var);
+                //MessageBox.Show(lista.Count() + "\n" + var);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             return lista;
         }
 
@@ -438,7 +463,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD2.Close();
                 return false;
             }
@@ -446,7 +471,7 @@ namespace bonita_smile_v1.Servicios
 
         public bool SincronizarLocalServidor()
         {
-            MessageBox.Show("ENTRO AL METODO");
+            //MessageBox.Show("ENTRO AL METODO");
             conexionBD = obj2.conexion(true);
             Escribir_Archivo ea = new Escribir_Archivo();
             bool internet = ti.Test();
@@ -455,32 +480,32 @@ namespace bonita_smile_v1.Servicios
             string ruta_carpeta = @configuracion.carpetas.ruta_script_carpeta + "\\";  //=====> variable que contiene el nombre de la carpeta donde estan alojados los queries
 
             archivos = Obtener_nombres_archivos(ruta_carpeta);
-            MessageBox.Show(archivos.Count() + "la lista de archivos tiene ");
+            //MessageBox.Show(archivos.Count() + "la lista de archivos tiene ");
 
             if (archivos.Count > 0)
             {
 
                 foreach (var archivo in archivos)
                 {
-                    lQuery = ea.obtenerQueryArchivo(@configuracion.carpetas.ruta_script_carpeta + "\\"+archivo);
-                    MessageBox.Show(lQuery.Count() + "");
+                    lQuery = ea.obtenerQueryArchivo(@configuracion.carpetas.ruta_script_carpeta + "\\" + archivo);
+                    //MessageBox.Show(lQuery.Count() + "");
                     if (lQuery != null)
                     {
                         if (!internet)
                         {
-                            MessageBox.Show("entro al if1");
-                            MessageBox.Show("Intentelo más tarde, no cuenta con acceso a internet");
+                            //MessageBox.Show("entro al if1");
+                            //MessageBox.Show("Intentelo más tarde, no cuenta con acceso a internet");
                             return false;
                         }
                         else
                         {
-                            MessageBox.Show("entro al else");
+                            //MessageBox.Show("entro al else");
                             //CREAR TRANSACCION
                             MySqlTransaction tr = null;
                             try
                             {
 
-                                MessageBox.Show("entro al try");
+                                //MessageBox.Show("entro al try");
                                 conexionBD.Open();
 
                                 tr = conexionBD.BeginTransaction();
@@ -489,7 +514,7 @@ namespace bonita_smile_v1.Servicios
 
                                     if (!query.Equals(""))
                                     {
-                                        MessageBox.Show("entro aqui" + query);
+                                        // MessageBox.Show("entro aqui" + query);
                                         Console.WriteLine("query : ->" + query);
                                         MySqlCommand cmd = new MySqlCommand(query, conexionBD);
                                         cmd.ExecuteReader();
@@ -503,8 +528,10 @@ namespace bonita_smile_v1.Servicios
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("entro al catch :(" + ex.ToString());
-                                MessageBox.Show("error intente mas tarde");
+                                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                                //MessageBox.Show("entro al catch :(" + ex.ToString());
+                                //MessageBox.Show("error intente mas tarde");
                                 tr.Rollback();
                                 return false;
                             }
@@ -584,8 +611,6 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-
-
         public bool subir_fotos()
         {
             Archivo_Binario ab = new Archivo_Binario();
@@ -593,29 +618,37 @@ namespace bonita_smile_v1.Servicios
 
             var lista = Obtener_nombres_archivos(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\");
             bool bandera = true;
-            foreach (var filename in lista)
+            if(lista.Count()==0)
             {
-               if(new Test_Internet().Test())
+                bandera = true;
+            }
+            else
+            {
+                foreach (var filename in lista)
                 {
-                    SubirFicheroStockFTP(filename, @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\");
-                    if(File.Exists(@configuracion.carpetas.ruta_subir_servidor_carpeta+"\\"+filename))
+                    if (new Test_Internet().Test())
                     {
-                        File.Delete(@configuracion.carpetas.ruta_subir_servidor_carpeta +"\\" + filename);
+                        SubirFicheroStockFTP(filename, @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\");
+                        if (File.Exists(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + filename))
+                        {
+                            File.Delete(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + filename);
+
+                        }
+                        else
+                        {
+
+                        }
+                        // File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + filename);
 
                     }
                     else
                     {
-
+                        bandera = false;
                     }
-                   // File.Delete(@"\\DESKTOP-ED8E774\fotos_offline\" + filename);
-                   
+
                 }
-                else
-                {
-                    bandera =false;
-                }
-            
             }
+            
             return bandera;
 
 
@@ -664,9 +697,8 @@ namespace bonita_smile_v1.Servicios
             }
             catch (Exception ex)
             {
-                //logger.Error("Error " + ex.Message + " " + ex.StackTrace);
-                verdad = false;
-                System.Windows.MessageBox.Show("Error " + ex.Message + " " + ex.StackTrace);
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); verdad = false;
+                //System.Windows.MessageBox.Show("Error " + ex.Message + " " + ex.StackTrace);
 
 
             }
@@ -704,15 +736,13 @@ namespace bonita_smile_v1.Servicios
             }
             catch (WebException wEx)
             {
-                descargar = false;
-                throw wEx;
-
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
             catch (Exception ex)
             {
-                descargar = false;
-                throw ex;
-
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
 
             }
             return descargar;
@@ -744,22 +774,22 @@ namespace bonita_smile_v1.Servicios
                     }
                     tr.Commit();
 
-                    ea.SetFileReadAccess(ruta,false);
+                    ea.SetFileReadAccess(ruta, false);
                     File.Delete(ruta);
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex + "");
-                    if(tr==null)
+                    System.Windows.Forms.MessageBox.Show("Se ha producido un error al conectarse al servidor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (tr == null)
                     {
-                        MessageBox.Show("No se pudo conectar a la conexion , Intentelo mas tarde!! :(");
+
                     }
                     else
                     {
                         tr.Rollback();
                     }
-                   
+
                     return false;
                 }
                 finally
@@ -780,18 +810,18 @@ namespace bonita_smile_v1.Servicios
             Escribir_Archivo ea = new Escribir_Archivo();
             List<String> lQuery = new List<string>();
             List<String> archivos = new List<String>();
-           
+
             bool eliminarArchivo = true;
 
-            MessageBox.Show("ENTRO AL METODO");
-          
+            //MessageBox.Show("ENTRO AL METODO");
+
             bool internet = ti.Test();
-            
-           
+
+
             string ruta_carpeta = @configuracion.carpetas.ruta_eliminar_carpeta + "\\";  //=====> variable que contiene el nombre de la carpeta donde estan alojados los queries
 
             archivos = Obtener_nombres_archivos(ruta_carpeta);
-            MessageBox.Show(archivos.Count() + "la lista de archivos tiene ");
+            // MessageBox.Show(archivos.Count() + "la lista de archivos tiene ");
 
             if (archivos.Count > 0)
             {
@@ -799,7 +829,7 @@ namespace bonita_smile_v1.Servicios
                 foreach (var archivo in archivos)
                 {
                     lQuery = ea.obtenerQueryArchivo(@configuracion.carpetas.ruta_eliminar_carpeta + "\\" + archivo);
-                    MessageBox.Show(lQuery.Count() + "");
+                    //MessageBox.Show(lQuery.Count() + "");
                     if (lQuery != null)
                     {
                         //CREAR TRANSACCION
@@ -807,13 +837,13 @@ namespace bonita_smile_v1.Servicios
                         try
                         {
                             //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
-                           // var datos = ea.leer(ruta_borrar);
+                            // var datos = ea.leer(ruta_borrar);
 
                             foreach (string imagen in lQuery)
                             {
-                                if(!imagen.Equals(""))
+                                if (!imagen.Equals(""))
                                 {
-                                    MessageBox.Show(imagen);
+                                    //MessageBox.Show(imagen);
                                     Uri siteUri = new Uri(configuracion.ftp.ftp_server + configuracion.ftp.ftp_path + imagen);
                                     bool verdad = DeleteFileOnServer(siteUri, configuracion.ftp.ftp_user, configuracion.ftp.ftp_password);
 
@@ -821,25 +851,25 @@ namespace bonita_smile_v1.Servicios
                                         eliminarArchivo = false;
                                 }
 
-                               
+
                             }
                             if (eliminarArchivo)
                             {
-                                System.Windows.MessageBox.Show("elimino Archivo");
+                                //System.Windows.MessageBox.Show("elimino Archivo");
                                 ea.SetFileReadAccess(@configuracion.carpetas.ruta_eliminar_carpeta + "\\" + archivo, false);
 
                                 File.Delete(@configuracion.carpetas.ruta_eliminar_carpeta + "\\" + archivo);
                             }
-                            
+
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex + "");
+                            System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             return false;
                         }
                     }
-                    
+
                 }
                 return true;
             }

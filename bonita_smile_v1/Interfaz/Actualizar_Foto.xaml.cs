@@ -84,15 +84,15 @@ namespace bonita_smile_v1
 
             //File.Delete(ruta2 + paciente.foto);
             //System.Windows.MessageBox.Show("el paciente es " + paciente.foto);
-            System.Windows.MessageBox.Show(paciente.foto);
+            //System.Windows.MessageBox.Show(paciente.foto);
             if(paciente.foto.Equals(""))
             {
-                string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg");;
+                string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg");;
                 rt_imagen.Fill = Imagen(ruta2);
             }
             else
             {
-                System.Windows.MessageBox.Show("no esta vacio"+paciente.foto);
+                //System.Windows.MessageBox.Show("no esta vacio"+paciente.foto);
                // string ruta2 = "/Assets//img1.jpgimg1.jpg";
                 rt_imagen.Fill = Imagen(@configuracion.carpetas.ruta_imagenes_carpeta+"\\"+ paciente.foto);                
             }
@@ -100,7 +100,7 @@ namespace bonita_smile_v1
         }
         public ImageBrush Imagen(string filename)
         {
-            string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg");;
+            string ruta2 =  System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg");;
             if (File.Exists(filename))
             {
                 Image image = new Image();
@@ -242,7 +242,7 @@ namespace bonita_smile_v1
                         //}
                         //else
                         //{
-                            System.Windows.Forms.MessageBox.Show("Offline", "Offline", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //System.Windows.Forms.MessageBox.Show("Offline", "Offline", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -332,7 +332,7 @@ namespace bonita_smile_v1
                         //    }
                         //}
 
-                        System.Windows.Forms.MessageBox.Show("Offline", "Offline", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //System.Windows.Forms.MessageBox.Show("Offline", "Offline", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -358,7 +358,7 @@ namespace bonita_smile_v1
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo actualizar el paciente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   // System.Windows.Forms.MessageBox.Show("No se pudo actualizar el paciente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 
             }
@@ -513,7 +513,7 @@ namespace bonita_smile_v1
                         bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica , alias);
                         if (inserto)
                         {
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             //pa = new Paciente(!bandera_online_offline);
                             //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
@@ -544,7 +544,7 @@ namespace bonita_smile_v1
                         bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica,alias);
                         if (inserto)
                         {
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                           // System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             //pa = new Paciente(!bandera_online_offline);
                             //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
@@ -577,7 +577,7 @@ namespace bonita_smile_v1
                     {
                         bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica ,alias);
                         {
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                           // System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             //pa = new Paciente(!bandera_online_offline);
                             //pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, this.foto_vieja, paciente.antecedente, this.paciente.email, 0, this.paciente.clinica.id_clinica);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
@@ -619,7 +619,7 @@ namespace bonita_smile_v1
                             System.IO.File.Copy(@configuracion.carpetas.ruta_imagenes_carpeta + "\\"+ nombre_nuevo_foto, destFile2, true);
                             Escribir_Archivo ea = new Escribir_Archivo();
                             ea.escribir_imagen_eliminar(this.paciente.foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                           // System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -703,12 +703,12 @@ namespace bonita_smile_v1
             // Check if file is there  
             if (fi.Exists)
             {
-                System.Windows.MessageBox.Show("Si esta");
+                //System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
                 fi.MoveTo(sourceFile + nombre_nuevo);
                 //string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
                 //System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
-                System.Windows.MessageBox.Show("se pudo si");
+                //System.Windows.MessageBox.Show("se pudo si");
             }
         }
     }

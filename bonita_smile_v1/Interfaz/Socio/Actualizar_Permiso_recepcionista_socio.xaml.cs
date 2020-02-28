@@ -83,7 +83,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD2.Close();
         }
@@ -104,15 +104,15 @@ namespace bonita_smile_v1.Interfaz.Socio
                 string id_usuario = obtener_id_usuario(valor+"_"+this.id_usuario);
                 string id_clinica = obtener_id_Clinica(valor2);
                 Clinicas c = new Clinicas(bandera_online_offline);
-                System.Windows.MessageBox.Show(id_usuario + "     " + id_clinica);
+                //System.Windows.MessageBox.Show(id_usuario + "     " + id_clinica);
                 bool existe = new Clinicas(bandera_online_offline).Verificar_Tabla_Permisos(id_usuario);
-                System.Windows.MessageBox.Show("EL VALOR DE EXISTE ES " + existe);
+               // System.Windows.MessageBox.Show("EL VALOR DE EXISTE ES " + existe);
                 if (!existe)
                 {
                     bool insertar = c.insertar_Permisos(id_usuario, id_clinica ,Al);
                     if (insertar)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //c = new Clinicas(!bandera_online_offline);
                         //c.insertar_Permisos(id_usuario, id_clinica);
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -120,7 +120,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                             socio.Main4.Content = new Permisos_Recepcionista_socio(this.lista, this.Al, this.id_rol);
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                          //  System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -129,7 +129,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     bool inserto = c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo ,Al);
                     if (inserto)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // System.Windows.Forms.MessageBox.Show("Se Actualizo correctamente", "Se actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //c = new Clinicas(!bandera_online_offline);
                         //c.actualizar_Permisos(id_usuario, id_clinica, id_clinica_viejo);
                         Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -139,7 +139,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                   
@@ -180,7 +180,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();
@@ -212,7 +212,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

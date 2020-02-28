@@ -34,7 +34,8 @@ namespace bonita_smile_v1
         {
             if(txt_imagen.Text.Equals(txt_subir_servidor.Text)|| txt_imagen.Text.Equals(txt_fotografias.Text)||txt_imagen.Text.Equals(txt_temporal.Text)||txt_imagen.Text.Equals(txt_script.Text)||txt_imagen.Text.Equals(txt_eliminar.Text)|| txt_subir_servidor.Text.Equals(txt_fotografias.Text)||txt_subir_servidor.Text.Equals(txt_temporal.Text)||txt_subir_servidor.Text.Equals(txt_script.Text)||txt_subir_servidor.Text.Equals(txt_eliminar.Text)||txt_fotografias.Text.Equals(txt_temporal.Text)||txt_fotografias.Text.Equals(txt_script.Text)||txt_fotografias.Text.Equals(txt_eliminar.Text)||txt_temporal.Text.Equals(txt_script.Text)||txt_temporal.Text.Equals(txt_eliminar.Text)||txt_script.Text.Equals(txt_eliminar.Text))
             {
-                MessageBox.Show("No se deben de repetir las rutas ");
+                System.Windows.Forms.MessageBox.Show("No se deben de repetir las rutas ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
             }
             else
             {

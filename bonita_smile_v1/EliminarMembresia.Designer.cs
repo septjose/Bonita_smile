@@ -70,8 +70,8 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
-            this.Name = "EliminarMembresia";
-            this.Text = "EliminarMembresia";
+            this.Name = "Eliminar Membresia";
+            this.Text = "Eliminar Membresia";
             this.ResumeLayout(false);
             this.PerformLayout();
 

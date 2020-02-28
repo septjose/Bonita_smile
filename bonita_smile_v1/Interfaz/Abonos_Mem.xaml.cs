@@ -43,7 +43,7 @@ namespace bonita_smile_v1.Interfaz
         string id_membresia;
         public Abonos_Mem(PacienteModel paciente,string id_membresia,double totales,string alias)
         {
-            System.Windows.MessageBox.Show("imprimo el abono :" + totales);
+            //System.Windows.MessageBox.Show("imprimo el abono :" + totales);
             Archivo_Binario ab = new Archivo_Binario();
             Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
 
@@ -125,7 +125,7 @@ namespace bonita_smile_v1.Interfaz
                         //abo.eliminarAbono(abono.id_abono);
 
 
-                        System.Windows.Forms.MessageBox.Show("Se elimino el abono correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // System.Windows.Forms.MessageBox.Show("Se elimino el abono correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         this.notas.Remove((abonos_membresiaModel)lvNotas.SelectedItem);
 
@@ -135,7 +135,7 @@ namespace bonita_smile_v1.Interfaz
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se pudo eliminar el abono", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       // System.Windows.Forms.MessageBox.Show("No se pudo eliminar el abono", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
 
@@ -143,7 +143,7 @@ namespace bonita_smile_v1.Interfaz
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -166,7 +166,7 @@ namespace bonita_smile_v1.Interfaz
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -204,13 +204,13 @@ namespace bonita_smile_v1.Interfaz
                     //abo = new Abonos(!bandera_online_offline);
                     //abo.eliminarAbono(abono.id_abono);
 
-                    System.Windows.Forms.MessageBox.Show("Se elimino la membresia correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   // System.Windows.Forms.MessageBox.Show("Se elimino la membresia correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
 
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo eliminar el abono", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //System.Windows.Forms.MessageBox.Show("No se pudo eliminar el abono", "Error ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
 

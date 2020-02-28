@@ -156,8 +156,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
-            this.Name = "Servidor_Externo";
-            this.Text = "Servidor_Externo";
+            this.Name = "Configuracion del Servidor Externo";
+            this.Text = "Configuracion del Servidor Externo";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -79,19 +79,19 @@ namespace bonita_smile_v1
                 if (admin != null)
                 {
                     admin.Main.Content = new Page6(alias);
-                    System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     if(recep!=null)
                 {
                     recep.Main3.Content = new Pacientes_Recepcionista(this.paciente.clinica.id_clinica,alias);
-                    System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     if (socio != null)
                 {
                     socio.Main4.Content = new Pacientes_socio(this.lista,this.alias);
-                    System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //System.Windows.Forms.MessageBox.Show("Se Ingreso  el Paciente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
 
@@ -99,7 +99,7 @@ namespace bonita_smile_v1
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               // System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

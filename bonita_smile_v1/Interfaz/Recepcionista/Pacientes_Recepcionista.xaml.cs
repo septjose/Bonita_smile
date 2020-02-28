@@ -87,7 +87,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                         {
                             foreach (var nombre in listaNombreArchivos)
                             {
-                                System.Windows.MessageBox.Show("escribio en archivo");
+                                //System.Windows.MessageBox.Show("escribio en archivo");
 
                                 //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
                                 ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
@@ -117,7 +117,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
 
                             }
                         }
-                        System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // System.Windows.Forms.MessageBox.Show("Se elimino el paciente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         GPaciente.Remove((PacienteModel)lv_Paciente.SelectedItem);
 
                         //TODA LA PARTE ONLINE
@@ -152,7 +152,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       // System.Windows.Forms.MessageBox.Show("No se pudo eliminar la  clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     }
                 }
@@ -265,7 +265,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -114,8 +114,8 @@
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "InsertarMembresia";
-            this.Text = "InsertarMembresia";
+            this.Name = "Ingresar Membresia";
+            this.Text = "Inresar Membresia";
             this.ResumeLayout(false);
             this.PerformLayout();
 

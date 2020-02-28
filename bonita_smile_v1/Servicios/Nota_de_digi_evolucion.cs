@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -23,7 +24,7 @@ namespace bonita_smile_v1.Servicios
 
         public Nota_de_digi_evolucion(bool online)
         {
-            MessageBox.Show(prueba_remota);
+            //MessageBox.Show(prueba_remota);
             this.conexionBD = obj.conexion(online);
             this.online = online;
             string ruta = Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
@@ -36,7 +37,7 @@ namespace bonita_smile_v1.Servicios
         public List<Nota_de_digi_evolucionModel> MostrarNota_de_digi_evolucion(string id_motivo, string id_paciente)
         {
             List<Nota_de_digi_evolucionModel> listaNota_de_digi_evolucion = new List<Nota_de_digi_evolucionModel>();
-            query = "SELECT nota_de_digi_evolucion.id_nota,nota_de_digi_evolucion.id_paciente,nota_de_digi_evolucion.id_motivo,nota_de_digi_evolucion.descripcion,date_format(nota_de_digi_evolucion.fecha, '%d/%m/%Y') as fecha,nota_de_digi_evolucion.nombre_doctor,carpeta_archivos.id_carpeta,carpeta_archivos.nombre_carpeta FROM nota_de_digi_evolucion inner join carpeta_archivos on carpeta_archivos.id_nota=nota_de_digi_evolucion.id_nota where nota_de_digi_evolucion.id_paciente='" + id_paciente+"' and nota_de_digi_evolucion.id_motivo='"+id_motivo+"' ";
+            query = "SELECT nota_de_digi_evolucion.id_nota,nota_de_digi_evolucion.id_paciente,nota_de_digi_evolucion.id_motivo,nota_de_digi_evolucion.descripcion,date_format(nota_de_digi_evolucion.fecha, '%d/%m/%Y') as fecha,nota_de_digi_evolucion.nombre_doctor,carpeta_archivos.id_carpeta,carpeta_archivos.nombre_carpeta FROM nota_de_digi_evolucion inner join carpeta_archivos on carpeta_archivos.id_nota=nota_de_digi_evolucion.id_nota where nota_de_digi_evolucion.id_paciente='" + id_paciente + "' and nota_de_digi_evolucion.id_motivo='" + id_motivo + "' ";
             Console.WriteLine(query);
             try
             {
@@ -68,21 +69,23 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
             conexionBD.Close();
             return listaNota_de_digi_evolucion;
         }
 
-        public bool eliminarNotaEvolucion(string id_nota, string id_paciente, string id_motivo ,string alias)
+        public bool eliminarNotaEvolucion(string id_nota, string id_paciente, string id_motivo, string alias)
         {
-            bool internet = ti.Test();
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -100,7 +103,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
 
-                   query =  "DELETE FROM nota_de_digi_evolucion WHERE id_nota = '"+id_nota+"' AND id_paciente ='"+id_paciente+"' AND id_motivo = '"+id_motivo+"'";
+                    query = "DELETE FROM nota_de_digi_evolucion WHERE id_nota = '" + id_nota + "' AND id_paciente ='" + id_paciente + "' AND id_motivo = '" + id_motivo + "'";
                     //query = "DELETE FROM nota_de_digi_evolucion where id_nota='" + id_nota + "'";
 
                     conexionBD.Open();
@@ -110,30 +113,31 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se eliminó correctamente la Nota de evolución: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-                
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool insertarNota_de_digi_evolucion(string id_paciente, string id_motivo, string descripcion_motivo, string descripcion, string fecha,string nombre_doctor , string alias)
+        public bool insertarNota_de_digi_evolucion(string id_paciente, string id_motivo, string descripcion_motivo, string descripcion, string fecha, string nombre_doctor, string alias)
         {
             Seguridad seguridad = new Seguridad();
-            string auxiliar_identificador_nota = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha+nombre_doctor + DateTime.Now);
-            bool internet = ti.Test();
+            string auxiliar_identificador_nota = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha + nombre_doctor + DateTime.Now);
+            MySqlTransaction tr = null;
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -156,45 +160,49 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     reader = cmd.ExecuteReader();
-                    
+
                     while (reader.Read())
                     {
-                        no_carpeta =Int32.Parse( reader[0].ToString());
+                        no_carpeta = Int32.Parse(reader[0].ToString());
                     }
 
                     conexionBD.Close();
-                    string nombre_carpeta = "No_Carpeta_"+no_carpeta + "_" + DateTime.Now.ToString("dd/MM/yyyy");
+                    string nombre_carpeta = "No_Carpeta_" + no_carpeta + "_" + DateTime.Now.ToString("dd/MM/yyyy");
                     string auxiliar_identificador_carpeta = seguridad.SHA1(nombre_carpeta + DateTime.Now);
                     // -----------HACER TRANSACCION-------- -/
-                    query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador,nombre_doctor) VALUES('" + auxiliar_identificador_nota + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','<!--" + auxiliar_identificador_nota + "-->','"+nombre_doctor+"');";
+
+                    query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador,nombre_doctor) VALUES('" + auxiliar_identificador_nota + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','<!--" + auxiliar_identificador_nota + "-->','" + nombre_doctor + "');";
                     query = query + "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,id_motivo,auxiliar_identificador,id_nota) VALUES('" + auxiliar_identificador_carpeta + "','" + nombre_carpeta + "','" + id_paciente + "','" + id_motivo + "','<!--" + auxiliar_identificador_carpeta + "-->','" + auxiliar_identificador_nota + "')";
 
                     conexionBD.Open();
-                    
+
+                    //tr = conexionBD.BeginTransaction();
+
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
+                    //tr.Commit();
 
                     conexionBD.Close();
                     // ---------------------------------------/
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se insertó correctamente la Nota de evolución: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-                
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar insertar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //tr.Rollback();
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool actualizarNota_de_digi_evolucion(string id_nota, string id_paciente, string id_motivo, string descripcion, string fecha,string nombre_doctor  ,string alias)
+        public bool actualizarNota_de_digi_evolucion(string id_nota, string id_paciente, string id_motivo, string descripcion, string fecha, string nombre_doctor, string alias)
         {
-            bool internet = ti.Test();
 
             try
             {
@@ -202,6 +210,8 @@ namespace bonita_smile_v1.Servicios
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -220,7 +230,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE nota_de_digi_evolucion set id_paciente ='" + id_paciente + "',id_motivo = '" + id_motivo + "',descripcion = '" + descripcion + "',fecha = '" + fecha + "',auxiliar_identificador = '" + id_nota + "',nombre_doctor='"+nombre_doctor+"' where id_nota = '" + id_nota + "'";
+                    query = "UPDATE nota_de_digi_evolucion set id_paciente ='" + id_paciente + "',id_motivo = '" + id_motivo + "',descripcion = '" + descripcion + "',fecha = '" + fecha + "',auxiliar_identificador = '" + id_nota + "',nombre_doctor='" + nombre_doctor + "' where id_nota = '" + id_nota + "'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -229,19 +239,19 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se actualizó correctamente la Nota de evolución: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-              
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-       
+
     }
 }

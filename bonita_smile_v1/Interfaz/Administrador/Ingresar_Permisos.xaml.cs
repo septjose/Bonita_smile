@@ -35,7 +35,7 @@ namespace bonita_smile_v1
         string alias;
         public Pagina_Ingresar_Permisos(int id_rol,string alias)
         {
-            System.Windows.MessageBox.Show(alias+"el constructor de ingresar");
+           // System.Windows.MessageBox.Show(alias+"el constructor de ingresar");
             this.conexionBD = obj.conexion(bandera_online_offline);
             this.conexionBD2 = obj.conexion(bandera_online_offline);
             this.id_rol = id_rol;
@@ -70,7 +70,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD2.Close();
         }
@@ -100,7 +100,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -124,7 +124,7 @@ namespace bonita_smile_v1
                 bool inserto = c.insertar_Permisos(id_usuario, id_clinica,alias);
                 if (inserto)
                 {
-                    System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //c = new Clinicas(!bandera_online_offline);
                     //c.insertar_Permisos(id_usuario, id_clinica);
                     Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -135,7 +135,7 @@ namespace bonita_smile_v1
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se Ingreso ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   // System.Windows.Forms.MessageBox.Show("No se Ingreso ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch(Exception ex)
@@ -174,7 +174,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();
@@ -206,7 +206,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

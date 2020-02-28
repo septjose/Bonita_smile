@@ -91,7 +91,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                             //cli = new Clinicas(!bandera_online_offline);
                             //cli.eliminar_Permiso(permiso.id_usuario, permiso.id_clinica);
                             permiso.nombre_sucursal = "";
-                            System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                           // System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             GuPermisos.Remove((PermisosModel)lv_Users.SelectedItem);
                             GuPermisos.Add(permiso);
                         }

@@ -38,7 +38,7 @@ namespace bonita_smile_v1
             InitializeComponent();
             llenar_list_view(id);
             id_clinica = id;
-            System.Windows.MessageBox.Show("imprimo el id de la clinica");
+           // System.Windows.MessageBox.Show("imprimo el id de la clinica");
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
             view.Filter = UserFilter;
@@ -168,14 +168,10 @@ namespace bonita_smile_v1
                     
                 }
 
-               
-                
-
-
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

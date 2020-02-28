@@ -77,14 +77,14 @@ namespace bonita_smile_v1.Interfaz.Socio
                         //user = new Usuarios(!bandera_online_offline);
                         //user.eliminarUsuario(id_usuario);
                         Gusuario.Remove((UsuarioModel)lv_Users.SelectedItem);
-                        System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // System.Windows.Forms.MessageBox.Show("Se elimino el usuario correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                 }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -108,7 +108,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

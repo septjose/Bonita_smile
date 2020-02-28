@@ -20,7 +20,7 @@ namespace bonita_smile_v1
         string alias;
         public Actualizar_Nombre_Carpeta(string id_paciente, string id_carpeta,string id_motivo,string alias)
         {
-            MessageBox.Show("el id_motivo "+id_motivo);
+            //MessageBox.Show("el id_motivo "+id_motivo);
             this.id_paciente = id_paciente;
             this.id_motivo = id_motivo;
             this.id_carpeta = id_carpeta;
@@ -37,13 +37,13 @@ namespace bonita_smile_v1
                 if (insertarCarpeta)
                 {
 
-                    System.Windows.Forms.MessageBox.Show("Se actualizò Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   // System.Windows.Forms.MessageBox.Show("Se actualizò Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //ca = new Carpeta_archivos(!bandera_online_offline);
                     //ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente, id_motivo);
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //System.Windows.Forms.MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 this.DialogResult = DialogResult.OK;

@@ -104,7 +104,7 @@
                     <ColumnDefinition Width="800"/>
                 </Grid.ColumnDefinitions>
                 <!--<Button Grid.Column="0" Content="Agregar Nota"  Margin="0,0,0,500"  Click="Button_Click"/>-->
-                <Button Grid.Column="0" Margin="0,0,0,0" Name="btn1" Click="Button_Click" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                <Button Grid.Column="1" Margin="609.333,-5,0,0" Name="btn1" Click="Button_Click" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
@@ -133,7 +133,7 @@
                     <Button Content="Button" Height="100" Width="75"/>
                 </Button>
 
-                <Button Grid.Column="1" Margin="719.333,0,-68.667,0" Click="Button_Click_4" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                <Button Grid.Column="1" Margin="609.333,50,0,0" Click="Button_Click_4" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
@@ -163,7 +163,7 @@
                 </Button>
 
 
-                <Button Grid.Column="1" Margin="719,130,-68.667,0" Click="Button_Click_3" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                <Button Grid.Column="1" Margin="609.333,110,0,0" Click="Button_Click_3" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">

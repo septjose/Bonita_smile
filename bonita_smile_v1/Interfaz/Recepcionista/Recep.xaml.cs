@@ -24,13 +24,15 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         ObservableCollection<PacienteModel> GPaciente;
         string id = "";
         string alias;
-        public Recep(string id,string nombre,string alias)
+        UsuarioModel usu;
+        public Recep(UsuarioModel usu,string id,string nombre,string alias)
         {
             InitializeComponent();
             Main3.Content = new Recepcionista_Principal(id,alias);
             this.id = id;
             nombre_clinica.Text = nombre;
             this.alias = alias;
+            this.usu = usu;
             //llenar_list_view();
 
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv_Paciente.ItemsSource);
@@ -107,6 +109,11 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
         {
             Paleta_Colores p_c = new Paleta_Colores();
             p_c.ShowDialog();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Main3.Content = new Actualizar_Perfil(usu, id, null, alias);
         }
     }
 }

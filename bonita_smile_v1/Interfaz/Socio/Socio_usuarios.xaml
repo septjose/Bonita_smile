@@ -78,7 +78,7 @@
             <Border Grid.Row="1" Grid.Column="1" Background="White"  BorderBrush="Silver" Margin="0 20 0 0" BorderThickness="1" CornerRadius="8 8 3 3 " Height="50" VerticalAlignment="Top">
                 <DockPanel>
 
-                    <Button  Content="Ingresar" HorizontalAlignment="Left" Margin="250,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" Click="Button_Click_1">
+                    <Button  Content="Ingresar" HorizontalAlignment="Left" Margin="350,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" Click="Button_Click_1">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">

@@ -101,7 +101,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -125,7 +125,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 bool inserto = c.insertar_Permisos(id_usuario, id_clinica,alias);
                 if (inserto)
                 {
-                    System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   // System.Windows.Forms.MessageBox.Show("Se Ingreso  correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //c = new Clinicas(!bandera_online_offline);
                     //c.insertar_Permisos(id_usuario, id_clinica);
                     Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
@@ -136,7 +136,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("No se Ingreso ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                  //  System.Windows.Forms.MessageBox.Show("No se Ingreso ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -175,7 +175,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();
@@ -207,7 +207,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

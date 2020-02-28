@@ -105,7 +105,7 @@
                         </Button.Template>
                     </Button>
 
-                    <Button  HorizontalAlignment="Center" Height="auto" Margin="150,0,0,0" VerticalAlignment="Center" Width="auto" Click="Button_Click_2">
+                    <Button  HorizontalAlignment="Center" Height="auto" Margin="400,0,0,0" VerticalAlignment="Center" Width="auto" Click="Button_Click_2">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">

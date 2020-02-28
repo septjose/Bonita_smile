@@ -98,7 +98,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -153,19 +153,19 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digítos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("Correo no valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show("Correo no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show("No selecciono el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("No seleccionó el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
                     {
                         System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -202,7 +202,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();
@@ -247,7 +247,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                     bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica,alias);
                                     if (inserto)
                                     {
-                                        System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        //System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         //pa = new Paciente(!bandera_online_offline);
                                         //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
@@ -265,7 +265,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                     bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica,alias);
                                     if (inserto)
                                     {
-                                        System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                       // System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         //pa = new Paciente(!bandera_online_offline);
                                         //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
@@ -286,7 +286,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                     bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica,alias);
                                     if (inserto)
                                     {
-                                        System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                       // System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         //pa = new Paciente(!bandera_online_offline);
                                         //pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, txtTelefono.Text, foto, antecedentes, txtEmail.Text, 0, id_clinica);
                                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
@@ -315,7 +315,7 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                                         System.IO.File.Copy(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre_nuevo_foto, destFile2, true);
                                         Escribir_Archivo ea = new Escribir_Archivo();
                                         ea.escribir_imagen_eliminar(foto, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
-                                        System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                       // System.Windows.Forms.MessageBox.Show("Se actualizo el Paciente", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
 
 
@@ -364,21 +364,21 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 digitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            System.Windows.Forms.MessageBox.Show("El teléfono debe de tener 10 dígitos", "Teléfono no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         }
 
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("Correo no valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show("Correo no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
 
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show("No selecciono el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show("No seleccionó el comboBox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     if (txtNombre.Text.Equals("") || txtApellidos.Text.Equals("") || txtDireccion.Text.Equals(""))
                     {
                         System.Windows.Forms.MessageBox.Show("Le faltan campos por llenar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -398,12 +398,12 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
             // Check if file is there  
             if (fi.Exists)
             {
-                System.Windows.MessageBox.Show("Si esta");
+               // System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
                 fi.MoveTo(sourceFile + nombre_nuevo);
                 //string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
                 //System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
-                System.Windows.MessageBox.Show("se pudo si");
+                //System.Windows.MessageBox.Show("se pudo si");
             }
         }
 

@@ -61,8 +61,8 @@
             this.ClientSize = new System.Drawing.Size(372, 298);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
-            this.Name = "Paleta_Colores";
-            this.Text = "Paleta_Colores";
+            this.Name = "Paleta de Colores";
+            this.Text = "Paleta de Colores";
             this.ResumeLayout(false);
             this.PerformLayout();
 

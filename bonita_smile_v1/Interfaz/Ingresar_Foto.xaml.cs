@@ -72,7 +72,7 @@ namespace bonita_smile_v1
             //MiWebCam = null;
             this.configuracion = configuracion;
             this.ruta = @configuracion.carpetas.ruta_fotografias_carpeta + "\\";
-            System.Windows.MessageBox.Show("ghhhxhhhd"+ruta);
+            //System.Windows.MessageBox.Show("ghhhxhhhd"+ruta);
             this.ruta_offline = @configuracion.carpetas.ruta_subir_servidor_carpeta + "\\";
             this.btn_capturar.IsEnabled = false;
             this.btnSiguiente.IsEnabled = false;            
@@ -144,7 +144,7 @@ namespace bonita_smile_v1
                 {
                     File.Delete(ruta + foto);
                 }
-                System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //System.Windows.Forms.MessageBox.Show("Se subio correctamente la foto", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 Recep recep = System.Windows.Application.Current.Windows.OfType<Recep>().FirstOrDefault();
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -250,7 +250,7 @@ namespace bonita_smile_v1
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No se pudo registrar el paciente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               // System.Windows.Forms.MessageBox.Show("No se pudo registrar el paciente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 

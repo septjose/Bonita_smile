@@ -71,7 +71,7 @@ namespace bonita_smile_v1
                                 bool inserto2 = new Abonos_Membresia(bandera_online_offline).InsertarAbonoMembresia(DateTime.Now.ToString("yyyy/MM/dd"), efectivo.ToString(culture), "Primer pago para tener la membresia", id_membresia, paciente.id_paciente, paciente.clinica.id_clinica, alias);
                                 if(inserto2)
                                 {
-                                    System.Windows.Forms.MessageBox.Show("El paciente " + paciente.nombre + " " + paciente.apellidos + " es ahora miembro", "Se ingreso correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //System.Windows.Forms.MessageBox.Show("El paciente " + paciente.nombre + " " + paciente.apellidos + " es ahora miembro", "Se ingreso correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                     imprimir_recibo();
 
@@ -81,7 +81,7 @@ namespace bonita_smile_v1
 
                                     if (admin != null)
                                     {
-                                        MessageBox.Show(abono.ToString());
+                                        //MessageBox.Show(abono.ToString());
                                         admin.Main.Content = new Abonos_Mem(paciente,id_membresia, abono, alias);
                                     }
                                     else
@@ -104,12 +104,12 @@ namespace bonita_smile_v1
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar la membresia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                               // System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar la membresia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
                         {
-                            System.Windows.MessageBox.Show(ex + "");
+                            System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             this.DialogResult = DialogResult.OK;
                         }
                         this.DialogResult = DialogResult.OK;
@@ -154,7 +154,8 @@ namespace bonita_smile_v1
             }
             else
             {
-                System.Windows.MessageBox.Show("Impresora no válida.");
+                System.Windows.Forms.MessageBox.Show("Impresora no válida ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+              
             }
         }
 
@@ -170,7 +171,7 @@ namespace bonita_smile_v1
 
         private void Imprimir(object sender, PrintPageEventArgs e)
         {
-            MessageBox.Show(paciente.clinica.id_clinica);
+          
             string sucursal = obtener_nombre_sucursal(paciente.clinica.id_clinica);
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
@@ -310,7 +311,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

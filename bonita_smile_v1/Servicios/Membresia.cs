@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -118,7 +119,7 @@ namespace bonita_smile_v1.Servicios
             catch (MySqlException ex)
             {
                 conexionBD.Close();
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return listaMembresia;
@@ -209,22 +210,23 @@ namespace bonita_smile_v1.Servicios
             catch (MySqlException ex)
             {
                 //conexionBD.Close();
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             //conexionBD.Close();
             return membresia;
         }
-        public bool InsertarMembresia(string id_paciente, string membresia, string id_clinica, string costo ,string alias)
+        public bool InsertarMembresia(string id_paciente, string membresia, string id_clinica, string costo, string alias)
         {
             Seguridad seguridad = new Seguridad();
             string id_membresia = "";
             id_membresia = seguridad.SHA1(id_paciente + membresia + id_clinica + costo + DateTime.Now);
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -251,24 +253,27 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se insertó correctamente la Membresía: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     return true;
                 }
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar insertar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
         public bool ActualizarMembresia(string id_membresia, string id_paciente, string membresia, string id_clinica, string costo, string alias)
         {
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -293,26 +298,27 @@ namespace bonita_smile_v1.Servicios
                     conexionBD.Close();
 
                     Escribir_Archivo ea = new Escribir_Archivo();
-                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt"); 
+                    System.Windows.Forms.MessageBox.Show("Se actualizó correctamente la Mmebresía: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
-        public bool EliminarMembresia(string id_membresia, string id_paciente, string id_clinica ,string alias)
+        public bool EliminarMembresia(string id_membresia, string id_paciente, string id_clinica, string alias)
         {
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -338,14 +344,14 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se eliminó correctamente el Abono: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
 
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }

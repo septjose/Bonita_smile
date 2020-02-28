@@ -69,7 +69,7 @@ namespace bonita_smile_v1
                     {
                         
 
-                        System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //cl = new Clinicas(!bandera_online_offline);
                         //cl.actualizarClinica(id_clinica, nombre_clinica, color);
                         //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -99,7 +99,7 @@ namespace bonita_smile_v1
                     }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                           // System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
@@ -110,7 +110,7 @@ namespace bonita_smile_v1
                         if (actualizo)
                         {
                         
-                        System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Forms.MessageBox.Show("Se actualizo la Clinica", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //cl = new Clinicas(!bandera_online_offline);
                         //cl.actualizarClinica(id_clinica, nombre_clinica, color);
                         //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
@@ -142,7 +142,7 @@ namespace bonita_smile_v1
                     }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                          //  System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }

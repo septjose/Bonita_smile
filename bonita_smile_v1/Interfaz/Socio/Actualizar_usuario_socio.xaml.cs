@@ -85,7 +85,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -120,7 +120,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                         if (inserto)
                         {
 
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                           // System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             //user = new Usuarios(!bandera_online_offline);
                             //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
                             usu.alias = alias;
@@ -140,7 +140,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }
@@ -163,7 +163,7 @@ namespace bonita_smile_v1.Interfaz.Socio
 
                             usu.rol = rolModel;
 
-                            System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             //vu.refrescar_listview(this.usu, usu, lv_aux);
                             Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                             if (socio != null)
@@ -174,13 +174,13 @@ namespace bonita_smile_v1.Interfaz.Socio
                         else
                         {
 
-                            System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                           //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show("No selecciono Nada en el combobox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Windows.Forms.MessageBox.Show("No seleccionó Nada en el combobox", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (txtNombre.Text.Equals("") || txtApellido.Text.Equals("") || txtAlias.Text.Equals("") || pwbPassword.Password.Equals(""))
                     {
                         System.Windows.Forms.MessageBox.Show("Falta llenar Campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -216,7 +216,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
             conexionBD.Close();
@@ -248,7 +248,7 @@ namespace bonita_smile_v1.Interfaz.Socio
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

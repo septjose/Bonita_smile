@@ -85,7 +85,7 @@ namespace bonita_smile_v1
             if (lvCarpetas.SelectedItems.Count > 0)
 
             {
-                System.Windows.MessageBox.Show(lvCarpetas.SelectedItems.Count + "");
+               // System.Windows.MessageBox.Show(lvCarpetas.SelectedItems.Count + "");
                 // System.Windows.MessageBox.Show(carpeta.id_carpeta + "");
                 // System.Windows.MessageBox.Show(carpeta.id_paciente + "");
                 //System.Windows.MessageBox.Show("hi");
@@ -148,7 +148,7 @@ namespace bonita_smile_v1
             // ELIMINARLA DE LA BS LOCAL/
 
             // SI LA CARPETA ESTA ASOCIADA A UNA NOTA NO ELIMINARLA, DE LO CONTRARIO SI ELIMINARLA
-            System.Windows.MessageBox.Show("imprimo " +  item_carpeta.id_nota );
+            //System.Windows.MessageBox.Show("imprimo " +  item_carpeta.id_nota );
             if (item_carpeta.id_nota.Equals("")|| item_carpeta.id_nota==null)
 
             {
@@ -161,7 +161,7 @@ namespace bonita_smile_v1
                 bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta,alias);
                 if (elimino)
                 {
-                    System.Windows.MessageBox.Show("llego aqio");
+                    //System.Windows.MessageBox.Show("llego aqio");
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     if (listaNombreArchivos.Count == 0)
@@ -173,12 +173,12 @@ namespace bonita_smile_v1
 
                         foreach (var nombre in listaNombreArchivos)
                         {
-                            System.Windows.MessageBox.Show("escribio en archivo");
+                           // System.Windows.MessageBox.Show("escribio en archivo");
 
                             //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
                             ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
                             //ELIMINAR FOTOS
-                            System.Windows.MessageBox.Show("RUTA PARA BORRAR EN BS " + @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
+                          //  System.Windows.MessageBox.Show("RUTA PARA BORRAR EN BS " + @configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
                             File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
                             
                         }
@@ -223,8 +223,9 @@ namespace bonita_smile_v1
             }
             else
             {
-                System.Windows.MessageBox.Show("imprimo" + item_carpeta.id_carpeta + "  " + item_carpeta.id_motivo + "  " + item_carpeta.id_nota + "  " + item_carpeta.id_paciente + "   " + item_carpeta.nombre_carpeta);
-                System.Windows.MessageBox.Show("Esta carpeta esta asociada a una nota, no se puede eliminar");
+                //System.Windows.MessageBox.Show("imprimo" + item_carpeta.id_carpeta + "  " + item_carpeta.id_motivo + "  " + item_carpeta.id_nota + "  " + item_carpeta.id_paciente + "   " + item_carpeta.nombre_carpeta);
+               // System.Windows.MessageBox.Show("");
+                System.Windows.Forms.MessageBox.Show("Esta carpeta esta asociada a una nota, no se puede eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

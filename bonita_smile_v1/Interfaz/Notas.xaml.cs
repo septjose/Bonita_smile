@@ -148,92 +148,99 @@ namespace bonita_smile_v1
             bool eliminarArchivo = true;
             string rutaArchivoEliminar = @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt";
             Nota_de_digi_evolucionModel nota = (Nota_de_digi_evolucionModel)lvNotas.SelectedItem;
-
-            var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el motivo :" + nota.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-            if (confirmation == System.Windows.Forms.DialogResult.Yes)
+            if (lvNotas.SelectedItems.Count > 0)
             {
-
-                //ELIMINAR PRIMERO LO REFERENTE A LA CARPETA
-
-                //RECUPERAR NOMBRE DE ARCHIVOS DE LA CARPETA
-                System.Windows.MessageBox.Show(nota.id_nota);
-                var carpeta = new Carpeta_archivos(false).carpetaArchivos(nota.id_nota);
-                var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(carpeta.id_carpeta, id_paciente);
-                System.Windows.MessageBox.Show(carpeta.id_carpeta);
-                //ELIMINAR REGISTRO
-                bool elimino = new Carpeta_archivos(bandera_offline_online).eliminarCarpeta_archivos(carpeta.id_carpeta , alias);
-                if (elimino)
+                var confirmation = System.Windows.Forms.MessageBox.Show("Esta seguro de borrar el motivo :" + nota.descripcion + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (confirmation == System.Windows.Forms.DialogResult.Yes)
                 {
-                    System.Windows.MessageBox.Show("llego aqio");
 
-                    Escribir_Archivo ea = new Escribir_Archivo();
-                    if (listaNombreArchivos.Count == 0)
+                    //ELIMINAR PRIMERO LO REFERENTE A LA CARPETA
+
+                    //RECUPERAR NOMBRE DE ARCHIVOS DE LA CARPETA
+                    //System.Windows.MessageBox.Show(nota.id_nota);
+                    var carpeta = new Carpeta_archivos(false).carpetaArchivos(nota.id_nota);
+                    var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(carpeta.id_carpeta, id_paciente);
+                   // System.Windows.MessageBox.Show(carpeta.id_carpeta);
+                    //ELIMINAR REGISTRO
+                    bool elimino = new Carpeta_archivos(bandera_offline_online).eliminarCarpeta_archivos(carpeta.id_carpeta, alias);
+                    if (elimino)
                     {
-                        ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
-                    }
-                    else
-                    {
-                        foreach (var nombre in listaNombreArchivos)
+                        //System.Windows.MessageBox.Show("llego aqio");
+
+                        Escribir_Archivo ea = new Escribir_Archivo();
+                        if (listaNombreArchivos.Count == 0)
                         {
-                            System.Windows.MessageBox.Show("escribio en archivo");
-
-                            //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
-                            ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_"+alias+".txt");
-                            //ELIMINAR FOTOS
-                            if(File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa))
-                            {
-                                File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
-                            }
-                            
+                            ea.escribir_imagen_eliminar("", @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_" + alias + ".txt");
                         }
+                        else
+                        {
+                            foreach (var nombre in listaNombreArchivos)
+                            {
+                               // System.Windows.MessageBox.Show("escribio en archivo");
+
+                                //PASAR LOS NOMBRES DE LOS ARCHIVOS DE LA CARPETA EN UN ARCHIVO
+                                ea.escribir_imagen_eliminar(nombre.foto_completa, @configuracion.carpetas.ruta_eliminar_carpeta + "\\eliminar_imagen_temporal_" + alias + ".txt");
+                                //ELIMINAR FOTOS
+                                if (File.Exists(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa))
+                                {
+                                    File.Delete(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + nombre.foto_completa);
+                                }
+
+                            }
+                        }
+
+                        ////ELIMINAR DEL SERVIDOR/
+
+                        ///****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
+                        ////ELIMINAR REGISTRO
+                        //elimino = new Carpeta_archivos(!bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta);
+                        //if (elimino)
+                        //{
+                        //    //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
+                        //    var datos = ea.leer(rutaArchivoEliminar);
+
+                        //    foreach (string imagen in datos)
+                        //    {
+                        //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
+                        //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
+
+                        //        if (!verdad)
+                        //            eliminarArchivo = false;
+                        //    }
+                        //    if (eliminarArchivo)
+                        //    {
+                        //        System.Windows.MessageBox.Show("elimino Archivo");
+                        //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
+                        //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    //SI NO HAY INTERNET, NO HACER NADA
+                        //}
+                        ///**********************************/
                     }
 
-                    ////ELIMINAR DEL SERVIDOR/
+                    //ELIMINAR DESPUES TODO LO REFERENTE A LA NOTA
+                    Nota_de_digi_evolucion mot = new Nota_de_digi_evolucion(bandera_offline_online);
 
-                    ///****POSIBLEMENTE SE QUITE DE AQUI Y SE HACE UNICAMENTE EN EL BOTON DE SINCRONIZAR****/
-                    ////ELIMINAR REGISTRO
-                    //elimino = new Carpeta_archivos(!bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta);
-                    //if (elimino)
-                    //{
-                    //    //ELIMINAR FOTOS DE SERVIDOR, OBTENIENDO NOMBRE DEL ARCHIVO
-                    //    var datos = ea.leer(rutaArchivoEliminar);
+                    elimino = mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo, alias);
+                    if (elimino)
+                    {
+                        //mot = new Nota_de_digi_evolucion(!bandera_offline_online);
+                        //mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
+                        // mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
+                        GNotas.Remove((Nota_de_digi_evolucionModel)lvNotas.SelectedItem);
+                       // System.Windows.Forms.MessageBox.Show("Se elimino el motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
 
-                    //    foreach (string imagen in datos)
-                    //    {
-                    //        Uri siteUri = new Uri("ftp://jjdeveloperswdm.com/" + imagen);
-                    //        bool verdad = DeleteFileOnServer(siteUri, "bonita_smile@jjdeveloperswdm.com", "bonita_smile");
-
-                    //        if (!verdad)
-                    //            eliminarArchivo = false;
-                    //    }
-                    //    if (eliminarArchivo)
-                    //    {
-                    //        System.Windows.MessageBox.Show("elimino Archivo");
-                    //        ea.SetFileReadAccess(rutaArchivoEliminar, false);
-                    //        File.Delete(@"\\DESKTOP-ED8E774\backup_bs\eliminar_imagen_temporal.txt");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    //SI NO HAY INTERNET, NO HACER NADA
-                    //}
-                    ///**********************************/
                 }
-
-                //ELIMINAR DESPUES TODO LO REFERENTE A LA NOTA
-                Nota_de_digi_evolucion mot = new Nota_de_digi_evolucion(bandera_offline_online);
-
-                elimino = mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo , alias);
-                if (elimino)
-                {
-                    //mot = new Nota_de_digi_evolucion(!bandera_offline_online);
-                    //mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo);
-                    // mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente);
-                    GNotas.Remove((Nota_de_digi_evolucionModel)lvNotas.SelectedItem);
-                    System.Windows.Forms.MessageBox.Show("Se elimino el motivo correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-
             }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -244,14 +251,14 @@ namespace bonita_smile_v1
                 DialogResult resultado = new DialogResult();
                 Form mensaje = new Actualizar_Nota_Evolucion(nota,nombre_doctor,alias);
                 resultado = mensaje.ShowDialog();
-                System.Windows.MessageBox.Show(nota.fecha);
+               // System.Windows.MessageBox.Show(nota.fecha);
                 this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
-                System.Windows.MessageBox.Show(GNotas[0].fecha);
+                //System.Windows.MessageBox.Show(GNotas[0].fecha);
                 lvNotas.ItemsSource = GNotas;
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

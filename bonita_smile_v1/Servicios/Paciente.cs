@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
 namespace bonita_smile_v1.Servicios
@@ -23,7 +24,7 @@ namespace bonita_smile_v1.Servicios
         string ruta2;
         Test_Internet ti = new Test_Internet();
         private bool online;
-         string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
+        string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         Configuracion_Model configuracion;
         //
         public Paciente(bool online)
@@ -33,7 +34,7 @@ namespace bonita_smile_v1.Servicios
             this.conexionBD = obj.conexion(online);
             this.online = online;
             this.ruta = @configuracion.carpetas.ruta_imagenes_carpeta + "\\";
-            MessageBox.Show("jdjdjd" + ruta);
+            //MessageBox.Show("jdjdjd" + ruta);
             this.configuracion = configuracion;
         }
 
@@ -70,10 +71,10 @@ namespace bonita_smile_v1.Servicios
                     }
                     else
                     {
-                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\trofeo.jpg"));
+                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                     }
-                    pacienteModel.membresia = reader[11].ToString(); 
+                    pacienteModel.membresia = reader[11].ToString();
                     clinicaModel.id_clinica = reader[12].ToString();
                     clinicaModel.nombre_sucursal = reader[13].ToString();
                     clinicaModel.color = reader[14].ToString();
@@ -86,7 +87,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return listaPaciente;
@@ -98,7 +99,7 @@ namespace bonita_smile_v1.Servicios
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
             foreach (var id in lista)
             {
-                MessageBox.Show("el id de la clinica es " + id);
+               // MessageBox.Show("el id de la clinica es " + id);
                 query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id + "' ";
 
                 try
@@ -127,7 +128,7 @@ namespace bonita_smile_v1.Servicios
                         }
                         else
                         {
-                            pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\trofeo.jpg"));
+                            pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                         }
                         pacienteModel.membresia = reader[11].ToString();
@@ -142,12 +143,12 @@ namespace bonita_smile_v1.Servicios
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 conexionBD.Close();
             }
-            
-           
+
+
             return listaPaciente;
         }
 
@@ -155,7 +156,7 @@ namespace bonita_smile_v1.Servicios
         {
 
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
-            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id+"' ";
+            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id + "' ";
 
             try
             {
@@ -186,8 +187,8 @@ namespace bonita_smile_v1.Servicios
                     }
                     else
                     {
-                        
-                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\trofeo.jpg"));
+
+                        pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                     }
                     pacienteModel.membresia = reader[11].ToString();
@@ -202,7 +203,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return listaPaciente;
@@ -258,15 +259,16 @@ namespace bonita_smile_v1.Servicios
         //    return listaPaciente;
         //}
 
-        public bool eliminarPaciente(string id_paciente  ,string alias)
+        public bool eliminarPaciente(string id_paciente, string alias)
         {
-            bool internet = ti.Test();
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -292,41 +294,42 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se eliminó correctamente el paciente: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-                
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool insertarPaciente(string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica  ,string alias)
+        public bool insertarPaciente(string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica, string alias)
         {
             Seguridad s = new Seguridad();
-            string foto_paciente ="";
-            string auxiliar_identificador="";
+            string foto_paciente = "";
+            string auxiliar_identificador = "";
             Seguridad seguridad = new Seguridad();
-            bool internet = ti.Test();
-            if(foto.Equals(""))
+            if (foto.Equals(""))
             {
-                foto_paciente = foto; 
+                foto_paciente = foto;
             }
             else
             {
                 foto_paciente = s.quitar_acentos(foto);
             }
-            auxiliar_identificador = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto_paciente + antecedente + email + marketing + id_clinica+DateTime.Now);
+            auxiliar_identificador = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto_paciente + antecedente + email + marketing + id_clinica + DateTime.Now);
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -353,20 +356,20 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se insertó correctamente el Paciente: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-                
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar insertar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool actualizarPaciente(string id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica  ,string alias)
+        public bool actualizarPaciente(string id_paciente, string nombre, string apellidos, string direccion, string telefono, string foto, string antecedente, string email, int marketing, string id_clinica, string alias)
         {
             Seguridad s = new Seguridad();
             string foto_paciente = "";
@@ -379,12 +382,13 @@ namespace bonita_smile_v1.Servicios
                 foto_paciente = s.quitar_acentos(foto);
             }
 
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -403,7 +407,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto_paciente + "',email = '" + email + "',marketing = " + marketing + ",id_clinica ='" + id_clinica + "',antecedente='" + antecedente + "',auxiliar_identificador = '"+ id_paciente +"' where id_paciente ='"+id_paciente +"'";
+                    query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto_paciente + "',email = '" + email + "',marketing = " + marketing + ",id_clinica ='" + id_clinica + "',antecedente='" + antecedente + "',auxiliar_identificador = '" + id_paciente + "' where id_paciente ='" + id_paciente + "'";
                     Console.WriteLine(query);
 
                     conexionBD.Open();
@@ -413,14 +417,14 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se actualizó correctamente el Paciente: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
-               
+
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
@@ -435,7 +439,7 @@ namespace bonita_smile_v1.Servicios
                 //MessageBox.Show("se encontro la foto en " + filename);
                 var bitmap = new BitmapImage();
                 //MessageBox.Show("A");
-                var stream = File.OpenRead(this.ruta+ filename);
+                var stream = File.OpenRead(this.ruta + filename);
                 //MessageBox.Show("B");
                 bitmap.BeginInit();
                 //MessageBox.Show("C");
@@ -457,7 +461,7 @@ namespace bonita_smile_v1.Servicios
                 //MessageBox.Show("no se encontro la foto en " + filename);
                 var bitmap = new BitmapImage();
                 //MessageBox.Show("A");
-                var stream = File.OpenRead( System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\img1.jpg"));
+                var stream = File.OpenRead(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\img1.jpg"));
                 //MessageBox.Show("B");
                 bitmap.BeginInit();
                 //MessageBox.Show("C");
@@ -480,37 +484,38 @@ namespace bonita_smile_v1.Servicios
         {
             BitmapImage bi;
 
-           
-                //MessageBox.Show("se encontro la foto en " + filename);
-                var bitmap = new BitmapImage();
-                //MessageBox.Show("A");
-                var stream = File.OpenRead( filename);
-                //MessageBox.Show("B");
-                bitmap.BeginInit();
-                //MessageBox.Show("C");
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                //MessageBox.Show("D");
-                bitmap.StreamSource = stream;
-                //MessageBox.Show("E");
-                bitmap.EndInit();
-                //MessageBox.Show("F");
-                stream.Close();
-                //MessageBox.Show("G");
-                stream.Dispose();
-                //MessageBox.Show("H");
 
-                return bitmap;
-         
+            //MessageBox.Show("se encontro la foto en " + filename);
+            var bitmap = new BitmapImage();
+            //MessageBox.Show("A");
+            var stream = File.OpenRead(filename);
+            //MessageBox.Show("B");
+            bitmap.BeginInit();
+            //MessageBox.Show("C");
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            //MessageBox.Show("D");
+            bitmap.StreamSource = stream;
+            //MessageBox.Show("E");
+            bitmap.EndInit();
+            //MessageBox.Show("F");
+            stream.Close();
+            //MessageBox.Show("G");
+            stream.Dispose();
+            //MessageBox.Show("H");
+
+            return bitmap;
+
         }
-        public bool eliminarMembresia(PacienteModel paciente , string alias)
+        public bool eliminarMembresia(PacienteModel paciente, string alias)
         {
-            bool internet = ti.Test();
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -539,27 +544,28 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se eliminó correctamente la Membresía: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public bool actualizarMembresia(PacienteModel paciente , string alias)
+        public bool actualizarMembresia(PacienteModel paciente, string alias)
         {
-            bool internet = ti.Test();
             try
             {
 
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -577,10 +583,10 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    MessageBox.Show(paciente.id_paciente);
+                    //MessageBox.Show(paciente.id_paciente);
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
                     query = "UPDATE paciente set membresia = '" + DateTime.Now.ToString("yyyy/MM/dd") + "' where id_paciente ='" + paciente.id_paciente + "'";
-                    MessageBox.Show(query);
+                    //MessageBox.Show(query);
                     Console.WriteLine(query);
 
                     conexionBD.Open();

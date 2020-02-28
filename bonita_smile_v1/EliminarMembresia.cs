@@ -35,19 +35,19 @@ namespace bonita_smile_v1
                     bool elimino = new Paciente(bandera_online_offline).eliminarMembresia(paciente,alias);
                     if (elimino)
                     {
-                        System.Windows.Forms.MessageBox.Show("Se Eliminó la membresia", "Se Eliminó", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // System.Windows.Forms.MessageBox.Show("Se Eliminó la membresia", "Se Eliminó", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         // -----------------------------------------------/
                         //elimino = new Paciente(!bandera_online_offline).eliminarMembresia(paciente);
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se pudo  Eliminar la membresia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //System.Windows.Forms.MessageBox.Show("No se pudo  Eliminar la membresia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(ex + "");
+                    //System.Windows.MessageBox.Show(ex + "");
                     this.DialogResult = DialogResult.OK;
                 }
             }

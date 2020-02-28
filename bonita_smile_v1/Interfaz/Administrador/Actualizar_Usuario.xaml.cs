@@ -83,7 +83,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -126,7 +126,7 @@ namespace bonita_smile_v1
                             {
                                 //user = new Usuarios(!bandera_online_offline);
                                 //user.actualizarUsuarioSocio(id_usu, alias, nombre, apellidos, password, id_rol);
-                                System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                     
@@ -134,7 +134,7 @@ namespace bonita_smile_v1
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                     admin.Main.Content = new Page4(alias);
@@ -147,14 +147,14 @@ namespace bonita_smile_v1
                             {
                                 //user = new Usuarios(!bandera_online_offline);
                                 //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
-                                System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                               // System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                     admin.Main.Content = new Page4(alias_user);
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                     admin.Main.Content = new Page4(alias_user);
@@ -177,7 +177,7 @@ namespace bonita_smile_v1
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         else
@@ -190,7 +190,7 @@ namespace bonita_smile_v1
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                               // System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }                      
                     }
@@ -233,7 +233,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
             conexionBD.Close();
@@ -265,7 +265,7 @@ namespace bonita_smile_v1
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();

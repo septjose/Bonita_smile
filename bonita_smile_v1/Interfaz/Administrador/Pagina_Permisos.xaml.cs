@@ -32,7 +32,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
         string alias;
         public Pagina_Permisos(int id_rol,string alias)
         {
-            System.Windows.MessageBox.Show(alias+"constructor permisos");
+           // System.Windows.MessageBox.Show(alias+"constructor permisos");
             this.id_rol = id_rol;
             this.alias = alias;
             InitializeComponent();
@@ -69,7 +69,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show(this.alias + "presiono el boton de eliminar");
+            //System.Windows.MessageBox.Show(this.alias + "presiono el boton de eliminar");
             PermisosModel permiso = (PermisosModel)lv_Users.SelectedItem;
             if (lv_Users.SelectedItems.Count > 0)
             {    
@@ -92,7 +92,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
                             //cli = new Clinicas(!bandera_online_offline);
                             //cli.eliminar_Permiso(permiso.id_usuario, permiso.id_clinica);
                             permiso.nombre_sucursal = "";
-                            System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //System.Windows.Forms.MessageBox.Show("Se elimino el permiso correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             GuPermisos.Remove((PermisosModel)lv_Users.SelectedItem);
                             GuPermisos.Add(permiso);
 
@@ -112,7 +112,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show(this.alias + "presiono el boton actualizar");
+            //System.Windows.MessageBox.Show(this.alias + "presiono el boton actualizar");
             PermisosModel permiso = (PermisosModel)lv_Users.SelectedItem;
             if (lv_Users.SelectedItems.Count > 0)
             {
@@ -131,7 +131,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show(this.alias+"presiono el boton ingresar");
+           // System.Windows.MessageBox.Show(this.alias+"presiono el boton ingresar");
             Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
             if (admin != null)
                 admin.Main.Content = new Pagina_Ingresar_Permisos(this.id_rol, this.alias);

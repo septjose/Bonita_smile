@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -75,7 +76,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
         }
@@ -107,7 +108,7 @@ namespace bonita_smile_v1.Interfaz.Administrador
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "";
             }
             conexionBD.Close();
@@ -192,7 +193,8 @@ namespace bonita_smile_v1.Interfaz.Administrador
 
                 if (!fecha2.Equals("") && !fecha.Equals("") && valor.Equals(""))
                 {
-                    MessageBox.Show("Debe de elegir un id de la clinica");
+                    System.Windows.Forms.MessageBox.Show("Debe de elegir un id de la clinica: ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   // MessageBox.Show("");
                     valor = "";
                     fecha2 = "";
                     fecha = "";
@@ -200,7 +202,9 @@ namespace bonita_smile_v1.Interfaz.Administrador
                 else
                     if (!fecha2.Equals("") && fecha.Equals("") && valor.Equals(""))
                 {
-                    MessageBox.Show("Porfavor elegir la fecha inicial con el id de la clinica");
+                    System.Windows.Forms.MessageBox.Show("Porfavor elegir la fecha inicial con el id de la clinica: ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                   
                     valor = "";
                     fecha2 = "";
                     fecha = "";

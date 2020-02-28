@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace bonita_smile_v1.Servicios
 {
@@ -34,11 +35,9 @@ namespace bonita_smile_v1.Servicios
 
         public List<abonos_membresiaModel> MostrarAbonosMembresia(string id_membresia, string id_paciente, string id_clinica)
         {
-            MessageBox.Show("El id_membresia " + id_membresia);
-            MessageBox.Show("Id_paciente :" + id_paciente);
-            MessageBox.Show("Id_clinica :" + id_clinica);
+          
             List<abonos_membresiaModel> listaAbonosMembresia = new List<abonos_membresiaModel>();
-            string query = "SELECT id_abono_membresia,date_format(fecha, '%d/%m/%Y') as fecha,monto,comentario from abonos_membresia where id_membresia= '" + id_membresia +"' and id_paciente='" + id_paciente +"' and id_clinica='" + id_clinica +"'";
+            string query = "SELECT id_abono_membresia,date_format(fecha, '%d/%m/%Y') as fecha,monto,comentario from abonos_membresia where id_membresia= '" + id_membresia + "' and id_paciente='" + id_paciente + "' and id_clinica='" + id_clinica + "'";
             Console.WriteLine(query);
             try
             {
@@ -61,7 +60,7 @@ namespace bonita_smile_v1.Servicios
                                 abonosMembresia.id_abono_membresia = reader[0].ToString();
                                 abonosMembresia.fecha = reader[1].ToString();
                                 double attemp4 = Convert.ToDouble(reader[2].ToString());
-                                
+
                                 abonosMembresia.monto = attemp4.ToString("n", nfi);
                                 abonosMembresia.comentario = reader[3].ToString();
 
@@ -150,7 +149,7 @@ namespace bonita_smile_v1.Servicios
             catch (MySqlException ex)
             {
                 conexionBD.Close();
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return listaAbonosMembresia;
@@ -261,22 +260,23 @@ namespace bonita_smile_v1.Servicios
             catch (MySqlException ex)
             {
                 conexionBD.Close();
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return abonosMembresia;
         }
-        public bool InsertarAbonoMembresia(string fecha, string monto, string comentario, string id_membresia, string id_paciente, string id_clinica ,string alias)
+        public bool InsertarAbonoMembresia(string fecha, string monto, string comentario, string id_membresia, string id_paciente, string id_clinica, string alias)
         {
             Seguridad seguridad = new Seguridad();
             string id_abono_membresia = "";
             id_abono_membresia = seguridad.SHA1(fecha + monto + comentario + id_membresia + id_paciente + id_clinica + DateTime.Now);
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -303,25 +303,26 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-
+                    System.Windows.Forms.MessageBox.Show("Se insertó correctamente el Abono de membresia: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar insertar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
-        public bool ActualizarAbonoMembresia(string id_abono_membresia, string fecha, string monto, string comentario, string id_membresia, string id_paciente, string id_clinica,string alias)
+        public bool ActualizarAbonoMembresia(string id_abono_membresia, string fecha, string monto, string comentario, string id_membresia, string id_paciente, string id_clinica, string alias)
         {
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA INSERTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -347,24 +348,26 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se actualizó correctamente el Abono de membresia: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
-        public bool EliminarAbonoMembresia(string id_abono_membresia, string id_membresia, string id_paciente, string id_clinica,string alias)
+        public bool EliminarAbonoMembresia(string id_abono_membresia, string id_membresia, string id_paciente, string id_clinica, string alias)
         {
-            bool internet = ti.Test();
             try
             {
                 MySqlCommand cmd; ;
                 if (online)
                 {
+                    bool internet = ti.Test();
+
                     if (!internet)
                     {
                         //EN CASO DE REALIZAR UNA PETICION PARA ELIMINAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
@@ -390,23 +393,24 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Se eliminó correctamente el Abono: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
 
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
         }
 
-        public double Abonados(string id_membresia,string id_paciente,string id_clinica)
+        public double Abonados(string id_membresia, string id_paciente, string id_clinica)
         {
             double abonado = 0.0;
 
-            string query = "select  IFNULL(sum(monto),0)as abonado from abonos_membresia where id_membresia = '" + id_membresia + "' and id_paciente='"+id_paciente+"' and id_clinica='"+id_clinica+"'";
+            string query = "select  IFNULL(sum(monto),0)as abonado from abonos_membresia where id_membresia = '" + id_membresia + "' and id_paciente='" + id_paciente + "' and id_clinica='" + id_clinica + "'";
 
             try
             {
@@ -422,7 +426,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
 
@@ -447,7 +451,7 @@ namespace bonita_smile_v1.Servicios
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexionBD.Close();
             return restante;

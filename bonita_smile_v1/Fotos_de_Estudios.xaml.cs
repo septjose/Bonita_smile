@@ -198,7 +198,8 @@ namespace bonita_smile_v1
                             //revisar paridad entre carpetas offline y bs. si esta en offline forzosamente debe de estar en bs, de lo contrario eliminar imagen de offline =====> PROBABLEMENTE TAMBIÉN VERIFICAR ESTO AL ENTRAR A ESTE PAGE(INTERFAZ)
                             //POSIBLE ERROR : Que no exista una de las carpetas o servicio ocupado
                             //eliminar registro de BS Local
-                            System.Windows.MessageBox.Show( "La imagen ya existe");
+                           
+                            System.Windows.Forms.MessageBox.Show("La imagen ya existe", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                         //SUBIR TODO AL SERVIDOR
@@ -230,7 +231,8 @@ namespace bonita_smile_v1
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("No es imagen " + s[i]);
+                    System.Windows.Forms.MessageBox.Show("Formato No valido solo acepta PNG y JPG "+ s[i], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
                 }
             }
             lb_imagen.Items.Clear();
@@ -254,12 +256,12 @@ namespace bonita_smile_v1
             // Check if file is there  
             if (fi.Exists)
             {
-                System.Windows.MessageBox.Show("Si esta");
+                //System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
                 fi.MoveTo(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + nombre_nuevo);
                 string destFile = System.IO.Path.Combine(@configuracion.carpetas.ruta_imagenes_carpeta + "\\", nombre_nuevo);
                 System.IO.File.Copy(@configuracion.carpetas.ruta_subir_servidor_carpeta + "\\" + nombre_nuevo, destFile, true);
-                System.Windows.MessageBox.Show("se pudo si");
+                //System.Windows.MessageBox.Show("se pudo si");
             }
         }
         public void renombrar(bool online, string nombre_viejo, string nombre_nuevo)
@@ -275,12 +277,12 @@ namespace bonita_smile_v1
             // Check if file is there  
             if (fi.Exists)
             {
-                System.Windows.MessageBox.Show("Si esta");
+                //System.Windows.MessageBox.Show("Si esta");
                 // Move file with a new name. Hence renamed.  
                 fi.MoveTo(sourceFile + nombre_nuevo);
                 //string destFile = System.IO.Path.Combine(@"\\DESKTOP-ED8E774\bs\", nombre_nuevo);
                 //System.IO.File.Copy(@"\\DESKTOP-ED8E774\fotos_offline\" + nombre_nuevo, destFile, true);
-                System.Windows.MessageBox.Show("se pudo si");
+                //System.Windows.MessageBox.Show("se pudo si");
             }
         }
 
@@ -326,7 +328,7 @@ namespace bonita_smile_v1
             {
                 //logger.Error("Error " + ex.Message + " " + ex.StackTrace);
                 verdad = false;
-                System.Windows.MessageBox.Show("Error " + ex.Message + " " + ex.StackTrace);
+                //System.Windows.MessageBox.Show("Error " + ex.Message + " " + ex.StackTrace);
             }
             return verdad;
         }

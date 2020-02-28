@@ -59,14 +59,14 @@ namespace bonita_smile_v1
                     {
                         //c = new Clinicas(!bandera_online_offline);
                         //c.insertarClinica(nombre_sucursal, color);
-                        System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // System.Windows.Forms.MessageBox.Show("Se Ingreso la Clinica correctamente", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                         if (admin != null)
                             admin.Main.Content = new Page5(alias);
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("No se pudo insertar la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       // System.Windows.Forms.MessageBox.Show("No se pudo insertar la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
