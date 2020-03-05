@@ -12,7 +12,6 @@ namespace bonita_smile_v1.Modelos
         public string nombre_sucursal { get; set; }
         public string color { get; set; }
 
-        public string fecha { get; set; }
 
         
     }

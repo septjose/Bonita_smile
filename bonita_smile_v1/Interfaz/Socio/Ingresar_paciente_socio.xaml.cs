@@ -149,7 +149,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     PacienteModel pacienteModel = new PacienteModel();
                     ClinicaModel clinicaModel = new ClinicaModel();
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
-                    if (email_correcto)
+                    if (email_correcto|| txtEmail.Text.Equals("")) 
                     {
                         if (new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
@@ -214,7 +214,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                     string id_clinica = obtener_id_clinica(valor);
                     Paciente pa = new Paciente(false);
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
-                    if (email_correcto)
+                    if (email_correcto|| txtEmail.Text.Equals(""))
                     {
                         if (new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {

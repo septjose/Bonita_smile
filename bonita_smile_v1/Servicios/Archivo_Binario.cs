@@ -120,6 +120,7 @@ namespace bonita_smile_v1.Servicios
             datos.Add(configuracion.carpetas.ruta_respaldo_carpeta);
             datos.Add(configuracion.carpetas.ruta_script_carpeta);
             datos.Add(configuracion.carpetas.ruta_eliminar_carpeta);
+            datos.Add(configuracion.carpetas.ruta_acceso_deirecto);
 
             datos.Add(configuracion.ftp.ftp_server);
             datos.Add(configuracion.ftp.ftp_password);
@@ -209,15 +210,16 @@ namespace bonita_smile_v1.Servicios
                         ruta_respaldo_carpeta = new Seguridad().Desencriptar(lista[14]),
                         ruta_script_carpeta = new Seguridad().Desencriptar(lista[15]),
                         ruta_eliminar_carpeta = new Seguridad().Desencriptar(lista[16]),
+                        ruta_acceso_deirecto = new Seguridad().Desencriptar(lista[17]),
                     };
 
                     ConfiguracionFTPModel ftps = new ConfiguracionFTPModel()
                     {
-                        ftp_server = new Seguridad().Desencriptar(lista[17]),
-                        ftp_password = new Seguridad().Desencriptar(lista[18]),
-                        ftp_path = new Seguridad().Desencriptar(lista[19]),
-                        ftp_user = new Seguridad().Desencriptar(lista[20]),
-                        nombre_impresora = new Seguridad().Desencriptar(lista[21]),
+                        ftp_server = new Seguridad().Desencriptar(lista[18]),
+                        ftp_password = new Seguridad().Desencriptar(lista[19]),
+                        ftp_path = new Seguridad().Desencriptar(lista[20]),
+                        ftp_user = new Seguridad().Desencriptar(lista[21]),
+                        nombre_impresora = new Seguridad().Desencriptar(lista[22]),
                         
                     };
 

@@ -62,6 +62,7 @@ namespace bonita_smile_v1.Servicios
                                 double attemp4 = Convert.ToDouble(reader[2].ToString());
 
                                 abonosMembresia.monto = attemp4.ToString("n", nfi);
+                                abonosMembresia.montito = double.Parse(reader[2].ToString());
                                 abonosMembresia.comentario = reader[3].ToString();
 
                                 // ----------CONSULTA PARA OBTENER SUBOBJETOS DE LA BS-----------------//

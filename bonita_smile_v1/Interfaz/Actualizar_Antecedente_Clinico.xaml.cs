@@ -106,7 +106,7 @@ namespace bonita_smile_v1
                     
                     Paciente pa = new Paciente(bandera_online_offline);
                     bool email_correcto = new Seguridad().email_bien_escrito(this.paciente.email);
-                    if (email_correcto)
+                    if (email_correcto || this.paciente.email.Equals(""))
                     {
                     string viejo = this.nombre_viejo;
                         string nuevo = this.paciente.nombre + "_" + this.paciente.apellidos;
@@ -200,9 +200,11 @@ namespace bonita_smile_v1
                             }
                             else
                             {
-                                string nombre_nuevo_foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.id_paciente + ".jpg";
+                        Seguridad s = new Seguridad();
+                        string nombre_nuevo_foto = this.paciente.nombre + "_" + this.paciente.apellidos + "_" + this.paciente.id_paciente + ".jpg";
                                 nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
-                                bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica,alias);
+                        nombre_nuevo_foto = s.quitar_acentos(nombre_nuevo_foto);
+                        bool inserto = pa.actualizarPaciente(this.paciente.id_paciente, this.paciente.nombre, this.paciente.apellidos, this.paciente.direccion, this.paciente.telefono, nombre_nuevo_foto, txtAntecedentes.Text, this.paciente.email, 0, this.paciente.clinica.id_clinica,alias);
                             if (inserto)
                                 {
                                     renombrar(this.paciente.foto, nombre_nuevo_foto);

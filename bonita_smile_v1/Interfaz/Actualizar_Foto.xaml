@@ -35,9 +35,9 @@
                     <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="40" Margin="189,57,0,0" VerticalAlignment="Top" Width="250"  Style="{StaticResource MetroComboBox}"/>
                     <Label Content="Seleccionar Dispositivo" HorizontalAlignment="Left"  Margin="10,52,0,0" VerticalAlignment="Top" Height="42" Width="173" FontSize="15" Foreground="Black"/>
                     <Button  x:Name="btnencender" Content="Encender Camara" Height="40" Margin="79,112,282.333,0" VerticalAlignment="Top" Width="93" Click="Button_Click" HorizontalAlignment="Left"/>
-                    <Button x:Name="btncapturar" Content="Capturar" HorizontalAlignment="Center" Height="40" Margin="9.667,112,0,0" VerticalAlignment="Top" Width="93" Grid.Column="1" Click="Button_Click_2"/>
-                    <Button x:Name="btnSiguiente" Content="Finalizar" Grid.Column="1" HorizontalAlignment="Right" Height="40" Margin="9.667,112,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
-                    <Button x:Name="btnOmitir" Content="Finalizar(omitir foto)" Grid.Column="1" HorizontalAlignment="Right" Height="40" Margin="9.667,150,0,0" VerticalAlignment="Top" Width="150" Click="btnOmitir_Click"/>
+                    <Button x:Name="btncapturar" Content="Capturar" HorizontalAlignment="Center" Height="40" Margin="217,109,565.333,0" VerticalAlignment="Top" Width="93" Click="Button_Click_2"/>
+                    <Button x:Name="btnSiguiente" Content="Finalizar" HorizontalAlignment="Right" Height="40" Margin="0,104,198.333,0" VerticalAlignment="Top" Width="101" Click="Button_Click_1"/>
+                    <Button x:Name="btnOmitir" Content="Finalizar(omitir foto)" HorizontalAlignment="Right" Height="40" Margin="0,109,343.333,0" VerticalAlignment="Top" Width="165" Click="btnOmitir_Click"/>
                     <Image x:Name="img1" HorizontalAlignment="Left" Height="500" Margin="440,165,0,0" VerticalAlignment="Top" Width="340" />
                     <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="255" Margin="35,165,500,0" Stroke="Black" VerticalAlignment="Top" Width="340"/>
 

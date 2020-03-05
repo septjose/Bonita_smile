@@ -71,7 +71,7 @@ namespace bonita_smile_v1.Interfaz.Socio
                 {
                     Usuarios user = new Usuarios(bandera_online_offline);
 
-                    bool elimino = user.eliminarUsuario(id_usuario,alias);
+                    bool elimino = user.eliminarUsuario(id_usuario, this.alias);
                     if (elimino)
                     {
                         //user = new Usuarios(!bandera_online_offline);

@@ -35,10 +35,11 @@ namespace bonita_smile_v1.Servicios
             this.online = online;
         }
 
-        public List<Fotos_estudio_carpetaModel> MostrarFoto_estudio_carpeta(string id_carpeta, string id_paciente)
+        public List<Fotos_estudio_carpetaModel> MostrarFoto_estudio_carpeta(string id_carpeta, string id_paciente,string id_motivo,string id_clinica)
         {
             List<Fotos_estudio_carpetaModel> listaFoto_estudio_carpeta = new List<Fotos_estudio_carpetaModel>();
-            query = "SELECT  * FROM fotos_estudio_carpeta where id_carpeta='" + id_carpeta + "' and id_paciente='" + id_paciente + "'";
+            query = "SELECT  * FROM fotos_estudio_carpeta where id_carpeta='" + id_carpeta + "' and id_paciente='" + id_paciente + "' and id_motivo='"+id_motivo+"' and id_clinica='"+id_clinica+"'";
+            Console.WriteLine(query);
             //MessageBox.Show(query);
             string foto_recortada = "";
             try
@@ -60,6 +61,8 @@ namespace bonita_smile_v1.Servicios
                     fotos_Estudio_CarpetaModel.foto = foto_recortada;
                     fotos_Estudio_CarpetaModel.foto_completa = reader[3].ToString();
                     fotos_Estudio_CarpetaModel.imagen = LoadImage(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + reader[3].ToString());
+                    fotos_Estudio_CarpetaModel.id_motivo = reader[4].ToString();
+                    fotos_Estudio_CarpetaModel.id_clinica = reader[5].ToString();
                     //MessageBox.Show(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + reader[3].ToString());
                     listaFoto_estudio_carpeta.Add(fotos_Estudio_CarpetaModel);
                 }
@@ -73,7 +76,7 @@ namespace bonita_smile_v1.Servicios
 
         }
 
-        public bool eliminarFoto_estudio_carpeta(string id_foto, string alias)
+        public bool eliminarFoto_estudio_carpeta(string id_foto,string id_carpeta,string id_paciente,string id_motivo,string id_clinica, string alias)
         {
             try
             {
@@ -99,7 +102,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "DELETE FROM fotos_estudio_carpeta where id_foto='" + id_foto + "'";
+                    query = "DELETE FROM fotos_estudio_carpeta where id_foto='" + id_foto + "' and id_carpeta='"+id_carpeta+"' and id_paciente='"+id_paciente+"' and id_motivo='"+id_motivo+"' and id_clinica='"+id_clinica+"'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -108,13 +111,14 @@ namespace bonita_smile_v1.Servicios
 
                     Escribir_Archivo ea = new Escribir_Archivo();
                     ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
-                    System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return true;
+                    System.Windows.Forms.MessageBox.Show("Se actualizó correctamente la  Foto: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
                 }
                 //return true;
             }
             catch (MySqlException ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar eliminar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }
@@ -152,10 +156,10 @@ namespace bonita_smile_v1.Servicios
             return lista_foto_clinica;
         }
 
-        public List<Fotos_estudio_carpetaModel> MostrarFoto_Paciente(string id_paciente)
+        public List<Fotos_estudio_carpetaModel> MostrarFoto_Paciente(string id_paciente,string id_clinica )
         {
             List<Fotos_estudio_carpetaModel> listaFoto_estudio_carpeta = new List<Fotos_estudio_carpetaModel>();
-            query = "SELECT  * FROM fotos_estudio_carpeta where id_paciente='" + id_paciente + "'";
+            query = "SELECT  * FROM fotos_estudio_carpeta where id_paciente='" + id_paciente + "' and id_clinica='"+id_clinica+"'";
             //MessageBox.Show(query);
             string foto_recortada = "";
             try
@@ -177,7 +181,8 @@ namespace bonita_smile_v1.Servicios
                     fotos_Estudio_CarpetaModel.foto = foto_recortada;
                     fotos_Estudio_CarpetaModel.foto_completa = reader[3].ToString();
                     fotos_Estudio_CarpetaModel.imagen = LoadImage(@configuracion.carpetas.ruta_imagenes_carpeta + "\\" + reader[3].ToString());
-
+                    fotos_Estudio_CarpetaModel.id_motivo = reader[4].ToString();
+                    fotos_Estudio_CarpetaModel.id_clinica = reader[5].ToString();
                     listaFoto_estudio_carpeta.Add(fotos_Estudio_CarpetaModel);
                 }
             }
@@ -189,11 +194,11 @@ namespace bonita_smile_v1.Servicios
             return listaFoto_estudio_carpeta;
         }
 
-        public bool insertarFoto_estudio_carpeta(string id_carpeta, string id_paciente, string foto, string alias)
+        public bool insertarFoto_estudio_carpeta(string id_carpeta, string id_paciente, string foto,string id_motivo,string id_clinica, string alias)
         {
-            string auxiliar_identificador = "";
+            string id_foto = "";
             Seguridad seguridad = new Seguridad();
-            auxiliar_identificador = seguridad.SHA1(id_carpeta + id_paciente + foto);
+            id_foto = seguridad.SHA1(id_carpeta + id_paciente + foto);
             try
             {
 
@@ -219,8 +224,8 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO fotos_estudio_carpeta (id_foto,id_carpeta,id_paciente,foto,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + id_carpeta + "','" + id_paciente + "','" + foto + "','<!--" + auxiliar_identificador + "-->')";
-
+                    query = "INSERT INTO fotos_estudio_carpeta (id_foto,id_carpeta,id_paciente,foto,id_motivo,id_clinica) VALUES('" + id_foto + "','" + id_carpeta + "','" + id_paciente + "','" + foto + "','" + id_motivo + "','"+id_clinica+"')";
+                    Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();
@@ -241,7 +246,7 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        public bool actualizarFoto_estudio_carpeta(string id_foto, string id_carpeta, string id_paciente, string foto, string alias)
+        public bool actualizarFoto_estudio_carpeta(string id_foto, string id_carpeta, string id_paciente, string foto,string id_motivo,string id_clinica ,string alias)
         {
 
             try
@@ -270,7 +275,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE fotos_estudio_carpeta set id_paciente = '" + id_paciente + "',id_carpeta = '" + id_carpeta + "',foto = '" + foto + ",auxiliar_identificador = '" + id_foto + "' where id_foto = '" + id_foto + "'";
+                    query = "UPDATE fotos_estudio_carpeta set foto = '" + foto  + "' where id_foto = '" + id_foto + "' and id_carpeta='"+id_carpeta+"' and id_paciente='"+id_paciente+"' and id_motivo='"+id_motivo+"' and id_clinica='"+id_clinica+"'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -292,32 +297,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public string MostrarFotos_Update(string id_foto)
-        {
-            string aux_identi = "";
-            query = "SELECT auxiliar_identificador from fotos_estudio_carpeta where id_foto='" + id_foto + "'";
-
-            try
-            {
-                conexionBD.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-
-                    aux_identi = reader[0].ToString();
-
-                }
-            }
-            catch (MySqlException ex)
-            {
-                System.Windows.Forms.MessageBox.Show("Se ha producido un error  ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            conexionBD.Close();
-            return aux_identi;
-        }
+        
 
 
         /**PASAR A OTRA CLASE***/

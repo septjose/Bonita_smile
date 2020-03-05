@@ -28,7 +28,7 @@ namespace bonita_smile_v1
         {
            
             this.nota = nota;
-            System.Windows.MessageBox.Show(nota.fecha);
+            //System.Windows.MessageBox.Show(nota.fecha);
             this.alias = alias;
             this.nombre_doctor = nota.nombre_doctor;
             InitializeComponent();
@@ -142,7 +142,7 @@ namespace bonita_smile_v1
                 //System.Windows.MessageBox.Show(" imprimo conversion  " + parsedDate.ToString("yyyy/MM/dd"));
                 string fecha_actual = parsedDate.ToString("yyyy/MM/dd");
                 Nota_de_digi_evolucion ne = new Nota_de_digi_evolucion(bandera_online_offline);
-                bool insertarAbono = ne.actualizarNota_de_digi_evolucion(nota.id_nota, nota.id_paciente, nota.id_motivo, comentario, fecha_actual,nombre_doctor , alias);
+                bool insertarAbono = ne.actualizarNota_de_digi_evolucion(nota.id_nota, nota.id_paciente, nota.id_motivo, comentario, fecha_actual,nota.id_usuario,nota.id_clinica , alias);
                 if (insertarAbono)
                 {
                   //  System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -39,6 +39,7 @@ namespace bonita_smile_v1
         Configuracion_Model configuracion;
          string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
         string alias;
+        string id_clinica;
         public Pagina_Estudios(PacienteModel paciente, Motivo_citaModel motivo,string alias)
         {
             Archivo_Binario ab = new Archivo_Binario();
@@ -48,14 +49,16 @@ namespace bonita_smile_v1
             //MessageBox.Show("El nombre del paciente es " + paciente.nombre);
             this.configuracion = configuracion;
             id_paciente = paciente.id_paciente;
+            id_clinica = motivo.id_clinica;
             id_motivo = motivo.id_motivo;
-            llenar_list_view(id_paciente);
+            llenar_list_view(id_paciente,id_clinica);
             this.alias = alias;
+            
         }
 
-        void llenar_list_view(string id_paciente)
+        void llenar_list_view(string id_paciente,string id_clinica)
         {
-            carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
+            carpetas = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo,id_clinica));
 
             lvCarpetas.ItemsSource = carpetas;
             GCarpetas = carpetas;
@@ -79,8 +82,6 @@ namespace bonita_smile_v1
         private void lvCarpetas_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Carpeta_archivosModel carpeta = (Carpeta_archivosModel)lvCarpetas.SelectedItem;
-            
-
 
             if (lvCarpetas.SelectedItems.Count > 0)
 
@@ -93,6 +94,7 @@ namespace bonita_smile_v1
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                 Clin clin = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
 
+             
                 if (admin != null)
                     admin.Main.Content = new Fotos_de_Estudios(carpeta,alias);
                 else
@@ -113,11 +115,11 @@ namespace bonita_smile_v1
         private void EditZoneInfoContextMenu_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Agregar_Carpetas(id_paciente, id_motivo,alias);
+            Form mensaje = new Agregar_Carpetas(id_paciente, id_motivo,id_clinica,alias);
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo,id_clinica));
         }
 
 
@@ -155,10 +157,10 @@ namespace bonita_smile_v1
                 //NO ESTA ASOCIADA, ENTONCES SE PUEDE ELIMINAR
 
                 //RECUPERAR NOMBRE DE ARCHIVOS DE LA CARPETA
-                var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(this.item_carpeta.id_carpeta, id_paciente);
+                var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(this.item_carpeta.id_carpeta, id_paciente,this.item_carpeta.id_motivo,this.item_carpeta.id_clinica);
 
                 //ELIMINAR REGISTRO
-                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta,alias);
+                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(this.item_carpeta.id_carpeta,this.item_carpeta.id_paciente,this.item_carpeta.id_motivo,this.item_carpeta.id_nota,this.item_carpeta.id_clinica,alias);
                 if (elimino)
                 {
                     //System.Windows.MessageBox.Show("llego aqio");
@@ -186,7 +188,7 @@ namespace bonita_smile_v1
 
 
                     lvCarpetas.ItemsSource = null;
-                    lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
+                    lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo,id_clinica));
 
                     //    // ELIMINAR DEL SERVIDOR/
 
@@ -275,11 +277,11 @@ namespace bonita_smile_v1
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta, id_motivo, alias);
+            Form mensaje = new Actualizar_Nombre_Carpeta(item_carpeta.id_paciente, item_carpeta.id_carpeta, id_motivo,item_carpeta.id_nota,item_carpeta.id_clinica, alias);
             resultado = mensaje.ShowDialog();
 
             lvCarpetas.ItemsSource = null;
-            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo));
+            lvCarpetas.ItemsSource = new ObservableCollection<Carpeta_archivosModel>(new Servicios.Carpeta_archivos(false).MostrarCarpeta_archivos_paciente(id_paciente,id_motivo,id_clinica));
         }
     }
 }

@@ -69,7 +69,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
 
         void llenar_list_view(string id_motivo, string id_paciente)
         {
-            var notas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
+            var notas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente,motivo.id_clinica));
 
             lvNotas.ItemsSource = notas;
             GNotas = notas;
@@ -78,9 +78,9 @@ namespace bonita_smile_v1.Interfaz.Clinica
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DialogResult resultado = new DialogResult();
-            Form mensaje = new Agregar_Nota_Evolucion(motivo.id_motivo, motivo.descripcion, paciente.id_paciente,nombre_doctor,alias);
+            Form mensaje = new Agregar_Nota_Evolucion(motivo.id_motivo, motivo.descripcion, paciente.id_paciente,nombre_doctor,paciente.clinica.id_clinica,alias);
             resultado = mensaje.ShowDialog();
-            this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
+            this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente,motivo.id_clinica));
             lvNotas.ItemsSource = GNotas;
         }
 
@@ -146,11 +146,11 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 //ELIMINAR PRIMERO LO REFERENTE A LA CARPETA
 
                 //RECUPERAR NOMBRE DE ARCHIVOS DE LA CARPETA
-                var carpeta = new Carpeta_archivos(false).carpetaArchivos(nota.id_nota);
-                var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(carpeta.id_nota, id_paciente);
+                var carpeta = new Carpeta_archivos(false).carpetaArchivos(nota.id_nota,nota.id_paciente,nota.id_motivo,nota.id_clinica);
+                var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_estudio_carpeta(carpeta.id_carpeta, id_paciente,motivo.id_motivo,motivo.id_clinica);
 
                 //ELIMINAR REGISTRO
-                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta,alias);
+                bool elimino = new Carpeta_archivos(bandera_online_offline).eliminarCarpeta_archivos(carpeta.id_carpeta,carpeta.id_paciente,carpeta.id_motivo,carpeta.id_nota,carpeta.id_clinica,alias);
                 if (elimino)
                 {
                     //System.Windows.MessageBox.Show("llego aqio");
@@ -213,7 +213,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 //ELIMINAR DESPUES TODO LO REFERENTE A LA NOTA
                 Nota_de_digi_evolucion mot = new Nota_de_digi_evolucion(bandera_online_offline);
 
-                elimino = mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo,alias);
+                elimino = mot.eliminarNotaEvolucion(nota.id_nota, paciente.id_paciente, motivo.id_motivo,motivo.id_clinica,nota.id_usuario,alias);
                 if (elimino)
                 {
                     //mot = new Nota_de_digi_evolucion(!bandera_online_offline);
@@ -235,7 +235,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 Form mensaje = new Actualizar_Nota_Evolucion(nota,nombre_doctor,alias);
                 resultado = mensaje.ShowDialog();
                 //System.Windows.MessageBox.Show(nota.fecha);
-                this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente));
+                this.GNotas = new ObservableCollection<Nota_de_digi_evolucionModel>(new Servicios.Nota_de_digi_evolucion(false).MostrarNota_de_digi_evolucion(id_motivo, id_paciente,motivo.id_clinica));
                 //System.Windows.MessageBox.Show(GNotas[0].fecha);
                 lvNotas.ItemsSource = GNotas;
             }
@@ -287,6 +287,7 @@ namespace bonita_smile_v1.Interfaz.Clinica
                 carpeta.id_paciente = nota.id_paciente;
                 carpeta.id_motivo = nota.id_motivo;
                 carpeta.id_nota = nota.id_nota;
+                carpeta.id_clinica = nota.id_clinica;
 
                 Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();

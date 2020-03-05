@@ -102,10 +102,12 @@ namespace bonita_smile_v1.Interfaz.Socio
                 try
                 {
                     //Ventana_Usuario vu = new Ventana_Usuario();
-                    UsuarioModel usu = new UsuarioModel();
+                   // UsuarioModel usu = new UsuarioModel();
                     RolModel rolModel = new RolModel();
                     valor = cmbRol.SelectedItem.ToString();
+                   
                     int id_rol = obtener_id_rol(valor);
+                    
                     string nombre = txtNombre.Text;
                     string apellidos = txtApellido.Text;
                     string alias = txtAlias.Text;
@@ -114,34 +116,106 @@ namespace bonita_smile_v1.Interfaz.Socio
                     Usuarios user = new Usuarios(bandera_online_offline);
                     string pass_tabla = obtener_password(id_usu);
                     bool inserto = false;
+                    bool actualizo = false;
+                    bool borro = false;
                     if (password.Equals(pass_tabla))
                     {
-                        inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol, alias_user);
-                        if (inserto)
+                        if(usu.rol.id_rol==2 && id_rol==4)
                         {
+                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol, alias_user);
+                            if (actualizo)
+                            {
+                                borro = user.eliminarDoctor(id_usu, alias_user);
+                                if (borro)
+                                {
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    if (socio != null)
+                                        //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                        socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                                }
+                                else
+                                {
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    if (socio != null)
+                                        //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                        socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                                }
 
-                           // System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            //user = new Usuarios(!bandera_online_offline);
-                            //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
-                            usu.alias = alias;
-                            usu.apellidos = apellidos;
-                            usu.id_usuario = id_usu;
-                            usu.nombre = nombre;
-                            usu.password = password;
-                            rolModel.id_rol = id_rol;
-                            rolModel.descripcion = valor;
-
-                            usu.rol = rolModel;
-
-                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                            if (socio != null)
-                                //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                                socio.Main4.Content = new Socio_usuarios(this.lista,this.alias);
+                            }
+                            else
+                            {
+                                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                if (socio != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                            }
+                        }
+                        else if(usu.rol.id_rol==4 && id_rol==2)
+                        {
+                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol, alias_user);
+                            if (actualizo)
+                            {
+                                inserto = user.insertar_solo_doctor(id_usu, alias_user, "");
+                                if (inserto)
+                                {
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    if (socio != null)
+                                        //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                        socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                                }
+                                else
+                                {
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    if (socio != null)
+                                        //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                        socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                                }
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                                // System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                //if (admin != null)
+                                //    admin.Main.Content = new Page4(alias_user);
+                            }
+                            else
+                            {
+                                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                if (socio != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                            }
                         }
                         else
                         {
-                            //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol, alias_user);
+                            if (inserto)
+                            {
+
+                                // System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                                usu.alias = alias;
+                                usu.apellidos = apellidos;
+                                usu.id_usuario = id_usu;
+                                usu.nombre = nombre;
+                                usu.password = password;
+                                rolModel.id_rol = id_rol;
+                                rolModel.descripcion = valor;
+
+                                usu.rol = rolModel;
+
+                                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                if (socio != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                            }
+                            else
+                            {
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
+
+                       
 
                     }
                     else
@@ -149,33 +223,102 @@ namespace bonita_smile_v1.Interfaz.Socio
                         Seguridad secure = new Seguridad();
                         string new_pass = secure.Encriptar(password);
                         inserto = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user);
-                        if (inserto)
+                        if (usu.rol.id_rol == 2 && id_rol == 4)
                         {
-                            //user = new Usuarios(!bandera_online_offline);
-                            //user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
-                            usu.alias = alias;
-                            usu.apellidos = apellidos;
-                            usu.id_usuario = id_usu;
-                            usu.nombre = nombre;
-                            usu.password = password;
-                            rolModel.id_rol = id_rol;
-                            rolModel.descripcion = valor;
+                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user);
+                            if (actualizo)
+                            {
+                                borro = user.eliminarDoctor(id_usu, alias_user);
+                                if (borro)
+                                {
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    if (socio != null)
+                                        //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                        socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                                }
+                                else
+                                {
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    if (socio != null)
+                                        //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                        socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                                }
 
-                            usu.rol = rolModel;
-
-                            //System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            //vu.refrescar_listview(this.usu, usu, lv_aux);
-                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                            if (socio != null)
-                                //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                                socio.Main4.Content = new Socio_usuarios(this.lista,this.alias);
-
+                            }
+                            else
+                            {
+                                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                if (socio != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                            }
+                        }
+                        else if (usu.rol.id_rol == 4 && id_rol == 2)
+                        {
+                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user);
+                            if (actualizo)
+                            {
+                                inserto = user.insertar_solo_doctor(id_usu, alias_user, "");
+                                if (inserto)
+                                {
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    if (socio != null)
+                                        //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                        socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                                }
+                                else
+                                {
+                                    Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                    if (socio != null)
+                                        //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                        socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                                }
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                                // System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                //if (admin != null)
+                                //    admin.Main.Content = new Page4(alias_user);
+                            }
+                            else
+                            {
+                                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                if (socio != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                            }
                         }
                         else
                         {
+                            if (inserto)
+                            {
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                                usu.alias = alias;
+                                usu.apellidos = apellidos;
+                                usu.id_usuario = id_usu;
+                                usu.nombre = nombre;
+                                usu.password = password;
+                                rolModel.id_rol = id_rol;
+                                rolModel.descripcion = valor;
 
-                           //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                usu.rol = rolModel;
+
+                                //System.Windows.Forms.MessageBox.Show("Se actualizo el Usuario", "Se Actualizo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //vu.refrescar_listview(this.usu, usu, lv_aux);
+                                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                                if (socio != null)
+                                    //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                    socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+
+                            }
+                            else
+                            {
+
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
+                       
                     }
                 }
                 catch (Exception ex)

@@ -34,10 +34,11 @@ namespace bonita_smile_v1.Servicios
 
         }
 
-        public List<Nota_de_digi_evolucionModel> MostrarNota_de_digi_evolucion(string id_motivo, string id_paciente)
+        public List<Nota_de_digi_evolucionModel> MostrarNota_de_digi_evolucion(string id_motivo, string id_paciente,string id_clinica)
         {
             List<Nota_de_digi_evolucionModel> listaNota_de_digi_evolucion = new List<Nota_de_digi_evolucionModel>();
-            query = "SELECT nota_de_digi_evolucion.id_nota,nota_de_digi_evolucion.id_paciente,nota_de_digi_evolucion.id_motivo,nota_de_digi_evolucion.descripcion,date_format(nota_de_digi_evolucion.fecha, '%d/%m/%Y') as fecha,nota_de_digi_evolucion.nombre_doctor,carpeta_archivos.id_carpeta,carpeta_archivos.nombre_carpeta FROM nota_de_digi_evolucion inner join carpeta_archivos on carpeta_archivos.id_nota=nota_de_digi_evolucion.id_nota where nota_de_digi_evolucion.id_paciente='" + id_paciente + "' and nota_de_digi_evolucion.id_motivo='" + id_motivo + "' ";
+            //query = "SELECT nota_de_digi_evolucion.id_nota,nota_de_digi_evolucion.id_paciente,nota_de_digi_evolucion.id_motivo,nota_de_digi_evolucion.descripcion,date_format(nota_de_digi_evolucion.fecha, '%d/%m/%Y') as fecha,concat(usuario.nombre,usuario.apellidos)as nombre_doctor,nota_de_digi_evolucion.id_usuario,nota_de_digi_evolucion.id_clinica,carpeta_archivos.id_carpeta,carpeta_archivos.nombre_carpeta FROM nota_de_digi_evolucion inner join carpeta_archivos on carpeta_archivos.id_nota=nota_de_digi_evolucion.id_nota inner join usuario on usuario.id_usuario=nota_de_digi_evolucion.id_usuario where nota_de_digi_evolucion.id_paciente='"+id_paciente+"' and nota_de_digi_evolucion.id_motivo='"+id_motivo+"' and nota_de_digi_evolucion.id_clinica='"+id_clinica+"'";
+            query = "select nota_de_digi_evolucion.id_nota, nota_de_digi_evolucion.id_paciente, nota_de_digi_evolucion.id_motivo,nota_de_digi_evolucion.descripcion,date_format(nota_de_digi_evolucion.fecha, '%d/%m/%Y') as fecha,nota_de_digi_evolucion.id_clinica,usuario.id_usuario,concat(usuario.nombre,' ',usuario.apellidos)as nombre,carpeta_archivos.id_carpeta,carpeta_archivos.nombre_carpeta from nota_de_digi_evolucion inner join carpeta_archivos on nota_de_digi_evolucion.id_nota=carpeta_archivos.id_nota left join usuario on usuario.id_usuario = nota_de_digi_evolucion.id_usuario where nota_de_digi_evolucion.id_paciente='" + id_paciente+ "' and nota_de_digi_evolucion.id_motivo='" + id_motivo+ "' and nota_de_digi_evolucion.id_clinica='"+id_clinica+"'";
             Console.WriteLine(query);
             try
             {
@@ -56,12 +57,16 @@ namespace bonita_smile_v1.Servicios
                     nota_De_Digi_EvolucionModel.id_motivo = reader[2].ToString();
                     nota_De_Digi_EvolucionModel.descripcion = reader[3].ToString();
                     nota_De_Digi_EvolucionModel.fecha = reader[4].ToString();
-                    nota_De_Digi_EvolucionModel.nombre_doctor = reader[5].ToString();
-                    carpeta.id_carpeta = reader[6].ToString();
-                    carpeta.nombre_carpeta = reader[7].ToString();
+                    nota_De_Digi_EvolucionModel.id_clinica = reader[5].ToString();
+                    
+                    nota_De_Digi_EvolucionModel.id_usuario = reader[6].ToString();
+                    nota_De_Digi_EvolucionModel.nombre_doctor = reader[7].ToString();
+                    carpeta.id_carpeta = reader[8].ToString();
+                    carpeta.nombre_carpeta = reader[9].ToString();
                     carpeta.id_paciente = reader[1].ToString();
                     carpeta.id_motivo = reader[2].ToString();
                     carpeta.id_nota = reader[0].ToString();
+                    carpeta.id_clinica = reader[5].ToString();
                     nota_De_Digi_EvolucionModel.carpeta = carpeta;
 
                     listaNota_de_digi_evolucion.Add(nota_De_Digi_EvolucionModel);
@@ -76,7 +81,7 @@ namespace bonita_smile_v1.Servicios
             return listaNota_de_digi_evolucion;
         }
 
-        public bool eliminarNotaEvolucion(string id_nota, string id_paciente, string id_motivo, string alias)
+        public bool eliminarNotaEvolucion(string id_nota, string id_paciente, string id_motivo,string id_clinica,string id_usuario,string alias)
         {
             try
             {
@@ -103,7 +108,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
 
-                    query = "DELETE FROM nota_de_digi_evolucion WHERE id_nota = '" + id_nota + "' AND id_paciente ='" + id_paciente + "' AND id_motivo = '" + id_motivo + "'";
+                    query = "DELETE FROM nota_de_digi_evolucion WHERE id_nota = '" + id_nota + "' AND id_paciente ='" + id_paciente + "' AND id_motivo = '" + id_motivo + "' and id_clinica='"+id_clinica+"' and id_usuario='"+id_usuario+"'";
                     //query = "DELETE FROM nota_de_digi_evolucion where id_nota='" + id_nota + "'";
 
                     conexionBD.Open();
@@ -126,10 +131,10 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool insertarNota_de_digi_evolucion(string id_paciente, string id_motivo, string descripcion_motivo, string descripcion, string fecha, string nombre_doctor, string alias)
+        public bool insertarNota_de_digi_evolucion(string id_paciente, string id_motivo,  string descripcion, string fecha, string id_usuario,string id_clinica, string alias)
         {
             Seguridad seguridad = new Seguridad();
-            string auxiliar_identificador_nota = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha + nombre_doctor + DateTime.Now);
+            string id_nota = seguridad.SHA1(id_paciente + id_motivo + descripcion + fecha + id_usuario +id_clinica+ DateTime.Now);
             MySqlTransaction tr = null;
             try
             {
@@ -156,7 +161,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     int no_carpeta = 0;
-                    query = "select count(descripcion) from  nota_de_digi_evolucion where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo + "'";
+                    query = "select count(descripcion) from  nota_de_digi_evolucion where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo + "' and id_clinica='"+id_clinica+"'";
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     reader = cmd.ExecuteReader();
@@ -171,9 +176,9 @@ namespace bonita_smile_v1.Servicios
                     string auxiliar_identificador_carpeta = seguridad.SHA1(nombre_carpeta + DateTime.Now);
                     // -----------HACER TRANSACCION-------- -/
 
-                    query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,auxiliar_identificador,nombre_doctor) VALUES('" + auxiliar_identificador_nota + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','<!--" + auxiliar_identificador_nota + "-->','" + nombre_doctor + "');";
-                    query = query + "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,id_motivo,auxiliar_identificador,id_nota) VALUES('" + auxiliar_identificador_carpeta + "','" + nombre_carpeta + "','" + id_paciente + "','" + id_motivo + "','<!--" + auxiliar_identificador_carpeta + "-->','" + auxiliar_identificador_nota + "')";
-
+                    query = "INSERT INTO nota_de_digi_evolucion (id_nota,id_paciente,id_motivo,descripcion,fecha,id_clinica,id_usuario) VALUES('" + id_nota + "','" + id_paciente + "','" + id_motivo + "','" + descripcion + "','" + fecha + "','" + id_clinica + "','" + id_usuario + "');";
+                    query = query + "INSERT INTO carpeta_archivos (id_carpeta,nombre_carpeta,id_paciente,id_motivo,id_nota,id_clinica) VALUES('" + auxiliar_identificador_carpeta + "','" + nombre_carpeta + "','" + id_paciente + "','" + id_motivo + "','" + id_nota + "','" + id_clinica + "')";
+                    Console.WriteLine(query);
                     conexionBD.Open();
 
                     //tr = conexionBD.BeginTransaction();
@@ -201,7 +206,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarNota_de_digi_evolucion(string id_nota, string id_paciente, string id_motivo, string descripcion, string fecha, string nombre_doctor, string alias)
+        public bool actualizarNota_de_digi_evolucion(string id_nota, string id_paciente, string id_motivo, string descripcion, string fecha, string id_usuario,string id_clinica, string alias)
         {
 
             try
@@ -230,8 +235,8 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE nota_de_digi_evolucion set id_paciente ='" + id_paciente + "',id_motivo = '" + id_motivo + "',descripcion = '" + descripcion + "',fecha = '" + fecha + "',auxiliar_identificador = '" + id_nota + "',nombre_doctor='" + nombre_doctor + "' where id_nota = '" + id_nota + "'";
-
+                    query = "UPDATE nota_de_digi_evolucion set descripcion ='" + descripcion + "',fecha = '" + fecha  + "' where id_nota = '" + id_nota + "' and id_paciente='"+id_paciente+"' and id_motivo='"+id_motivo+"' and id_clinica='"+id_clinica+"' and id_usuario='"+id_usuario+"'";
+                    Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();

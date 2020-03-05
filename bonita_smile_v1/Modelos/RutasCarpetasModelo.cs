@@ -17,6 +17,7 @@ namespace bonita_smile_v1.Modelos
         public string ruta_respaldo_carpeta { get; set;}
         public string ruta_script_carpeta { get; set; }
         public string ruta_eliminar_carpeta { get; set; }
+        public string ruta_acceso_deirecto { get; set; }
        
     }
 }

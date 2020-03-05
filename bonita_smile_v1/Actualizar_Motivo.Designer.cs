@@ -174,7 +174,7 @@ namespace bonita_smile_v1
 
                     Motivo_cita mc = new Motivo_cita(bandera_online_offline);
                     //System.Windows.MessageBox.Show("imprimo el id del paciente" + motivo.paciente.id_paciente);
-                    bool inserto = mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo.ToString(culture), motivo.paciente.id_paciente  ,alias);
+                    bool inserto = mc.actualizarMotivo_cita(motivo.id_motivo, nombre, costo.ToString(culture), motivo.id_paciente,motivo.id_clinica  ,alias);
                     if (inserto)
                     {
                       //  System.Windows.Forms.MessageBox.Show("Se Actualizo Correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);

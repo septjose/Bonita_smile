@@ -253,7 +253,7 @@ namespace bonita_smile_v1
                         if (abono <= restante && restante > 0.0)
                         {
                             Abonos ab = new Abonos(bandera_online_offline);
-                            bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario ,alias);
+                            bool actualizar = ab.actualizarAbono(this.abono.id_abono, this.abono.id_paciente,this.abono.id_clinica, this.abono.id_motivo, fecha_actual, abono.ToString(culture), comentario ,alias);
                             if (actualizar)
                             {
                                 //ab = new Abonos(!bandera_online_offline);
@@ -340,6 +340,7 @@ namespace bonita_smile_v1
             //printDocument1.PrinterSettings.PrinterName = "HPFEF3CF (HP Officejet Pro 6830) (Red)";
             printDocument1.PrinterSettings.PrinterName = configuracion.ftp.nombre_impresora;
             //printDocument1.PrinterSettings.PrinterName = "Microsoft XPS Document Writer";
+             printDocument1.DefaultPageSettings.PaperSize = new PaperSize("210 x 297 mm", 196, 822);
             //poner try catch
             if (printDocument1.PrinterSettings.IsValid)
             {
@@ -389,8 +390,8 @@ namespace bonita_smile_v1
             string fecha_finalizacion = DateTime.Now.AddYears(1).ToString("d/M/yyyy");
             string hora = DateTime.Now.ToString("HH:mm:ss") + " hrs";
             Abonos a = new Abonos(bandera_online_offline);
-            double restante_pagado = a.Restante(id_motivo);
-            double abonado_pagado = a.Abonados(id_motivo);
+            double restante_pagado = a.Restante(id_motivo,paciente.clinica.id_clinica,paciente.id_paciente);
+            double abonado_pagado = a.Abonados(id_motivo,paciente.id_paciente,paciente.clinica.id_clinica);
             string sucursal = obtener_nombre_sucursal(paciente.clinica.id_clinica);
 
             System.Drawing.Image imagen = System.Drawing.Image.FromFile(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\bs_ticket_imagen.bmp"));

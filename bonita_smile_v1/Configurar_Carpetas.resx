@@ -135,4 +135,7 @@
   <metadata name="folder_eliminar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 49</value>
   </metadata>
+  <metadata name="folder_acceso.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>724, 48</value>
+  </metadata>
 </root>

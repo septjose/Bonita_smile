@@ -34,6 +34,7 @@ namespace bonita_smile_v1.Interfaz.Socio
         List<string> lista = new List<string>();
         string alias;
         string nombre_doctor;
+        PacienteModel item;
         public Pagina_Socio(List<string> lista,string nombre_doctor,string alias)
         {
             
@@ -132,65 +133,73 @@ namespace bonita_smile_v1.Interfaz.Socio
                 //System.Windows.MessageBox.Show("hi");
                 try
                 {
-                    //  System.Windows.MessageBox.Show("hii x2");
-                    bool subir_scripts = sinc.SincronizarLocalServidor();
-                    if (subir_scripts) {/* System.Windows.MessageBox.Show("se subieron los scripts");*/ }
-                    //System.Windows.MessageBox.Show("hii x3");
-                    if (verificar)
+                    bool backup_local = sinc.SincronizarLocalServidor();
+                    if (backup_local)
                     {
-                        //System.Windows.MessageBox.Show("se hace el backup");
-                        sinc.Backup();
-                        //System.Windows.MessageBox.Show("despues backup");
-                        bool borrar = sinc.borrar_bd();
-                        if (borrar)
+                        //  System.Windows.MessageBox.Show("hii x2");
+                        bool subir_scripts = sinc.Backup_bd_local();
+                        if (subir_scripts) {/* System.Windows.MessageBox.Show("se subieron los scripts");*/ }
+                        //System.Windows.MessageBox.Show("hii x3");
+                        if (verificar)
                         {
-                          //  System.Windows.MessageBox.Show("Se borro la bd");
-                            bool si_creo = sinc.crear_bd();
-                            if (si_creo)
+                            //System.Windows.MessageBox.Show("se hace el backup");
+                            sinc.Backup();
+                            //System.Windows.MessageBox.Show("despues backup");
+                            bool borrar = sinc.borrar_bd();
+                            if (borrar)
                             {
-                            //    System.Windows.MessageBox.Show("se creo la bd");
-                                sinc.Restore();
-
-                                bool subio_fotos = sinc.subir_fotos();
-                                if (subio_fotos)
+                                //  System.Windows.MessageBox.Show("Se borro la bd");
+                                bool si_creo = sinc.crear_bd();
+                                if (si_creo)
                                 {
-                              //      System.Windows.MessageBox.Show("se subieron las fotos correctamente");
-                                //    System.Windows.MessageBox.Show("toca eliminar fotos");
-                                    bool eliminar_fotos = sinc.eliminar_fotos();
-                                    if (eliminar_fotos)
+                                    //    System.Windows.MessageBox.Show("se creo la bd");
+                                    sinc.Restore();
+
+                                    bool subio_fotos = sinc.subir_fotos();
+                                    if (subio_fotos)
                                     {
-                                       // System.Windows.MessageBox.Show("se eliminaron las fotos");
-                                    }
-                                    //System.Windows.MessageBox.Show("toca descargar");
-                                    bool descargar_fotos = sinc.descargar_fotos_socio(lista);
-                                    if (descargar_fotos)
-                                    {
-                                        System.Windows.Forms.MessageBox.Show("Se realizó correctamente la Sincronización ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    }
+                                        //      System.Windows.MessageBox.Show("se subieron las fotos correctamente");
+                                        //    System.Windows.MessageBox.Show("toca eliminar fotos");
+                                        bool eliminar_fotos = sinc.eliminar_fotos();
+                                        if (eliminar_fotos)
+                                        {
+                                            // System.Windows.MessageBox.Show("se eliminaron las fotos");
+                                        }
+                                        //System.Windows.MessageBox.Show("toca descargar");
+                                        bool descargar_fotos = sinc.descargar_fotos_socio(lista);
+                                        if (descargar_fotos)
+                                        {
+                                            System.Windows.Forms.MessageBox.Show("Se realizó correctamente la Sincronización ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        }
 
 
+                                        else
+                                        {
+                                            System.Windows.Forms.MessageBox.Show("Se ha producido un error al Sincronizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }
+
+                                    }
                                     else
                                     {
                                         System.Windows.Forms.MessageBox.Show("Se ha producido un error al Sincronizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
+
 
                                 }
                                 else
                                 {
                                     System.Windows.Forms.MessageBox.Show("Se ha producido un error al Sincronizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
-
-
                             }
                             else
                             {
                                 System.Windows.Forms.MessageBox.Show("Se ha producido un error al Sincronizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-                        else
-                        {
-                            System.Windows.Forms.MessageBox.Show("Se ha producido un error al Sincronizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Se ha producido un error al Sincronizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }
@@ -263,6 +272,53 @@ namespace bonita_smile_v1.Interfaz.Socio
             else
             {
                 System.Windows.MessageBox.Show("No se seleccionó ningún registro, error");
+            }
+        }
+        private void chk_factura_Click(object sender, RoutedEventArgs e)
+        {
+            Paciente p = new Paciente(false);
+            PacienteModel item = ((FrameworkElement)e.OriginalSource).DataContext as PacienteModel;
+            if (item != null)
+            {
+
+                if (item.factura)
+                {
+                    p.actualizar_Factura(item.id_paciente, item.clinica.id_clinica, 1, alias);
+                }
+                else
+                {
+                    p.actualizar_Factura(item.id_paciente, item.clinica.id_clinica, 0, alias);
+                }
+                List<PacienteModel> pacientes = new Servicios.Paciente(false).MostrarPaciente();
+                lv_Paciente.ItemsSource = pacientes;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Error");
+            }
+
+        }
+
+        private void lv_Paciente_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            PacienteModel paciente = (PacienteModel)lv_Paciente.SelectedItem;
+            if (lv_Paciente.SelectedItems.Count > 0)
+            {
+
+                //System.Windows.MessageBox.Show("hi");
+                //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                Soc soc = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                // Market market = System.Windows.Application.Current.Windows.OfType<Market>().FirstOrDefault();
+
+                if (soc != null)
+                {
+                    soc.Main4.Content = new Page2(paciente, nombre_doctor, alias);
+                }
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No selecciono ningun registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -222,6 +222,12 @@
     <Compile Include="Actualizar_Abono_Membresia.Designer.cs">
       <DependentUpon>Actualizar_Abono_Membresia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Actualizar_Fecha_Membresia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Actualizar_Fecha_Membresia.Designer.cs">
+      <DependentUpon>Actualizar_Fecha_Membresia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Actualizar_Motivo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -390,6 +396,7 @@
     <Compile Include="Modelos\Categoria.cs" />
     <Compile Include="Modelos\ConfiguracionFTPModel.cs" />
     <Compile Include="Modelos\Configuracion_Model.cs" />
+    <Compile Include="Modelos\DoctorModel.cs" />
     <Compile Include="Modelos\Ganancias.cs" />
     <Compile Include="Modelos\Imagen.cs" />
     <Compile Include="Modelos\MembresiaModel.cs" />
@@ -733,6 +740,9 @@
     <EmbeddedResource Include="Actualizar_Abono_Membresia.resx">
       <DependentUpon>Actualizar_Abono_Membresia.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Actualizar_Fecha_Membresia.resx">
+      <DependentUpon>Actualizar_Fecha_Membresia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Actualizar_Motivo.resx">
       <DependentUpon>Actualizar_Motivo.cs</DependentUpon>
     </EmbeddedResource>
@@ -837,6 +847,8 @@
     <Resource Include="Assets\trofeo.jpg" />
     <Resource Include="Assets\bs_ticket_imagen.bmp" />
     <Resource Include="Assets\papel.png" />
+    <Resource Include="Assets\comprobar.png" />
+    <Resource Include="Assets\calendario.png" />
     <Content Include="Resources\login_icon4.svg" />
     <Resource Include="Resources\usuario_azul.png" />
   </ItemGroup>

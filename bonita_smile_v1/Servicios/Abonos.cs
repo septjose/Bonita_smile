@@ -37,10 +37,10 @@ namespace bonita_smile_v1.Servicios
             this.configuracion = configuracion;
         }
 
-        public List<AbonosModel> MostrarAbonos(string id_motivo, string id_paciente)
+        public List<AbonosModel> MostrarAbonos(string id_motivo, string id_paciente,string id_clinica)
         {
             List<AbonosModel> listaAbonos = new List<AbonosModel>();
-            query = "SELECT id_abono,id_paciente,id_motivo,date_format(fecha, '%d/%m/%Y') as fecha,monto,comentario FROM abonos where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo + "'";
+            query = "SELECT id_abono,id_paciente,id_motivo,id_clinica,date_format(fecha, '%d/%m/%Y') as fecha,monto,comentario FROM abonos where id_paciente='" + id_paciente + "' and id_motivo='" + id_motivo + "' and id_clinica='"+id_clinica+"'";
 
             try
             {
@@ -56,11 +56,12 @@ namespace bonita_smile_v1.Servicios
                     abonosModel.id_abono = reader[0].ToString();
                     abonosModel.id_paciente = reader[1].ToString();
                     abonosModel.id_motivo = reader[2].ToString();
-                    abonosModel.fecha = reader[3].ToString();
-                    abonosModel.monto = double.Parse(reader[4].ToString());
+                    abonosModel.id_clinica = reader[3].ToString();
+                    abonosModel.fecha = reader[4].ToString();
+                    abonosModel.monto = double.Parse(reader[5].ToString());
                     double attemp4 = Convert.ToDouble(abonosModel.monto, culture);
                     abonosModel.costito = "$" + attemp4.ToString("n", nfi);
-                    abonosModel.comentario = reader[5].ToString();
+                    abonosModel.comentario = reader[6].ToString();
 
                     listaAbonos.Add(abonosModel);
                 }
@@ -73,11 +74,11 @@ namespace bonita_smile_v1.Servicios
             return listaAbonos;
         }
 
-        public double Abonados(string id_motivo)
+        public double Abonados(string id_motivo,string id_paciente,string id_clinica)
         {
             double abonado = 0.0;
 
-            query = "select  IFNULL(sum(monto),0)as abonado from abonos where id_motivo = '" + id_motivo + "'";
+            query = "select  IFNULL(sum(monto),0)as abonado from abonos where id_motivo = '" + id_motivo + "' and id_paciente='"+id_paciente+"' and id_clinica='"+id_clinica+"'";
 
             try
             {
@@ -100,10 +101,10 @@ namespace bonita_smile_v1.Servicios
             return abonado;
         }
 
-        public double Restante(string id_motivo)
+        public double Restante(string id_motivo,string id_clinica,string id_paciente)
         {
             double restante = 0.0;
-            query = "select IFNULL(((select costo from motivo_cita where id_motivo='" + id_motivo + "')-(select sum(monto) from abonos where id_motivo ='" + id_motivo + "')),(select costo from motivo_cita where id_motivo='" + id_motivo + "')) as restante;";
+            query = "select IFNULL(((select costo from motivo_cita where id_motivo='" + id_motivo + "' and id_clinica='"+id_clinica+"' and id_paciente='"+id_paciente+ "')-(select sum(monto) from abonos where id_motivo='" + id_motivo + "' and id_clinica='" + id_clinica + "' and id_paciente='" + id_paciente + "')),(select costo from motivo_cita where id_motivo='" + id_motivo + "' and id_clinica='" + id_clinica + "' and id_paciente='" + id_paciente + "')) as restante;";
             try
             {
                 conexionBD.Open();
@@ -124,7 +125,7 @@ namespace bonita_smile_v1.Servicios
             return restante;
         }
 
-        public bool eliminarAbono(string id_abono, string alias)
+        public bool eliminarAbono(string id_abono,string id_paciente,string id_clinica,string id_motivo, string alias)
         {
             try
             {
@@ -149,7 +150,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "DELETE FROM abonos where id_abono='" + id_abono + "'";
+                    query = "DELETE FROM abonos where id_abono='" + id_abono + "' and id_paciente='"+id_paciente+"' and id_clinica='"+id_clinica+"' and id_motivo='"+id_motivo+"'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -174,11 +175,11 @@ namespace bonita_smile_v1.Servicios
         }
 
 
-        public bool insertarAbono(string id_paciente, string id_motivo, string fecha, string monto, string comentario, string alias)
+        public bool insertarAbono(string id_paciente, string id_motivo, string fecha, string monto, string comentario, string id_clinica,string alias)
         {
             Seguridad seguridad = new Seguridad();
             string id_abono = "";
-            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario + DateTime.Now);
+            id_abono = seguridad.SHA1(id_paciente + id_motivo + fecha + monto + comentario+id_clinica + DateTime.Now);
             try
             {
                 MySqlCommand cmd; ;
@@ -203,7 +204,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO abonos (id_abono,id_paciente,id_motivo,fecha,monto,comentario,auxiliar_identificador) VALUES('" + id_abono + "','" + id_paciente + "','" + id_motivo + "','" + fecha + "'," + monto + ",'" + comentario + "','<!--" + id_abono + "-->')";
+                    query = "INSERT INTO abonos (id_abono,id_paciente,id_clinica,id_motivo,fecha,monto,comentario) VALUES('" + id_abono + "','" + id_paciente + "','" + id_clinica + "','" + id_motivo + "','" + fecha + "'," + monto + ",'" + comentario + "')";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -224,7 +225,7 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
-        public bool actualizarAbono(string id_abono, string id_paciente, string id_motivo, string fecha, string monto, string comentario, string alias)
+        public bool actualizarAbono(string id_abono, string id_paciente,string id_clinica, string id_motivo, string fecha, string monto, string comentario, string alias)
         {
             try
             {
@@ -251,7 +252,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE abonos set id_paciente ='" + id_paciente + "',id_motivo = '" + id_motivo + "',fecha = '" + fecha + "',monto = " + monto + ",comentario='" + comentario + "',auxiliar_identificador = '" + id_abono + "'where id_abono = '" + id_abono + "'";
+                    query = "UPDATE abonos set fecha ='" + fecha + "',monto = " + monto + ",comentario = '" + comentario  + "'where id_abono = '" + id_abono + "' and id_paciente='"+id_paciente+"' and id_clinica='"+id_clinica+"' and id_motivo='"+id_motivo+"'";
                     Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);

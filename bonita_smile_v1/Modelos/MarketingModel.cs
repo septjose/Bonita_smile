@@ -13,6 +13,6 @@ namespace bonita_smile_v1.Modelos
         public string fecha_de_envio { get; set; }
         public string id_paciente { get; set; }
 
-        public string fecha { get; set; }
+        public string id_clinica { get; set; }
     }
 }

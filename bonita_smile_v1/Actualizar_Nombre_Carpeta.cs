@@ -16,15 +16,19 @@ namespace bonita_smile_v1
         string id_paciente = "";
         string id_carpeta = "";
         string id_motivo = "";
+        string id_clinica = "";
+        string id_nota = "";
         bool bandera_online_offline = false;
         string alias;
-        public Actualizar_Nombre_Carpeta(string id_paciente, string id_carpeta,string id_motivo,string alias)
+        public Actualizar_Nombre_Carpeta(string id_paciente, string id_carpeta,string id_motivo,string id_nota,string id_clinica,string alias)
         {
             //MessageBox.Show("el id_motivo "+id_motivo);
             this.id_paciente = id_paciente;
             this.id_motivo = id_motivo;
             this.id_carpeta = id_carpeta;
             this.alias = alias;
+            this.id_nota = id_nota;
+            this.id_clinica = id_clinica;
             InitializeComponent();
         }
 
@@ -33,7 +37,7 @@ namespace bonita_smile_v1
            if(!txtAbono.Text.Equals(""))
             {
                 Carpeta_archivos ca = new Carpeta_archivos(bandera_online_offline);
-                bool insertarCarpeta = ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente, id_motivo ,alias);
+                bool insertarCarpeta = ca.actualizarCarpeta_archivos(id_carpeta, txtAbono.Text, id_paciente, id_motivo,id_nota,id_clinica ,alias);
                 if (insertarCarpeta)
                 {
 

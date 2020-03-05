@@ -28,9 +28,9 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="txt_Titulo" Text="Paciente" Grid.Row="0" Grid.Column="1" Foreground="#FF3580BF" FontSize="55" FontWeight="Bold"   Margin="0 20 0 0"/>
             <Grid Grid.Row="1" Grid.Column="1">
@@ -43,15 +43,15 @@
                 <TextBox Grid.Column="0" Height="25"  FontSize="17" x:Name="txtNombre" BorderBrush="LightGray"  TextWrapping="Wrap" Margin="0 30 0 0" Style="{DynamicResource MaterialDesignTitleTextBox}" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Left"   Width="600"  TextChanged="txtNombre_TextChanged" />
                 <Image Grid.Column="0" Source="/Assets/lupa.png" Height="20" Width="20" Margin="570 30 0 0"></Image>
                 <Button  Grid.Column="1"  Height="30" Content="Observar Expediente" Margin="30 30 0 0" Click="Button_Click" />
-                <!--<Button Grid.Column="2" Content="Sincronizar" Height="30" Width="140" Click="Button_Click_1" Margin="0 30 0 0"/>-->
-                <Button Grid.Column="3" Content="Membresia" Height="30" Width="140" Click="Button_Click_2" Margin="0 30 0 0"/>
+                <Button Grid.Column="2" Content="Sincronizar" Height="30" Width="140" Click="Button_Click_1" Margin="0 30 0 0"/>
+                <Button Grid.Column="3" Content="Membresia" Height="30" Width="140" Click="Button_Click_2" Margin="0 30 50 0"/>
             </Grid>
 
 
             <Border Grid.Row="2"  Grid.Column="1" Background="GhostWhite"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Margin="0 20 0 0" Width="auto">
 
                 <Grid Margin="10">
-                    <ListView   x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top"  Width="auto">
+                    <ListView   x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top"  Width="auto" Height="auto" MouseDoubleClick="lv_Paciente_MouseDoubleClick"  >
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
@@ -66,13 +66,13 @@
                                 <Setter Property="FontFamily" Value="Arial"/>
                                 <Setter Property="FontSize" Value="13"/>
 
-
+                                <!--<EventSetter Event="PreviewMouseUp"
+                                    Handler="obtener_valor_item" />-->
                             </Style>
                         </ListView.ItemContainerStyle>
-
                         <ListView.View >
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
-                                <GridViewColumn Header="Foto" Width="250">
+                                <GridViewColumn Header="Foto" Width="250" >
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Grid>
@@ -108,7 +108,15 @@
                                 <GridViewColumn Header="Telefono" Width="150" DisplayMemberBinding="{Binding telefono}" />
                                 <GridViewColumn Header="Email" Width="150" DisplayMemberBinding="{Binding email}" />
                                 <GridViewColumn Header="Membresia" Width="150" DisplayMemberBinding="{Binding membresia}" />
-
+                                <GridViewColumn Header="Factura" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel >
+                                                <CheckBox x:Name="chk_factura" IsChecked="{Binding factura}" Content="Factura" Click="chk_factura_Click" ></CheckBox>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
 
                             </GridView>
                         </ListView.View>

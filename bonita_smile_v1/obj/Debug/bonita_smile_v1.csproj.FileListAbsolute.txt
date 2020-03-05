@@ -1760,9 +1760,10 @@ E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\bin\Debug\System
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\bin\Debug\System.ValueTuple.xml
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\bin\Debug\Umbraco.Core.pdb
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\bin\Debug\Umbraco.Core.xml
-E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csprojAssemblyReference.cache
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\IniciarSesionWindow.baml
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Fotos_de_Estudios.g.cs
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Abonos_Mem.g.cs
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Perfil.g.cs
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Admin.g.cs
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Ganancias_Clinica.g.cs
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Pagina_Permisos.g.cs
@@ -1815,6 +1816,8 @@ E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1_MarkupCompile.lref
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\App.baml
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Fotos_de_Estudios.baml
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Abonos_Mem.baml
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Perfil.baml
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Admin.baml
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Ganancias_Clinica.baml
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Administrador\Pagina_Permisos.baml
@@ -1862,6 +1865,7 @@ E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interf
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Socio\Socio_usuarios.baml
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.g.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Abono.resources
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Abono_Membresia.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Motivo.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Nombre_Carpeta.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Nota_Evolucion.resources
@@ -1872,6 +1876,7 @@ E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Configurar_Carpetas.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.EliminarMembresia.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.IngresarMotivo.resources
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Ingresar_Abono_Membresia.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.InsertarMembresia.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.MessageBoxAbono.resources
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Paleta_Colores.resources
@@ -1882,9 +1887,5 @@ E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csproj.CopyComplete
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.exe
 E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.pdb
-E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Abonos_Mem.g.cs
-E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Abonos_Mem.baml
-E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Ingresar_Abono_Membresia.resources
-E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Abono_Membresia.resources
-E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Perfil.g.cs
-E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\Interfaz\Actualizar_Perfil.baml
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.csprojAssemblyReference.cache
+E:\PortableGit\programs_c#\bs_v1.5\Bonita_smile\bonita_smile_v1\obj\Debug\bonita_smile_v1.Actualizar_Fecha_Membresia.resources

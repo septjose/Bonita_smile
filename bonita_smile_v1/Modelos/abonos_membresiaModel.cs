@@ -11,6 +11,7 @@ namespace bonita_smile_v1.Modelos
         public string id_abono_membresia { get; set; }
         public string fecha { get; set; }
         public string monto { get; set; }
+        public double montito { get; set; }
         public string comentario { get; set; }
         public MembresiaModel membresia { get; set; }
     }

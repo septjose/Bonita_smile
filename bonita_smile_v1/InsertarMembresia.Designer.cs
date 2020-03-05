@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txt_efectivo = new System.Windows.Forms.TextBox();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.datetimepicker1 = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // btnAceptar
@@ -69,7 +70,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(64, 117);
+            this.label1.Location = new System.Drawing.Point(73, 61);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 29);
             this.label1.TabIndex = 2;
@@ -77,7 +78,7 @@
             // 
             // txtPrecio
             // 
-            this.txtPrecio.Location = new System.Drawing.Point(216, 120);
+            this.txtPrecio.Location = new System.Drawing.Point(225, 64);
             this.txtPrecio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.Size = new System.Drawing.Size(225, 26);
@@ -88,7 +89,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(65, 192);
+            this.label2.Location = new System.Drawing.Point(74, 136);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 29);
             this.label2.TabIndex = 4;
@@ -97,16 +98,24 @@
             // 
             // txt_efectivo
             // 
-            this.txt_efectivo.Location = new System.Drawing.Point(216, 192);
+            this.txt_efectivo.Location = new System.Drawing.Point(225, 136);
             this.txt_efectivo.Name = "txt_efectivo";
             this.txt_efectivo.Size = new System.Drawing.Size(225, 26);
             this.txt_efectivo.TabIndex = 5;
+            // 
+            // datetimepicker1
+            // 
+            this.datetimepicker1.Location = new System.Drawing.Point(95, 226);
+            this.datetimepicker1.Name = "datetimepicker1";
+            this.datetimepicker1.Size = new System.Drawing.Size(355, 26);
+            this.datetimepicker1.TabIndex = 6;
             // 
             // InsertarMembresia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 385);
+            this.Controls.Add(this.datetimepicker1);
             this.Controls.Add(this.txt_efectivo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtPrecio);
@@ -114,7 +123,7 @@
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "Ingresar Membresia";
+            this.Name = "InsertarMembresia";
             this.Text = "Inresar Membresia";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -130,5 +139,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txt_efectivo;
         private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.DateTimePicker datetimepicker1;
     }
 }

@@ -42,7 +42,7 @@ namespace bonita_smile_v1.Servicios
         {
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
 
-            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente";
+            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedentes, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,paciente.factura,clinica.id_clinica,clinica.nombre_sucursal,clinica.color FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente";
             //query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, date_format(paciente.membresia, '%d/%m/%Y') as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica";
             try
             {
@@ -65,7 +65,7 @@ namespace bonita_smile_v1.Servicios
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                     //pacienteModel.marketing = reader[6].ToString();
                     pacienteModel.antecedente = reader[9].ToString();
-                    if (reader[11].ToString().Equals(""))
+                    if (reader[10].ToString().Equals(""))
                     {
                         pacienteModel.imagen_membresia = null;
                     }
@@ -74,7 +74,8 @@ namespace bonita_smile_v1.Servicios
                         pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                     }
-                    pacienteModel.membresia = reader[11].ToString();
+                    pacienteModel.membresia = reader[10].ToString();
+                    if (reader[11].ToString() == "False") { pacienteModel.factura = false; } else { pacienteModel.factura = true; }
                     clinicaModel.id_clinica = reader[12].ToString();
                     clinicaModel.nombre_sucursal = reader[13].ToString();
                     clinicaModel.color = reader[14].ToString();
@@ -99,8 +100,8 @@ namespace bonita_smile_v1.Servicios
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
             foreach (var id in lista)
             {
-               // MessageBox.Show("el id de la clinica es " + id);
-                query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id + "' ";
+                // MessageBox.Show("el id de la clinica es " + id);
+                query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedentes, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,paciente.factura,clinica.id_clinica,clinica.nombre_sucursal,clinica.color FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id + "'";
 
                 try
                 {
@@ -111,6 +112,7 @@ namespace bonita_smile_v1.Servicios
                     {
                         PacienteModel pacienteModel = new PacienteModel();
                         ClinicaModel clinicaModel = new ClinicaModel();
+
                         pacienteModel.id_paciente = reader[0].ToString();
                         pacienteModel.nombre = reader[1].ToString();
                         pacienteModel.apellidos = reader[2].ToString();
@@ -122,7 +124,7 @@ namespace bonita_smile_v1.Servicios
                         if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                         //pacienteModel.marketing = reader[6].ToString();
                         pacienteModel.antecedente = reader[9].ToString();
-                        if (reader[11].ToString().Equals(""))
+                        if (reader[10].ToString().Equals(""))
                         {
                             pacienteModel.imagen_membresia = null;
                         }
@@ -131,13 +133,15 @@ namespace bonita_smile_v1.Servicios
                             pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                         }
-                        pacienteModel.membresia = reader[11].ToString();
+                        pacienteModel.membresia = reader[10].ToString();
+                        if (reader[11].ToString() == "False") { pacienteModel.factura = false; } else { pacienteModel.factura = true; }
                         clinicaModel.id_clinica = reader[12].ToString();
                         clinicaModel.nombre_sucursal = reader[13].ToString();
                         clinicaModel.color = reader[14].ToString();
                         pacienteModel.clinica = clinicaModel;
-
-
+                        /*saber si la membresi que devuelve es vacio o no 
+                        si regresa  vacio entonces no poner la imagen del trofeo
+                        de lo contrario mandar la foto en una variable para que la muestre*/
                         listaPaciente.Add(pacienteModel);
                     }
                 }
@@ -154,9 +158,8 @@ namespace bonita_smile_v1.Servicios
 
         public List<PacienteModel> MostrarPaciente_Clinica(string id)
         {
-
             List<PacienteModel> listaPaciente = new List<PacienteModel>();
-            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedente,paciente.auxiliar_identificador, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,clinica.id_clinica,clinica.nombre_sucursal,clinica.color,clinica.auxiliar_identificador FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='" + id + "' ";
+            query = "SELECT paciente.id_paciente,paciente.nombre,paciente.apellidos,paciente.direccion,paciente.telefono,paciente.foto,paciente.email,paciente.marketing,paciente.id_clinica,paciente.antecedentes, if ((STRCMP(date_format(membresia.membresia, '%d/%m/%Y'), '00/00/0000') = 0) or(DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()) < 0),'',CONCAT('Adquirida: ', date_format(membresia.membresia, '%d/%m/%Y'), '\n', 'Caduca: ', date_format(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), '%d/%m/%Y'), '\n', 'Quedan: ', DATEDIFF(ADDDATE(membresia.membresia, INTERVAL 1 YEAR), now()),' días')) as membresia,paciente.factura,clinica.id_clinica,clinica.nombre_sucursal,clinica.color FROM paciente inner join clinica on clinica.id_clinica = paciente.id_clinica left join membresia on membresia.id_paciente=paciente.id_paciente where clinica.id_clinica='"+id+"'";
 
             try
             {
@@ -181,23 +184,24 @@ namespace bonita_smile_v1.Servicios
                     if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
                     //pacienteModel.marketing = reader[6].ToString();
                     pacienteModel.antecedente = reader[9].ToString();
-                    if (reader[11].ToString().Equals(""))
+                    if (reader[10].ToString().Equals(""))
                     {
                         pacienteModel.imagen_membresia = null;
                     }
                     else
                     {
-
                         pacienteModel.imagen_membresia = LoadImage_Membresia(System.IO.Path.Combine(@System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, @"..\..\..\Assets\trofeo.jpg"));
 
                     }
-                    pacienteModel.membresia = reader[11].ToString();
+                    pacienteModel.membresia = reader[10].ToString();
+                    if (reader[11].ToString() == "False") { pacienteModel.factura = false; } else { pacienteModel.factura = true; }
                     clinicaModel.id_clinica = reader[12].ToString();
                     clinicaModel.nombre_sucursal = reader[13].ToString();
                     clinicaModel.color = reader[14].ToString();
                     pacienteModel.clinica = clinicaModel;
-
-
+                    /*saber si la membresi que devuelve es vacio o no 
+                    si regresa  vacio entonces no poner la imagen del trofeo
+                    de lo contrario mandar la foto en una variable para que la muestre*/
                     listaPaciente.Add(pacienteModel);
                 }
             }
@@ -209,57 +213,7 @@ namespace bonita_smile_v1.Servicios
             return listaPaciente;
         }
 
-
-
-        //public List<PacienteModel> MostrarPaciente_unico(string nombre)
-        //{
-        //    List<PacienteModel> listaPaciente = new List<PacienteModel>();
-        //    query = "SELECT * FROM paciente inner join clinica on clinica.id_clinica=paciente.id_clinica where paciente.nombre='" + nombre + "'";
-
-        //    try
-        //    {
-        //        conexionBD.Open();
-        //        MySqlCommand cmd = new MySqlCommand(query, conexionBD);
-
-        //        reader = cmd.ExecuteReader();
-
-        //        while (reader.Read())
-        //        {
-        //            PacienteModel pacienteModel = new PacienteModel();
-        //            ClinicaModel clinicaModel = new ClinicaModel();
-
-        //            pacienteModel.id_paciente = int.Parse(reader[0].ToString());
-        //            pacienteModel.nombre = reader[1].ToString();
-        //            pacienteModel.apellidos = reader[2].ToString();
-        //            pacienteModel.direccion = reader[3].ToString();
-        //            pacienteModel.telefono = reader[4].ToString();
-
-        //            string ruta = reader[5].ToString();
-
-        //            pacienteModel.imagen = LoadImage(@"\\DESKTOP-ED8E774\bs\" + ruta);
-        //            pacienteModel.email = reader[6].ToString();
-        //            if (reader[7].ToString() == "False") { pacienteModel.marketing = 0; } else { pacienteModel.marketing = 1; }
-        //            //pacienteModel.marketing = reader[6].ToString();
-
-        //            pacienteModel.antecedente = reader[9].ToString();
-        //            clinicaModel.id_clinica = int.Parse(reader[10].ToString());
-        //            clinicaModel.nombre_sucursal = reader[11].ToString();
-        //            clinicaModel.color = reader[12].ToString();
-        //            pacienteModel.clinica = clinicaModel;
-
-
-        //            listaPaciente.Add(pacienteModel);
-        //        }
-        //    }
-        //    catch (MySqlException ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //    conexionBD.Close();
-        //    return listaPaciente;
-        //}
-
-        public bool eliminarPaciente(string id_paciente, string alias)
+        public bool eliminarPaciente(string id_paciente,string id_clinica, string alias)
         {
             try
             {
@@ -285,7 +239,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "DELETE FROM paciente where id_paciente='" + id_paciente + "'";
+                    query = "DELETE FROM paciente where id_paciente='" + id_paciente + "' and id_clinica='"+id_clinica+"'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -311,7 +265,7 @@ namespace bonita_smile_v1.Servicios
         {
             Seguridad s = new Seguridad();
             string foto_paciente = "";
-            string auxiliar_identificador = "";
+            string id_paciente = "";
             Seguridad seguridad = new Seguridad();
             if (foto.Equals(""))
             {
@@ -321,7 +275,7 @@ namespace bonita_smile_v1.Servicios
             {
                 foto_paciente = s.quitar_acentos(foto);
             }
-            auxiliar_identificador = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto_paciente + antecedente + email + marketing + id_clinica + DateTime.Now);
+            id_paciente = seguridad.SHA1(nombre + apellidos + direccion + telefono + foto_paciente + antecedente + email + marketing + id_clinica + DateTime.Now);
             try
             {
 
@@ -347,7 +301,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO paciente (id_paciente,nombre,apellidos,direccion,telefono,foto,antecedente,email,marketing,id_clinica,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre + "','" + apellidos + "','" + direccion + "','" + telefono + "','" + foto_paciente + "','" + antecedente + "','" + email + "'," + marketing + ",'" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
+                    query = "INSERT INTO paciente (id_paciente,nombre,apellidos,direccion,telefono,foto,email,marketing,id_clinica,antecedentes,factura) VALUES('" + id_paciente + "','" + nombre + "','" + apellidos + "','" + direccion + "','" + telefono + "','" + foto_paciente + "','" + email + "'," + marketing + ",'" + id_clinica + "','" + antecedente + "'," + 0 + ")";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -407,7 +361,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto_paciente + "',email = '" + email + "',marketing = " + marketing + ",id_clinica ='" + id_clinica + "',antecedente='" + antecedente + "',auxiliar_identificador = '" + id_paciente + "' where id_paciente ='" + id_paciente + "'";
+                    query = "UPDATE paciente set nombre = '" + nombre + "',apellidos = '" + apellidos + "',direccion = '" + direccion + "',telefono = '" + telefono + "',foto = '" + foto_paciente + "',email = '" + email + "',marketing = " + marketing + ",antecedentes='" + antecedente  + "', id_clinica='"+id_clinica+"' where id_paciente ='" + id_paciente + "'";
                     Console.WriteLine(query);
 
                     conexionBD.Open();
@@ -425,6 +379,58 @@ namespace bonita_smile_v1.Servicios
             catch (MySqlException ex)
             {
                 System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar actualizar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexionBD.Close();
+                return false;
+            }
+        }
+
+        public bool actualizar_Factura(string id_paciente ,string id_clinica , int factura,string alias)
+        {
+            Seguridad s = new Seguridad();
+
+            try
+            {
+                MySqlCommand cmd; ;
+                if (online)
+                {
+                    bool internet = ti.Test();
+
+                    if (!internet)
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA ACTUALIZAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI NO LO HAY, ENTONCES NO HACER NADA Y SEGUIR MANTENIENDO QUERIES EN EL ARCHIVO 
+                        return false;
+                    }
+                    else
+                    {
+                        //EN CASO DE REALIZAR UNA PETICION PARA INSEACTUALIZARRTAR EN SERVIDOR VERIFICAR SI HAY INTERNET, SI LO HAY, ENTONCES INSERTAR TODOS LOS QUERIES DEL ARCHIVO
+
+                        //query = "UPDATE usuario set alias = '" + alias + "',nombre = '" + nombre + "',apellidos = '" + apellidos + "',password = '" + password + "',id_rol = " + id_rol + " where id_usuario = '" + id_usuario + "'";
+                        Sincronizar sincronizar = new Sincronizar();
+                        sincronizar.insertarArchivoEnServidor(conexionBD);
+                        return true;
+                    }
+                }
+                else
+                {
+                    //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
+                    query = "UPDATE paciente set factura = " + factura + " where id_paciente ='" + id_paciente + "' and id_clinica='"+id_clinica+"'";
+                    Console.WriteLine(query);
+
+                    conexionBD.Open();
+                    cmd = new MySqlCommand(query, conexionBD);
+                    cmd.ExecuteReader();
+                    conexionBD.Close();
+
+                    Escribir_Archivo ea = new Escribir_Archivo();
+                    ea.escribir_imagen_eliminar(query + ";", @configuracion.carpetas.ruta_script_carpeta + "\\script_temporal_" + alias + ".txt");
+                    System.Windows.Forms.MessageBox.Show("Este usuario solicita factura de sus pagos: ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Se ha producido un error al intentar hacer", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexionBD.Close();
                 return false;
             }

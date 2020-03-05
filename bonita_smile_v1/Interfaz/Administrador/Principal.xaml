@@ -51,7 +51,7 @@
             <Border Grid.Row="2"  Grid.Column="1" Background="GhostWhite"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Margin="0 20 0 0" Width="auto">
 
                     <Grid Margin="10">
-                        <ListView   x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top"  Width="auto" Height="auto">
+                        <ListView   x:Name="lv_Paciente" Margin="0 0 0 0" Foreground="Black" VerticalAlignment="Top"  Width="auto" Height="auto" MouseDoubleClick="lv_Paciente_MouseDoubleClick"  >
 
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
@@ -64,13 +64,13 @@
                                     <Setter Property="Control.BorderThickness" Value="0.2" />
                                     <Setter Property="Control.BorderBrush" Value="Black" />
                                     <Setter Property="FontFamily" Value="Arial"/>
-                                    <Setter Property="FontSize" Value="13"/>
-
-
+                                <Setter Property="FontSize" Value="13"/>
+                            
+                                <!--<EventSetter Event="PreviewMouseUp"
+                                    Handler="obtener_valor_item" />-->
                                 </Style>
-                            </ListView.ItemContainerStyle>
-
-                            <ListView.View >
+                        </ListView.ItemContainerStyle>
+                        <ListView.View >
                                 <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                                     <GridViewColumn Header="Foto" Width="250" >
                                         <GridViewColumn.CellTemplate>
@@ -108,7 +108,15 @@
                                     <GridViewColumn Header="Telefono" Width="150" DisplayMemberBinding="{Binding telefono}" />
                                     <GridViewColumn Header="Email" Width="150" DisplayMemberBinding="{Binding email}" />
                                 <GridViewColumn Header="Membresia" Width="150" DisplayMemberBinding="{Binding membresia}" />
-
+                                <GridViewColumn Header="Factura" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel >
+                                                <CheckBox x:Name="chk_factura" IsChecked="{Binding factura}" Content="Factura" Click="chk_factura_Click" ></CheckBox>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
 
                             </GridView>
                             </ListView.View>

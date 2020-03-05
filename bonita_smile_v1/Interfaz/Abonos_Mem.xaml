@@ -213,6 +213,32 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
+                <Button Grid.Column="1" Margin="780.333,200,-178.667,0"   Click="Button_Click_4" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                                <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/calendario.png">
+                                </Image>
+                                <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter Property="RenderTransform" TargetName="grid">
+                                        <Setter.Value>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                                <SkewTransform AngleX="0" AngleY="0"/>
+                                                <RotateTransform Angle="0"/>
+                                                <TranslateTransform X="0" Y="0"/>
+                                            </TransformGroup>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
                 <TextBlock Grid.Column="1" Text="Abonos registrados" HorizontalAlignment="Center" FontSize="25" Margin="50 10 0 0"></TextBlock>
                 <ListView Grid.Column="1" x:Name="lvNotas" Style="{StaticResource MetroListView}" Margin="50 50 0 0">
                     <ListView.ItemContainerStyle>

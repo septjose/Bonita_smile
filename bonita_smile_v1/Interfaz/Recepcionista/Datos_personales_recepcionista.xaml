@@ -106,14 +106,177 @@
 
                 </Grid>
             </Border>
-            <Border Grid.Row="2" Grid.Column="1" Margin="0,24.667,0,35" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
+            <Border Grid.Row="2" Grid.Column="1" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="450" Width="auto">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="305"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Motivos de Cita" Grid.Row="0" Margin="0 0 0 0" FontSize="30" Foreground="#FF3580BF"  FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <Grid Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Margin="0 0 0 0" Content="Ver historial de abonos" Click="Button_Click" HorizontalAlignment="Center"/>
+                        <Button Grid.Column="1" Margin="0 0 0 0" Content="Carpeta Acceso directo" Click="Button_Click_4" HorizontalAlignment="Center"/>
+                        <!--<Button Grid.Column="2" Margin="0 0 0 0" Content="Ver estudios" Click="Button_Click_5" HorizontalAlignment="Center" />-->
+
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1000"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Border>
+                            <Grid  Grid.Row="2" Grid.Column="0" >
+                                <ListView  Height="200" x:Name="lvMotivo"   Style="{StaticResource MetroListView}" Margin="24,40,76,66">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Height" Value="30"/>
+                                            <Setter Property="Background" Value="White"/>
+                                            <Setter Property="Control.Background" Value="White" />
+                                            <Setter Property="Control.BorderThickness" Value="0.2" />
+                                            <Setter Property="Control.BorderBrush" Value="Black" />
+                                            <Setter Property="FontFamily" Value="Arial"/>
+                                            <Setter Property="FontSize" Value="13"/>
+
+
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View >
+                                        <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
+
+                                            <GridViewColumn Header="Descripcion" Width="250" DisplayMemberBinding="{Binding descripcion}" />
+                                            <GridViewColumn Header="Costo" Width="150" DisplayMemberBinding="{Binding costito}" />
+                                            <GridViewColumn Header="Abonado" Width="150" DisplayMemberBinding="{Binding abonado}" />
+                                            <GridViewColumn Header="Restante" Width="150" DisplayMemberBinding="{Binding restante}" />
+                                            <GridViewColumn Header="Status de pago" Width="190">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <Image Source="{Binding imagen_status}"  Height="20" Width="20"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+
+                                    </ListView.View>
+                                </ListView>
+                                <Grid Grid.Row="2" Grid.Column="1">
+                                    <Grid.RowDefinitions >
+                                        <RowDefinition Height="80"/>
+                                        <RowDefinition Height="80"/>
+                                        <RowDefinition Height="80"/>
+                                    </Grid.RowDefinitions>
+                                    <Button Grid.Row="0"  Margin="900,50,0,0" Name="btn1" Click="Button_Click_1" Height="Auto" RenderTransformOrigin="0.426,0.179" >
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/agregar.png">
+                                                    </Image>
+                                                    <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+
+                                                    </Border>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="RenderTransform" TargetName="grid">
+                                                            <Setter.Value>
+                                                                <TransformGroup>
+                                                                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                                                    <SkewTransform AngleX="0" AngleY="0"/>
+                                                                    <RotateTransform Angle="0"/>
+                                                                    <TranslateTransform X="0" Y="0"/>
+                                                                </TransformGroup>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+
+                                    <Button Grid.Row="1" Grid.Column="2" Margin="900,10,0,0"  Click="Button_Click_3" Height="Auto" Width="95">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/actualizar.png">
+                                                    </Image>
+                                                    <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+
+                                                    </Border>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="RenderTransform" TargetName="grid">
+                                                            <Setter.Value>
+                                                                <TransformGroup>
+                                                                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                                                    <SkewTransform AngleX="0" AngleY="0"/>
+                                                                    <RotateTransform Angle="0"/>
+                                                                    <TranslateTransform X="0" Y="0"/>
+                                                                </TransformGroup>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+
+
+                                    <Button Grid.Row="2" Grid.Column="1" Margin="900,0,0,0"  Click="Button_Click_2" Height="Auto" Width="95"  >
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+                                                    <Image Margin="0,0,0,0" Width="25" Height="25" OpacityMask="{x:Null}" Source="/Assets/eliminar.png">
+                                                    </Image>
+                                                    <Border Margin="0,0,0,0" VerticalAlignment="Bottom" Height="28" HorizontalAlignment="Stretch" Padding="0,0,0,0">
+
+                                                    </Border>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="RenderTransform" TargetName="grid">
+                                                            <Setter.Value>
+                                                                <TransformGroup>
+                                                                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                                                    <SkewTransform AngleX="0" AngleY="0"/>
+                                                                    <RotateTransform Angle="0"/>
+                                                                    <TranslateTransform X="0" Y="0"/>
+                                                                </TransformGroup>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+
+                                </Grid>
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+                </Grid>
+            </Border>
+            <!--<Border Grid.Row="2" Grid.Column="1" Margin="0,24.667,0,35" Background="White"  BorderBrush="Silver" BorderThickness="1" CornerRadius="8 8 3 3 " Height="auto" Width="auto">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="0"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <!--<Button Grid.Row="0" Content="Agregar un Motivo"  Margin="0,0,950,0" Click="Button_Click_1" Width="200" Height="30" />-->
+                    -->
+            <!--<Button Grid.Row="0" Content="Agregar un Motivo"  Margin="0,0,950,0" Click="Button_Click_1" Width="200" Height="30" />-->
+            <!--
                     <Button Grid.Row="2" Margin="758,-200,297.333,563.667" Name="btn1" Click="Button_Click_1" Height="Auto" RenderTransformOrigin="0.426,0.179" >
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
@@ -205,8 +368,8 @@
                             <ColumnDefinition Width="306"/>
                             <ColumnDefinition Width="610.667"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Motivos de Cita" Margin="20,1,32,0.667" FontSize="30" Foreground="#FF3580BF"  FontWeight="Bold"/>
-                        <Button Grid.Column="2" Content="Ver historial del motivo" FontSize="15" Margin="85,12,335.667,381" Height="Auto" Click="Button_Click" RenderTransformOrigin="0.5,0.5">
+                       
+                        <Button Grid.Column="1" Content="Ver historial del motivo" FontSize="15" Margin="41,22,75,371" Height="Auto" Click="Button_Click" RenderTransformOrigin="0.5,0.5">
                             <Button.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -216,62 +379,24 @@
                                 </TransformGroup>
                             </Button.RenderTransform>
                         </Button>
-
+                        <Button Grid.Column="1" Content="Carpeta Acceso directo" Click="Button_Click_4" Height="Auto" Margin="251,17,475.667,369.666" Grid.ColumnSpan="2" />
+                        <Button Grid.Column="2" Content="Ver estudios" Click="Button_Click_5" Height="Auto" Margin="165,22,285.667,374.666"  />
                     </Grid>
 
 
                     <Grid   Grid.Row="2" Margin="9.667,-150,-12.333,156.333" Width="400">
-                        <ListView  Height="200" x:Name="lvMotivo" Width="400"   Style="{StaticResource MetroListView}" Margin="-46,-71,46,229">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                    <Setter Property="Height" Value="30"/>
-                                    <Setter Property="Background" Value="White"/>
-                                    <Setter Property="Control.Background" Value="White" />
-                                    <Setter Property="Control.BorderThickness" Value="0.2" />
-                                    <Setter Property="Control.BorderBrush" Value="Black" />
-                                    <Setter Property="FontFamily" Value="Arial"/>
-                                    <Setter Property="FontSize" Value="13"/>
-
-
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.View >
-                                <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
-
-                                    <GridViewColumn Header="Descripcion" Width="250" DisplayMemberBinding="{Binding descripcion}" />
-
-                                    <GridViewColumn Header="Costo" Width="150" DisplayMemberBinding="{Binding costito}" />
-
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                       
                     </Grid>
 
 
 
                 </Grid >
-            </Border>
+            </Border>-->
 
 
 
 
 
-            <!--<Label x:Name="lblClinica" Content="" HorizontalAlignment="Left" Margin="573,199,0,0" VerticalAlignment="Top" Width="273"/>
-        <Label x:Name="lblEmail" Content="" HorizontalAlignment="Left" Margin="244,191,0,0" VerticalAlignment="Top" Width="281"/>
-        
-        <Label x:Name="lblTelefono" Content="" HorizontalAlignment="Left" Margin="244,136,0,0" VerticalAlignment="Top" Width="281"/>
-        <Label x:Name="lblApellido" Content="" HorizontalAlignment="Left" Margin="573,86,0,0" VerticalAlignment="Top" Width="273"/>
-        <Label x:Name="lblDireccion" Content="" HorizontalAlignment="Left" Margin="573,144,0,0" VerticalAlignment="Top" Width="273"/>
-        
-        <Label Content="ANTECEDENTES CLINICOS" HorizontalAlignment="Left" Margin="14,230,0,0" VerticalAlignment="Top" Height="34" Width="185"/>
-        <TextBlock x:Name="tbAntecedentes" HorizontalAlignment="Left" Height="107" Margin="30,269,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="284"/>
-        
-        <Label Content="MOTIVOS DE CITA" HorizontalAlignment="Left" Height="42" Margin="489,269,0,0" VerticalAlignment="Top" Width="123"/>
-        <Button Content="Ver historial del motivo" HorizontalAlignment="Left" Margin="489,581,0,0" VerticalAlignment="Top" Width="197" Height="49" Click="Button_Click"/>
-        
-        <Rectangle x:Name="rt_imagen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="159" Margin="14,44,0,0" Stroke="Black" VerticalAlignment="Top" Width="199"/>-->
         </Grid>
     </ScrollViewer>
 </Page>

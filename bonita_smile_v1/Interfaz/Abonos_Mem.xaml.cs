@@ -217,5 +217,12 @@ namespace bonita_smile_v1.Interfaz
             }
 
         }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            DialogResult resultado = new DialogResult();
+            Form mensaje = new Actualizar_Fecha_Membresia(id_membresia, paciente.id_paciente, paciente.clinica.id_clinica, alias);
+            resultado = mensaje.ShowDialog();
+        }
     }
 }

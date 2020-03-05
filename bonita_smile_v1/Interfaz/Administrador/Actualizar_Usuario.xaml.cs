@@ -111,6 +111,8 @@ namespace bonita_smile_v1
                     Usuarios user = new Usuarios(bandera_online_offline);
                     string pass_tabla = obtener_password(id_usu);
                     bool actualizo = false;
+                    bool borro = false;
+                    bool inserto = false;
                     Clinicas cli = new Clinicas(bandera_online_offline);
                     if (password.Equals(pass_tabla))
                     {
@@ -141,13 +143,77 @@ namespace bonita_smile_v1
                             }
                         }
                         else
+
+                         if ((usu.rol.id_rol == 2 && id_rol ==3||id_rol==4 ) || (usu.rol.id_rol == 1 &&  id_rol == 3 || id_rol == 4) || (usu.rol.id_rol == 5 && id_rol == 3 || id_rol == 4))
                         {
                             actualizo= user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol,alias_user);
                             if(actualizo)
                             {
+                                borro = user.eliminarDoctor(id_usu, alias_user);
+                                if(borro)
+                                {
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                        admin.Main.Content = new Page4(alias_user);
+                                }
+                                else
+                                {
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                        admin.Main.Content = new Page4(alias_user);
+                                }
+                              
+                            }
+                            else
+                            {
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page4(alias_user);
+                            }
+                        }
+                        else
+                        if((usu.rol.id_rol == 3 && id_rol == 1 || id_rol == 2 || id_rol == 5) || (usu.rol.id_rol == 4 && id_rol == 1 || id_rol == 2 || id_rol == 5))
+                        {
+                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol, alias_user);
+                            if (actualizo)
+                            {
+                                inserto = user.insertar_solo_doctor(id_usu,alias_user,"");
+                                if (inserto)
+                                {
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                        admin.Main.Content = new Page4(alias_user);
+                                }
+                                else
+                                {
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                        admin.Main.Content = new Page4(alias_user);
+                                }
                                 //user = new Usuarios(!bandera_online_offline);
                                 //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
-                               // System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                // System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                //if (admin != null)
+                                //    admin.Main.Content = new Page4(alias_user);
+                            }
+                            else
+                            {
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page4(alias_user);
+                            }
+                        }
+                        else
+                        {
+                            actualizo = user.actualizarDoctor(id_usu, alias, nombre, apellidos, password, id_rol, alias_user,"");
+                            if (actualizo)
+                            {
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                                // System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
                                 if (admin != null)
                                     admin.Main.Content = new Page4(alias_user);
@@ -162,6 +228,7 @@ namespace bonita_smile_v1
                         }
                         
                     }
+                    //////////////////////////////////////////////
                     else
                     {
                         Seguridad secure = new Seguridad();
@@ -181,18 +248,89 @@ namespace bonita_smile_v1
                             }
                         }
                         else
+
+                         if ((usu.rol.id_rol == 2 && id_rol == 3 || id_rol == 4) || (usu.rol.id_rol == 1 && id_rol == 3 || id_rol == 4) || (usu.rol.id_rol == 5 && id_rol == 3 || id_rol == 4))
                         {
                             actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user);
                             if (actualizo)
                             {
-                                //user = new Usuarios(!bandera_online_offline);
-                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol);
+                                borro = user.eliminarDoctor(id_usu, alias_user);
+                                if (borro)
+                                {
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                        admin.Main.Content = new Page4(alias_user);
+                                }
+                                else
+                                {
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                        admin.Main.Content = new Page4(alias_user);
+                                }
+
                             }
                             else
                             {
-                               // System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page4(alias_user);
                             }
-                        }                      
+                        }
+                        else
+                        if ((usu.rol.id_rol == 3 && id_rol == 1 || id_rol == 2 || id_rol == 5) || (usu.rol.id_rol == 4 && id_rol == 1 || id_rol == 2 || id_rol == 5))
+                        {
+                            actualizo = user.actualizarUsuario(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user);
+                            if (actualizo)
+                            {
+                                inserto = user.insertar_solo_doctor(id_usu, alias_user, "");
+                                if (inserto)
+                                {
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                        admin.Main.Content = new Page4(alias_user);
+                                }
+                                else
+                                {
+                                    Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                    if (admin != null)
+                                        admin.Main.Content = new Page4(alias_user);
+                                }
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                                // System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                //if (admin != null)
+                                //    admin.Main.Content = new Page4(alias_user);
+                            }
+                            else
+                            {
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page4(alias_user);
+                            }
+                        }
+                        else
+                        {
+                            actualizo = user.actualizarDoctor(id_usu, alias, nombre, apellidos, new_pass, id_rol, alias_user, "");
+                            if (actualizo)
+                            {
+                                //user = new Usuarios(!bandera_online_offline);
+                                //user.actualizarUsuario(id_usu, alias, nombre, apellidos, password, id_rol);
+                                // System.Windows.Forms.MessageBox.Show("Se actualizao correctamente ", "Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page4(alias_user);
+                            }
+                            else
+                            {
+                                //System.Windows.Forms.MessageBox.Show("No se pudo Actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                                if (admin != null)
+                                    admin.Main.Content = new Page4(alias_user);
+                            }
+                        }
                     }
                 }
                 catch (Exception ex)

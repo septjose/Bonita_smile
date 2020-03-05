@@ -265,7 +265,7 @@ namespace bonita_smile_v1.Servicios
                 return false;
             }
         }
-        public bool ActualizarMembresia(string id_membresia, string id_paciente, string membresia, string id_clinica, string costo, string alias)
+        public bool ActualizarMembresia(string id_membresia, string id_paciente, string membresia, string id_clinica, string alias)
         {
             try
             {
@@ -291,7 +291,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    string query = "UPDATE membresia set membresia ='" + membresia + "',costo = '" + costo + "' where id_membresia = '" + id_membresia + "' and id_paciente='" + id_paciente + "' and id_clinica='" + id_clinica + "'";
+                    string query = "UPDATE membresia set membresia ='" + membresia + "' where id_membresia = '" + id_membresia + "' and id_paciente='" + id_paciente + "' and id_clinica='" + id_clinica + "'";
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();

@@ -76,7 +76,7 @@ namespace bonita_smile_v1
                     }
                     else
                     {
-                        bool elimino = user.eliminarUsuario(id_usuario,alias);
+                        bool elimino = user.eliminarUsuario(id_usuario, this.alias);
                         if (elimino)
                         {
                             //user = new Usuarios(!bandera_online_offline);

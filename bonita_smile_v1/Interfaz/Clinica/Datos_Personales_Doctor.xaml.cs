@@ -152,8 +152,36 @@ namespace bonita_smile_v1.Interfaz.Clinica
             {
                 System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }  
+        }
 
-        
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            string ruta = configuracion.carpetas.ruta_acceso_deirecto;
+            System.Diagnostics.Process.Start(ruta);
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+
+
+            Motivo_citaModel motivo = (Motivo_citaModel)lvMotivo.SelectedItem;
+            if (lvMotivo.SelectedItems.Count > 0)
+            {
+                Clin clinica = System.Windows.Application.Current.Windows.OfType<Clin>().FirstOrDefault();
+
+                if (clinica != null)
+                {
+                    clinica.Main2.Content = new Pagina_Estudios(paciente, motivo, alias);
+                }
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+
     }
 }

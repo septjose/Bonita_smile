@@ -129,7 +129,7 @@ namespace bonita_smile_v1
                     PacienteModel pacienteModel = new PacienteModel();
                     ClinicaModel clinicaModel = new ClinicaModel();
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
-                    if (email_correcto)
+                    if (email_correcto|| txtEmail.Text.Equals(""))
                     {
                         if(new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
@@ -236,7 +236,7 @@ namespace bonita_smile_v1
                     string id_clinica = obtener_id_clinica(valor);
                     Paciente pa = new Paciente(bandera_online_offline);
                     bool email_correcto = new Seguridad().email_bien_escrito(txtEmail.Text);
-                    if (email_correcto)
+                    if (email_correcto|| txtEmail.Text.Equals(""))
                     {
                         if(new Seguridad().ValidarTelefonos7a10Digitos(txtTelefono.Text))
                         {
@@ -298,8 +298,10 @@ namespace bonita_smile_v1
                                 }
                                 else
                                 {
+                                    Seguridad s = new Seguridad();
                                     string nombre_nuevo_foto = txtNombre.Text + "_" + txtApellidos.Text + "_" + id_pacientes + ".jpg";
                                     nombre_nuevo_foto = nombre_nuevo_foto.Replace(" ", "_");
+                                    nombre_nuevo_foto = s.quitar_acentos(nombre_nuevo_foto);
                                     bool inserto = pa.actualizarPaciente(id_pacientes, txtNombre.Text, txtApellidos.Text, txtDireccion.Text, tel, nombre_nuevo_foto, antecedentes, txtEmail.Text, 0, id_clinica , alias);
                                     if (inserto)
                                     {

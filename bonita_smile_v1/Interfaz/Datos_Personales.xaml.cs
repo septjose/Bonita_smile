@@ -174,7 +174,7 @@ namespace bonita_smile_v1
             //im.ShowDialog();
        
             DialogResult resultado = new DialogResult();
-            Form mensaje = new IngresarMotivo(id,alias);
+            Form mensaje = new IngresarMotivo(id,paciente.clinica.id_clinica,alias);
             resultado = mensaje.ShowDialog();
             this.GMotivo = new ObservableCollection<Motivo_citaModel>(new Servicios.Motivo_cita(false).Mostrar_MotivoCita(id));
             lvMotivo.ItemsSource = GMotivo;
@@ -191,7 +191,7 @@ namespace bonita_smile_v1
                     if (confirmation == System.Windows.Forms.DialogResult.Yes)
                     {
                         Motivo_cita mot = new Motivo_cita(bandera_online_offline);
-                        bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.paciente.id_paciente,alias);
+                        bool elimino = mot.eliminarMotivo_cita(motivo.id_motivo,motivo.id_paciente,motivo.id_clinica,alias);
                         if (elimino)
                         {
                         //mot = new Motivo_cita(!bandera_online_offline);
@@ -228,6 +228,40 @@ namespace bonita_smile_v1
 
 
            
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            string ruta = configuracion.carpetas.ruta_acceso_deirecto;
+            System.Diagnostics.Process.Start(ruta);
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            
+
+            Motivo_citaModel motivo = (Motivo_citaModel)lvMotivo.SelectedItem;
+            if (lvMotivo.SelectedItems.Count > 0)
+            {
+                Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+
+                if (admin != null)
+                {
+                    admin.Main.Content = new Pagina_Estudios(paciente, motivo, alias);
+                }
+                else
+                    if(socio!=null)
+                    {
+                    socio.Main4.Content = new Pagina_Estudios(paciente, motivo, alias);
+                    }
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No seleccionó ningún registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

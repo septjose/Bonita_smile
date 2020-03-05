@@ -82,9 +82,6 @@ namespace bonita_smile_v1
         }
 
 
-
-
-
         #endregion
 
         private PictureBox pictureBox1;

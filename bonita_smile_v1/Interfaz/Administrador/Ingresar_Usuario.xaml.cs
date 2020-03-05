@@ -89,26 +89,45 @@ namespace bonita_smile_v1
                 try
                 {
                     Usuarios user = new Usuarios(bandera_online_offline);
-                    bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol , alias_user);
-
-
-                    if (inserto)
+                    if(id_rol==1 || id_rol==2 || id_rol==5)
                     {
-                       // System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        /*-----------------------------------------------*/
-                        //user = new Usuarios(!bandera_online_offline);
-                        //inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
-
-                        Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
-                        if (admin != null)
-                            //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                            admin.Main.Content = new Page4(alias_user);
+                        bool inserto_usuario = user.insertar_doctor(alias, nombre, apellidos, password, id_rol, alias_user,"");
+                        if (inserto_usuario)
+                        {
+                            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                            if (admin != null)
+                                //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                admin.Main.Content = new Page4(alias_user);
+                        }
+                        else
+                        {
+                            //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
-                       //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol, alias_user);
+
+
+                        if (inserto)
+                        {
+                            // System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            /*-----------------------------------------------*/
+                            //user = new Usuarios(!bandera_online_offline);
+                            //inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+
+                            Admin admin = System.Windows.Application.Current.Windows.OfType<Admin>().FirstOrDefault();
+                            if (admin != null)
+                                //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                admin.Main.Content = new Page4(alias_user);
+                        }
+                        else
+                        {
+                            //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
+                    
                 }
                 catch (Exception ex)
                 {

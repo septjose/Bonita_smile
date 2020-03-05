@@ -72,8 +72,8 @@ namespace bonita_smile_v1.Interfaz.Recepcionista
                 if (confirmation == System.Windows.Forms.DialogResult.Yes)
                 {
                     //se elimina todo lo relacionado con el pacinete incluyento sus registros de carpetas,fotos,etc. osea que no se puede recuperar nada
-                    var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_Paciente(id_paciente);
-                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente,alias);
+                    var listaNombreArchivos = new Fotos_estudio_carpeta(false).MostrarFoto_Paciente(id_paciente,paciente.clinica.id_clinica);
+                    bool elimino = new Paciente(bandera_online_offline).eliminarPaciente(id_paciente,paciente.clinica.id_clinica,alias);
                     if (elimino)
                     {
                         //obtener todas sus imagenes y guardarlas dentro del archivo

@@ -59,7 +59,7 @@ namespace bonita_smile_v1
                         {
 
                             //MessageBox.Show(paciente.nombre);
-                            bool inserto = new Membresia(bandera_online_offline).InsertarMembresia(paciente.id_paciente, DateTime.Now.ToString("yyyy/MM/dd"),paciente.clinica.id_clinica,abono.ToString(culture),alias);
+                            bool inserto = new Membresia(bandera_online_offline).InsertarMembresia(paciente.id_paciente, datetimepicker1.Value.ToString("yyyy/MM/dd"),paciente.clinica.id_clinica,abono.ToString(culture),alias);
                             if (inserto)
                             {
                                 List<MembresiaModel> lista = new Membresia(bandera_online_offline).MostrarMembresias(paciente.id_paciente, paciente.clinica.id_clinica);

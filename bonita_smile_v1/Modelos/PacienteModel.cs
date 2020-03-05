@@ -16,14 +16,16 @@ namespace bonita_smile_v1.Modelos
         public string telefono { get; set; }
         public string foto { get; set; }
         public BitmapImage imagen { get; set; }
-        public string antecedente { get; set; }
+        
         public string email { get; set; }
         public int marketing { get; set; }
         public ClinicaModel clinica { get; set; }
+        public string antecedente { get; set; }
 
         public string membresia { get; set; }
 
         public BitmapImage imagen_membresia {get;set;}
         public string fecha { get; set; }
+        public bool factura { get; set; }
     }
 }

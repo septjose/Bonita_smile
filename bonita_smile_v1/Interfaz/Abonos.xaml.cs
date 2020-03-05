@@ -62,10 +62,10 @@ namespace bonita_smile_v1
             txtRestante.IsEnabled = false;
             txtTotal.Text = "$" +   Convert.ToDouble(motivo.costo,culture).ToString("n", nfi);
             total = Convert.ToDouble(motivo.costo.ToString(), culture);
-            txtAbonado.Text = "$" + Convert.ToDouble(abono.Abonados(motivo.id_motivo), culture).ToString("n", nfi);
-            txtRestante.Text = "$" + Convert.ToDouble(abono.Restante(motivo.id_motivo), culture).ToString("n", nfi);
-            restante = Convert.ToDouble(abono.Restante(motivo.id_motivo).ToString(),culture);
-            abonado = Convert.ToDouble(abono.Abonados(motivo.id_motivo).ToString(),culture);
+            txtAbonado.Text = "$" + Convert.ToDouble(abono.Abonados(motivo.id_motivo,motivo.id_paciente,motivo.id_clinica), culture).ToString("n", nfi);
+            txtRestante.Text = "$" + Convert.ToDouble(abono.Restante(motivo.id_motivo,motivo.id_clinica,motivo.id_paciente), culture).ToString("n", nfi);
+            restante = Convert.ToDouble(abono.Restante(motivo.id_motivo,motivo.id_clinica,motivo.id_paciente).ToString(),culture);
+            abonado = Convert.ToDouble(abono.Abonados(motivo.id_motivo,motivo.id_paciente,motivo.id_clinica).ToString(),culture);
             llenar_list_view(motivo.id_motivo, paciente.id_paciente);
             this.alias = alias;
             
@@ -73,7 +73,7 @@ namespace bonita_smile_v1
         }
         void llenar_list_view(string id_motivo, string id_paciente)
         {
-             this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(id_motivo, id_paciente));
+             this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(id_motivo, id_paciente,paciente.clinica.id_clinica));
 
             lvNotas.ItemsSource = notas;
             GAbono = notas;
@@ -83,14 +83,14 @@ namespace bonita_smile_v1
         {
             Abonos abonos = new Abonos(bandera_online_offline);
             DialogResult resultado = new DialogResult();
-            double restanten = Convert.ToDouble(abonos.Restante(motivo.id_motivo).ToString(),culture);
+            double restanten = Convert.ToDouble(abonos.Restante(motivo.id_motivo,motivo.id_clinica,motivo.id_paciente).ToString(),culture);
             Form mensaje = new MessageBoxAbono(motivo.id_motivo, paciente.id_paciente,txtNombre.Text,txtMotivo.Text, restanten, abonado, total,paciente  , alias);
             resultado = mensaje.ShowDialog();
-            this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
+            this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente,paciente.clinica.id_clinica));
             lvNotas.ItemsSource = this.notas;
 
-            txtAbonado.Text = "$" + Convert.ToDouble(abonos.Abonados(motivo.id_motivo), culture).ToString("n", nfi);
-            txtRestante.Text = "$" + Convert.ToDouble(abonos.Restante(motivo.id_motivo), culture).ToString("n", nfi);
+            txtAbonado.Text = "$" + Convert.ToDouble(abonos.Abonados(motivo.id_motivo,motivo.id_paciente,motivo.id_clinica), culture).ToString("n", nfi);
+            txtRestante.Text = "$" + Convert.ToDouble(abonos.Restante(motivo.id_motivo,motivo.id_clinica,motivo.id_paciente), culture).ToString("n", nfi);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -103,7 +103,7 @@ namespace bonita_smile_v1
                     {
                         Abonos abo = new Abonos(bandera_online_offline);
 
-                        bool elimino = abo.eliminarAbono(abono.id_abono,alias);
+                        bool elimino = abo.eliminarAbono(abono.id_abono,abono.id_paciente,abono.id_clinica,abono.id_motivo,alias);
                         if (elimino)
                         {
 
@@ -116,8 +116,8 @@ namespace bonita_smile_v1
                         this.notas.Remove((AbonosModel)lvNotas.SelectedItem);
 
                         Abonos abonos = new Abonos(bandera_online_offline);
-                        txtAbonado.Text = "$" + Convert.ToDouble(abonos.Abonados(motivo.id_motivo), culture).ToString("n", nfi);
-                        txtRestante.Text = "$" + Convert.ToDouble(abonos.Restante(motivo.id_motivo), culture).ToString("n", nfi);
+                        txtAbonado.Text = "$" + Convert.ToDouble(abonos.Abonados(motivo.id_motivo,motivo.id_paciente,motivo.id_clinica), culture).ToString("n", nfi);
+                        txtRestante.Text = "$" + Convert.ToDouble(abonos.Restante(motivo.id_motivo,motivo.id_clinica,motivo.id_paciente), culture).ToString("n", nfi);
                     }
                         else
                         {
@@ -140,14 +140,14 @@ namespace bonita_smile_v1
             if (lvNotas.SelectedItems.Count > 0)
             {
                 Abonos abonos = new Abonos(bandera_online_offline);
-                double restanten = Convert.ToDouble(abonos.Restante(motivo.id_motivo).ToString(), culture);
+                double restanten = Convert.ToDouble(abonos.Restante(motivo.id_motivo,motivo.id_clinica,motivo.id_paciente).ToString(), culture);
                 DialogResult resultado = new DialogResult();
                 Form mensaje = new Actualizar_Abono(motivo.id_motivo, paciente.id_paciente, txtNombre.Text, txtMotivo.Text, restanten, abonado, total, abono,paciente , alias);
                 resultado = mensaje.ShowDialog();
 
-                txtAbonado.Text = "$" + Convert.ToDouble(abonos.Abonados(motivo.id_motivo), culture).ToString("n", nfi);
-                txtRestante.Text = "$" + Convert.ToDouble(abonos.Restante(motivo.id_motivo), culture).ToString("n", nfi);
-                this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente));
+                txtAbonado.Text = "$" + Convert.ToDouble(abonos.Abonados(motivo.id_motivo,motivo.id_paciente,motivo.id_clinica), culture).ToString("n", nfi);
+                txtRestante.Text = "$" + Convert.ToDouble(abonos.Restante(motivo.id_motivo,motivo.id_clinica,motivo.id_paciente), culture).ToString("n", nfi);
+                this.notas = new ObservableCollection<AbonosModel>(new Servicios.Abonos(bandera_online_offline).MostrarAbonos(motivo.id_motivo, paciente.id_paciente,paciente.clinica.id_clinica));
                 lvNotas.ItemsSource = this.notas;
             }
             else

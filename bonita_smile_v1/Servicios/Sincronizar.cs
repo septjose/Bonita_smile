@@ -74,6 +74,42 @@ namespace bonita_smile_v1.Servicios
             }
         }
 
+        public bool Backup_bd_local()
+        {
+            bool v = false;
+            /*servidor = "162.241.60.126";
+            puerto = "3306";
+            usuario = "jjdevelo_dentist";
+            password = "jjpd1996";
+            database = "jjdevelo_dentist";
+            */
+
+            Archivo_Binario ab = new Archivo_Binario();
+            Configuracion_Model configuracion = ab.Cargar(ruta_archivo);
+
+            // string constring = "server=162.241.60.126;user=jjdevelo_dentist;pwd=jjpd1996;database=jjdevelo_dentist;";
+            string constring = "server=" + configuracion.servidor_interno.servidor_local + ";user=" + configuracion.servidor_interno.usuario_local + ";pwd=" + configuracion.servidor_interno.password_local + ";database=" + configuracion.servidor_interno.database_local + ";";
+            constring += "charset=utf8;convertzerodatetime=true;";
+            //MessageBox.Show(constring);
+            string file = @configuracion.carpetas.ruta_respaldo_carpeta + "\\backup_local.sql";
+            using (MySqlConnection conn = new MySqlConnection(constring))
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = conn;
+                        conn.Open();
+                        mb.ExportToFile(file);
+                        //System.Windows.Forms.MessageBox.Show("Se hizo el respaldo correctamente ", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        conn.Close();
+                        v = true;
+                    }
+                }
+            }
+            return v;
+        }
+
         public void Restore()
         {
             Archivo_Binario ab = new Archivo_Binario();
@@ -697,7 +733,8 @@ namespace bonita_smile_v1.Servicios
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); verdad = false;
+                //System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verdad = false;
                 //System.Windows.MessageBox.Show("Error " + ex.Message + " " + ex.StackTrace);
 
 
@@ -736,12 +773,12 @@ namespace bonita_smile_v1.Servicios
             }
             catch (WebException wEx)
             {
-                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //System.Windows.Forms.MessageBox.Show("Se ha producido un error ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
 
             }

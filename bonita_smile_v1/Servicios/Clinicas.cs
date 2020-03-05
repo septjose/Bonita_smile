@@ -269,9 +269,9 @@ namespace bonita_smile_v1.Servicios
 
         public bool insertarClinica(string nombre_sucursal, string color, string alias)
         {
-            string auxiliar_identificador = "";
+            string id_clinica = "";
             Seguridad seguridad = new Seguridad();
-            auxiliar_identificador = seguridad.SHA1(nombre_sucursal + color + DateTime.Now);
+            id_clinica = seguridad.SHA1(nombre_sucursal + color + DateTime.Now);
             try
             {
                 MySqlCommand cmd; ;
@@ -296,7 +296,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO clinica (id_clinica,nombre_sucursal,color,auxiliar_identificador) VALUES('" + auxiliar_identificador + "','" + nombre_sucursal + "','" + color + "','<!--" + auxiliar_identificador + "-->')";
+                    query = "INSERT INTO clinica (id_clinica,nombre_sucursal,color) VALUES('" + id_clinica + "','" + nombre_sucursal + "','" + color + "')";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -348,7 +348,7 @@ namespace bonita_smile_v1.Servicios
                 }
                 else
                 {
-                    query = "INSERT INTO permisos (id_usuario,id_clinica,auxiliar_identificador) VALUES('" + id_usuario + "','" + id_clinica + "','<!--" + auxiliar_identificador + "-->')";
+                    query = "INSERT INTO permisos (id_usuario,id_clinica) VALUES('" + id_usuario + "','" + id_clinica + "')";
                     Console.WriteLine(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -435,7 +435,7 @@ namespace bonita_smile_v1.Servicios
                 else
                 {
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
-                    query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "',auxiliar_identificador ='" + id_clinica + "' where id_clinica = '" + id_clinica + "'";
+                    query = "UPDATE clinica set nombre_sucursal = '" + nombre_sucursal + "',color = '" + color + "' where id_clinica = '" + id_clinica + "'";
 
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
@@ -486,7 +486,7 @@ namespace bonita_smile_v1.Servicios
                     //string auxiliar_identificador = MostrarUsuario_Update(id_usuario);
                     query = "UPDATE permisos set id_clinica = '" + id_clinica + "' where id_usuario ='" + id_usuario + "' and id_clinica='" + id_clinica_anterior + "'";
                     Console.WriteLine(query);
-                    System.Windows.MessageBox.Show(query);
+                    //System.Windows.MessageBox.Show(query);
                     conexionBD.Open();
                     cmd = new MySqlCommand(query, conexionBD);
                     cmd.ExecuteReader();

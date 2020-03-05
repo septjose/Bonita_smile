@@ -15,7 +15,7 @@ namespace bonita_smile_v1.Modelos
         public string foto { get; set; }
         public string foto_completa { get; set;}
         public BitmapImage imagen { get; set; }
-
-        public string fecha { get; set; }
+        public string id_motivo { get; set; }
+        public string id_clinica { get; set; }
     }
 }

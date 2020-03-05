@@ -92,25 +92,51 @@ namespace bonita_smile_v1.Interfaz.Socio
                 try
                 {
                     Usuarios user = new Usuarios(bandera_online_offline);
-                    bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol, alias_user);
 
-                    if (inserto)
+                    if(id_rol==2)
                     {
-                       // System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        bool inserto_doctor = user.insertar_doctor(alias, nombre, apellidos, password, id_rol, alias_user,"");
+                        if (inserto_doctor)
+                        {
+                            // System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        /*-----------------------------------------------*/
-                        //user = new Usuarios(!bandera_online_offline);
-                        //inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+                            /*-----------------------------------------------*/
+                            //user = new Usuarios(!bandera_online_offline);
+                            //inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
 
-                        Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
-                        if (socio != null)
-                            //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
-                            socio.Main4.Content = new Socio_usuarios(this.lista,this.alias);
+                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                            if (socio != null)
+                                //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                        }
+                        else
+                        {
+                            //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
-                        //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        bool inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol, alias_user);
+
+                        if (inserto)
+                        {
+                            // System.Windows.Forms.MessageBox.Show("Se Ingreso  el Usuario", "Se Ingreso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            /*-----------------------------------------------*/
+                            //user = new Usuarios(!bandera_online_offline);
+                            //inserto = user.insertarUsuario(alias, nombre, apellidos, password, id_rol);
+
+                            Soc socio = System.Windows.Application.Current.Windows.OfType<Soc>().FirstOrDefault();
+                            if (socio != null)
+                                //System.Windows.MessageBox.Show("imprimo " + usuario.rol.descripcion);
+                                socio.Main4.Content = new Socio_usuarios(this.lista, this.alias);
+                        }
+                        else
+                        {
+                            //System.Windows.Forms.MessageBox.Show("No se pudo  Ingresar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
+                    
                 }
                 catch (Exception ex)
                 {

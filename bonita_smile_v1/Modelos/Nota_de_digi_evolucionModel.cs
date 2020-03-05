@@ -13,7 +13,8 @@ namespace bonita_smile_v1.Modelos
         public string id_motivo { get; set; }
         public string descripcion { get; set; }
         public string fecha { get; set; }
-
+        public string id_clinica { get; set; }
+        public string id_usuario { get; set; }
         public string nombre_doctor { get; set; }
 
         public Carpeta_archivosModel carpeta { get; set; }

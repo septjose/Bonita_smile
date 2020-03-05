@@ -39,8 +39,11 @@ namespace bonita_smile_v1
         //ObservableCollection<Imagen> GPaciente;
         string id_carpeta = "";
         string id_paciente = "";
+        string id_motivo = "";
+        string id_clinica = "";
         string ruta = "";
         bool bandera_online_offline = false;
+        Carpeta_archivosModel carpeta;
 
           string ruta_archivo = System.IO.Path.Combine(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"dentista\setup\conf\configuracion.txt");
 
@@ -49,10 +52,10 @@ namespace bonita_smile_v1
         ObservableCollection<Fotos_estudio_carpetaModel> GFotos;
         Configuracion_Model configuracion;
         string alias;
-        void llenar_list_view(string id_carpeta, string id_paciente)
+        void llenar_list_view(string id_carpeta, string id_paciente,string id_clinica,string id_motivo)
         {
             Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta(bandera_online_offline);
-            List<Fotos_estudio_carpetaModel> lista = f_estudio.MostrarFoto_estudio_carpeta(id_carpeta, id_paciente);
+            List<Fotos_estudio_carpetaModel> lista = f_estudio.MostrarFoto_estudio_carpeta(id_carpeta, id_paciente,id_motivo,id_clinica);
 
             var fotografos = new ObservableCollection<Fotos_estudio_carpetaModel>(lista);
             for (int i = 0; i < lista.Count; i++)
@@ -80,10 +83,13 @@ namespace bonita_smile_v1
 
             InitializeComponent();
             this.configuracion = configuracion;
-            llenar_list_view(carpeta.id_carpeta, carpeta.id_paciente);
+            llenar_list_view(carpeta.id_carpeta, carpeta.id_paciente,carpeta.id_clinica,carpeta.id_motivo);
             id_carpeta = carpeta.id_carpeta;
             id_paciente = carpeta.id_paciente;
+            this.id_motivo = carpeta.id_motivo;
+            this.id_clinica = carpeta.id_clinica;
             this.alias = alias;
+            this.carpeta = carpeta;
             //llenar_list_view2();
         }
 
@@ -177,7 +183,7 @@ namespace bonita_smile_v1
                      //SUBIRLO TODO LOCAL
                      //REALIZAR INSERCION DEL REGISTRO
                      Fotos_estudio_carpeta fotos = new Fotos_estudio_carpeta(bandera_online_offline);
-                    bool insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result,alias);
+                    bool insertar_foto = fotos.insertarFoto_estudio_carpeta(id_carpeta, id_paciente, id_carpeta + "_" + result,carpeta.id_motivo,carpeta.id_clinica,alias);
                     //SI SE INSERTA PROCEDER A PASAR LA IMAGEN A CARPETA BS Y BS_OFFLINE
                     if (insertar_foto)
                     {
@@ -238,7 +244,7 @@ namespace bonita_smile_v1
             lb_imagen.Items.Clear();
 
             Fotos_estudio_carpeta f_estudio = new Fotos_estudio_carpeta(bandera_online_offline);
-            List<Fotos_estudio_carpetaModel> lista = f_estudio.MostrarFoto_estudio_carpeta(id_carpeta, id_paciente);
+            List<Fotos_estudio_carpetaModel> lista = f_estudio.MostrarFoto_estudio_carpeta(id_carpeta, id_paciente,carpeta.id_motivo,carpeta.id_clinica);
 
             var fotografos = new ObservableCollection<Fotos_estudio_carpetaModel>(lista);
             for (int j = 0; j < lista.Count; j++)
@@ -357,7 +363,7 @@ namespace bonita_smile_v1
             // ELIMINARLA DE LA BS LOCAL/
 
              //ELIMINAR REGISTRO
-             bool elimino = new Fotos_estudio_carpeta(bandera_online_offline).eliminarFoto_estudio_carpeta(this.item_foto_carpeta.id_foto,alias);
+             bool elimino = new Fotos_estudio_carpeta(bandera_online_offline).eliminarFoto_estudio_carpeta(this.item_foto_carpeta.id_foto,this.item_foto_carpeta.id_carpeta,this.item_foto_carpeta.id_paciente,this.item_foto_carpeta.id_motivo,this.item_foto_carpeta.id_clinica,alias);
             //ELIMINAR IMAGEN
             File.Delete(item_foto_carpeta.foto_completa);
             if (elimino)
